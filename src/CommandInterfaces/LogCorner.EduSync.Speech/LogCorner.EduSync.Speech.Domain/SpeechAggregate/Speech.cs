@@ -1,20 +1,40 @@
-﻿namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
+﻿using LogCorner.EduSync.Speech.Domain.Events;
+using LogCorner.EduSync.Speech.Domain.Exceptions;
+using System;
+
+namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
-    public class Speech
+    public class Speech : AggregateRoot<Guid>
     {
-        // Here, we have an anemic domain model, we will enrich it when implementing the domain
-        private string title;
+        public Title Title { get; private set; }
+        public UrlValue Url { get; private set; }
+        public Description Description { get; private set; }
+        public SpeechType Type { get; private set; }
 
-        private string urlValue;
-        private string description;
-        private string type;
-
-        public Speech(string title, string urlValue, string description, string type)
+        public Speech(Title title, UrlValue urlValue, Description description, SpeechType type)
         {
-            this.title = title;
-            this.urlValue = urlValue;
-            this.description = description;
-            this.type = type;
+            Title = title ?? throw new ArgumentNullAggregateException(nameof(title));
+            Url = urlValue ?? throw new ArgumentNullAggregateException(nameof(urlValue));
+            Description = description ?? throw new ArgumentNullAggregateException(nameof(description));
+            Type = type ?? throw new ArgumentNullAggregateException(nameof(type));
+            AddDomainEvent(new SpeechCreateEvent(Id, Title, Url, Description, Type));
         }
+
+        public Speech(Guid id, Title title, UrlValue urlValue, Description description, SpeechType type)
+        {
+            Id = id;
+            Title = title ?? throw new ArgumentNullAggregateException(nameof(title));
+            Url = urlValue ?? throw new ArgumentNullAggregateException(nameof(urlValue));
+            Description = description ?? throw new ArgumentNullAggregateException(nameof(description));
+            Type = type ?? throw new ArgumentNullAggregateException(nameof(type));
+            AddDomainEvent(new SpeechCreateEvent(Id, Title, Url, Description, Type));
+        }
+
+        /*
+         Speech will need medias, organizer, talker, etc...
+         I will implement them in other features when it is necessary
+         KISS : Keep It Simple, Stupid
+         YAGNI : ou Aren’t Gonna Need It
+         */
     }
 }
