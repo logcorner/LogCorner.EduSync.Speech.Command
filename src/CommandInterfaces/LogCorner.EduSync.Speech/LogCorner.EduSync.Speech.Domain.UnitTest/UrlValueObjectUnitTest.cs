@@ -1,5 +1,4 @@
-﻿using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
-using Xunit;
+﻿using Xunit;
 
 namespace LogCorner.EduSync.Speech.Domain.UnitTest
 {

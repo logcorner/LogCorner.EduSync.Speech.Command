@@ -1,7 +1,6 @@
-﻿using System;
+﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using LogCorner.EduSync.Speech.Domain.Exceptions;
 
 namespace LogCorner.EduSync.Speech.Domain
 {
