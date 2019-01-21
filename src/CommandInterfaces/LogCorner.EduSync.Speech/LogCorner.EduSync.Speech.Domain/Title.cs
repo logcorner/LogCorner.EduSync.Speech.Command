@@ -12,10 +12,10 @@ namespace LogCorner.EduSync.Speech.Domain
 
         public Title(string value)
         {
-            if (value.Length < MinLenght)
+            if (value?.Length < MinLenght)
                 throw new InvalidLenghtAggregateException("Value is too short");
 
-            if (value.Length > MaxLenght)
+            if (value?.Length > MaxLenght)
                 throw new InvalidLenghtAggregateException("Value is too long");
 
             Value = value;
