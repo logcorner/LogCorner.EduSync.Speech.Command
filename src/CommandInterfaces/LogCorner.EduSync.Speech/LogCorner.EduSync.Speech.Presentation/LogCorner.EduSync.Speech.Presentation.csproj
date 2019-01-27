@@ -5,9 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Dtos\" />
-    <Folder Include="Exceptions\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

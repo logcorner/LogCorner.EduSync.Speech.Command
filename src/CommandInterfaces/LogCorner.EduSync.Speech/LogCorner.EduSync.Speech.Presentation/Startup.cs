@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using LogCorner.EduSync.Speech.Application.UseCases;
+using LogCorner.EduSync.Speech.Presentation.Exceptions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +20,8 @@ namespace LogCorner.EduSync.Speech.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IRegisterSpeechUseCase, RegisterSpeechUseCase>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -32,10 +36,8 @@ namespace LogCorner.EduSync.Speech.Presentation
             {
                 app.UseHsts();
             }
+            app.UseMiddleware<ExceptionMiddleware>();
 
-            //http://localhost:62694/swagger/v1/swagger.json
-            //http://localhost:62694/swagger/index.html
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

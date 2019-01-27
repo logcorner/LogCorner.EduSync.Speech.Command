@@ -61,4 +61,3 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         }
     }
 }
-
