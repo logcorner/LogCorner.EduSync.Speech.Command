@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.Presentation\LogCorner.EduSync.Speech.Presentation.csproj" />
+    <ProjectReference Include="..\LogCorner.EduSync.Speech.Presentation\LogCorner.EduSync.Speech.Presentation.csproj" />
   </ItemGroup>
 
 </Project>
