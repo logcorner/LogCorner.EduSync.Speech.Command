@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using LogCorner.EduSync.Speech.Domain.IRepository;
+using System;
 
 namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
-    public interface ISpeechRepository
+    public interface ISpeechRepository : IRepository<Speech, Guid>
     {
-        Task CreateAsync(Speech entity);
     }
 }
