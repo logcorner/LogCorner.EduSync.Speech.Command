@@ -15,6 +15,11 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         private readonly List<MediaFile> _mediaFileItems;
         public IReadOnlyCollection<MediaFile> MediaFileItems => _mediaFileItems;
 
+        //EF Core need a parameterless constructor
+        private Speech()
+        {
+        }
+
         public Speech(Title title, UrlValue urlValue, Description description, SpeechType type)
         {
             Title = title ?? throw new ArgumentNullAggregateException(nameof(title));

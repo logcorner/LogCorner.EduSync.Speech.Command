@@ -11,7 +11,10 @@
 
   <ItemGroup>
     <Folder Include="Exceptions\" />
-    <Folder Include="Mapping\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LogCorner.EduSync.Speech.Domain\LogCorner.EduSync.Speech.Domain.csproj" />
   </ItemGroup>
 
 </Project>
