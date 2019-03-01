@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  logcorner.edusync.speech.presentation:
+    image: ${DOCKER_REGISTRY-}logcorner-edusync-speech-presentation
+    build:
+      context: .
+      dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/Dockerfile

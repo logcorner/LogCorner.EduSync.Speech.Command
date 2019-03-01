@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  logcorner.edusync.speech.presentation:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8080:80"
