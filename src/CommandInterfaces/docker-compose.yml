@@ -1,8 +1,18 @@
 version: '3.4'
 
 services:
+  # web api service
   logcorner.edusync.speech.presentation:
     image: ${DOCKER_REGISTRY-}logcorner-edusync-speech-presentation
     build:
       context: .
       dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/Dockerfile
+    depends_on:
+      - logcorner.edusync.speech.presentation.data
+ 
+ # database service
+  logcorner.edusync.speech.presentation.data:
+    image: ${DOCKER_REGISTRY-}logcorner-edusync-speech-presentation-data
+    build:
+      context: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Database/Docker
+      dockerfile: Dockerfile
