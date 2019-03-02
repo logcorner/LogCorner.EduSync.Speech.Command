@@ -1,6 +1,6 @@
 FROM microsoft/mssql-server-linux
 
-ADD Restore/Script.sql /home/resources/Restore.sql
+ADD Restore/LogCorner.EduSync.Speech.Database_Create.sql /home/resources/Restore.sql
 
 ENV ACCEPT_EULA=Y
 ENV SA_PASSWORD=PassW0rd
