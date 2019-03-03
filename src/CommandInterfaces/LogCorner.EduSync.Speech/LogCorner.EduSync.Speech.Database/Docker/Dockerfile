@@ -9,8 +9,7 @@ ARG SA_PASSWORD
 ENV SA_PASSWORD=${SA_PASSWORD}
 ENV ACCEPT_EULA=Y
 
-RUN echo "Oh dang look at that V_SA_PASSWORD = $V_SA_PASSWORD"
-RUN echo "Oh dang look at that SA_PASSWORD =$SA_PASSWORD"
+RUN echo "Ok it looks like that SA_PASSWORD =$SA_PASSWORD"
 
 RUN (/opt/mssql/bin/sqlservr --accept-eula & ) | grep -q "SQL Server is now ready for client connections" \
   && sleep 10 \
