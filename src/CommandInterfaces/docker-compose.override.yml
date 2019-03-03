@@ -12,3 +12,5 @@ services:
   logcorner.edusync.speech.presentation.data:
     ports:
       - "1433:1433"
+   
+    
