@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.Presentation.UnitTest", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.Presentation.UnitTest\LogCorner.EduSync.Speech.Presentation.UnitTest.csproj", "{B3EC16EC-B89A-4352-B2DB-8A839AAEDC75}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C49F873D-4091-4616-8B06-3862A28E020F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{B3EC16EC-B89A-4352-B2DB-8A839AAEDC75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3EC16EC-B89A-4352-B2DB-8A839AAEDC75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3EC16EC-B89A-4352-B2DB-8A839AAEDC75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C49F873D-4091-4616-8B06-3862A28E020F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C49F873D-4091-4616-8B06-3862A28E020F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C49F873D-4091-4616-8B06-3862A28E020F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C49F873D-4091-4616-8B06-3862A28E020F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

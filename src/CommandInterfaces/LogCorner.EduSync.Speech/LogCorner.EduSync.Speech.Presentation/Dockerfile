@@ -1,0 +1,22 @@
+FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
+WORKDIR /app
+EXPOSE 80
+
+FROM microsoft/dotnet:2.2-sdk AS build
+WORKDIR /src
+COPY LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/LogCorner.EduSync.Speech.Presentation.csproj LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/
+COPY LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Infrastructure/LogCorner.EduSync.Speech.Infrastructure.csproj LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Infrastructure/
+COPY LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Domain/LogCorner.EduSync.Speech.Domain.csproj LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Domain/
+COPY LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application/LogCorner.EduSync.Speech.Application.csproj LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application/
+RUN dotnet restore LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/LogCorner.EduSync.Speech.Presentation.csproj
+COPY . .
+WORKDIR /src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation
+RUN dotnet build LogCorner.EduSync.Speech.Presentation.csproj -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish LogCorner.EduSync.Speech.Presentation.csproj -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "LogCorner.EduSync.Speech.Presentation.dll"]
