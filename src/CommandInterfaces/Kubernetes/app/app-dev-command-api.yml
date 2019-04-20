@@ -13,7 +13,7 @@ spec:
     - protocol: TCP
       port: 80
       nodePort: 30081
-  type: NodePort
+  type: LoadBalancer
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
@@ -31,6 +31,9 @@ spec:
       containers:
       - name: command
         image: logcorneredusync.azurecr.io/logcorner-edusync-speech-presentation:latest
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Kubernetes"
         ports:
         - containerPort: 80
         imagePullPolicy: Always

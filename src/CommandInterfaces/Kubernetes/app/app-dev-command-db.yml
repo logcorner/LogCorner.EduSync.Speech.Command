@@ -1,0 +1,42 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  namespace: dev
+  name: dev-command-database-deployment
+  labels:
+    app: sqlserver
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dev
+        tier: database
+    spec:
+      containers:
+      - name: database
+        image: microsoft/mssql-server-linux:latest
+        ports:
+        - containerPort: 1433
+        env:
+        - name: SA_PASSWORD
+          value: "Gdevops1#"
+        - name: ACCEPT_EULA
+          value: "Y"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: dev
+  name: dev-command-database-service
+  labels:
+    app: dev
+spec:
+  ports:
+  - name: sqlserver
+    port: 1433
+    targetPort: 1433
+  selector:
+    app: dev
+    tier: database
+  type: LoadBalancer

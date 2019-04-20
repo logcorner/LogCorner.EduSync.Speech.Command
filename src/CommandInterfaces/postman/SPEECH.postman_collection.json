@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "52cf7042-2850-491e-be48-23fc1c156a24",
+		"name": "SPEECH",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:62694/api/speech",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Title\":\"Le Lorem Ipsum est simplement du faux texte\",\n\t\"Description\":\"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte\",\n\t\"Url\":\"http://www.yahoo.fr\",\n\t\"Type\":\"2\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:62694/api/speech",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "62694",
+					"path": [
+						"api",
+						"speech"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/speech",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Title\":\"Le Lorem Ipsum est simplement du faux texte\",\n\t\"Description\":\"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte\",\n\t\"Url\":\"http://www.yahoo.fr\",\n\t\"Type\":\"1\"\n\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/speech",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"speech"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://13.81.27.23/api/speech",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Title\":\"Le Lorem Ipsum est simplement du faux texte\",\n\t\"Description\":\"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte\",\n\t\"Url\":\"http://www.yahoo.fr\",\n\t\"Type\":\"1\"\n\n}"
+				},
+				"url": {
+					"raw": "http://13.81.27.23/api/speech",
+					"protocol": "http",
+					"host": [
+						"13",
+						"81",
+						"27",
+						"23"
+					],
+					"path": [
+						"api",
+						"speech"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
