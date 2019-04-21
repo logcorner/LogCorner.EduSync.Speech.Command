@@ -2,21 +2,21 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: dev-command-api-deployment
-  namespace: dev
+  namespace: __namespace__
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: dev
+        app: __namespace__
         tier: command-api
     spec:
       containers:
       - name: command
-        image: logcorneredusync.azurecr.io/logcorner-edusync-speech-presentation
+        image: __ContainerRegistry__/logcorner-edusync-speech-presentation
         env:
         - name: ASPNETCORE_ENVIRONMENT
-          value: "Kubernetes"
+          value: "__AspNetCoreEnvironment__"
         ports:
         - containerPort: 80
         imagePullPolicy: Always
@@ -27,17 +27,17 @@ apiVersion: v1
 kind: Service
 metadata:
   name: dev-command-api-service
-  namespace: dev
+  namespace: __namespace__
   labels:
-    app: dev
+    app: __namespace__
     tier: command-api
 spec:
   selector:
-    app: dev
+    app: __namespace__
     tier: command-api
   ports:
     - protocol: TCP
       port: 80
-      nodePort: 30081
+      nodePort: 30082
   type: LoadBalancer
 

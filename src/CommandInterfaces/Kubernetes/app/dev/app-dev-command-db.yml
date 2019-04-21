@@ -22,7 +22,7 @@ spec:
         - containerPort: 1433
         env:
         - name: SA_PASSWORD
-          value: "Gdevops1#"
+          value: "PassW0rd"
         - name: ACCEPT_EULA
           value: "Y"
       imagePullSecrets:

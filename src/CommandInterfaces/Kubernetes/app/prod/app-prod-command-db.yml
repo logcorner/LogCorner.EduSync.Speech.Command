@@ -1,28 +1,28 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  namespace: dev
+  namespace: __namespace__
   name: dev-command-database-deployment
   labels:
-    app: dev
+    app: __namespace__
     tier: command-db
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: dev
+        app: __namespace__
         tier: database
     spec:
       containers:
       - name: database
-        image: logcorneredusync.azurecr.io/logcorner-edusync-speech-presentation-data
+        image: __ContainerRegistry__/logcorner-edusync-speech-presentation-data
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 1433
         env:
         - name: SA_PASSWORD
-          value: "Gdevops1#"
+          value: "PassW0rd"
         - name: ACCEPT_EULA
           value: "Y"
       imagePullSecrets:
@@ -31,10 +31,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: dev
+  namespace: __namespace__
   name: dev-command-database-service
   labels:
-    app: dev
+    app: __namespace__
     tier: command-db
 spec:
   ports:
@@ -42,6 +42,6 @@ spec:
     port: 1433
     targetPort: 1433
   selector:
-    app: dev
+    app: __namespace__
     tier: database
   type: LoadBalancer
