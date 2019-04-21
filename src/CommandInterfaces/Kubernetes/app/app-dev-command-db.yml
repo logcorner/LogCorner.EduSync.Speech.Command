@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
       - name: database
-        image: microsoft/mssql-server-linux:latest
+        image: logcorneredusync.azurecr.io/logcorner-edusync-speech-presentation-data
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 1433
         env:
@@ -23,6 +24,8 @@ spec:
           value: "Gdevops1#"
         - name: ACCEPT_EULA
           value: "Y"
+      imagePullSecrets:
+        - name: registrysecret
 ---
 apiVersion: v1
 kind: Service

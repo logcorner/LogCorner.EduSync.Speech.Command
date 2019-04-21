@@ -2,7 +2,7 @@ Param(
     [parameter(Mandatory=$false)]
     [string]$subscriptionName="Microsoft Azure Sponsorship",
     [parameter(Mandatory=$false)]
-    [string]$DataBaseImageName="logcorner-edusync-identityprovider-tokenserver-data",
+    [string]$DataBaseImageName="logcorner-edusync-speech-presentation-data",
     [parameter(Mandatory=$false)]
 	
 	[string]$ApiImageName="logcorner-edusync-speech-presentation",
