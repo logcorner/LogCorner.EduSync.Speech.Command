@@ -1,0 +1,43 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: dev-command-api-deployment
+  namespace: dev
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dev
+        tier: command-api
+    spec:
+      containers:
+      - name: command
+        image: logcorneredusync.azurecr.io/logcorner-edusync-speech-presentation
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Kubernetes"
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+      imagePullSecrets:
+        - name: registrysecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-command-api-service
+  namespace: dev
+  labels:
+    app: dev
+    tier: command-api
+spec:
+  selector:
+    app: dev
+    tier: command-api
+  ports:
+    - protocol: TCP
+      port: 80
+      nodePort: 30081
+  type: LoadBalancer
+

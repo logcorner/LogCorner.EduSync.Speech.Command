@@ -1,6 +1,6 @@
 
 Write-Host "Starting switch to location of app files" -ForegroundColor Yellow
-Set-Location ~/Source/Repos/LogCorner.EduSync/src/CommandInterfaces/Kubernetes/app
+Set-Location ~/Source/Repos/LogCorner.EduSync/src/CommandInterfaces/Kubernetes/app/dev
 Write-Host "Successfully switching to app setup files" -ForegroundColor Green
 
 Write-Host "Starting deployment of setup files" -ForegroundColor Yellow
