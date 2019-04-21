@@ -2,7 +2,7 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   namespace: __namespace__
-  name: prod-command-database-deployment
+  name: command-database-deployment
   labels:
     app: __namespace__
     tier: command-db
@@ -15,7 +15,7 @@ spec:
         tier: database
     spec:
       containers:
-      - name:  command-database
+      - name:  command-database-container
         image: __ContainerRegistry__/logcorner-edusync-speech-presentation-data
         imagePullPolicy: IfNotPresent
         ports:
@@ -32,7 +32,7 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: __namespace__
-  name: prod-command-database-service
+  name: command-database-service
   labels:
     app: __namespace__
     tier: command-db

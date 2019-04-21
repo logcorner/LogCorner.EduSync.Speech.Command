@@ -2,7 +2,7 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   namespace: dev
-  name: dev-command-database-deployment
+  name: command-database-deployment
   labels:
     app: dev
     tier: command-db
@@ -15,7 +15,7 @@ spec:
         tier: database
     spec:
       containers:
-      - name: database
+      - name: command-database-container
         image: logcorneredusync.azurecr.io/logcorner-edusync-speech-presentation-data
         imagePullPolicy: IfNotPresent
         ports:
@@ -32,7 +32,7 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: dev
-  name: dev-command-database-service
+  name: command-database-service
   labels:
     app: dev
     tier: command-db

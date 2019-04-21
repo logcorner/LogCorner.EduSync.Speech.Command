@@ -1,7 +1,7 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: prod-command-api-deployment
+  name: command-api-deployment
   namespace: __namespace__
 spec:
   replicas: 1
@@ -12,7 +12,7 @@ spec:
         tier: command-api
     spec:
       containers:
-      - name: command-api
+      - name: command-api-container
         image: __ContainerRegistry__/logcorner-edusync-speech-presentation
         env:
         - name: ASPNETCORE_ENVIRONMENT
@@ -26,7 +26,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: prod-command-api-service
+  name: command-api-service
   namespace: __namespace__
   labels:
     app: __namespace__
@@ -38,6 +38,6 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      nodePort: 30082
+      nodePort: __CommandApiNodePort__
   type: LoadBalancer
 
