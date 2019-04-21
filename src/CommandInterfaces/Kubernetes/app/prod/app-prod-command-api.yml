@@ -1,7 +1,7 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: dev-command-api-deployment
+  name: prod-command-api-deployment
   namespace: __namespace__
 spec:
   replicas: 1
@@ -12,7 +12,7 @@ spec:
         tier: command-api
     spec:
       containers:
-      - name: command
+      - name: command-api
         image: __ContainerRegistry__/logcorner-edusync-speech-presentation
         env:
         - name: ASPNETCORE_ENVIRONMENT
@@ -26,7 +26,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: dev-command-api-service
+  name: prod-command-api-service
   namespace: __namespace__
   labels:
     app: __namespace__
