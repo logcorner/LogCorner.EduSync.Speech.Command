@@ -1,14 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: dev-command-service
+  name: dev-command-api-service
   namespace: dev
   labels:
     app: dev
+    tier: command-api
 spec:
   selector:
     app: dev
-    tier: command
+    tier: command-api
   ports:
     - protocol: TCP
       port: 80
@@ -18,7 +19,7 @@ spec:
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: dev-command-deployment
+  name: dev-command-api-deployment
   namespace: dev
 spec:
   replicas: 1
@@ -26,7 +27,7 @@ spec:
     metadata:
       labels:
         app: dev
-        tier: command
+        tier: command-api
     spec:
       containers:
       - name: command
