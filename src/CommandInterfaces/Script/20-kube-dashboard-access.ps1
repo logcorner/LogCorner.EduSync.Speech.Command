@@ -5,6 +5,7 @@ Param(
     [string]$clusterName="aksLogCornerCluster"
  )
 
+# Enable the Kubernetes dashboard access
 Write-Host "Starting switch to location of setup files" -ForegroundColor Yellow
 Set-Location ~/Source/Repos/LogCorner.EduSync/src/CommandInterfaces/Kubernetes/setup
 Write-Host "Successfully switching to location setup files" -ForegroundColor Green

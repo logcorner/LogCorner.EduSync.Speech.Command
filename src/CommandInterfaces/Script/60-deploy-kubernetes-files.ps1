@@ -1,4 +1,5 @@
 
+# deploy kubernetes files to cluster
 Write-Host "Starting switch to location of app files" -ForegroundColor Yellow
 Set-Location ~/Source/Repos/LogCorner.EduSync/src/CommandInterfaces/Kubernetes/app/dev
 Write-Host "Successfully switching to app setup files" -ForegroundColor Green

@@ -24,8 +24,8 @@ Param(
 Write-Host "Setting Azure subscription to $subscriptionName"  -ForegroundColor Yellow
 az account set --subscription=$subscriptionName
 
-# Get credentials for newly created cluster
-Write-Host "Getting credentials for cluster $clusterName" -ForegroundColor Yellow
+# Creating Secret for cluster $clusterName
+Write-Host "Creating Secret for cluster $clusterName" -ForegroundColor Yellow
 kubectl create secret docker-registry $secretName `
 --docker-server=$dockerServer `
 --docker-username=$dockerUsername `

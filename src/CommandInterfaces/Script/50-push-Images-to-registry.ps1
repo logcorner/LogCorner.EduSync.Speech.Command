@@ -18,15 +18,16 @@ Param(
 Write-Host "Setting Azure subscription to $subscriptionName"  -ForegroundColor Yellow
 az account set --subscription=$subscriptionName
 
-# Get credentials for newly created cluster
+# login to regitry
 Write-Host "login to regitry" -ForegroundColor Yellow
 
 docker login $dockerServer -u LogCornerEduSync -p guRYbusAKNFfDQCbTKaEjThN=Eyqt4Jl
-
+# Tag and push $ApiImageName
 Write-Host "Tag and push $ApiImageName" -ForegroundColor Yellow
 docker tag $ApiImageName $dockerServer/$ApiImageName
 docker push $dockerServer/$ApiImageName
 
+# Tag and push $DataBaseImageName
 Write-Host "Tag and push $DataBaseImageName" -ForegroundColor Yellow
 docker tag $DataBaseImageName $dockerServer/$DataBaseImageName
 docker push $dockerServer/$DataBaseImageName
