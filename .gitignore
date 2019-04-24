@@ -259,3 +259,4 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/src/CommandInterfaces/tests-results/unit-test-results_2019-04-24_19-56-44-894.xml
