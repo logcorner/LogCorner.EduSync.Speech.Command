@@ -7,6 +7,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
         [Fact]
         public void Test1()
         {
+            Assert.True(1 == 2);
         }
     }
 }
