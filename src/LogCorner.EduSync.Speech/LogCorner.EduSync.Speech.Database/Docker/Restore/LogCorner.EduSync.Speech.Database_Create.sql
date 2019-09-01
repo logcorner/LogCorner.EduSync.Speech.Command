@@ -78,9 +78,6 @@ IF EXISTS (SELECT 1
                 AUTO_UPDATE_STATISTICS ON,
                 RECURSIVE_TRIGGERS OFF 
             WITH ROLLBACK IMMEDIATE;
-        ALTER DATABASE [$(DatabaseName)]
-            SET AUTO_CLOSE OFF 
-            WITH ROLLBACK IMMEDIATE;
     END
 
 
