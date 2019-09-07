@@ -39,7 +39,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 
         public IEnumerable<IDomainEvent> GetUncommittedEvents()
         {
-            throw new System.NotImplementedException();
+            return _uncommittedEvents.AsEnumerable();
         }
 
         public void ClearUncommittedEvents()

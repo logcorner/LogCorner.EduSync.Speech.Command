@@ -1,6 +1,8 @@
 using LogCorner.EduSync.Speech.Domain.Exceptions;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using LogCorner.EduSync.Speech.Domain.Events;
 using Xunit;
@@ -57,6 +59,21 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
             Assert.Equal(evt.Type, aggregate.Type);
 
             Assert.IsAssignableFrom<IDomainEvent>(evt);
+        }
+
+        [Fact]
+        public void GetUncommittedEventsOfNewAggregateShouldReturnListOfIDomainEvent()
+        {
+            //Arrange
+            IEventSourcing aggregate =  CreateNewAggregate();
+          
+            //Act
+            var result = aggregate.GetUncommittedEvents();
+            
+            //Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
+            Assert.IsAssignableFrom<IEnumerable<IDomainEvent>>(result);
         }
 
         private SpeechAggregate.Speech CreateNewAggregate()
