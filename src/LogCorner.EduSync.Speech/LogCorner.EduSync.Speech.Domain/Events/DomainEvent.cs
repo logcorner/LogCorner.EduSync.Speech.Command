@@ -6,7 +6,7 @@ namespace LogCorner.EduSync.Speech.Domain.Events
     {
         public string Id { get; protected set; }
         public DateTime OcurrendOn { get; }
-        public int Version { get; internal set; }
+        public long Version { get; internal set; }
 
         public DomainEvent()
         {

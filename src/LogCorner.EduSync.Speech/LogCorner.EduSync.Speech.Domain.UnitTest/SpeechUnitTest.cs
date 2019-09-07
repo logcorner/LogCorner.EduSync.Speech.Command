@@ -281,7 +281,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
 
             //Act
             var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
-            Assert.Throws<InvalidVersionAggregateException>(() => speech.CreateMedia(file, 0));
+            Assert.Throws<ConcurrencyException>(() => speech.CreateMedia(file, 0));
         }
 
         [Fact]
