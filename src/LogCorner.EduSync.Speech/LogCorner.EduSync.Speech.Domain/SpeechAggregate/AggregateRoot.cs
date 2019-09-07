@@ -1,13 +1,15 @@
 ﻿using LogCorner.EduSync.Speech.Domain.Events;
 using System.Collections.Generic;
+using System.Linq;
 using LogCorner.EduSync.Speech.Domain.Exceptions;
 
 namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
     public abstract class AggregateRoot<T> : Entity<T>, IEventSourcing
     {
-        private readonly List<DomainEvent> _domainEvents = new List<DomainEvent>();
-        public IReadOnlyList<DomainEvent> DomainEvents => _domainEvents;
+        private readonly List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
+        public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents;
+        private readonly ICollection<IDomainEvent> _uncommittedEvents = new LinkedList<IDomainEvent>();
 
         public long Version => _version;
         private long _version = -1;
@@ -28,7 +30,11 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 
         public void ApplyEvent(IDomainEvent @event, long version)
         {
-            throw new System.NotImplementedException();
+            if (!_uncommittedEvents.Any(x => Equals(x.EventId, @event.EventId)))
+            {
+                ((dynamic)this).Apply((dynamic)@event);
+                _version = version;
+            }
         }
 
         public IEnumerable<IDomainEvent> GetUncommittedEvents()
@@ -41,11 +47,11 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             throw new System.NotImplementedException();
         }
 
-        protected void AddDomainEvent(DomainEvent newEvent)
+        protected void AddDomainEvent(IDomainEvent newEvent)
         {
            // ValidateVersion(newEvent.Version);
-            newEvent.Version = ++_version;
-            _domainEvents.Add(newEvent);
+           // newEvent.Version = ++_version;
+         //  _domainEvents.Add(newEvent);
         }
     }
 }

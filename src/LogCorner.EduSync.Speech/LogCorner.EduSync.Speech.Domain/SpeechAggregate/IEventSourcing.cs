@@ -8,8 +8,6 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 
         void ValidateVersion(long expectedVersion);
 
-        void ApplyEvent(IDomainEvent @event, long version);
-
         IEnumerable<IDomainEvent> GetUncommittedEvents();
 
         void ClearUncommittedEvents();

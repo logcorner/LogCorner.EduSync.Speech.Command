@@ -8,7 +8,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.Mapping
         public void Configure(EntityTypeBuilder<Domain.SpeechAggregate.Speech> speechEntityConfiguration)
         {
             speechEntityConfiguration.ToTable("Speech");
-            speechEntityConfiguration.Ignore(b => b.DomainEvents);
+           // speechEntityConfiguration.Ignore(b => b.DomainEvents);
             speechEntityConfiguration.HasKey(o => o.Id);
             speechEntityConfiguration.OwnsOne(s => s.Url).Property(b => b.Value).HasColumnName("Url");
             speechEntityConfiguration.OwnsOne(s => s.Title).Property(b => b.Value).HasColumnName("Title");

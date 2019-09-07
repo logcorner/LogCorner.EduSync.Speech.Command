@@ -2,15 +2,16 @@
 
 namespace LogCorner.EduSync.Speech.Domain.Events
 {
-    public class MediaFileCreatedEvent : DomainEvent
+    public class MediaFileCreatedEvent : Event
     {
         public UrlValue File { get; }
+        public Guid MediaFileId { get; }
 
-        public MediaFileCreatedEvent(Guid id, UrlValue file, int version)
+        public MediaFileCreatedEvent(Guid aggregateId, Guid mediaFileId, UrlValue file)
         {
-            Id = id.ToString();
+            MediaFileId = mediaFileId;
+            AggregateId = aggregateId;
             File = file;
-            Version = version;
         }
     }
 }

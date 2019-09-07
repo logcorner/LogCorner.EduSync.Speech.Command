@@ -2,16 +2,17 @@
 
 namespace LogCorner.EduSync.Speech.Domain.Events
 {
-    public class SpeechCreatedEvent : DomainEvent
+    public class SpeechCreatedEvent : Event
     {
         public Title Title { get; }
         public UrlValue Url { get; }
         public Description Description { get; }
         public SpeechType Type { get; }
 
-        public SpeechCreatedEvent(Guid id, Title title, UrlValue url, Description description, SpeechType type)
+        public SpeechCreatedEvent(Guid id, Title title, UrlValue url,
+                                  Description description, SpeechType type)
         {
-            Id = id.ToString();
+            AggregateId = id;
             Title = title;
             Url = url;
             Description = description;
