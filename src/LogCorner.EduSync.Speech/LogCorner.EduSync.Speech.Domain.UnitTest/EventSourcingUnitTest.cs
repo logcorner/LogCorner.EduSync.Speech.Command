@@ -4,6 +4,7 @@ using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Xunit;
 
@@ -101,7 +102,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
             sut.ExposeAddDomainEvent(@event, expectedVersion);
 
             //Assert
-            Assert.Equal(sut.Version , @event.AggregateVersion);
+            Assert.Equal(sut.Version, @event.AggregateVersion);
         }
 
         [Fact]
@@ -109,15 +110,52 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
         {
             //Arrange
             long expectedVersion = -1;
-           
+
             var sut = CreateNewAggregate<StubEventSourcing>();
-            var @event = new SubEvent(Guid.NewGuid(), sut.Id,"test value");
+            var @event = new SubEvent(Guid.NewGuid(), sut.Id, "test value");
             //Act
             sut.ExposeAddDomainEvent(@event, expectedVersion);
 
             //Assert
             Assert.Equal(sut.Id, @event.AggregateId);
             Assert.Equal(sut.Value, @event.Value);
+        }
+
+        [Fact]
+        public void AddDomainEventWithValidVersionThenUncommittedEventsShouldBeSingle()
+        {
+            //Arrange
+            long expectedVersion = -1;
+
+            var sut = CreateNewAggregate<StubEventSourcing>();
+            var @event = new SubEvent(Guid.NewGuid(), sut.Id, "test value");
+
+            //Act
+            sut.ExposeAddDomainEvent(@event, expectedVersion);
+            var uncommittedEvents = sut.GetUncommittedEvents().Single();
+
+            //Assert
+            Assert.NotNull(uncommittedEvents);
+            Assert.Equal(uncommittedEvents, @event);
+        }
+
+        [Fact]
+        public void ClearUncommittedEventsThenUncommittedEventsShouldBeEmpty()
+        {
+            //Arrange
+            long expectedVersion = -1;
+
+            var sut = CreateNewAggregate<StubEventSourcing>();
+            var @event = new SubEvent(Guid.NewGuid(), sut.Id, "test value");
+
+            //Act
+            sut.ExposeAddDomainEvent(@event, expectedVersion);
+            sut.ClearUncommittedEvents();
+            var uncommittedEvents = sut.GetUncommittedEvents();
+
+            //Assert
+            Assert.NotNull(uncommittedEvents);
+            Assert.Empty(uncommittedEvents);
         }
 
         private T CreateNewAggregate<T>() where T : AggregateRoot<Guid>

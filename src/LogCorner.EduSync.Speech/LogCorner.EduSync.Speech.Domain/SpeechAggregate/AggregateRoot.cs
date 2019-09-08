@@ -41,7 +41,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 
         public void ClearUncommittedEvents()
         {
-            throw new System.NotImplementedException();
+            _uncommittedEvents.Clear();
         }
 
         protected void AddDomainEvent(IDomainEvent @event, long originalVersion = -1)
@@ -49,6 +49,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             ValidateVersion(originalVersion);
             @event.BuildVersion(_version + 1);
             ApplyEvent(@event, @event.AggregateVersion);
+            _uncommittedEvents.Add(@event);
         }
     }
 }
