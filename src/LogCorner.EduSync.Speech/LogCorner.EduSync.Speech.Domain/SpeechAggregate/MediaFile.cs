@@ -5,6 +5,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
     public class MediaFile : Entity<Guid>
     {
+        
         public UrlValue File { get; private set; }
 
         //EF Core need a parameterless constructor
@@ -15,6 +16,12 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         public MediaFile(UrlValue file)
         {
             File = file ?? throw new ArgumentNullAggregateException(nameof(file));
+        }
+
+        public MediaFile(Guid id, UrlValue file)
+        {
+            Id = id;
+            File = file;
         }
     }
 }

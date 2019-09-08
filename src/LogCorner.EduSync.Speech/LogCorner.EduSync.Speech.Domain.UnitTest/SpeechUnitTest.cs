@@ -281,7 +281,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
 
             //Act
             var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
-            Assert.Throws<ConcurrencyException>(() => speech.CreateMedia(file, 0));
+            Assert.Throws<ConcurrencyException>(() => speech.CreateMedia(file, -1));
         }
 
         [Fact]
@@ -296,7 +296,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
 
             //Act
             var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
-            speech.CreateMedia(file, -1);
+            speech.CreateMedia(file, 0);
 
             Assert.Throws<MediaFileAlreadyExisteDomainException>(() => speech.CreateMedia(file, 0));
             /*var domainEvent = speech.DomainEvents.SingleOrDefault(s => s is MediaFileCreatedEvent);

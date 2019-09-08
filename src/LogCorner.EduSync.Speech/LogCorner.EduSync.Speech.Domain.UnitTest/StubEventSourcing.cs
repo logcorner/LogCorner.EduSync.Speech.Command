@@ -9,5 +9,11 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
         {
             AddDomainEvent(stubEvent, originalVersion);
         }
+
+        public void Apply(SubEvent subEvent)
+        {
+
+        }
     }
 }
+

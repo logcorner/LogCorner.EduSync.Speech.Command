@@ -48,6 +48,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         {
             ValidateVersion(originalVersion);
             @event.BuildVersion(_version + 1);
+            ApplyEvent(@event, @event.AggregateVersion);
         }
     }
 }

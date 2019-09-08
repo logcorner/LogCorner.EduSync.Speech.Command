@@ -90,7 +90,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
         }
 
         [Fact]
-        public void AddDomainEventWithValidVersionThenVersionOfEventShouldBeEqualsToCurrentVerSionOfAggregatePlusOne()
+        public void AddDomainEventWithValidVersionThenVersionOfEventShouldBeEqualsToCurrentVerSionOfAggregate()
         {
             //Arrange
             long expectedVersion = -1;
@@ -101,7 +101,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
             sut.ExposeAddDomainEvent(@event, expectedVersion);
 
             //Assert
-            Assert.Equal(sut.Version + 1, @event.AggregateVersion);
+            Assert.Equal(sut.Version , @event.AggregateVersion);
         }
 
         private T CreateNewAggregate<T>() where T : AggregateRoot<Guid>
