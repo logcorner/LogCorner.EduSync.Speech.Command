@@ -1,11 +1,10 @@
+using LogCorner.EduSync.Speech.Domain.Events;
 using LogCorner.EduSync.Speech.Domain.Exceptions;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
+using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using LogCorner.EduSync.Speech.Domain.Events;
-using Moq;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Domain.UnitTest
@@ -41,16 +40,16 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
         {
             //Arrange
             long expectedVersion = -1;
-           
+
             var evt = new SpeechCreatedEvent(Guid.NewGuid(),
                 new Title("SpeechCreatedEvent Title "),
                 new UrlValue("http://url-evt.com"),
                 new Description("SpeechCreatedEvent description must be very long as a description than people can understand without efforts"),
                 SpeechType.Conferences);
             var aggregate = CreateNewAggregate<SpeechAggregate.Speech>();
-           
+
             //Act
-            aggregate.ApplyEvent(evt,expectedVersion);
+            aggregate.ApplyEvent(evt, expectedVersion);
 
             //Assert
             Assert.Equal(evt.AggregateId, aggregate.Id);
@@ -66,12 +65,12 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
         public void GetUncommittedEventsOfNewAggregateShouldReturnListOfIDomainEvent()
         {
             //Arrange
-            
+
             IEventSourcing aggregate = CreateNewAggregate<StubEventSourcing>();
-          
+
             //Act
             var result = aggregate.GetUncommittedEvents();
-            
+
             //Assert
             Assert.NotNull(result);
             Assert.Empty(result);
@@ -86,21 +85,35 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
             var sut = CreateNewAggregate<StubEventSourcing>();
             //Act
             //Assert
-            Assert.Throws<ConcurrencyException>(() 
+            Assert.Throws<ConcurrencyException>(()
                 => sut.ExposeAddDomainEvent(It.IsAny<IDomainEvent>(), expectedVersion));
+        }
+
+        [Fact]
+        public void AddDomainEventWithValidVersionThenVersionOfEventShouldBeEqualsToCurrentVerSionOfAggregatePlusOne()
+        {
+            //Arrange
+            long expectedVersion = -1;
+            IDomainEvent @event = new SubEvent();
+            var sut = CreateNewAggregate<StubEventSourcing>();
+
+            //Act
+            sut.ExposeAddDomainEvent(@event, expectedVersion);
+
+            //Assert
+            Assert.Equal(sut.Version + 1, @event.AggregateVersion);
         }
 
         private T CreateNewAggregate<T>() where T : AggregateRoot<Guid>
         {
             return (T)typeof(T)
                 .GetConstructor(BindingFlags.Instance |
-                                         BindingFlags.NonPublic | 
+                                         BindingFlags.NonPublic |
                                          BindingFlags.Public,
                                 null,
-                                new Type[0], 
+                                new Type[0],
                                 new ParameterModifier[0])
                 ?.Invoke(new object[0]);
         }
     }
-
 }

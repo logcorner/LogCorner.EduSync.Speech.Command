@@ -1,13 +1,12 @@
-﻿using LogCorner.EduSync.Speech.Domain.Events;
+﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
-using LogCorner.EduSync.Speech.Domain.Exceptions;
 
 namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
     public abstract class AggregateRoot<T> : Entity<T>, IEventSourcing
     {
-      private readonly ICollection<IDomainEvent> _uncommittedEvents = new LinkedList<IDomainEvent>();
+        private readonly ICollection<IDomainEvent> _uncommittedEvents = new LinkedList<IDomainEvent>();
 
         public long Version => _version;
         private long _version = -1;
@@ -48,6 +47,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         protected void AddDomainEvent(IDomainEvent @event, long originalVersion = -1)
         {
             ValidateVersion(originalVersion);
+            @event.BuildVersion(_version + 1);
         }
     }
 }
