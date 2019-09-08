@@ -7,9 +7,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
     public abstract class AggregateRoot<T> : Entity<T>, IEventSourcing
     {
-        private readonly List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
-        public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents;
-        private readonly ICollection<IDomainEvent> _uncommittedEvents = new LinkedList<IDomainEvent>();
+      private readonly ICollection<IDomainEvent> _uncommittedEvents = new LinkedList<IDomainEvent>();
 
         public long Version => _version;
         private long _version = -1;
@@ -47,11 +45,9 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             throw new System.NotImplementedException();
         }
 
-        protected void AddDomainEvent(IDomainEvent newEvent)
+        protected void AddDomainEvent(IDomainEvent @event, long originalVersion = -1)
         {
-           // ValidateVersion(newEvent.Version);
-           // newEvent.Version = ++_version;
-         //  _domainEvents.Add(newEvent);
+            ValidateVersion(originalVersion);
         }
     }
 }

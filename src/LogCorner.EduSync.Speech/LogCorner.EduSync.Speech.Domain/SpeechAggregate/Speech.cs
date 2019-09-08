@@ -62,7 +62,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             }
             _mediaFileItems.Add(mediaFile);
 
-            AddDomainEvent(new MediaFileCreatedEvent(Id, mediaFile.Id, mediaFile.File));
+            AddDomainEvent(new MediaFileCreatedEvent(Id, mediaFile.Id, mediaFile.File),originalVersion);
         }
 
         public void Apply(SpeechCreatedEvent ev)

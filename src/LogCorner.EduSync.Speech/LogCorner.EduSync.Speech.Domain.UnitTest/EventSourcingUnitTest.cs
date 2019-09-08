@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using LogCorner.EduSync.Speech.Domain.Events;
+using Moq;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Domain.UnitTest
@@ -46,7 +47,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
                 new UrlValue("http://url-evt.com"),
                 new Description("SpeechCreatedEvent description must be very long as a description than people can understand without efforts"),
                 SpeechType.Conferences);
-            var aggregate =  CreateNewAggregate();
+            var aggregate = CreateNewAggregate<SpeechAggregate.Speech>();
            
             //Act
             aggregate.ApplyEvent(evt,expectedVersion);
@@ -65,7 +66,8 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
         public void GetUncommittedEventsOfNewAggregateShouldReturnListOfIDomainEvent()
         {
             //Arrange
-            IEventSourcing aggregate =  CreateNewAggregate();
+            
+            IEventSourcing aggregate = CreateNewAggregate<StubEventSourcing>();
           
             //Act
             var result = aggregate.GetUncommittedEvents();
@@ -76,9 +78,21 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
             Assert.IsAssignableFrom<IEnumerable<IDomainEvent>>(result);
         }
 
-        private SpeechAggregate.Speech CreateNewAggregate()
+        [Fact]
+        public void AddDomainEventWithInvalidVesrionShouldRaiseConncurrencyException()
         {
-            return (SpeechAggregate.Speech)typeof(SpeechAggregate.Speech)
+            //Arrange
+            long expectedVersion = 0;
+            var sut = CreateNewAggregate<StubEventSourcing>();
+            //Act
+            //Assert
+            Assert.Throws<ConcurrencyException>(() 
+                => sut.ExposeAddDomainEvent(It.IsAny<IDomainEvent>(), expectedVersion));
+        }
+
+        private T CreateNewAggregate<T>() where T : AggregateRoot<Guid>
+        {
+            return (T)typeof(T)
                 .GetConstructor(BindingFlags.Instance |
                                          BindingFlags.NonPublic | 
                                          BindingFlags.Public,
@@ -88,4 +102,5 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
                 ?.Invoke(new object[0]);
         }
     }
+
 }
