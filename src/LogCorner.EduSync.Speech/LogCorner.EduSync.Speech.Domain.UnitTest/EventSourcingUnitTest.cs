@@ -94,7 +94,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
         {
             //Arrange
             long expectedVersion = -1;
-            IDomainEvent @event = new SubEvent();
+            IDomainEvent @event = new SubEvent(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<string>());
             var sut = CreateNewAggregate<StubEventSourcing>();
 
             //Act
@@ -102,6 +102,22 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
 
             //Assert
             Assert.Equal(sut.Version , @event.AggregateVersion);
+        }
+
+        [Fact]
+        public void AddDomainEventWithValidVersionThenEventShouldBeAppliedToAggregate()
+        {
+            //Arrange
+            long expectedVersion = -1;
+           
+            var sut = CreateNewAggregate<StubEventSourcing>();
+            var @event = new SubEvent(Guid.NewGuid(), sut.Id,"test value");
+            //Act
+            sut.ExposeAddDomainEvent(@event, expectedVersion);
+
+            //Assert
+            Assert.Equal(sut.Id, @event.AggregateId);
+            Assert.Equal(sut.Value, @event.Value);
         }
 
         private T CreateNewAggregate<T>() where T : AggregateRoot<Guid>

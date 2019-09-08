@@ -7,6 +7,15 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
     {
         public Guid EventId { get; }
         public long AggregateVersion { get; private set; } = -1;
+        public Guid AggregateId { get; }
+        public object Value { get; }
+
+        public SubEvent(Guid eventId, Guid aggregateId, object value)
+        {
+            EventId = eventId;
+            AggregateId = aggregateId;
+            Value = value;
+        }
 
         public void BuildVersion(long aggregateVersion)
         {
