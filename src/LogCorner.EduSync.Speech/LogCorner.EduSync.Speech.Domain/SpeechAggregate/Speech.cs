@@ -61,9 +61,8 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             {
                 throw new MediaFileAlreadyExisteDomainException(nameof(mediaFile));
             }
-            _mediaFileItems.Add(mediaFile);
 
-            AddDomainEvent(new MediaFileCreatedEvent(Id, mediaFile.Id, mediaFile.File),originalVersion);
+            AddDomainEvent(new MediaFileCreatedEvent(Id, mediaFile.Id, mediaFile.File), originalVersion);
         }
 
         public void Apply(SpeechCreatedEvent ev)

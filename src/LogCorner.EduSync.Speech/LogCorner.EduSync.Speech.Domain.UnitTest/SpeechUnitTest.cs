@@ -4,6 +4,7 @@ using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
 using System;
 using System.Linq;
+using System.Reflection;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Domain.UnitTest
@@ -175,31 +176,31 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
             Assert.Equal(speechType.Value, speech.Type.Value);
         }
 
-        //[Theory]
-        //[ClassData(typeof(SpeechTypeTestData))]
-        //public void RegisterSpeechWithValidDataRaiseDomainEvent(SpeechType speechType)
-        //{
-        //    //Arrange
-        //    var id = Guid.NewGuid();
-        //    var title = new Title("Lorem Ipsum is simply dummy text of the printin");
-        //    var description = new Description("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
-        //    var url = new UrlValue("http://url.com");
+        [Theory]
+        [ClassData(typeof(SpeechTypeTestData))]
+        public void RegisterSpeechWithValidDataRaiseDomainEvent(SpeechType speechType)
+        {
+            //Arrange
+            var id = Guid.NewGuid();
+            var title = new Title("Lorem Ipsum is simply dummy text of the printin");
+            var description = new Description("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
+            var url = new UrlValue("http://url.com");
 
-        //    //Act
-        //    var speech = new SpeechAggregate.Speech(id, title, url, description, speechType);
-        //    var domainEvent = speech.GetUncommittedEvents().SingleOrDefault();
-        //    var speechCreateEvent = (SpeechCreatedEvent)domainEvent;
+            //Act
+            var speech = new SpeechAggregate.Speech(id, title, url, description, speechType);
+            var domainEvent = speech.GetUncommittedEvents().SingleOrDefault();
+            var speechCreateEvent = (SpeechCreatedEvent)domainEvent;
 
-        //    //Assert
-        //    Assert.IsAssignableFrom<SpeechCreatedEvent>(domainEvent);
-        //    Assert.NotNull(speechCreateEvent);
-        //    Assert.Equal(id, domainEvent.EventId);
-        //    Assert.Equal(url, speechCreateEvent.Url);
-        //    Assert.Equal(title, speechCreateEvent.Title);
-        //    Assert.Equal(description, speechCreateEvent.Description);
-        //    Assert.Equal(speechType, speechCreateEvent.Type);
-        //    Assert.True(DateTime.Now > speechCreateEvent.OcurrendOn);
-        //}
+            //Assert
+            Assert.IsAssignableFrom<SpeechCreatedEvent>(domainEvent);
+            Assert.NotNull(speechCreateEvent);
+            Assert.Equal(id, speechCreateEvent.AggregateId);
+            Assert.Equal(url, speechCreateEvent.Url);
+            Assert.Equal(title, speechCreateEvent.Title);
+            Assert.Equal(description, speechCreateEvent.Description);
+            Assert.Equal(speechType, speechCreateEvent.Type);
+            Assert.True(DateTime.Now > speechCreateEvent.OcurrendOn);
+        }
 
         [Theory]
         [ClassData(typeof(SpeechTypeTestData))]
@@ -216,58 +217,57 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
             Assert.Throws<ArgumentNullAggregateException>(() => speech.CreateMedia(null, 0));
         }
 
-        //[Fact]
-        //public void CreateMediaWithValidMediaFileRetunrSuccess()
-        //{
-        //    //Arrange
-        //    var title = new Title("Lorem Ipsum is simply dummy text of the printin");
-        //    var description = new Description("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
-        //    var url = new UrlValue("http://url.com");
-        //    var file = new MediaFile(new UrlValue(
-        //        "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2ybMU?ver=c5fc&q=90&m=6&h=201&w=358&b=%23FFFFFFFF&l=f&o=t&aim=true"));
+        [Fact]
+        public void CreateMediaWithValidMediaFileRetunrSuccess()
+        {
+            //Arrange
+            var title = new Title("Lorem Ipsum is simply dummy text of the printin");
+            var description = new Description("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
+            var url = new UrlValue("http://url.com");
+            var file = new MediaFile(Guid.NewGuid(), new UrlValue(
+                "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2ybMU?ver=c5fc&q=90&m=6&h=201&w=358&b=%23FFFFFFFF&l=f&o=t&aim=true"));
 
-        //    //Act
-        //    var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
-        //    speech.CreateMedia(file, -1);
-        //    var domainEvent = speech.DomainEvents.SingleOrDefault(s => s is MediaFileCreatedEvent);
-        //    var mediaFileCreatedEvent = (MediaFileCreatedEvent)domainEvent;
+            //Act
+            var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
+            speech.CreateMedia(file, 0);
+            var domainEvent = speech.GetUncommittedEvents().SingleOrDefault(s => s is MediaFileCreatedEvent);
+            var mediaFileCreatedEvent = (MediaFileCreatedEvent)domainEvent;
 
-        //    //Assert
-        //    Assert.Contains(file, speech.MediaFileItems);
+            //Assert
+            Assert.Contains(file, speech.MediaFileItems);
 
-        //    Assert.NotNull(speech.MediaFileItems.Select(f => f.File));
-        //    Assert.NotNull(mediaFileCreatedEvent);
-        //    Assert.NotNull(mediaFileCreatedEvent.File);
-        //    Assert.NotNull(mediaFileCreatedEvent.File.Value);
-        //}
+            Assert.NotNull(speech.MediaFileItems.Select(f => f.File));
+            Assert.NotNull(mediaFileCreatedEvent);
+            Assert.Equal(mediaFileCreatedEvent.AggregateId, speech.Id);
+            Assert.Equal(mediaFileCreatedEvent.AggregateVersion, speech.Version);
+        }
 
-        //[Fact]
-        //public void CreateMediaWithValidVersionReturnSuccess()
-        //{
-        //    //Arrange
-        //    var title = new Title("Lorem Ipsum is simply dummy text of the printin");
-        //    var description = new Description("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
-        //    var url = new UrlValue("http://url.com");
-        //    var file = new MediaFile(new UrlValue(
-        //        "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2ybMU?ver=c5fc&q=90&m=6&h=201&w=358&b=%23FFFFFFFF&l=f&o=t&aim=true"));
+        [Fact]
+        public void CreateMediaWithValidVersionReturnSuccess()
+        {
+            //Arrange
+            var title = new Title("Lorem Ipsum is simply dummy text of the printin");
+            var description = new Description("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
+            var url = new UrlValue("http://url.com");
+            var file = new MediaFile(Guid.NewGuid(), new UrlValue(
+                "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2ybMU?ver=c5fc&q=90&m=6&h=201&w=358&b=%23FFFFFFFF&l=f&o=t&aim=true"));
 
-        //    //Act
-        //    var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
-        //    speech.CreateMedia(file, 1);
-        //    var domainEvent = speech.DomainEvents.SingleOrDefault(s => s is MediaFileCreatedEvent);
-        //    var mediaFileCreatedEvent = (MediaFileCreatedEvent)domainEvent;
+            //Act
+            var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
+            speech.CreateMedia(file, 0);
+            var domainEvent = speech.GetUncommittedEvents().SingleOrDefault(s => s is MediaFileCreatedEvent);
+            var mediaFileCreatedEvent = (MediaFileCreatedEvent)domainEvent;
 
-        //    //Assert
-        //    Assert.Contains(file, speech.MediaFileItems);
+            //Assert
+            Assert.Contains(file, speech.MediaFileItems);
 
-        //    Assert.NotNull(speech.MediaFileItems.Select(f => f.File));
-        //    Assert.NotNull(domainEvent);
-        //   // Assert.True(domainEvent. == 2);
-        //    Assert.True(speech.Version == 2);
-        //    Assert.NotNull(mediaFileCreatedEvent);
-        //    Assert.NotNull(mediaFileCreatedEvent.File);
-        //    Assert.NotNull(mediaFileCreatedEvent.File.Value);
-        //}
+            Assert.NotNull(speech.MediaFileItems.Select(f => f.File));
+            Assert.NotNull(domainEvent);
+            Assert.True(speech.Version == 1);
+            Assert.NotNull(mediaFileCreatedEvent);
+            Assert.NotNull(mediaFileCreatedEvent.File);
+            Assert.NotNull(mediaFileCreatedEvent.File.Value);
+        }
 
         [Fact]
         public void CreateMediaWithInvalidVersion()
@@ -276,7 +276,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
             var title = new Title("Lorem Ipsum is simply dummy text of the printin");
             var description = new Description("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
             var url = new UrlValue("http://url.com");
-            var file = new MediaFile(new UrlValue(
+            var file = new MediaFile(Guid.NewGuid(), new UrlValue(
                 "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2ybMU?ver=c5fc&q=90&m=6&h=201&w=358&b=%23FFFFFFFF&l=f&o=t&aim=true"));
 
             //Act
@@ -285,13 +285,13 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
         }
 
         [Fact]
-        public void CreateMediaWithExistingMedaiReturnSuccess()
+        public void CreateMediaWithExistingMedaiShouldNotApplyEvent()
         {
             //Arrange
             var title = new Title("Lorem Ipsum is simply dummy text of the printin");
             var description = new Description("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
             var url = new UrlValue("http://url.com");
-            var file = new MediaFile(new UrlValue(
+            var file = new MediaFile(Guid.NewGuid(), new UrlValue(
                 "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2ybMU?ver=c5fc&q=90&m=6&h=201&w=358&b=%23FFFFFFFF&l=f&o=t&aim=true"));
 
             //Act
@@ -299,7 +299,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
             speech.CreateMedia(file, 0);
 
             Assert.Throws<MediaFileAlreadyExisteDomainException>(() => speech.CreateMedia(file, 0));
-            /*var domainEvent = speech.DomainEvents.SingleOrDefault(s => s is MediaFileCreatedEvent);
+            var domainEvent = speech.GetUncommittedEvents().SingleOrDefault(s => s is MediaFileCreatedEvent);
             var mediaFileCreatedEvent = (MediaFileCreatedEvent)domainEvent;
 
             //Assert
@@ -307,11 +307,21 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
 
             Assert.NotNull(speech.MediaFileItems.Select(f => f.File));
             Assert.NotNull(domainEvent);
-            Assert.True(domainEvent.Version == 2);
-            Assert.True(speech.Version == 2);
-            Assert.NotNull(mediaFileCreatedEvent);
-            Assert.NotNull(mediaFileCreatedEvent.File);
-            Assert.NotNull(mediaFileCreatedEvent.File.Value);*/
+            Assert.True(mediaFileCreatedEvent.AggregateVersion == 1);
+            Assert.Equal(Guid.Empty, mediaFileCreatedEvent.AggregateId);
+        }
+
+        [Fact]
+        public void InstanciatingMediaFileWithPrivateConstrcutorShouldReturnNotNullInstance()
+        {
+            var instance = (MediaFile)typeof(MediaFile)
+                  .GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic,
+                      null,
+                      new Type[0],
+                      new ParameterModifier[0])
+                  ?.Invoke(new object[0]);
+            Assert.NotNull(instance);
+            Assert.IsType<MediaFile>(instance);
         }
     }
 }
