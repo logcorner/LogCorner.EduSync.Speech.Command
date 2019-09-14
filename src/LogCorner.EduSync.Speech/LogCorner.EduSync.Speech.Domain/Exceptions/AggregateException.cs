@@ -2,7 +2,7 @@
 {
     public class AggregateException : DomainException
     {
-        public AggregateException(string message) : base(message)
+        protected AggregateException(string message) : base(message)
         {
         }
     }
