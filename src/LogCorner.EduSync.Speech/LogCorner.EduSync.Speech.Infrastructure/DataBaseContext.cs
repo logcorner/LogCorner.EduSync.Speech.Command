@@ -6,10 +6,10 @@ namespace LogCorner.EduSync.Speech.Infrastructure
 {
     public class DataBaseContext : DbContext
     {
-        public virtual DbSet<Domain.SpeechAggregate.Speech> Speech { get; set; }
-        public virtual DbSet<MediaFile> MediaFile { get; set; }
+        public DbSet<Domain.SpeechAggregate.Speech> Speech { get; set; }
+        public DbSet<MediaFile> MediaFile { get; set; }
 
-        public virtual DbSet<EventStore> EventStore { get; set; }
+        public DbSet<EventStore> EventStore { get; set; }
 
         public DataBaseContext()
         {
