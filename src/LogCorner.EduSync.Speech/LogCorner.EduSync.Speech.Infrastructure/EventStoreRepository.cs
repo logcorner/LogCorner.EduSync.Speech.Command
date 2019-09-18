@@ -1,4 +1,5 @@
-﻿using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
+﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
+using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
@@ -11,6 +12,11 @@ namespace LogCorner.EduSync.Speech.Infrastructure
 
         public EventStoreRepository(DataBaseContext databaseContext)
         {
+            if (databaseContext == null)
+            {
+                throw new ArgumentNullException(nameof(databaseContext));
+            }
+
             _dbSet = databaseContext.Set<EventStore>();
         }
 
@@ -21,6 +27,10 @@ namespace LogCorner.EduSync.Speech.Infrastructure
 
         public async Task<T> GetByIdAsync<T>(Guid aggregateId) where T : AggregateRoot<Guid>
         {
+            if (aggregateId == Guid.Empty)
+            {
+                throw new BadAggregateIdException(nameof(aggregateId));
+            }
             throw new NotImplementedException();
         }
     }

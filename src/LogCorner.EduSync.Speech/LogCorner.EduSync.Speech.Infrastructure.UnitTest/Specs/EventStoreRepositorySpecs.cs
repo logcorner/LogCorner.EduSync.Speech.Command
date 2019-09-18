@@ -1,5 +1,7 @@
+using LogCorner.EduSync.Speech.Domain.Exceptions;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -8,6 +10,15 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
 {
     public class EventStoreRepositorySpecs
     {
+        [Fact]
+        public void InstanciatingEventStoreRepositoryWithNullContexShouldRaiseArgumentNullException()
+        {
+            //Arrange
+            //Act
+            //Assert
+            Assert.Throws<ArgumentNullException>(() => new EventStoreRepository(It.IsAny<DataBaseContext>()));
+        }
+
         [Fact(DisplayName = "AppendAsync should append an event on eventstore")]
         public async Task AppendAsyncShouldAppendAnEventOnEventStore()
         {
@@ -39,6 +50,20 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             Assert.Equal(evt.OccurredOn, result.OccurredOn);
             Assert.Equal(evt.SerializedBody, result.SerializedBody);
             Assert.Equal(evt.IsSync, result.IsSync);
+        }
+
+        [Fact]
+        public async Task GetByIdAsyncWithBadAggregateIdShouldRaiseArgumentNullException()
+        {
+            //Arrange
+            var moqDb = new Mock<DataBaseContext>();
+            IEventStoreRepository sut = new EventStoreRepository(moqDb.Object);
+            var aggregateId = Guid.Empty;
+
+            //Act
+            //Assert
+            await Assert.ThrowsAsync<BadAggregateIdException>(() =>
+                sut.GetByIdAsync<Domain.SpeechAggregate.Speech>(aggregateId));
         }
     }
 }

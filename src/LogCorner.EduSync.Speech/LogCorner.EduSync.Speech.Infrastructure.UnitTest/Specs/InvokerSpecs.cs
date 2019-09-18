@@ -7,10 +7,13 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
         [Fact(DisplayName = "CreateInstance Of AggregateRoot Should Return AN Empty Aggregate")]
         public void CreateInstanceOfAggregateRootShouldReturnEmptyAggregate()
         {
+            //Arrange
             IInvoker<Domain.SpeechAggregate.Speech> sut = new Invoker<Domain.SpeechAggregate.Speech>();
 
+            //Act
             var result = sut.CreateInstanceOfAggregateRoot();
 
+            //Assert
             Assert.NotNull(result);
             Assert.IsType<Domain.SpeechAggregate.Speech>(result);
 
