@@ -3,6 +3,7 @@ using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -81,9 +82,34 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             await Assert.ThrowsAsync<NullInstanceOfAggregateIdException>(() =>
                 sut.GetByIdAsync<StubAggregate>(aggregateId));
         }
-    }
 
-    public class StubAggregate : AggregateRoot<Guid>
-    {
+        [Fact]
+        public async Task GetByIdAsyncWithoutEventsShouldReturnEmptyList()
+        {
+            //Arrange
+            var optionsBuilder = new DbContextOptionsBuilder<DataBaseContext>();
+            optionsBuilder.UseInMemoryDatabase("FakeInMemoryData");
+            var moqContext = new DataBaseContext(optionsBuilder.Options);
+            moqContext.Database.EnsureCreated();
+
+            var aggregate = (StubAggregate)typeof(StubAggregate)
+                .GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic,
+                    null,
+                    new Type[0],
+                    new ParameterModifier[0])
+                ?.Invoke(new object[0]);
+
+            var moqInvoker = new Mock<IInvoker<StubAggregate>>();
+            moqInvoker.Setup(i => i.CreateInstanceOfAggregateRoot()).Returns(aggregate);
+
+            var sut = new EventStoreRepository<StubAggregate>(moqContext, moqInvoker.Object);
+            var aggregateId = Guid.NewGuid();
+
+            //Act
+            var result = await sut.GetByIdAsync<Domain.SpeechAggregate.Speech>(aggregateId);
+
+            //Assert
+            Assert.Null(result);
+        }
     }
 }

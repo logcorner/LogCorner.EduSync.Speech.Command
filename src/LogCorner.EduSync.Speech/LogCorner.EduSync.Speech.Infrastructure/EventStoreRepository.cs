@@ -2,6 +2,7 @@
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LogCorner.EduSync.Speech.Infrastructure
@@ -33,6 +34,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure
 
         public async Task<T> GetByIdAsync<T>(Guid aggregateId)
         {
+            T result = default;
             if (aggregateId == Guid.Empty)
             {
                 throw new BadAggregateIdException(nameof(aggregateId));
@@ -42,6 +44,13 @@ namespace LogCorner.EduSync.Speech.Infrastructure
             if (aggregate == null)
             {
                 throw new NullInstanceOfAggregateIdException(nameof(aggregate));
+            }
+
+            var events = _dbSet.AsNoTracking().Where(e => e.AggregateId == aggregateId).AsQueryable();
+
+            if (!events.Any())
+            {
+                return await Task.FromResult(result);
             }
             throw new NotImplementedException();
         }
