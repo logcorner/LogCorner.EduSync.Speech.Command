@@ -17,7 +17,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             //Arrange
             //Act
             //Assert
-            Assert.Throws<ArgumentNullException>(() => new EventStoreRepository<StubAggregate>(It.IsAny<DataBaseContext>(), It.IsAny<IInvoker<StubAggregate>>()));
+            Assert.Throws<ArgumentNullException>(() => new EventStoreRepository<StubAggregate>(It.IsAny<DataBaseContext>(), It.IsAny<IInvoker<StubAggregate>>(), It.IsAny<IEventSerializer>()));
         }
 
         [Fact(DisplayName = "AppendAsync should append an event on eventstore")]
@@ -34,7 +34,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
                 "LogCorner.EduSync.Speech.Domain.Events.Speech.SpeechCreatedEvent",
                 DateTime.Now, "{}");
 
-            var sut = new EventStoreRepository<StubAggregate>(moqContext, It.IsAny<IInvoker<StubAggregate>>());
+            var sut = new EventStoreRepository<StubAggregate>(moqContext, It.IsAny<IInvoker<StubAggregate>>(), It.IsAny<IEventSerializer>());
 
             //Act
             await sut.AppendAsync(evt);
@@ -58,7 +58,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
         {
             //Arrange
             var moqDb = new Mock<DataBaseContext>();
-            var sut = new EventStoreRepository<StubAggregate>(moqDb.Object, It.IsAny<IInvoker<StubAggregate>>());
+            var sut = new EventStoreRepository<StubAggregate>(moqDb.Object, It.IsAny<IInvoker<StubAggregate>>(), It.IsAny<IEventSerializer>());
             var aggregateId = Guid.Empty;
 
             //Act
@@ -74,7 +74,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             var moqDb = new Mock<DataBaseContext>();
             var moqInvoker = new Mock<IInvoker<StubAggregate>>();
             moqInvoker.Setup(i => i.CreateInstanceOfAggregateRoot()).Returns((StubAggregate)null);
-            var sut = new EventStoreRepository<StubAggregate>(moqDb.Object, moqInvoker.Object);
+            var sut = new EventStoreRepository<StubAggregate>(moqDb.Object, moqInvoker.Object, It.IsAny<IEventSerializer>());
             var aggregateId = Guid.NewGuid();
 
             //Act
@@ -102,7 +102,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             var moqInvoker = new Mock<IInvoker<StubAggregate>>();
             moqInvoker.Setup(i => i.CreateInstanceOfAggregateRoot()).Returns(aggregate);
 
-            var sut = new EventStoreRepository<StubAggregate>(moqContext, moqInvoker.Object);
+            var sut = new EventStoreRepository<StubAggregate>(moqContext, moqInvoker.Object, It.IsAny<IEventSerializer>());
             var aggregateId = Guid.NewGuid();
 
             //Act

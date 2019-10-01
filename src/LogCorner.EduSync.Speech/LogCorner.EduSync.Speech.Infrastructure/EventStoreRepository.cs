@@ -1,4 +1,5 @@
-﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
+﻿using LogCorner.EduSync.Speech.Domain.Events;
+using LogCorner.EduSync.Speech.Domain.Exceptions;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,11 +12,11 @@ namespace LogCorner.EduSync.Speech.Infrastructure
     {
         private readonly IInvoker<T> _invoker;
         private readonly DbSet<EventStore> _dbSet;
+        private readonly IEventSerializer _eventSerializer;
 
         public EventStoreRepository(DataBaseContext databaseContext
             ,
-            IInvoker<T> invoker
-            )
+            IInvoker<T> invoker, IEventSerializer eventSerializer)
         {
             if (databaseContext == null)
             {
@@ -23,6 +24,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure
             }
 
             _invoker = invoker;
+            _eventSerializer = eventSerializer;
 
             _dbSet = databaseContext.Set<EventStore>();
         }
@@ -46,12 +48,13 @@ namespace LogCorner.EduSync.Speech.Infrastructure
                 throw new NullInstanceOfAggregateIdException(nameof(aggregate));
             }
 
-            var events = _dbSet.AsNoTracking().Where(e => e.AggregateId == aggregateId).AsQueryable();
+            var eventStoreItems = _dbSet.AsNoTracking().Where(e => e.AggregateId == aggregateId).AsQueryable();
 
-            if (!events.Any())
+            if (!eventStoreItems.Any())
             {
                 return await Task.FromResult(result);
             }
+            var events = eventStoreItems.Select(@event => _eventSerializer.Deserialize<Event>(@event.SerializedBody, @event.TypeName)).AsEnumerable();
             throw new NotImplementedException();
         }
     }
