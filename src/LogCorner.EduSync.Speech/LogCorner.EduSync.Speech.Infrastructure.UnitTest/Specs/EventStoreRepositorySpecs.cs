@@ -1,8 +1,10 @@
+using LogCorner.EduSync.Speech.Domain.Events;
 using LogCorner.EduSync.Speech.Domain.Exceptions;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
@@ -17,7 +19,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             //Arrange
             //Act
             //Assert
-            Assert.Throws<ArgumentNullException>(() => new EventStoreRepository<StubAggregate>(It.IsAny<DataBaseContext>(), It.IsAny<IInvoker<StubAggregate>>(), It.IsAny<IEventSerializer>()));
+            Assert.Throws<ArgumentNullException>(() => new EventStoreRepository<StubAggregate>(It.IsAny<DataBaseContext>(), It.IsAny<IInvoker<StubAggregate>>(), It.IsAny<IDomainEventRebuilder>()));
         }
 
         [Fact(DisplayName = "AppendAsync should append an event on eventstore")]
@@ -34,7 +36,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
                 "LogCorner.EduSync.Speech.Domain.Events.Speech.SpeechCreatedEvent",
                 DateTime.Now, "{}");
 
-            var sut = new EventStoreRepository<StubAggregate>(moqContext, It.IsAny<IInvoker<StubAggregate>>(), It.IsAny<IEventSerializer>());
+            var sut = new EventStoreRepository<StubAggregate>(moqContext, It.IsAny<IInvoker<StubAggregate>>(), It.IsAny<IDomainEventRebuilder>());
 
             //Act
             await sut.AppendAsync(evt);
@@ -58,7 +60,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
         {
             //Arrange
             var moqDb = new Mock<DataBaseContext>();
-            var sut = new EventStoreRepository<StubAggregate>(moqDb.Object, It.IsAny<IInvoker<StubAggregate>>(), It.IsAny<IEventSerializer>());
+            var sut = new EventStoreRepository<StubAggregate>(moqDb.Object, It.IsAny<IInvoker<StubAggregate>>(), It.IsAny<IDomainEventRebuilder>());
             var aggregateId = Guid.Empty;
 
             //Act
@@ -73,8 +75,8 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             //Arrange
             var moqDb = new Mock<DataBaseContext>();
             var moqInvoker = new Mock<IInvoker<StubAggregate>>();
-            moqInvoker.Setup(i => i.CreateInstanceOfAggregateRoot()).Returns((StubAggregate)null);
-            var sut = new EventStoreRepository<StubAggregate>(moqDb.Object, moqInvoker.Object, It.IsAny<IEventSerializer>());
+            moqInvoker.Setup(i => i.CreateInstanceOfAggregateRoot<StubAggregate>()).Returns((StubAggregate)null);
+            var sut = new EventStoreRepository<StubAggregate>(moqDb.Object, moqInvoker.Object, It.IsAny<IDomainEventRebuilder>());
             var aggregateId = Guid.NewGuid();
 
             //Act
@@ -100,16 +102,76 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
                 ?.Invoke(new object[0]);
 
             var moqInvoker = new Mock<IInvoker<StubAggregate>>();
-            moqInvoker.Setup(i => i.CreateInstanceOfAggregateRoot()).Returns(aggregate);
+            moqInvoker.Setup(i => i.CreateInstanceOfAggregateRoot<StubAggregate>()).Returns(aggregate);
 
-            var sut = new EventStoreRepository<StubAggregate>(moqContext, moqInvoker.Object, It.IsAny<IEventSerializer>());
+            var sut = new EventStoreRepository<StubAggregate>(moqContext, moqInvoker.Object, It.IsAny<IDomainEventRebuilder>());
             var aggregateId = Guid.NewGuid();
 
             //Act
-            var result = await sut.GetByIdAsync<Domain.SpeechAggregate.Speech>(aggregateId);
+            var result = await sut.GetByIdAsync<StubAggregate>(aggregateId);
 
             //Assert
-            Assert.Null(result);
+            Assert.Equal(aggregate, result);
+        }
+
+        [Fact(DisplayName = "GetByIdAsync with events should return the current state of the aggregate")]
+        public async Task GetByIdAsyncWithEventsShouldReturnTheCurrentStateOfTheAggregate()
+        {
+            //Arrange
+            #region mock of DataBaseContext , mock of IDomainEventRebuilder and mock of moqInvoker
+
+            var aggregateId = Guid.NewGuid();
+            var optionsBuilder = new DbContextOptionsBuilder<DataBaseContext>();
+            optionsBuilder.UseInMemoryDatabase("FakeInMemoryData");
+            var moqContext = new DataBaseContext(optionsBuilder.Options);
+            moqContext.Database.EnsureCreated();
+
+            var obj = new EventOject(aggregateId, "Dupont", "45 av charles degaulle paris, france");
+            var type = obj.GetType().AssemblyQualifiedName;
+            var json = @"
+                {
+                    'FullName':'Dupont',
+                    'Adresse':'45 av charles degaulle paris, france'
+                }";
+
+            moqContext.EventStore.Add(new EventStore(aggregateId,
+                1,
+                "2@735f8407-16be-44b5-be96-2bab582b5298",
+                type,
+                DateTime.Now, json));
+            moqContext.SaveChanges();
+
+            Mock<IDomainEventRebuilder> moqDomainEventRebuilder = new Mock<IDomainEventRebuilder>();
+            moqDomainEventRebuilder.Setup(m => m.RebuildDomainEvents(It.IsAny<IEnumerable<EventStore>>()))
+                .Returns(new List<Event>
+                {
+                    obj
+                });
+
+            var aggregate = (StubAggregate)typeof(StubAggregate)
+                .GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic,
+                    null,
+                    new Type[0],
+                    new ParameterModifier[0])
+                ?.Invoke(new object[0]);
+
+            var moqInvoker = new Mock<IInvoker<StubAggregate>>();
+            moqInvoker.Setup(i => i.CreateInstanceOfAggregateRoot<StubAggregate>()).Returns(aggregate);
+
+            #endregion mock database , mock IDomainEventRebuilder et moqInvoker
+
+            var sut = new EventStoreRepository<StubAggregate>(moqContext, moqInvoker.Object, moqDomainEventRebuilder.Object);
+
+            //Act
+            var result = await sut.GetByIdAsync<StubAggregate>(aggregateId);
+            moqContext.Dispose();
+           
+            //Assert
+            Assert.NotNull(aggregate);
+            Assert.Equal(aggregate, result);
+            Assert.Equal(aggregateId, aggregate.Id);
+            Assert.Equal(obj.FullName, aggregate.FullName);
+            Assert.Equal(obj.Adresse, aggregate.Adresse);
         }
     }
 }

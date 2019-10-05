@@ -11,7 +11,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             IInvoker<Domain.SpeechAggregate.Speech> sut = new Invoker<Domain.SpeechAggregate.Speech>();
 
             //Act
-            var result = sut.CreateInstanceOfAggregateRoot();
+            var result = sut.CreateInstanceOfAggregateRoot< Domain.SpeechAggregate.Speech>();
 
             //Assert
             Assert.NotNull(result);

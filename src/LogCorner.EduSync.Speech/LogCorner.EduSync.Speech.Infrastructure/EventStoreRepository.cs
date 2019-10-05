@@ -1,5 +1,4 @@
-﻿using LogCorner.EduSync.Speech.Domain.Events;
-using LogCorner.EduSync.Speech.Domain.Exceptions;
+﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,11 +11,10 @@ namespace LogCorner.EduSync.Speech.Infrastructure
     {
         private readonly IInvoker<T> _invoker;
         private readonly DbSet<EventStore> _dbSet;
-        private readonly IEventSerializer _eventSerializer;
+        private readonly IDomainEventRebuilder _eventStoreToEVent;
 
-        public EventStoreRepository(DataBaseContext databaseContext
-            ,
-            IInvoker<T> invoker, IEventSerializer eventSerializer)
+        public EventStoreRepository(DataBaseContext databaseContext,
+            IInvoker<T> invoker, IDomainEventRebuilder eventStoreToEVent)
         {
             if (databaseContext == null)
             {
@@ -24,7 +22,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure
             }
 
             _invoker = invoker;
-            _eventSerializer = eventSerializer;
+            _eventStoreToEVent = eventStoreToEVent;
 
             _dbSet = databaseContext.Set<EventStore>();
         }
@@ -34,15 +32,14 @@ namespace LogCorner.EduSync.Speech.Infrastructure
             await _dbSet.AddAsync(@event);
         }
 
-        public async Task<T> GetByIdAsync<T>(Guid aggregateId)
+        public async Task<T> GetByIdAsync<T>(Guid aggregateId) where T : AggregateRoot<Guid>
         {
-            T result = default;
             if (aggregateId == Guid.Empty)
             {
                 throw new BadAggregateIdException(nameof(aggregateId));
             }
 
-            var aggregate = _invoker.CreateInstanceOfAggregateRoot();
+            var aggregate = _invoker.CreateInstanceOfAggregateRoot<T>();
             if (aggregate == null)
             {
                 throw new NullInstanceOfAggregateIdException(nameof(aggregate));
@@ -52,10 +49,13 @@ namespace LogCorner.EduSync.Speech.Infrastructure
 
             if (!eventStoreItems.Any())
             {
-                return await Task.FromResult(result);
+                return await Task.FromResult(aggregate);
             }
-            var events = eventStoreItems.Select(@event => _eventSerializer.Deserialize<Event>(@event.SerializedBody, @event.TypeName)).AsEnumerable();
-            throw new NotImplementedException();
+
+            var events = _eventStoreToEVent.RebuildDomainEvents(eventStoreItems);
+            aggregate.LoadFromHistory(events);
+
+            return await Task.FromResult(aggregate);
         }
     }
 }

@@ -21,7 +21,6 @@ namespace LogCorner.EduSync.Speech.Infrastructure
                 MemberSerialization memberSerialization)
             {
                 var prop = base.CreateProperty(member, memberSerialization);
-
                 if (!prop.Writable)
                 {
                     var property = member as PropertyInfo;
@@ -31,7 +30,6 @@ namespace LogCorner.EduSync.Speech.Infrastructure
                         prop.Writable = hasPrivateSetter;
                     }
                 }
-
                 return prop;
             }
         }

@@ -5,6 +5,6 @@ namespace LogCorner.EduSync.Speech.Infrastructure
 {
     public interface IInvoker<out T> where T : AggregateRoot<Guid>
     {
-        T CreateInstanceOfAggregateRoot();
+        T CreateInstanceOfAggregateRoot<T>();
     }
 }

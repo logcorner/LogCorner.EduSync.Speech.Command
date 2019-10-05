@@ -1,15 +1,20 @@
+using System;
+using LogCorner.EduSync.Speech.Domain.Events;
+
 namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
 {
-    public class EventOject
+    public class EventOject : Event
     {
-        public int Id { get; }
+        
 
-        public string Name { get; }
+        public string FullName { get; }
+        public string Adresse { get; }
 
-        public EventOject(int id, string name)
+        public EventOject(Guid aggregateId, string fullName, string adresse)
         {
-            Id = id;
-            Name = name;
+            AggregateId = aggregateId;
+            FullName = fullName;
+            Adresse = adresse;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure
 {
     public class Invoker<T> : IInvoker<T> where T : AggregateRoot<Guid>
     {
-        public T CreateInstanceOfAggregateRoot()
+        public T CreateInstanceOfAggregateRoot<T>()
         {
             return (T)typeof(T)
                 .GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic,
