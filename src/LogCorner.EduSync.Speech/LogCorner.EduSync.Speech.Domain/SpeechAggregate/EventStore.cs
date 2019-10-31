@@ -10,7 +10,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         public string Name { get; private set; }
         public string TypeName { get; private set; }
         public DateTime OccurredOn { get; private set; }
-        public string SerializedBody { get; private set; }
+        public string PayLoad { get; private set; }
         public bool IsSync { get; private set; }
 
         private EventStore()
@@ -25,7 +25,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             Name = name;
             TypeName = typeName;
             OccurredOn = occurredOn;
-            SerializedBody = serializedBody;
+            PayLoad = serializedBody;
         }
 
         public void MarkAsSynced()

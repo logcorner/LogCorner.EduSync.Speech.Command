@@ -16,7 +16,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure
 
         public IEnumerable<Event> RebuildDomainEvents(IEnumerable<EventStore> eventStoreItems)
         {
-            var events = eventStoreItems.Select(@event => _eventSerializer.Deserialize<Event>(@event.SerializedBody, @event.TypeName)).AsEnumerable();
+            var events = eventStoreItems.Select(@event => _eventSerializer.Deserialize<Event>(@event.PayLoad, @event.TypeName)).AsEnumerable();
             return events;
         }
     }

@@ -14,7 +14,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.Mapping
             eventStoreEntityConfiguration.Property(e => e.OccurredOn).IsRequired();
             eventStoreEntityConfiguration.Property(e => e.AggregateId).IsRequired();
             eventStoreEntityConfiguration.Property(e => e.Name).IsRequired();
-            eventStoreEntityConfiguration.Property(e => e.SerializedBody).IsRequired()
+            eventStoreEntityConfiguration.Property(e => e.PayLoad).IsRequired()
                 .HasColumnType("text");
 
             eventStoreEntityConfiguration.Property(e => e.TypeName).IsRequired()

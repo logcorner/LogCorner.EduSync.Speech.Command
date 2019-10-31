@@ -70,6 +70,7 @@
   <ItemGroup>
     <Build Include="dbo\Tables\Speech.sql" />
     <Build Include="dbo\Tables\MediaFile.sql" />
+    <Build Include="dbo\Tables\EventStore.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Docker\Dockerfile" />
