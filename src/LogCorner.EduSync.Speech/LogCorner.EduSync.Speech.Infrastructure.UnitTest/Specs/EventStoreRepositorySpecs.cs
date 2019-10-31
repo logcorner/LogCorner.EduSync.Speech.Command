@@ -118,6 +118,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
         public async Task GetByIdAsyncWithEventsShouldReturnTheCurrentStateOfTheAggregate()
         {
             //Arrange
+
             #region mock of DataBaseContext , mock of IDomainEventRebuilder and mock of moqInvoker
 
             var aggregateId = Guid.NewGuid();
@@ -158,14 +159,14 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             var moqInvoker = new Mock<IInvoker<StubAggregate>>();
             moqInvoker.Setup(i => i.CreateInstanceOfAggregateRoot<StubAggregate>()).Returns(aggregate);
 
-            #endregion mock database , mock IDomainEventRebuilder et moqInvoker
+            #endregion mock of DataBaseContext , mock of IDomainEventRebuilder and mock of moqInvoker
 
             var sut = new EventStoreRepository<StubAggregate>(moqContext, moqInvoker.Object, moqDomainEventRebuilder.Object);
 
             //Act
             var result = await sut.GetByIdAsync<StubAggregate>(aggregateId);
             moqContext.Dispose();
-           
+
             //Assert
             Assert.NotNull(aggregate);
             Assert.Equal(aggregate, result);

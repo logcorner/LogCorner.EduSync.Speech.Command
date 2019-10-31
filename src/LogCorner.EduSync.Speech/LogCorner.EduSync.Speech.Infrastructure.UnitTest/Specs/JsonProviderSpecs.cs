@@ -16,7 +16,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
                 }";
             var obj = new ObjectToDeserializeTo(1, "Dupont");
             var type = obj.GetType().AssemblyQualifiedName;
-         
+
             //Act
             IJsonProvider sut = new JsonProvider();
             var result = sut.DeserializeObject<ObjectToDeserializeTo>(json, type);
