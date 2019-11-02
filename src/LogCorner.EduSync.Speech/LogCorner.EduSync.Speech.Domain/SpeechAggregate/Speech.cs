@@ -2,6 +2,7 @@
 using LogCorner.EduSync.Speech.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
@@ -60,9 +61,25 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             {
                 throw new MediaFileAlreadyExisteDomainException(nameof(mediaFile));
             }
-            _mediaFileItems.Add(mediaFile);
 
-            AddDomainEvent(new MediaFileCreatedEvent(Id, mediaFile.File, originalVersion));
+            AddDomainEvent(new MediaFileCreatedEvent(Id, mediaFile.Id, mediaFile.File), originalVersion);
+        }
+
+        public void Apply(SpeechCreatedEvent ev)
+        {
+            Id = ev.AggregateId;
+            Title = ev.Title;
+            Url = ev.Url;
+            Description = ev.Description;
+            Type = ev.Type;
+        }
+
+        public void Apply(MediaFileCreatedEvent ev)
+        {
+            if (_mediaFileItems.All(c => c.File != ev.File))
+            {
+                _mediaFileItems.Add(new MediaFile(ev.MediaFileId, ev.File));
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
 using System;
 using System.Linq;
+using System.Reflection;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Domain.UnitTest
@@ -187,13 +188,13 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
 
             //Act
             var speech = new SpeechAggregate.Speech(id, title, url, description, speechType);
-            var domainEvent = speech.DomainEvents.SingleOrDefault();
+            var domainEvent = speech.GetUncommittedEvents().SingleOrDefault();
             var speechCreateEvent = (SpeechCreatedEvent)domainEvent;
 
             //Assert
             Assert.IsAssignableFrom<SpeechCreatedEvent>(domainEvent);
             Assert.NotNull(speechCreateEvent);
-            Assert.Equal(id.ToString(), domainEvent.Id);
+            Assert.Equal(id, speechCreateEvent.AggregateId);
             Assert.Equal(url, speechCreateEvent.Url);
             Assert.Equal(title, speechCreateEvent.Title);
             Assert.Equal(description, speechCreateEvent.Description);
@@ -223,13 +224,13 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
             var title = new Title("Lorem Ipsum is simply dummy text of the printin");
             var description = new Description("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
             var url = new UrlValue("http://url.com");
-            var file = new MediaFile(new UrlValue(
+            var file = new MediaFile(Guid.NewGuid(), new UrlValue(
                 "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2ybMU?ver=c5fc&q=90&m=6&h=201&w=358&b=%23FFFFFFFF&l=f&o=t&aim=true"));
 
             //Act
             var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
-            speech.CreateMedia(file, 1);
-            var domainEvent = speech.DomainEvents.SingleOrDefault(s => s is MediaFileCreatedEvent);
+            speech.CreateMedia(file, 0);
+            var domainEvent = speech.GetUncommittedEvents().SingleOrDefault(s => s is MediaFileCreatedEvent);
             var mediaFileCreatedEvent = (MediaFileCreatedEvent)domainEvent;
 
             //Assert
@@ -237,8 +238,8 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
 
             Assert.NotNull(speech.MediaFileItems.Select(f => f.File));
             Assert.NotNull(mediaFileCreatedEvent);
-            Assert.NotNull(mediaFileCreatedEvent.File);
-            Assert.NotNull(mediaFileCreatedEvent.File.Value);
+            Assert.Equal(mediaFileCreatedEvent.AggregateId, speech.Id);
+            Assert.Equal(mediaFileCreatedEvent.AggregateVersion, speech.Version);
         }
 
         [Fact]
@@ -248,13 +249,13 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
             var title = new Title("Lorem Ipsum is simply dummy text of the printin");
             var description = new Description("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
             var url = new UrlValue("http://url.com");
-            var file = new MediaFile(new UrlValue(
+            var file = new MediaFile(Guid.NewGuid(), new UrlValue(
                 "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2ybMU?ver=c5fc&q=90&m=6&h=201&w=358&b=%23FFFFFFFF&l=f&o=t&aim=true"));
 
             //Act
             var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
-            speech.CreateMedia(file, 1);
-            var domainEvent = speech.DomainEvents.SingleOrDefault(s => s is MediaFileCreatedEvent);
+            speech.CreateMedia(file, 0);
+            var domainEvent = speech.GetUncommittedEvents().SingleOrDefault(s => s is MediaFileCreatedEvent);
             var mediaFileCreatedEvent = (MediaFileCreatedEvent)domainEvent;
 
             //Assert
@@ -262,8 +263,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
 
             Assert.NotNull(speech.MediaFileItems.Select(f => f.File));
             Assert.NotNull(domainEvent);
-            Assert.True(domainEvent.Version == 2);
-            Assert.True(speech.Version == 2);
+            Assert.True(speech.Version == 1);
             Assert.NotNull(mediaFileCreatedEvent);
             Assert.NotNull(mediaFileCreatedEvent.File);
             Assert.NotNull(mediaFileCreatedEvent.File.Value);
@@ -276,30 +276,30 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
             var title = new Title("Lorem Ipsum is simply dummy text of the printin");
             var description = new Description("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
             var url = new UrlValue("http://url.com");
-            var file = new MediaFile(new UrlValue(
+            var file = new MediaFile(Guid.NewGuid(), new UrlValue(
                 "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2ybMU?ver=c5fc&q=90&m=6&h=201&w=358&b=%23FFFFFFFF&l=f&o=t&aim=true"));
 
             //Act
             var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
-            Assert.Throws<InvalidVersionAggregateException>(() => speech.CreateMedia(file, 0));
+            Assert.Throws<ConcurrencyException>(() => speech.CreateMedia(file, -1));
         }
 
         [Fact]
-        public void CreateMediaWithExistingMedaiReturnSuccess()
+        public void CreateMediaWithExistingMedaiShouldNotApplyEvent()
         {
             //Arrange
             var title = new Title("Lorem Ipsum is simply dummy text of the printin");
             var description = new Description("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
             var url = new UrlValue("http://url.com");
-            var file = new MediaFile(new UrlValue(
+            var file = new MediaFile(Guid.NewGuid(), new UrlValue(
                 "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2ybMU?ver=c5fc&q=90&m=6&h=201&w=358&b=%23FFFFFFFF&l=f&o=t&aim=true"));
 
             //Act
             var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
-            speech.CreateMedia(file, 1);
+            speech.CreateMedia(file, 0);
 
-            Assert.Throws<MediaFileAlreadyExisteDomainException>(() => speech.CreateMedia(file, 1));
-            /*var domainEvent = speech.DomainEvents.SingleOrDefault(s => s is MediaFileCreatedEvent);
+            Assert.Throws<MediaFileAlreadyExisteDomainException>(() => speech.CreateMedia(file, 0));
+            var domainEvent = speech.GetUncommittedEvents().SingleOrDefault(s => s is MediaFileCreatedEvent);
             var mediaFileCreatedEvent = (MediaFileCreatedEvent)domainEvent;
 
             //Assert
@@ -307,11 +307,21 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
 
             Assert.NotNull(speech.MediaFileItems.Select(f => f.File));
             Assert.NotNull(domainEvent);
-            Assert.True(domainEvent.Version == 2);
-            Assert.True(speech.Version == 2);
-            Assert.NotNull(mediaFileCreatedEvent);
-            Assert.NotNull(mediaFileCreatedEvent.File);
-            Assert.NotNull(mediaFileCreatedEvent.File.Value);*/
+            Assert.True(mediaFileCreatedEvent.AggregateVersion == 1);
+            Assert.Equal(Guid.Empty, mediaFileCreatedEvent.AggregateId);
+        }
+
+        [Fact]
+        public void InstanciatingMediaFileWithPrivateConstrcutorShouldReturnNotNullInstance()
+        {
+            var instance = (MediaFile)typeof(MediaFile)
+                  .GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic,
+                      null,
+                      new Type[0],
+                      new ParameterModifier[0])
+                  ?.Invoke(new object[0]);
+            Assert.NotNull(instance);
+            Assert.IsType<MediaFile>(instance);
         }
     }
 }

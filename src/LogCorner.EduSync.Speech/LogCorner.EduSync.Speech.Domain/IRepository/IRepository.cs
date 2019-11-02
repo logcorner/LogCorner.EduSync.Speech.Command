@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace LogCorner.EduSync.Speech.Domain.IRepository
 {
-    public interface IRepository<T, TIdentifier> where T : AggregateRoot<TIdentifier>
+    public interface IRepository<in T, TIdentifier> where T : AggregateRoot<TIdentifier>
     {
         Task CreateAsync(T entity);
     }

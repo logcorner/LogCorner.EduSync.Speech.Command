@@ -1,8 +1,9 @@
 ﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
+using System;
 
 namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
-    public class MediaFile : Entity<int>
+    public class MediaFile : Entity<Guid>
     {
         public UrlValue File { get; private set; }
 
@@ -11,8 +12,9 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         {
         }
 
-        public MediaFile(UrlValue file)
+        public MediaFile(Guid id, UrlValue file)
         {
+            Id = id;
             File = file ?? throw new ArgumentNullAggregateException(nameof(file));
         }
     }

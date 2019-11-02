@@ -1,33 +1,62 @@
-﻿using LogCorner.EduSync.Speech.Domain.Events;
-using LogCorner.EduSync.Speech.Domain.Exceptions;
+﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
-    public abstract class AggregateRoot<T> : Entity<T>
+    public abstract class AggregateRoot<T> : Entity<T>, IEventSourcing
     {
-        private readonly List<DomainEvent> _domainEvents = new List<DomainEvent>();
-        public IReadOnlyList<DomainEvent> DomainEvents => _domainEvents;
+        private readonly ICollection<IDomainEvent> _uncommittedEvents = new LinkedList<IDomainEvent>();
 
-        private int _version = 0;
-        public int Version => _version;
+        public long Version => _version;
+        private long _version = -1;
 
         protected AggregateRoot()
         {
         }
 
-        protected void AddDomainEvent(DomainEvent newEvent)
+        public void ValidateVersion(long expectedVersion)
         {
-            ValidateVersion(newEvent.Version);
-            newEvent.Version = ++_version;
-            _domainEvents.Add(newEvent);
+            if (Version != expectedVersion)
+            {
+                throw new ConcurrencyException(
+                    $@"Invalid version specified : expectedVersion = {Version}
+                          but  originalVersion = {expectedVersion}.");
+            }
         }
 
-        private void ValidateVersion(int version)
+        public void ApplyEvent(IDomainEvent @event, long version)
         {
-            if (Version != version)
+            if (!_uncommittedEvents.Any(x => Equals(x.EventId, @event.EventId)))
             {
-                throw new InvalidVersionAggregateException("Invalid version specified");
+                ((dynamic)this).Apply((dynamic)@event);
+                _version = version;
+            }
+        }
+
+        public IEnumerable<IDomainEvent> GetUncommittedEvents()
+        {
+            return _uncommittedEvents.AsEnumerable();
+        }
+
+        public void ClearUncommittedEvents()
+        {
+            _uncommittedEvents.Clear();
+        }
+
+        protected void AddDomainEvent(IDomainEvent @event, long originalVersion = -1)
+        {
+            ValidateVersion(originalVersion);
+            @event.BuildVersion(_version + 1);
+            ApplyEvent(@event, @event.AggregateVersion);
+            _uncommittedEvents.Add(@event);
+        }
+
+        public void LoadFromHistory(IEnumerable<IDomainEvent> events)
+        {
+            foreach (var @event in events)
+            {
+                ApplyEvent(@event, @event.AggregateVersion);
             }
         }
     }
