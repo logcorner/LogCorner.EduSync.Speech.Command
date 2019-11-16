@@ -15,6 +15,12 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
 
         public async Task Subscribe(IEventSourcing aggregate)
         {
+            foreach (var evt in aggregate.GetUncommittedEvents())
+            {
+                await _handler.Handle((Event)evt, aggregate.Version);
+            }
         }
     }
 }
+
+
