@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using LogCorner.EduSync.Speech.Application.UseCases;
+using LogCorner.EduSync.Speech.Domain;
 using LogCorner.EduSync.Speech.Domain.Events;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using LogCorner.EduSync.Speech.Domain;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Application.UnitTest
@@ -32,7 +32,6 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
             Assert.Equal(0, moqAggregate.Object.Version);
         }
 
-
         [Fact(DisplayName = "Subscribe with uncommitted events should call handle only once")]
         public async Task SubscribeWithUncommittedEventsShouldCallHandleOnlyOnce()
         {
@@ -45,8 +44,8 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
             var moqAggregate = new Mock<IEventSourcing>();
             moqAggregate.Setup(a => a.GetUncommittedEvents()).Returns(new List<Event>
             {
-                new SpeechCreatedEvent(It.IsAny<Guid>(),It.IsAny<Title>(),
-                    It.IsAny<UrlValue>(),It.IsAny<Description>(),
+                new SpeechCreatedEvent(It.IsAny<Guid>(), It.IsAny<Title>(),
+                    It.IsAny<UrlValue>(), It.IsAny<Description>(),
                     It.IsAny<SpeechType>())
             });
 
