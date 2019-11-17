@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
@@ -24,6 +25,27 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
 
             Assert.Equal(obj.Id, result.Id);
             Assert.Equal(obj.Name, result.Name);
+        }
+
+        [Fact(DisplayName = "given event object serializeobject should return a string")]
+        public void GivenEventObjectSerializeObjectShouldReturnString()
+        {
+            //Arrange
+
+            var obj = new ObjectToDeserializeTo(1, "Dupont");
+            string json = JsonConvert.SerializeObject(obj, Formatting.Indented,
+                new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+
+            //Act
+            IJsonProvider sut = new JsonProvider();
+            var result = sut.SerializeObject(obj);
+
+            //Assert
+
+            Assert.Equal(json, result);
         }
     }
 }
