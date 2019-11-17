@@ -15,5 +15,10 @@ namespace LogCorner.EduSync.Speech.Infrastructure
         {
             return _jsonProvider.DeserializeObject<TEvent>(serializedEvent, eventType);
         }
+
+        public string Serialize<TEvent>(TEvent domainEvent) where TEvent : IDomainEvent
+        {
+            return _jsonProvider.SerializeObject<TEvent>(domainEvent);
+        }
     }
 }

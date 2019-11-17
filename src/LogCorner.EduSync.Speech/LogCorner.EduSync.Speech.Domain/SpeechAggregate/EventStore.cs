@@ -28,9 +28,6 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             PayLoad = serializedBody;
         }
 
-        public void MarkAsSynced()
-        {
-            IsSync = true;
-        }
+       
     }
 }

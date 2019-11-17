@@ -1,4 +1,5 @@
 ﻿using LogCorner.EduSync.Speech.Application.UseCases;
+using LogCorner.EduSync.Speech.Domain.Events;
 using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using LogCorner.EduSync.Speech.Infrastructure;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace LogCorner.EduSync.Speech.Presentation
 {
@@ -19,7 +21,7 @@ namespace LogCorner.EduSync.Speech.Presentation
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -36,7 +38,16 @@ namespace LogCorner.EduSync.Speech.Presentation
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddScoped<IRegisterSpeechUseCase, RegisterSpeechUseCase>();
+            services.AddTransient<IRegisterSpeechUseCase, RegisterSpeechUseCase>();
+
+            services.AddTransient<IEventSourcingSubscriber, EventSourcingSubscriber>();
+
+            services.AddScoped(typeof(IEventStoreRepository<>), typeof(EventStoreRepository<>));
+            services.AddTransient<IEventSerializer, JsonEventSerializer>();
+            services.AddTransient<IEventSourcingHandler<Event>, EventSourcingHandler<AggregateRoot<Guid>>>();
+            services.AddTransient<IInvoker<AggregateRoot<Guid>>, Invoker<AggregateRoot<Guid>>>();
+            services.AddTransient<IDomainEventRebuilder, DomainEventRebuilder>();
+            services.AddTransient<IJsonProvider, JsonProvider>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
