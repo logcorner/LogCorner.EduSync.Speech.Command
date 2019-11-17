@@ -14,6 +14,17 @@ namespace LogCorner.EduSync.Speech.Infrastructure
             return (TEvent)JsonConvert.DeserializeObject(serializedEvent, Type.GetType(eventType), settings);
         }
 
+        public string SerializeObject<TEvent>(TEvent domainEvent)
+        {
+            string serializedEvent = JsonConvert.SerializeObject(domainEvent, Formatting.Indented,
+                new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+
+            return serializedEvent;
+        }
+
         private class PrivateSetterContractResolver : DefaultContractResolver
         {
             protected override JsonProperty CreateProperty(

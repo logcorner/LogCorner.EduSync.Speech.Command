@@ -18,7 +18,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure
 
         public string Serialize<TEvent>(TEvent domainEvent) where TEvent : IDomainEvent
         {
-            throw new System.NotImplementedException();
+            return _jsonProvider.SerializeObject<TEvent>(domainEvent);
         }
     }
 }
