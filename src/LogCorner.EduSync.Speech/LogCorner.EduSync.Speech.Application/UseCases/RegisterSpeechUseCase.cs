@@ -10,11 +10,13 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ISpeechRepository _speechRepository;
+        private readonly IEventSourcingSubscriber _domainEventSubscriber;
 
-        public RegisterSpeechUseCase(IUnitOfWork unitOfWork, ISpeechRepository speechRepository)
+        public RegisterSpeechUseCase(IUnitOfWork unitOfWork, ISpeechRepository speechRepository, IEventSourcingSubscriber domainEventSubscriber)
         {
             _unitOfWork = unitOfWork;
             _speechRepository = speechRepository;
+            _domainEventSubscriber = domainEventSubscriber;
         }
 
         public async Task Handle(RegisterSpeechCommandMessage command)
@@ -29,8 +31,9 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
             var description = new Description(command.Description);
             var type = new SpeechType(command.Type);
 
-            var speech = new Domain.SpeechAggregate.Speech(title, urlValue, description, type);
+            var speech = new Domain.SpeechAggregate.Speech(AggregateId.NewId(), title, urlValue, description, type);
             await _speechRepository.CreateAsync(speech);
+            await _domainEventSubscriber.Subscribe(speech);
             _unitOfWork.Commit();
         }
     }

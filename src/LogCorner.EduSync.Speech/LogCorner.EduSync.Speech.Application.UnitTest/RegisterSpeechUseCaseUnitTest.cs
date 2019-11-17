@@ -32,10 +32,12 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
                 "A Microservices from scratch online event Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took rem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
                 "http://microservices-getting-started.logcorner.com",
                 "2");
+
+            var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
             //Act
             // ------------ RegisterSpeechUseCase is the object under test
             IRegisterSpeechUseCase usecase =
-                new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object);
+                new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object, mockEventSourcingSubscriber.Object);
 
             await usecase.Handle(registerSpeechCommand);
 
@@ -57,9 +59,10 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
             Mock<IUnitOfWork> moqUnitOfWork = new Mock<IUnitOfWork>();
 
             Mock<ISpeechRepository> moqSpeechRepository = new Mock<ISpeechRepository>();
+            var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
 
             //Act
-            IRegisterSpeechUseCase usecase = new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object);
+            IRegisterSpeechUseCase usecase = new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object, mockEventSourcingSubscriber.Object);
 
             //Assert
             await Assert.ThrowsAsync<ApplicationArgumentNullException>(() => usecase.Handle(null));
