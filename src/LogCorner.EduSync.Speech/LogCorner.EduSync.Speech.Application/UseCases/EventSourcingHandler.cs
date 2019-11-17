@@ -25,8 +25,18 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
             {
                 throw new EventNullException(nameof(@event));
             }
+
+            var serializedBody = _eventSerializer.Serialize(@event);
+
+            var eventStore = new EventStore(@event.AggregateId, aggregateVersion,
+                $"{aggregateVersion}@{@event.AggregateId}",
+                @event.GetType().AssemblyQualifiedName,
+                @event.OcurrendOn,
+                serializedBody);
+            await _eventStoreRepository.AppendAsync(eventStore);
         }
     }
-
-
 }
+
+
+
