@@ -81,5 +81,21 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
                 _mediaFileItems.Add(new MediaFile(ev.MediaFileId, ev.File));
             }
         }
+
+        #region  - update title
+        public void ChangeTitle(string title, long originalVersion)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                throw new ArgumentNullAggregateException(nameof(title));
+            }
+            AddDomainEvent(new SpeechTitleChangedEvent(Id, title), originalVersion);
+        }
+
+        public void Apply(SpeechTitleChangedEvent ev)
+        {
+            Title = new Title(ev.Title);
+        }
+        #endregion
     }
 }

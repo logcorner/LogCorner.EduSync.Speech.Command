@@ -323,5 +323,66 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
             Assert.NotNull(instance);
             Assert.IsType<MediaFile>(instance);
         }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public void ChangeTitleWhenTitleIsNullOrEmptyShouldRaiseArgumentNullAggregateException(string newTitle)
+        {
+            //Arrange
+            var title = new Title("Lorem Ipsum is simply dummy text of the printin");
+            var description = new Description(@"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
+            var url = new UrlValue("http://url.com");
+               
+            var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
+            
+            //Act
+            //Assert
+            Assert.Throws<ArgumentNullAggregateException>(() => speech.ChangeTitle(newTitle, 
+                It.IsAny<long>()));
+        }
+
+        [Fact]
+        public void ChangeTitleWhenExpectedVersionIsNotEqualsToAggregateVersionShouldRaiseConcurrencyException()
+        {
+            //Arrange
+            long expectedVersion = 1;
+            string newTitle = "new Lorem Ipsum is simply dummy text of the printin";
+            var title = new Title("Lorem Ipsum is simply dummy text of the printin");
+            var description = new Description(@"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
+            var url = new UrlValue("http://url.com");
+
+            var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
+
+            //Act
+            //Assert
+            Assert.Throws<ConcurrencyException>(() => speech.ChangeTitle(newTitle,
+                expectedVersion));
+        }
+
+        [Fact]
+        public void ChangeTitleWithValiidArgumentsShouldApplySpeechTitleChangedEvent()
+        {
+            //Arrange
+            long expectedVersion = 0;
+            string newTitle = "new Lorem Ipsum is simply dummy text of the printin";
+            var title = new Title("Lorem Ipsum is simply dummy text of the printin");
+            var description = new Description(@"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
+            var url = new UrlValue("http://url.com");
+
+            var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
+
+            //Act
+            speech.ChangeTitle(newTitle, expectedVersion);
+            
+            //Assert
+            Assert.Equal(newTitle,speech.Title.Value);
+            Assert.Equal(description, speech.Description);
+            Assert.Equal(url, speech.Url);
+        }
     }
 }
