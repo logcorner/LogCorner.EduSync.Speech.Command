@@ -230,21 +230,6 @@ IF fulltextserviceproperty(N'IsFulltextInstalled') = 1
 
 
 GO
-PRINT N'Creating [dbo].[Speech]...';
-
-
-GO
-CREATE TABLE [dbo].[Speech] (
-    [ID]          UNIQUEIDENTIFIER NOT NULL,
-    [Title]       NVARCHAR (250)   NOT NULL,
-    [Description] NVARCHAR (MAX)   NOT NULL,
-    [Url]         NVARCHAR (250)   NOT NULL,
-    [Type]        INT              NOT NULL,
-    CONSTRAINT [PK_Presentation] PRIMARY KEY CLUSTERED ([ID] ASC)
-);
-
-
-GO
 PRINT N'Creating [dbo].[EventStore]...';
 
 
@@ -272,6 +257,21 @@ CREATE TABLE [dbo].[MediaFile] (
     [Url]      NVARCHAR (250)   NULL,
     [SpeechID] UNIQUEIDENTIFIER NOT NULL,
     PRIMARY KEY CLUSTERED ([ID] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Speech]...';
+
+
+GO
+CREATE TABLE [dbo].[Speech] (
+    [ID]          UNIQUEIDENTIFIER NOT NULL,
+    [Title]       NVARCHAR (250)   NOT NULL,
+    [Description] NVARCHAR (MAX)   NOT NULL,
+    [Url]         NVARCHAR (250)   NOT NULL,
+    [Type]        INT              NOT NULL,
+    CONSTRAINT [PK_Presentation] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
 
 

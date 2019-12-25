@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace LogCorner.EduSync.Speech.Application.UseCases
 {
-    public class RegisterSpeechUseCase : IRegisterSpeechUseCase
+    public class RegisterSpeechUseCase : IRegisterSpeechUseCase, IUpdateSpeechUseCase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ISpeechRepository _speechRepository;
         private readonly IEventSourcingSubscriber _domainEventSubscriber;
+        private readonly IEventStoreRepository<Domain.SpeechAggregate.Speech> _eventStoreRepository;
 
-        public RegisterSpeechUseCase(IUnitOfWork unitOfWork, ISpeechRepository speechRepository, IEventSourcingSubscriber domainEventSubscriber)
+        public RegisterSpeechUseCase(IUnitOfWork unitOfWork, ISpeechRepository speechRepository, IEventSourcingSubscriber domainEventSubscriber, IEventStoreRepository<Domain.SpeechAggregate.Speech> eventStoreRepository)
         {
             _unitOfWork = unitOfWork;
             _speechRepository = speechRepository;
             _domainEventSubscriber = domainEventSubscriber;
+            _eventStoreRepository = eventStoreRepository;
         }
 
         public async Task Handle(RegisterSpeechCommandMessage command)
@@ -35,6 +37,21 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
             await _speechRepository.CreateAsync(speech);
             await _domainEventSubscriber.Subscribe(speech);
             _unitOfWork.Commit();
+        }
+
+        public async Task Handle(UpdateSpeechCommandMessage command)
+        {
+            if (command == null)
+            {
+                throw new ApplicationArgumentNullException(nameof(command));
+            }
+
+            var speech = await _eventStoreRepository.GetByIdAsync<Domain.SpeechAggregate.Speech>(command.SpeechId);
+
+            if (speech == null)
+            {
+                throw new ApplicationNotFoundException($"speech not found {command.SpeechId}");
+            }
         }
     }
 }

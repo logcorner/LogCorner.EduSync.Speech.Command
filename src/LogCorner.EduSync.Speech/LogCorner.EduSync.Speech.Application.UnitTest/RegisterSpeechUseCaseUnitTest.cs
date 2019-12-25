@@ -37,7 +37,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
             //Act
             // ------------ RegisterSpeechUseCase is the object under test
             IRegisterSpeechUseCase usecase =
-                new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object, mockEventSourcingSubscriber.Object);
+                new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object, mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository<Domain.SpeechAggregate.Speech>>());
 
             await usecase.Handle(registerSpeechCommand);
 
@@ -62,7 +62,8 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
             var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
 
             //Act
-            IRegisterSpeechUseCase usecase = new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object, mockEventSourcingSubscriber.Object);
+            IRegisterSpeechUseCase usecase = new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+                mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository<Domain.SpeechAggregate.Speech>>());
 
             //Assert
             await Assert.ThrowsAsync<ApplicationArgumentNullException>(() => usecase.Handle(null));
