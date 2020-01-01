@@ -18,5 +18,10 @@ namespace LogCorner.EduSync.Speech.Infrastructure
         {
             await _repository.CreateAsync(speech);
         }
+
+        public async Task UpdateAsync(Domain.SpeechAggregate.Speech entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

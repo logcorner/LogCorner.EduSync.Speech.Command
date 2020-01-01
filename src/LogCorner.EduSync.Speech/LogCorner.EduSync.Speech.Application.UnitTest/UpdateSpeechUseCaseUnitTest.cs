@@ -5,6 +5,7 @@ using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
 using System;
 using System.Threading.Tasks;
+using LogCorner.EduSync.Speech.Domain;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Application.UnitTest
@@ -52,6 +53,57 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
             //Act
             //Assert
             await Assert.ThrowsAsync<ApplicationNotFoundException>(() => usecase.Handle(command));
+        }
+
+        [Fact(DisplayName = "Handling Update when Command is not null should update speech Title")]
+        public async Task HandlingUpdateWhenCommandIsNotNullShouldUpdateSpeechTitle()
+        {
+            //Arrange
+            string title = @"Lorem Ipsum is simply dummy text";
+            string newTitle = @"New Lorem Ipsum is simply dummy text";
+            string description = @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book";
+            string url = "http://www.test.com";
+
+            UpdateSpeechCommandMessage command = new UpdateSpeechCommandMessage(Guid.NewGuid(),
+                newTitle, description, url, SpeechType.Conferences.ToString(), 0);
+          
+            Mock<IUnitOfWork> moqUnitOfWork = new Mock<IUnitOfWork>();
+            var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
+
+            Mock<ISpeechRepository> moqSpeechRepository = new Mock<ISpeechRepository>();
+            moqSpeechRepository.Setup(x =>
+                    x.UpdateAsync(It.IsAny<Domain.SpeechAggregate.Speech>()))
+                .Returns(Task.CompletedTask).Verifiable();
+                
+            var speech = new Domain.SpeechAggregate.Speech(Guid.NewGuid(), 
+                new Title(title), new UrlValue("http://mysite.com"),
+                new Description(description), SpeechType.Conferences);
+
+            Mock<IEventStoreRepository<Domain.SpeechAggregate.Speech>> moqEventStoreRepository =
+                new Mock<IEventStoreRepository<Domain.SpeechAggregate.Speech>>();
+            moqEventStoreRepository.Setup(m =>
+                    m.GetByIdAsync<Domain.SpeechAggregate.Speech>(It.IsAny<Guid>()))
+                .Returns(Task.FromResult(speech));
+
+            IUpdateSpeechUseCase usecase = new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+                mockEventSourcingSubscriber.Object, moqEventStoreRepository.Object);
+            
+            //Act
+            await  usecase.Handle(command);
+
+            //Assert
+            moqSpeechRepository.Verify(m =>
+                m.UpdateAsync(It.Is<Domain.SpeechAggregate.Speech>(n =>
+                n.Id.Equals(speech.Id)
+                && n.Description.Value.Equals(speech.Description.Value, StringComparison.InvariantCultureIgnoreCase)
+                && n.Title.Value.Equals(command.Title)
+                && n.Url.Value.Equals(speech.Url.Value, StringComparison.InvariantCultureIgnoreCase)
+                && n.Type.Equals(speech.Type)
+            )),Times.Once);
+
+            mockEventSourcingSubscriber.Verify(m=>
+                m.Subscribe(It.IsAny<IEventSourcing>()), Times.Once);
+            moqUnitOfWork.Verify(m => m.Commit(), Times.Once);
         }
     }
 }

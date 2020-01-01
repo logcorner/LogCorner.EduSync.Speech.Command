@@ -52,6 +52,14 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
             {
                 throw new ApplicationNotFoundException($"speech not found {command.SpeechId}");
             }
+
+            if (speech.Title.Value != command.Title)
+            {
+                speech.ChangeTitle(command.Title, command.OriginalVersion);
+            }
+            await _speechRepository.UpdateAsync(speech);
+            await  _domainEventSubscriber.Subscribe(speech);
+            _unitOfWork.Commit();
         }
     }
 }
