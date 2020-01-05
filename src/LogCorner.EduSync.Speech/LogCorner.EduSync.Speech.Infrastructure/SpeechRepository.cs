@@ -1,5 +1,6 @@
 ﻿using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
+using LogCorner.EduSync.Speech.Infrastructure.Exceptions;
 using System;
 using System.Threading.Tasks;
 
@@ -21,7 +22,10 @@ namespace LogCorner.EduSync.Speech.Infrastructure
 
         public async Task UpdateAsync(Domain.SpeechAggregate.Speech entity)
         {
-            throw new NotImplementedException();
+            if (entity == null)
+            {
+                throw new RepositoryArgumentNullException(nameof(entity));
+            }
         }
     }
 }

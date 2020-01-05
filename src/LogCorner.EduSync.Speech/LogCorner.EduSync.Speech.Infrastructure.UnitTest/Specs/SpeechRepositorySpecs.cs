@@ -1,5 +1,6 @@
 using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
+using LogCorner.EduSync.Speech.Infrastructure.Exceptions;
 using Moq;
 using System;
 using System.Threading.Tasks;
@@ -27,6 +28,19 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
 
             //Assert
             mockRepository.Verify(x => x.CreateAsync(It.IsAny<Domain.SpeechAggregate.Speech>()), Times.Once);
+        }
+
+        [Fact(DisplayName = "Handling Update when Speech is null  should raise RepositoryArgumentNullException")]
+        public async Task HandlingUpdateWhenSpeechIsNullShouldRaiseRepositoryArgumentNullException()
+        {
+            //Arrange
+            Mock<IRepository<Domain.SpeechAggregate.Speech, Guid>> mockRepository =
+                new Mock<IRepository<Domain.SpeechAggregate.Speech, Guid>>();
+
+            ISpeechRepository sut = new SpeechRepository(mockRepository.Object);
+            //Act
+            //Assert
+            await Assert.ThrowsAsync<RepositoryArgumentNullException>(() => sut.UpdateAsync(null));
         }
     }
 }
