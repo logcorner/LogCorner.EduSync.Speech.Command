@@ -27,7 +27,5 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             OccurredOn = occurredOn;
             PayLoad = serializedBody;
         }
-
-       
     }
 }

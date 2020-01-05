@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using Xunit;
 
-namespace LogCorner.EduSync.Speech.Domain.UnitTest
+namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
 {
     public class EventSourcingUnitTest
     {

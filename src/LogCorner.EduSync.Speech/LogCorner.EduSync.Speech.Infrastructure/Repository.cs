@@ -19,10 +19,5 @@ namespace LogCorner.EduSync.Speech.Infrastructure
         {
             await _dbSet.AddAsync(entity);
         }
-
-        public Task UpdateAsync(T entity)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

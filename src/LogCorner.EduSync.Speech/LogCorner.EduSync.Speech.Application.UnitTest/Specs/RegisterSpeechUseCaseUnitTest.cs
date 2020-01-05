@@ -6,7 +6,7 @@ using Moq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace LogCorner.EduSync.Speech.Application.UnitTest
+namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
 {
     public class RegisterSpeechUseCaseUnitTest
     {

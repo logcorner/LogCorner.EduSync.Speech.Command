@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Xunit;
 using ILoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
 
-namespace LogCorner.EduSync.Speech.Presentation.UnitTest
+namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
 {
     public class SpeechControllerUnitTest
     {
@@ -82,7 +82,7 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest
             await middleware.InvokeAsync(context);
 
             //Assert
-            Assert.Equal((int) HttpStatusCode.InternalServerError, context.Response.StatusCode);
+            Assert.Equal((int)HttpStatusCode.InternalServerError, context.Response.StatusCode);
         }
     }
 }

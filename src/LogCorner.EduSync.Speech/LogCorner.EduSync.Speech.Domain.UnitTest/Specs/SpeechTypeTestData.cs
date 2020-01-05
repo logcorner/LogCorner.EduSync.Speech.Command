@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace LogCorner.EduSync.Speech.Domain.UnitTest
+namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
 {
     public class SpeechTypeTestData : IEnumerable<object[]>
     {

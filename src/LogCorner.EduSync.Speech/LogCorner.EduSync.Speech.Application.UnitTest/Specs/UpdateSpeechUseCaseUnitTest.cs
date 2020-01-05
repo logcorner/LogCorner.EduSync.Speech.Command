@@ -9,7 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace LogCorner.EduSync.Speech.Application.UnitTest
+namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
 {
     public class UpdateSpeechUseCaseUnitTest
     {
@@ -66,7 +66,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
             string url = "http://www.test.com";
 
             UpdateSpeechCommandMessage command = new UpdateSpeechCommandMessage(Guid.NewGuid(),
-                newTitle, description, url, SpeechType.Conferences.ToString(), 0);
+                newTitle, description, url, SpeechType.Conferences.Value.ToString(), 0);
 
             Mock<IUnitOfWork> moqUnitOfWork = new Mock<IUnitOfWork>();
             var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
@@ -77,7 +77,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
                 .Returns(Task.CompletedTask).Verifiable();
 
             var speech = new Domain.SpeechAggregate.Speech(Guid.NewGuid(),
-                new Title(title), new UrlValue("http://mysite.com"),
+                new Title(title), new UrlValue(url),
                 new Description(description), SpeechType.Conferences);
 
             Mock<IEventStoreRepository<Domain.SpeechAggregate.Speech>> moqEventStoreRepository =
@@ -93,13 +93,14 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
             await usecase.Handle(command);
 
             //Assert
+           // var type = (SpeechTypeEnum) Enum.Parse(typeof(SpeechTypeEnum), command.Type, true);
             moqSpeechRepository.Verify(m =>
                 m.UpdateAsync(It.Is<Domain.SpeechAggregate.Speech>(n =>
-                n.Id.Equals(speech.Id)
-                && n.Description.Value.Equals(speech.Description.Value, StringComparison.InvariantCultureIgnoreCase)
-                && n.Title.Value.Equals(command.Title)
-                && n.Url.Value.Equals(speech.Url.Value, StringComparison.InvariantCultureIgnoreCase)
-                && n.Type.Equals(speech.Type)
+                n.Id.Equals(speech.Id) 
+             && n.Description.Value.Equals(command.Description, StringComparison.InvariantCultureIgnoreCase)
+             && n.Title.Value.Equals(command.Title)
+             && n.Url.Value.Equals(command.Url, StringComparison.InvariantCultureIgnoreCase)
+             && n.Type.Equals(new SpeechType(command.Type))
             )), Times.Once);
 
             mockEventSourcingSubscriber.Verify(m =>

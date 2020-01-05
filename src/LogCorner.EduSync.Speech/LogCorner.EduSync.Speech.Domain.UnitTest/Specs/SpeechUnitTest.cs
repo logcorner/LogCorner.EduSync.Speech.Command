@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using Xunit;
 
-namespace LogCorner.EduSync.Speech.Domain.UnitTest
+namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
 {
     public class SpeechUnitTest
     {
@@ -335,12 +335,12 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
             var description = new Description(@"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                               Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
             var url = new UrlValue("http://url.com");
-               
+
             var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
-            
+
             //Act
             //Assert
-            Assert.Throws<ArgumentNullAggregateException>(() => speech.ChangeTitle(newTitle, 
+            Assert.Throws<ArgumentNullAggregateException>(() => speech.ChangeTitle(newTitle,
                 It.IsAny<long>()));
         }
 
@@ -378,9 +378,9 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
 
             //Act
             speech.ChangeTitle(newTitle, expectedVersion);
-            
+
             //Assert
-            Assert.Equal(newTitle,speech.Title.Value);
+            Assert.Equal(newTitle, speech.Title.Value);
             Assert.Equal(description, speech.Description);
             Assert.Equal(url, speech.Url);
         }

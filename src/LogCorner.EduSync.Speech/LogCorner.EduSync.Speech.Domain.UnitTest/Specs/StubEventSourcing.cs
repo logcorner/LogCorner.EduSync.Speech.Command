@@ -1,7 +1,7 @@
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using System;
 
-namespace LogCorner.EduSync.Speech.Domain.UnitTest
+namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
 {
     public class StubEventSourcing : AggregateRoot<Guid>
     {

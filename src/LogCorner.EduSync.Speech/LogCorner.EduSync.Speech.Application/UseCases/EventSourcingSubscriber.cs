@@ -22,5 +22,3 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
         }
     }
 }
-
-

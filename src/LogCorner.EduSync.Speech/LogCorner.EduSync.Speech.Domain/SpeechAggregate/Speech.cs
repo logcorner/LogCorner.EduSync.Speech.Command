@@ -82,7 +82,8 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             }
         }
 
-        #region  - update title
+        #region - update title
+
         public void ChangeTitle(string title, long originalVersion)
         {
             if (string.IsNullOrWhiteSpace(title))
@@ -96,6 +97,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         {
             Title = new Title(ev.Title);
         }
-        #endregion
+
+        #endregion - update title
     }
 }

@@ -13,4 +13,3 @@ namespace LogCorner.EduSync.Speech.Domain.Events
         }
     }
 }
-

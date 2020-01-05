@@ -1,15 +1,15 @@
 ﻿using Xunit;
 
-namespace LogCorner.EduSync.Speech.Domain.UnitTest
+namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
 {
-    public class SpeechTypeValueObjectUnitTest
+    public class UrlValueObjectUnitTest
     {
         [Fact]
         public void EqualityIsTrueWhenObjectsAreSameValuesTest()
         {
             //Arrange
-            var url1 = new SpeechType(SpeechTypeEnum.Conferences.ToString());
-            var url2 = new SpeechType(SpeechTypeEnum.Conferences.ToString());
+            var url1 = new UrlValue("http://url.com");
+            var url2 = new UrlValue("http://url.com");
 
             Assert.Equal(url1, url2);
             Assert.True(url1.Equals(url2));
@@ -21,8 +21,8 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest
         public void EqualityIsFalseWhenObjectsAreDifferentValuesTest()
         {
             //Arrange
-            var url1 = new SpeechType(SpeechTypeEnum.Conferences.ToString());
-            var url2 = new SpeechType(SpeechTypeEnum.SelfPacedLabs.ToString());
+            var url1 = new UrlValue("http://url1.com");
+            var url2 = new UrlValue("http://url2.com");
 
             Assert.False(url1 == url2);
         }
