@@ -66,7 +66,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
                 mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository<Domain.SpeechAggregate.Speech>>());
 
             //Assert
-            await Assert.ThrowsAsync<ApplicationArgumentNullException>(() => usecase.Handle(null));
+            await Assert.ThrowsAsync<ArgumentNullApplicationException>(() => usecase.Handle(null));
         }
     }
 }

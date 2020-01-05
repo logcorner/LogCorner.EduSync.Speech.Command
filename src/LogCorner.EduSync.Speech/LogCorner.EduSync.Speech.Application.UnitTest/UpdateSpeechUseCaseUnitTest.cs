@@ -1,12 +1,12 @@
 using LogCorner.EduSync.Speech.Application.Exceptions;
 using LogCorner.EduSync.Speech.Application.UseCases;
+using LogCorner.EduSync.Speech.Domain;
+using LogCorner.EduSync.Speech.Domain.Exceptions;
 using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
 using System;
 using System.Threading.Tasks;
-using LogCorner.EduSync.Speech.Domain;
-using LogCorner.EduSync.Speech.Domain.Exceptions;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Application.UnitTest
@@ -27,7 +27,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
                 mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository<Domain.SpeechAggregate.Speech>>());
 
             //Assert
-            await Assert.ThrowsAsync<ApplicationArgumentNullException>(() => usecase.Handle(null));
+            await Assert.ThrowsAsync<ArgumentNullApplicationException>(() => usecase.Handle(null));
         }
 
         [Fact(DisplayName = "Handling update  when speech does not exist should raise ApplicationNotFoundException")]
@@ -53,7 +53,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
 
             //Act
             //Assert
-            await Assert.ThrowsAsync<ApplicationNotFoundException>(() => usecase.Handle(command));
+            await Assert.ThrowsAsync<NotFoundApplicationException>(() => usecase.Handle(command));
         }
 
         [Fact(DisplayName = "Handling Update when Command is not null should update speech Title")]
@@ -67,7 +67,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
 
             UpdateSpeechCommandMessage command = new UpdateSpeechCommandMessage(Guid.NewGuid(),
                 newTitle, description, url, SpeechType.Conferences.ToString(), 0);
-          
+
             Mock<IUnitOfWork> moqUnitOfWork = new Mock<IUnitOfWork>();
             var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
 
@@ -75,8 +75,8 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
             moqSpeechRepository.Setup(x =>
                     x.UpdateAsync(It.IsAny<Domain.SpeechAggregate.Speech>()))
                 .Returns(Task.CompletedTask).Verifiable();
-                
-            var speech = new Domain.SpeechAggregate.Speech(Guid.NewGuid(), 
+
+            var speech = new Domain.SpeechAggregate.Speech(Guid.NewGuid(),
                 new Title(title), new UrlValue("http://mysite.com"),
                 new Description(description), SpeechType.Conferences);
 
@@ -88,9 +88,9 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
 
             IUpdateSpeechUseCase usecase = new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
                 mockEventSourcingSubscriber.Object, moqEventStoreRepository.Object);
-            
+
             //Act
-            await  usecase.Handle(command);
+            await usecase.Handle(command);
 
             //Assert
             moqSpeechRepository.Verify(m =>
@@ -100,14 +100,14 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest
                 && n.Title.Value.Equals(command.Title)
                 && n.Url.Value.Equals(speech.Url.Value, StringComparison.InvariantCultureIgnoreCase)
                 && n.Type.Equals(speech.Type)
-            )),Times.Once);
+            )), Times.Once);
 
-            mockEventSourcingSubscriber.Verify(m=>
+            mockEventSourcingSubscriber.Verify(m =>
                 m.Subscribe(It.IsAny<IEventSourcing>()), Times.Once);
             moqUnitOfWork.Verify(m => m.Commit(), Times.Once);
         }
 
-        [Fact(DisplayName = 
+        [Fact(DisplayName =
             "Handling Update when Expected version is not equal to aggregate version should raise ConcurrencyException")]
         public async Task HandlingUpdateWhenExpectedVersionIsNotEqualToAggregateVersionShouldRaiseConcurrencyException()
         {

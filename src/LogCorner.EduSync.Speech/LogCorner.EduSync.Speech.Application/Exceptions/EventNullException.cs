@@ -1,6 +1,6 @@
 ﻿namespace LogCorner.EduSync.Speech.Application.Exceptions
 {
-    public class EventNullException : ApplicationArgumentNullException
+    public class EventNullException : ArgumentNullApplicationException
     {
         internal EventNullException(string message) : base(message)
         {

@@ -25,7 +25,7 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
         {
             if (command == null)
             {
-                throw new ApplicationArgumentNullException(nameof(command));
+                throw new ArgumentNullApplicationException(nameof(command));
             }
 
             var title = new Title(command.Title);
@@ -43,14 +43,14 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
         {
             if (command == null)
             {
-                throw new ApplicationArgumentNullException(nameof(command));
+                throw new ArgumentNullApplicationException(nameof(command));
             }
 
             var speech = await _eventStoreRepository.GetByIdAsync<Domain.SpeechAggregate.Speech>(command.SpeechId);
 
             if (speech == null)
             {
-                throw new ApplicationNotFoundException($"speech not found {command.SpeechId}");
+                throw new NotFoundApplicationException($"speech not found {command.SpeechId}");
             }
 
             if (speech.Title.Value != command.Title)
@@ -58,7 +58,7 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
                 speech.ChangeTitle(command.Title, command.OriginalVersion);
             }
             await _speechRepository.UpdateAsync(speech);
-            await  _domainEventSubscriber.Subscribe(speech);
+            await _domainEventSubscriber.Subscribe(speech);
             _unitOfWork.Commit();
         }
     }
