@@ -1,4 +1,7 @@
-﻿using Xunit;
+﻿using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
+using System.Collections.Generic;
+using LogCorner.EduSync.Speech.Domain;
+using Xunit;
 
 namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
 {
@@ -18,11 +21,11 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             Assert.IsType<Domain.SpeechAggregate.Speech>(result);
 
             Assert.Equal(default, result.Id);
-            Assert.Equal(default, result.Title);
+            Assert.Equal(new Title(null), result.Title);
             Assert.Equal(default, result.Description);
             Assert.Equal(default, result.Url);
             Assert.Equal(default, result.Type);
-            Assert.Equal(default, result.MediaFileItems);
+            Assert.Equal(new List<MediaFile>(), result.MediaFileItems);
         }
     }
 }

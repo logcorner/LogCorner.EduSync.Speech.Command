@@ -8,7 +8,8 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
     public class Speech : AggregateRoot<Guid>
     {
-        public Title Title { get; private set; }
+        public Title Title => new Title(_title);
+        private string _title;
         public UrlValue Url { get; private set; }
         public Description Description { get; private set; }
         public SpeechType Type { get; private set; }
@@ -19,11 +20,12 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         //EF Core need a parameterless constructor
         private Speech()
         {
+            _mediaFileItems = new List<MediaFile>();
         }
 
         public Speech(Title title, UrlValue urlValue, Description description, SpeechType type)
         {
-            Title = title ?? throw new ArgumentNullAggregateException(nameof(title));
+            _title = title?.Value ?? throw new ArgumentNullAggregateException(nameof(title));
             Url = urlValue ?? throw new ArgumentNullAggregateException(nameof(urlValue));
             Description = description ?? throw new ArgumentNullAggregateException(nameof(description));
             Type = type ?? throw new ArgumentNullAggregateException(nameof(type));
@@ -34,7 +36,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         public Speech(Guid id, Title title, UrlValue urlValue, Description description, SpeechType type)
         {
             Id = id;
-            Title = title ?? throw new ArgumentNullAggregateException(nameof(title));
+            _title = title.Value ?? throw new ArgumentNullAggregateException(nameof(title));
             Url = urlValue ?? throw new ArgumentNullAggregateException(nameof(urlValue));
             Description = description ?? throw new ArgumentNullAggregateException(nameof(description));
             Type = type ?? throw new ArgumentNullAggregateException(nameof(type));
@@ -68,7 +70,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         public void Apply(SpeechCreatedEvent ev)
         {
             Id = ev.AggregateId;
-            Title = ev.Title;
+            _title = ev.Title.Value;
             Url = ev.Url;
             Description = ev.Description;
             Type = ev.Type;
@@ -95,7 +97,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 
         public void Apply(SpeechTitleChangedEvent ev)
         {
-            Title = new Title(ev.Title);
+            _title = ev.Title;
         }
 
         #endregion - update title

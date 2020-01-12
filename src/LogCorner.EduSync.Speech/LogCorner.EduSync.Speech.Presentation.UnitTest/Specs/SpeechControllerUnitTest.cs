@@ -1,4 +1,3 @@
-using System;
 using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Presentation.Controllers;
 using LogCorner.EduSync.Speech.Presentation.Dtos;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
@@ -103,7 +103,6 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
             Assert.IsType<BadRequestObjectResult>(result);
         }
 
-
         [Fact(DisplayName = "Update Speech When SpeechId Is Empty Sould Raise PresentationException")]
         public async Task UpdateSpeechWhenSpeechIdIsEmptySouldRaisePresentationException()
         {
@@ -128,15 +127,15 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
             //Arrange
             UpdateSpeechCommandMessage updateSpeechCommandMessage = null;
             var moqUpdateSpeechUseCase = new Mock<IUpdateSpeechUseCase>();
-            moqUpdateSpeechUseCase.Setup(x => x.Handle(It.IsAny<UpdateSpeechCommandMessage>()))
+            moqUpdateSpeechUseCase.Setup(x =>
+                    x.Handle(It.IsAny<UpdateSpeechCommandMessage>()))
                 .Returns(Task.CompletedTask)
                 .Callback<UpdateSpeechCommandMessage>(x => updateSpeechCommandMessage = x);
-     
+
             var speechForUpdateDto = new SpeechForUpdateDto
             {
                 Title = "New is simply dummy text of the printing",
-                Description =
-                    @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                Description = @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
                                 text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged",
                 Type = "1",
                 Url = "http://myjpg.jpg",
@@ -144,14 +143,16 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
                 Id = Guid.NewGuid()
             };
 
-            var sut = new SpeechController(It.IsAny<IRegisterSpeechUseCase>(), moqUpdateSpeechUseCase.Object);
+            var sut = new SpeechController(It.IsAny<IRegisterSpeechUseCase>(),
+                moqUpdateSpeechUseCase.Object);
 
             //Act
             var result = await sut.Put(speechForUpdateDto);
 
             //Assert
             Assert.IsType<OkResult>(result);
-            moqUpdateSpeechUseCase.Verify(x => x.Handle(It.IsAny<UpdateSpeechCommandMessage>()), Times.Once);
+            moqUpdateSpeechUseCase.Verify(x => x.Handle(
+                It.IsAny<UpdateSpeechCommandMessage>()), Times.Once);
             Assert.Equal(speechForUpdateDto.Id, updateSpeechCommandMessage.SpeechId);
             Assert.Equal(speechForUpdateDto.Title, updateSpeechCommandMessage.Title);
             Assert.Equal(speechForUpdateDto.Description, updateSpeechCommandMessage.Description);

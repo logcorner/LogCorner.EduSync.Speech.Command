@@ -27,6 +27,7 @@ namespace LogCorner.EduSync.Speech.Presentation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IRegisterSpeechUseCase, RegisterSpeechUseCase>();
+            services.AddScoped<IUpdateSpeechUseCase, RegisterSpeechUseCase>();
 
             var connectionString = Configuration["ConnectionStrings:SpeechDB"];
 
@@ -45,7 +46,7 @@ namespace LogCorner.EduSync.Speech.Presentation
             services.AddScoped(typeof(IEventStoreRepository<>), typeof(EventStoreRepository<>));
             services.AddTransient<IEventSerializer, JsonEventSerializer>();
             services.AddTransient<IEventSourcingHandler<Event>, EventSourcingHandler<AggregateRoot<Guid>>>();
-            services.AddTransient<IInvoker<AggregateRoot<Guid>>, Invoker<AggregateRoot<Guid>>>();
+            services.AddScoped(typeof(IInvoker<>), typeof(Invoker<>));
             services.AddTransient<IDomainEventRebuilder, DomainEventRebuilder>();
             services.AddTransient<IJsonProvider, JsonProvider>();
 
