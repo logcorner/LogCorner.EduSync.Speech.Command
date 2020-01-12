@@ -93,7 +93,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             await usecase.Handle(command);
 
             //Assert
-           // var type = (SpeechTypeEnum) Enum.Parse(typeof(SpeechTypeEnum), command.Type, true);
+           
             moqSpeechRepository.Verify(m =>
                 m.UpdateAsync(It.Is<Domain.SpeechAggregate.Speech>(n =>
                 n.Id.Equals(speech.Id) 

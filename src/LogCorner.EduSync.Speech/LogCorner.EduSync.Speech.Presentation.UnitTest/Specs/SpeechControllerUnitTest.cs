@@ -1,3 +1,4 @@
+using System;
 using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Presentation.Controllers;
 using LogCorner.EduSync.Speech.Presentation.Dtos;
@@ -19,8 +20,9 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
         public async Task RegisterSpeechWithInvalidModelStateReturnBadRequest()
         {
             //Arrange
-            var moq = new Mock<IRegisterSpeechUseCase>();
-            var sut = new SpeechController(moq.Object);
+            var moqRegisterSpeechUseCase = new Mock<IRegisterSpeechUseCase>();
+            var moqUpdateSpeechUseCase = new Mock<IUpdateSpeechUseCase>();
+            var sut = new SpeechController(moqRegisterSpeechUseCase.Object, moqUpdateSpeechUseCase.Object);
             sut.ModelState.AddModelError("x", "Invalid ModelState");
 
             //Act
@@ -35,11 +37,11 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
         {
             //Arrange
             RegisterSpeechCommandMessage registerSpeechCommandMessage = null;
-            var moq = new Mock<IRegisterSpeechUseCase>();
-            moq.Setup(x => x.Handle(It.IsAny<RegisterSpeechCommandMessage>()))
+            var moqRegisterSpeechUseCase = new Mock<IRegisterSpeechUseCase>();
+            moqRegisterSpeechUseCase.Setup(x => x.Handle(It.IsAny<RegisterSpeechCommandMessage>()))
                 .Returns(Task.CompletedTask)
                 .Callback<RegisterSpeechCommandMessage>(x => registerSpeechCommandMessage = x);
-
+            var moqUpdateSpeechUseCase = new Mock<IUpdateSpeechUseCase>();
             var speechForCreationDto = new SpeechForCreationDto
             {
                 Title = "is simply dummy text of the printing",
@@ -50,14 +52,14 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
                 Url = "http://myjpg.jpg",
             };
 
-            var sut = new SpeechController(moq.Object);
+            var sut = new SpeechController(moqRegisterSpeechUseCase.Object, moqUpdateSpeechUseCase.Object);
 
             //Act
             IActionResult result = await sut.Post(speechForCreationDto);
 
             //Assert
             Assert.IsType<OkResult>(result);
-            moq.Verify(x => x.Handle(It.IsAny<RegisterSpeechCommandMessage>()), Times.Once);
+            moqRegisterSpeechUseCase.Verify(x => x.Handle(It.IsAny<RegisterSpeechCommandMessage>()), Times.Once);
             Assert.Equal(speechForCreationDto.Title, registerSpeechCommandMessage.Title);
             Assert.Equal(speechForCreationDto.Description, registerSpeechCommandMessage.Description);
             Assert.Equal(speechForCreationDto.Type, registerSpeechCommandMessage.Type);
@@ -83,6 +85,79 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
 
             //Assert
             Assert.Equal((int)HttpStatusCode.InternalServerError, context.Response.StatusCode);
+        }
+
+        [Fact(DisplayName = "Update Speech When ModelState Is Invalid Should Return BadRequest")]
+        public async Task UpdateSpeechWhenModelStateIsInvalidReturnBadRequest()
+        {
+            //Arrange
+            var moq = new Mock<IRegisterSpeechUseCase>();
+            var moqUpdateSpeechUseCase = new Mock<IUpdateSpeechUseCase>();
+            var sut = new SpeechController(moq.Object, moqUpdateSpeechUseCase.Object);
+            sut.ModelState.AddModelError("x", "Invalid ModelState");
+
+            //Act
+            IActionResult result = await sut.Put(It.IsAny<SpeechForUpdateDto>());
+
+            //Assert
+            Assert.IsType<BadRequestObjectResult>(result);
+        }
+
+
+        [Fact(DisplayName = "Update Speech When SpeechId Is Empty Sould Raise PresentationException")]
+        public async Task UpdateSpeechWhenSpeechIdIsEmptySouldRaisePresentationException()
+        {
+            //Arrange
+            var moq = new Mock<IRegisterSpeechUseCase>();
+            var moqUpdateSpeechUseCase = new Mock<IUpdateSpeechUseCase>();
+            var sut = new SpeechController(moq.Object, moqUpdateSpeechUseCase.Object);
+
+            var dto = new SpeechForUpdateDto
+            {
+                Id = Guid.Empty
+            };
+
+            //Act
+            //Assert
+            await Assert.ThrowsAnyAsync<PresentationException>(() => sut.Put(dto));
+        }
+
+        [Fact(DisplayName = "Update Speech When ModelState Is Valid With No Errors Should Return Ok")]
+        public async Task UpdateSpeechWhenModelStateIsValidWithNoErrorsShouldReturnOk()
+        {
+            //Arrange
+            UpdateSpeechCommandMessage updateSpeechCommandMessage = null;
+            var moqUpdateSpeechUseCase = new Mock<IUpdateSpeechUseCase>();
+            moqUpdateSpeechUseCase.Setup(x => x.Handle(It.IsAny<UpdateSpeechCommandMessage>()))
+                .Returns(Task.CompletedTask)
+                .Callback<UpdateSpeechCommandMessage>(x => updateSpeechCommandMessage = x);
+     
+            var speechForUpdateDto = new SpeechForUpdateDto
+            {
+                Title = "New is simply dummy text of the printing",
+                Description =
+                    @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                                text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged",
+                Type = "1",
+                Url = "http://myjpg.jpg",
+                Version = 2,
+                Id = Guid.NewGuid()
+            };
+
+            var sut = new SpeechController(It.IsAny<IRegisterSpeechUseCase>(), moqUpdateSpeechUseCase.Object);
+
+            //Act
+            var result = await sut.Put(speechForUpdateDto);
+
+            //Assert
+            Assert.IsType<OkResult>(result);
+            moqUpdateSpeechUseCase.Verify(x => x.Handle(It.IsAny<UpdateSpeechCommandMessage>()), Times.Once);
+            Assert.Equal(speechForUpdateDto.Id, updateSpeechCommandMessage.SpeechId);
+            Assert.Equal(speechForUpdateDto.Title, updateSpeechCommandMessage.Title);
+            Assert.Equal(speechForUpdateDto.Description, updateSpeechCommandMessage.Description);
+            Assert.Equal(speechForUpdateDto.Type, updateSpeechCommandMessage.Type);
+            Assert.Equal(speechForUpdateDto.Url, updateSpeechCommandMessage.Url);
+            Assert.Equal(speechForUpdateDto.Version, updateSpeechCommandMessage.OriginalVersion);
         }
     }
 }
