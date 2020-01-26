@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace LogCorner.EduSync.Speech.Presentation.Exceptions
@@ -35,12 +36,12 @@ namespace LogCorner.EduSync.Speech.Presentation.Exceptions
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            return context.Response.WriteAsync(
+            return context.Response.WriteAsync(JsonSerializer.Serialize(
             new
             {
                 context.Response.StatusCode,
                 Message = "Internal Server Error."
-            }.ToString());
+            }));
         }
     }
 }
