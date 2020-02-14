@@ -93,10 +93,10 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             await usecase.Handle(command);
 
             //Assert
-           
+
             moqSpeechRepository.Verify(m =>
                 m.UpdateAsync(It.Is<Domain.SpeechAggregate.Speech>(n =>
-                n.Id.Equals(speech.Id) 
+                n.Id.Equals(speech.Id)
              && n.Description.Value.Equals(command.Description, StringComparison.InvariantCultureIgnoreCase)
              && n.Title.Value.Equals(command.Title)
              && n.Url.Value.Equals(command.Url, StringComparison.InvariantCultureIgnoreCase)

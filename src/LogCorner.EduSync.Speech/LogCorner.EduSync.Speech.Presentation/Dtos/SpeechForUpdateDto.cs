@@ -5,7 +5,7 @@ namespace LogCorner.EduSync.Speech.Presentation.Dtos
 {
     public class SpeechForUpdateDto
     {
-       [Required(ErrorMessage = "Please provide an Identifier")]
+        [Required(ErrorMessage = "Please provide an Identifier")]
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Please provide a Title")]

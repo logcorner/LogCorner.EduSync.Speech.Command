@@ -1,9 +1,9 @@
-﻿using System;
-using LogCorner.EduSync.Speech.Application.UseCases;
+﻿using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Presentation.Dtos;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using LogCorner.EduSync.Speech.Presentation.Exceptions;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace LogCorner.EduSync.Speech.Presentation.Controllers
 {
@@ -42,9 +42,9 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
             }
 
             var command = new UpdateSpeechCommandMessage(
-                dto.Id == Guid.Empty? throw new PresentationException("The speechId cannot be empty"): dto.Id, 
-                dto.Title, dto.Description, 
-                dto.Url, 
+                dto.Id == Guid.Empty ? throw new PresentationException("The speechId cannot be empty") : dto.Id,
+                dto.Title, dto.Description,
+                dto.Url,
                 dto.Type,
                 dto.Version);
 
