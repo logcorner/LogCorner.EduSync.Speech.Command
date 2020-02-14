@@ -47,7 +47,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             dbSet
                 .Setup(_ => _.AddAsync(It.IsAny<T>(), It.IsAny<CancellationToken>()))
                 .Callback((T model, CancellationToken token) => { sourceList.Add(model); })
-                .Returns((T model, CancellationToken token) => Task.FromResult((EntityEntry<T>)null)).Verifiable();
+                .Returns(async (T model, CancellationToken token) => await Task.FromResult((EntityEntry<T>)null)).Verifiable();
 
             return dbSet;
         }
