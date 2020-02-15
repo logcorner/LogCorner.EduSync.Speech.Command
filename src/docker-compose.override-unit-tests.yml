@@ -4,12 +4,19 @@ services:
   logcorner.edusync.speech.domain.unittest:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
     entrypoint:
       - dotnet
       - test
       - --logger
-      - trx;LogFileName=/tests/test-results.xml
+      - trx;LogFileName=/tests/test-results-1.xml
+  logcorner.edusync.speech.application.unittest:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    
+    entrypoint:
+      - dotnet
+      - test
+      - --logger
+      - trx;LogFileName=/tests/test-results-2.xml
    
     
