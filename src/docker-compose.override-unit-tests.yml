@@ -8,7 +8,7 @@ services:
       - dotnet
       - test
       - --logger
-      - trx;LogFileName=/tests/test-results-1.xml
+      - trx;LogFileName=/tests/tests-results-domain.xml
   logcorner.edusync.speech.application.unittest:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -17,6 +17,16 @@ services:
       - dotnet
       - test
       - --logger
-      - trx;LogFileName=/tests/test-results-2.xml
+      - trx;LogFileName=/tests/test-results-application.xml
+   
+  logcorner.edusync.speech.infrastructure.unittest:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    
+    entrypoint:
+      - dotnet
+      - test
+      - --logger
+      - trx;LogFileName=/tests/test-results-infrastructure.xml
    
     
