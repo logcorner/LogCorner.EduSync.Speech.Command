@@ -28,5 +28,15 @@ services:
       - test
       - --logger
       - trx;LogFileName=/tests/test-results-infrastructure.xml
+
+  logcorner.edusync.speech.presentation.unittest:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    
+    entrypoint:
+      - dotnet
+      - test
+      - --logger
+      - trx;LogFileName=/tests/test-results-presentation.xml
    
     

@@ -24,3 +24,10 @@ services:
       dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Infrastructure.UnitTest/Dockerfile
     volumes: 
       - ${BUILD_ARTIFACTSTAGINGDIRECTORY:-./tests-results/}:/tests
+ logcorner.edusync.speech.presentation.unittest:
+    image: logcorner-edusync-speech-presentation-unit-test
+    build:
+      context: .
+      dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTest/Dockerfile
+    volumes: 
+      - ${BUILD_ARTIFACTSTAGINGDIRECTORY:-./tests-results/}:/tests
