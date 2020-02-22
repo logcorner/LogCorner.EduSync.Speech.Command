@@ -3,40 +3,40 @@ version: '3.4'
 services:
   logcorner.edusync.speech.domain.unittest:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=UnitTest
     entrypoint:
       - dotnet
       - test
       - --logger
-      - trx;LogFileName=/tests/tests-results-domain.xml
+      - trx;LogFileName=/domain-tests/tests-results-domain.xml
   logcorner.edusync.speech.application.unittest:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=UnitTest
     
     entrypoint:
       - dotnet
       - test
       - --logger
-      - trx;LogFileName=/tests/test-results-application.xml
+      - trx;LogFileName=/application-tests/test-results-application.xml
    
   logcorner.edusync.speech.infrastructure.unittest:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=UnitTest
     
     entrypoint:
       - dotnet
       - test
       - --logger
-      - trx;LogFileName=/tests/test-results-infrastructure.xml
+      - trx;LogFileName=/infrastructure-tests/test-results-infrastructure.xml
 
   logcorner.edusync.speech.presentation.unittest:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=UnitTest
     
     entrypoint:
       - dotnet
       - test
       - --logger
-      - trx;LogFileName=/tests/test-results-presentation.xml
+      - trx;LogFileName=/presentation-tests/test-results-presentation.xml
    
     

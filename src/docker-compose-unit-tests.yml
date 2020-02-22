@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Domain.UnitTest/Dockerfile
     volumes: 
-      - ${BUILD_ARTIFACTSTAGINGDIRECTORY:-./tests-results/}:/tests
+      - ./TestResults/tests-results-domain:/domain-tests
 
  logcorner.edusync.speech.application.unittest:
     image: logcorner-edusync-speech-application-unit-test
@@ -15,7 +15,7 @@ services:
       context: .
       dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTest/Dockerfile
     volumes: 
-      - ${BUILD_ARTIFACTSTAGINGDIRECTORY:-./tests-results/}:/tests
+      - ./TestResults/tests-results-application:/application-tests
 
  logcorner.edusync.speech.infrastructure.unittest:
     image: logcorner-edusync-speech-infrastructure-unit-test
@@ -23,11 +23,14 @@ services:
       context: .
       dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Infrastructure.UnitTest/Dockerfile
     volumes: 
-      - ${BUILD_ARTIFACTSTAGINGDIRECTORY:-./tests-results/}:/tests
+       - ./TestResults/tests-results-infrastructure:/infrastructure-tests
+ 
  logcorner.edusync.speech.presentation.unittest:
     image: logcorner-edusync-speech-presentation-unit-test
     build:
       context: .
       dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTest/Dockerfile
     volumes: 
-      - ${BUILD_ARTIFACTSTAGINGDIRECTORY:-./tests-results/}:/tests
+       - ./TestResults/tests-results-presentation:/presentation-tests
+
+
