@@ -9,6 +9,10 @@
     <DockerServiceName>logcorner.edusync.speech.presentation</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="docker-compose.override-unit-tests.yml">
+      <DependentUpon>docker-compose-unit-tests.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose-unit-tests.yml" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>

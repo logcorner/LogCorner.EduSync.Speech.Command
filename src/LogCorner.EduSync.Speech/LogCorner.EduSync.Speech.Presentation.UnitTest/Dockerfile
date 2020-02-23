@@ -1,24 +1,16 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim AS base
 WORKDIR /app
-EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
+COPY ["LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTest/LogCorner.EduSync.Speech.Presentation.UnitTest.csproj", "LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTest/"]
 COPY ["LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/LogCorner.EduSync.Speech.Presentation.csproj", "LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/"]
 COPY ["LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Infrastructure/LogCorner.EduSync.Speech.Infrastructure.csproj", "LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Infrastructure/"]
 COPY ["LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Domain/LogCorner.EduSync.Speech.Domain.csproj", "LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Domain/"]
 COPY ["LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application/LogCorner.EduSync.Speech.Application.csproj", "LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application/"]
-RUN dotnet restore "LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/LogCorner.EduSync.Speech.Presentation.csproj"
+RUN dotnet restore "LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTest/LogCorner.EduSync.Speech.Presentation.UnitTest.csproj"
 COPY . .
-WORKDIR "/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation"
-RUN dotnet build "LogCorner.EduSync.Speech.Presentation.csproj" -c Release -o /app/build
+WORKDIR "/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTest"
 
-FROM build AS publish
-RUN dotnet publish "LogCorner.EduSync.Speech.Presentation.csproj" -c Release -o /app/publish
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "LogCorner.EduSync.Speech.Presentation.dll"]

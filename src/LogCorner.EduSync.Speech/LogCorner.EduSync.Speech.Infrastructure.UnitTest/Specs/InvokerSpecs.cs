@@ -1,6 +1,6 @@
-﻿using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
+﻿using LogCorner.EduSync.Speech.Domain;
+using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using System.Collections.Generic;
-using LogCorner.EduSync.Speech.Domain;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "LogCorner.EduSync.Speech.Application.UnitTest": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
