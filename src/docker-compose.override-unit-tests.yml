@@ -17,7 +17,7 @@ services:
       - dotnet
       - test
       - --logger
-      - trx;LogFileName=/application-tests/test-results-application.xml
+      - trx;LogFileName=/application-tests/tests-results-application.xml
    
   logcorner.edusync.speech.infrastructure.unittest:
     environment:
@@ -27,7 +27,7 @@ services:
       - dotnet
       - test
       - --logger
-      - trx;LogFileName=/infrastructure-tests/test-results-infrastructure.xml
+      - trx;LogFileName=/infrastructure-tests/tests-results-infrastructure.xml
 
   logcorner.edusync.speech.presentation.unittest:
     environment:
@@ -37,6 +37,6 @@ services:
       - dotnet
       - test
       - --logger
-      - trx;LogFileName=/presentation-tests/test-results-presentation.xml
+      - trx;LogFileName=/presentation-tests/tests-results-presentation.xml
    
     
