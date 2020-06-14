@@ -1,0 +1,319 @@
+{
+  "options": [
+    {
+      "enabled": false,
+      "definition": {
+        "id": "5d58cc01-7c75-450c-be18-a388ddb129ec"
+      },
+      "inputs": {
+        "branchFilters": "[\"+refs/heads/*\"]",
+        "additionalFields": "{}"
+      }
+    },
+    {
+      "enabled": false,
+      "definition": {
+        "id": "a9db38f9-9fdc-478c-b0f9-464221e58316"
+      },
+      "inputs": {
+        "workItemType": "Task",
+        "assignToRequestor": "true",
+        "additionalFields": "{}"
+      }
+    }
+  ],
+  "triggers": [
+    {
+      "branchFilters": [
+        "+master"
+      ],
+      "pathFilters": [
+      ],
+      "batchChanges": false,
+      "maxConcurrentBuildsPerBranch": 1,
+      "pollingInterval": 0,
+      "triggerType": 2
+    }
+  ],
+  "variables": {
+    "system.debug": {
+      "value": "false",
+      "allowOverride": true
+    }
+  },
+  "properties": {
+  },
+  "tags": [
+  ],
+  "_links": {
+    "self": {
+      "href": "https://dev.azure.com/logcorner/51b13ef6-109b-4cd3-8491-f9c5482bd542/_apis/build/Definitions/4?revision=2"
+    },
+    "web": {
+      "href": "https://dev.azure.com/logcorner/51b13ef6-109b-4cd3-8491-f9c5482bd542/_build/definition?definitionId=4"
+    },
+    "editor": {
+      "href": "https://dev.azure.com/logcorner/51b13ef6-109b-4cd3-8491-f9c5482bd542/_build/designer?id=4&_a=edit-build-definition"
+    },
+    "badge": {
+      "href": "https://dev.azure.com/logcorner/51b13ef6-109b-4cd3-8491-f9c5482bd542/_apis/build/status/4"
+    }
+  },
+  "jobAuthorizationScope": 1,
+  "jobTimeoutInMinutes": 60,
+  "jobCancelTimeoutInMinutes": 5,
+  "badgeEnabled": true,
+  "process": {
+    "phases": [
+      {
+        "steps": [
+          {
+            "environment": {
+            },
+            "enabled": true,
+            "continueOnError": false,
+            "alwaysRun": false,
+            "displayName": "Build service images",
+            "timeoutInMinutes": 0,
+            "condition": "succeeded()",
+            "task": {
+              "id": "6975e2d1-96d3-4afc-8a41-498b5d34ea19",
+              "versionSpec": "0.*",
+              "definitionType": "task"
+            },
+            "inputs": {
+              "containerregistrytype": "Azure Container Registry",
+              "dockerRegistryEndpoint": "",
+              "azureSubscriptionEndpoint": "",
+              "azureContainerRegistry": "",
+              "dockerComposeFile": "src/docker-compose.yml",
+              "additionalDockerComposeFiles": "docker-compose.override.yml\ndocker-compose-unit-tests.yml\ndocker-compose.override-unit-tests.yml",
+              "dockerComposeFileArgs": "",
+              "projectName": "$(Build.Repository.Name)",
+              "qualifyImageNames": "true",
+              "action": "Build services",
+              "additionalImageTags": "$(Build.BuildNumber)",
+              "includeSourceTags": "false",
+              "includeLatestTag": "true",
+              "buildImages": "true",
+              "serviceName": "",
+              "containerName": "",
+              "ports": "",
+              "workDir": "",
+              "entrypoint": "",
+              "containerCommand": "",
+              "detached": "true",
+              "abortOnContainerExit": "true",
+              "imageDigestComposeFile": "$(Build.StagingDirectory)/docker-compose.images.yml",
+              "removeBuildOptions": "false",
+              "baseResolveDirectory": "",
+              "outputDockerComposeFile": "$(Build.StagingDirectory)/docker-compose.yml",
+              "dockerComposeCommand": "",
+              "arguments": "",
+              "dockerHostEndpoint": "",
+              "nopIfNoDockerComposeFile": "false",
+              "requireAdditionalDockerComposeFiles": "false",
+              "cwd": "$(System.DefaultWorkingDirectory)"
+            }
+          },
+          {
+            "environment": {
+            },
+            "enabled": true,
+            "continueOnError": false,
+            "alwaysRun": false,
+            "displayName": "Run UnitTests",
+            "timeoutInMinutes": 0,
+            "condition": "succeeded()",
+            "task": {
+              "id": "6975e2d1-96d3-4afc-8a41-498b5d34ea19",
+              "versionSpec": "0.*",
+              "definitionType": "task"
+            },
+            "inputs": {
+              "containerregistrytype": "Azure Container Registry",
+              "dockerRegistryEndpoint": "",
+              "azureSubscriptionEndpoint": "",
+              "azureContainerRegistry": "",
+              "dockerComposeFile": "src/docker-compose-unit-tests.yml",
+              "additionalDockerComposeFiles": "docker-compose.override-unit-tests.yml",
+              "dockerComposeFileArgs": "",
+              "projectName": "$(Build.Repository.Name)",
+              "qualifyImageNames": "true",
+              "action": "Run a Docker Compose command",
+              "additionalImageTags": "",
+              "includeSourceTags": "false",
+              "includeLatestTag": "false",
+              "buildImages": "true",
+              "serviceName": "logcorner.edusync.speech.domain.unittest",
+              "containerName": "",
+              "ports": "",
+              "workDir": "",
+              "entrypoint": "",
+              "containerCommand": "",
+              "detached": "true",
+              "abortOnContainerExit": "true",
+              "imageDigestComposeFile": "$(Build.StagingDirectory)/docker-compose.images.yml",
+              "removeBuildOptions": "false",
+              "baseResolveDirectory": "",
+              "outputDockerComposeFile": "$(Build.StagingDirectory)/docker-compose.yml",
+              "dockerComposeCommand": "up",
+              "arguments": "",
+              "dockerHostEndpoint": "",
+              "nopIfNoDockerComposeFile": "false",
+              "requireAdditionalDockerComposeFiles": "false",
+              "cwd": "$(System.DefaultWorkingDirectory)"
+            }
+          },
+          {
+            "environment": {
+            },
+            "enabled": true,
+            "continueOnError": true,
+            "alwaysRun": false,
+            "displayName": "Publish Test Results ",
+            "timeoutInMinutes": 0,
+            "condition": "succeeded()",
+            "task": {
+              "id": "0b0f01ed-7dde-43ff-9cbb-e48954daf9b1",
+              "versionSpec": "2.*",
+              "definitionType": "task"
+            },
+            "inputs": {
+              "testRunner": "VSTest",
+              "testResultsFiles": "$(System.DefaultWorkingDirectory)/**/tests-results*.xml",
+              "searchFolder": "$(System.DefaultWorkingDirectory)",
+              "mergeTestResults": "false",
+              "failTaskOnFailedTests": "true",
+              "testRunTitle": "",
+              "platform": "",
+              "configuration": "",
+              "publishRunAttachments": "true"
+            }
+          }
+        ],
+        "name": "Agent job",
+        "refName": "Job_1",
+        "condition": "succeeded()",
+        "target": {
+          "queue": {
+            "_links": {
+              "self": {
+                "href": "https://dev.azure.com/logcorner/_apis/build/Queues/91"
+              }
+            },
+            "id": 91,
+            "url": "https://dev.azure.com/logcorner/_apis/build/Queues/91",
+            "pool": null
+          },
+          "agentSpecification": {
+            "identifier": "ubuntu-20.04"
+          },
+          "executionOptions": {
+            "type": 0
+          },
+          "allowScriptsAuthAccessOption": false,
+          "type": 1
+        },
+        "jobAuthorizationScope": 1
+      }
+    ],
+    "target": {
+      "agentSpecification": {
+        "identifier": "windows-2019"
+      }
+    },
+    "type": 1
+  },
+  "repository": {
+    "properties": {
+      "apiUrl": "https://api.github.com/repos/logcorner/LogCorner.EduSync.Speech.Command",
+      "branchesUrl": "https://api.github.com/repos/logcorner/LogCorner.EduSync.Speech.Command/branches",
+      "cloneUrl": "https://github.com/logcorner/LogCorner.EduSync.Speech.Command.git",
+      "connectedServiceId": "8739e4d3-fc72-46df-9d70-19c6ce74e51f",
+      "defaultBranch": "master",
+      "fullName": "logcorner/LogCorner.EduSync.Speech.Command",
+      "hasAdminPermissions": "True",
+      "isFork": "False",
+      "isPrivate": "False",
+      "lastUpdated": "06/09/2020 15:02:16",
+      "manageUrl": "https://github.com/logcorner/LogCorner.EduSync.Speech.Command",
+      "nodeId": "MDEwOlJlcG9zaXRvcnkxNjM1MzcyNzc=",
+      "ownerId": "5066547",
+      "orgName": "logcorner",
+      "refsUrl": "https://api.github.com/repos/logcorner/LogCorner.EduSync.Speech.Command/git/refs",
+      "safeRepository": "logcorner/LogCorner.EduSync.Speech.Command",
+      "shortName": "LogCorner.EduSync.Speech.Command",
+      "ownerAvatarUrl": "https://avatars1.githubusercontent.com/u/5066547?v=4",
+      "archived": "False",
+      "externalId": "163537277",
+      "ownerIsAUser": "True",
+      "checkoutNestedSubmodules": "false",
+      "cleanOptions": "0",
+      "fetchDepth": "0",
+      "gitLfsSupport": "false",
+      "reportBuildStatus": "true",
+      "skipSyncSource": "false",
+      "labelSourcesFormat": "$(build.buildNumber)",
+      "labelSources": "0"
+    },
+    "id": "logcorner/LogCorner.EduSync.Speech.Command",
+    "type": "GitHub",
+    "name": "logcorner/LogCorner.EduSync.Speech.Command",
+    "url": "https://github.com/logcorner/LogCorner.EduSync.Speech.Command.git",
+    "defaultBranch": "Feature/DevOps",
+    "clean": "false",
+    "checkoutSubmodules": false
+  },
+  "processParameters": {
+  },
+  "quality": 1,
+  "authoredBy": {
+    "displayName": "XXXXX YYYYY",
+    "url": "https://spsprodeus21.vssps.visualstudio.com/A2c020c17-8ba3-4d9f-9be2-dc546200d912/_apis/Identities/cb2ceb9d-e876-6d5b-9a37-499b09da8ddb",
+    "_links": {
+      "avatar": {
+        "href": "https://dev.azure.com/logcorner/_apis/GraphProfile/MemberAvatars/msa.Y2IyY2ViOWQtZTg3Ni03ZDViLTlhMzctNDk5YjA5ZGE4ZGRi"
+      }
+    },
+    "id": "cb2ceb9d-e876-6d5b-9a37-499b09da8ddb",
+    "uniqueName": "xxxxx@yyyyyy.fr",
+    "imageUrl": "https://dev.azure.com/logcorner/_apis/GraphProfile/MemberAvatars/msa.Y2IyY2ViOWQtZTg3Ni03ZDViLTlhMzctNDk5YjA5ZGE4ZGRi",
+    "descriptor": "msa.Y2IyY2ViOWQtZTg3Ni03ZDViLTlhMzctNDk5YjA5ZGE4ZGRi"
+  },
+  "drafts": [
+  ],
+  "queue": {
+    "_links": {
+      "self": {
+        "href": "https://dev.azure.com/logcorner/_apis/build/Queues/91"
+      }
+    },
+    "id": 91,
+    "name": "Azure Pipelines",
+    "url": "https://dev.azure.com/logcorner/_apis/build/Queues/91",
+    "pool": {
+      "id": 10,
+      "name": "Azure Pipelines",
+      "isHosted": true
+    }
+  },
+  "id": 4,
+  "name": "LogCorner.EduSync.Speech.Command",
+  "url": "https://dev.azure.com/logcorner/51b13ef6-109b-4cd3-8491-f9c5482bd542/_apis/build/Definitions/4?revision=2",
+  "uri": "vstfs:///Build/Definition/4",
+  "path": "\\",
+  "type": 2,
+  "queueStatus": 0,
+  "revision": 2,
+  "createdDate": "2020-06-14T18:55:12.510Z",
+  "project": {
+    "id": "51b13ef6-109b-4cd3-8491-f9c5482bd542",
+    "name": "LogCorner.EduSync.Speech.Command",
+    "url": "https://dev.azure.com/logcorner/_apis/projects/51b13ef6-109b-4cd3-8491-f9c5482bd542",
+    "state": 1,
+    "revision": 418127374,
+    "visibility": 2,
+    "lastUpdateTime": "2020-06-14T10:48:18.100Z"
+  }
+}
