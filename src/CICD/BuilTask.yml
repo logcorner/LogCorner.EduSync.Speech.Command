@@ -1,0 +1,20 @@
+steps:
+
+- task: DockerCompose@0
+
+  displayName: 'Build service images'
+
+  inputs:
+
+    dockerComposeFile: 'src/docker-compose.yml'
+
+    additionalDockerComposeFiles: |
+     docker-compose.override.yml
+     docker-compose-unit-tests.yml
+     docker-compose.override-unit-tests.yml
+
+    action: 'Build services'
+
+    additionalImageTags: '$(Build.BuildNumber)'
+
+    includeLatestTag: true
