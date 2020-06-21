@@ -199,7 +199,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
             Assert.Equal(title, speechCreateEvent.Title);
             Assert.Equal(description, speechCreateEvent.Description);
             Assert.Equal(speechType, speechCreateEvent.Type);
-            Assert.True(DateTime.Now > speechCreateEvent.OcurrendOn);
+            Assert.True(DateTime.UtcNow < speechCreateEvent.OcurrendOn);
         }
 
         [Theory]

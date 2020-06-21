@@ -5,4 +5,4 @@ COPY ["LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Domain/LogCorner.EduSyn
 RUN dotnet restore "LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Domain.UnitTest/LogCorner.EduSync.Speech.Domain.UnitTest.csproj"
 COPY . .
 WORKDIR "/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Domain.UnitTest"
-#RUN dotnet test "LogCorner.EduSync.Speech.Domain.UnitTest.csproj" --logger "trx;LogFileName=LogCorner.EduSync.Speech.Domain.UnitTest.trx" 
+
