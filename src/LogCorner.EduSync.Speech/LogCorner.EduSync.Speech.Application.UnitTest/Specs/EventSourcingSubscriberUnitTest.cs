@@ -1,11 +1,10 @@
 using LogCorner.EduSync.Speech.Application.UseCases;
-using LogCorner.EduSync.Speech.Domain;
-using LogCorner.EduSync.Speech.Domain.Events;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
@@ -44,9 +43,9 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             var moqAggregate = new Mock<IEventSourcing>();
             moqAggregate.Setup(a => a.GetUncommittedEvents()).Returns(new List<Event>
             {
-                new SpeechCreatedEvent(It.IsAny<Guid>(), It.IsAny<Title>(),
-                    It.IsAny<UrlValue>(), It.IsAny<Description>(),
-                    It.IsAny<SpeechType>())
+                new SpeechCreatedEvent(It.IsAny<Guid>(), It.IsAny<string>(),
+                    It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<string>())
             });
 
             //Act

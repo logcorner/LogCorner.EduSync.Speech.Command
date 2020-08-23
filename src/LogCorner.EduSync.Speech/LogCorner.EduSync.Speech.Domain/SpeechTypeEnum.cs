@@ -32,6 +32,14 @@ namespace LogCorner.EduSync.Speech.Domain
                     throw new InvalidEnumAggregateException("SpeechType should be valid and not empty");
         }
 
+        public SpeechType(int value)
+        {
+
+            Value = (SpeechTypeEnum)Enum.ToObject(typeof(SpeechTypeEnum), value);
+
+           
+        }
+
         public override bool Equals(object obj)
         {
             return Equals(obj as SpeechType);

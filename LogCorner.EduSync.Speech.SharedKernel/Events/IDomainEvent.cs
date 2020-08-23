@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
+namespace LogCorner.EduSync.Speech.SharedKernel.Events
 {
     public interface IDomainEvent
     {

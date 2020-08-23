@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace LogCorner.EduSync.Speech.Domain.Events
+namespace LogCorner.EduSync.Speech.SharedKernel.Events
 {
     public class MediaFileCreatedEvent : Event
     {
-        public UrlValue File { get; }
+        public string File { get; }
         public Guid MediaFileId { get; }
 
-        public MediaFileCreatedEvent(Guid aggregateId, Guid mediaFileId, UrlValue file)
+        public MediaFileCreatedEvent(Guid aggregateId, Guid mediaFileId, string file)
         {
             MediaFileId = mediaFileId;
             AggregateId = aggregateId;

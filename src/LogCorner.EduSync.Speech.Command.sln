@@ -33,6 +33,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.Pr
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C49F873D-4091-4616-8B06-3862A28E020F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "60. SharedKernel", "60. SharedKernel", "{B0FD6F43-353B-41A4-A3DE-54499DE82E23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogCorner.EduSync.Speech.SharedKernel", "..\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.SharedKernel.csproj", "{516AD4F4-6881-4A2F-9B49-1D9154A7D235}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +85,10 @@ Global
 		{C49F873D-4091-4616-8B06-3862A28E020F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C49F873D-4091-4616-8B06-3862A28E020F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C49F873D-4091-4616-8B06-3862A28E020F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{516AD4F4-6881-4A2F-9B49-1D9154A7D235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{516AD4F4-6881-4A2F-9B49-1D9154A7D235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{516AD4F4-6881-4A2F-9B49-1D9154A7D235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{516AD4F4-6881-4A2F-9B49-1D9154A7D235}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +103,7 @@ Global
 		{DB6AB3AD-DFED-43AB-8177-28D6D50F0A9A} = {A5B0E323-08F9-4D70-9A26-D7E57E8389B5}
 		{0964135D-D2D0-46EB-966A-6B01B3882F90} = {323CC586-A3DE-4B9B-A566-350999394325}
 		{B3EC16EC-B89A-4352-B2DB-8A839AAEDC75} = {40DC0A61-1AF3-446C-9D8B-068EA1E7D71D}
+		{516AD4F4-6881-4A2F-9B49-1D9154A7D235} = {B0FD6F43-353B-41A4-A3DE-54499DE82E23}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5279CE35-3C1B-4719-9C6B-F96FE2C24172}

@@ -1,5 +1,5 @@
-using LogCorner.EduSync.Speech.Domain.Events;
 using System;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 
 namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
 {

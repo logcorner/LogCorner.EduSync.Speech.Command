@@ -1,5 +1,6 @@
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using System;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 
 namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
 {

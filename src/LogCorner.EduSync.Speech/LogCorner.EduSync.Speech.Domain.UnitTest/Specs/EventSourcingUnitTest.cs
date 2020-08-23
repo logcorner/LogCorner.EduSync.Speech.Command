@@ -1,4 +1,3 @@
-using LogCorner.EduSync.Speech.Domain.Events;
 using LogCorner.EduSync.Speech.Domain.Exceptions;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
@@ -6,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
@@ -43,10 +43,10 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
             long expectedVersion = -1;
 
             var evt = new SpeechCreatedEvent(Guid.NewGuid(),
-                new Title("SpeechCreatedEvent Title "),
-                new UrlValue("http://url-evt.com"),
-                new Description("SpeechCreatedEvent description must be very long as a description than people can understand without efforts"),
-                SpeechType.Conferences);
+               "SpeechCreatedEvent Title ",
+                "http://url-evt.com",
+               "SpeechCreatedEvent description must be very long as a description than people can understand without efforts",
+                "Conferences");
             var aggregate = CreateNewAggregate<SpeechAggregate.Speech>();
 
             //Act
@@ -54,10 +54,10 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
 
             //Assert
             Assert.Equal(evt.AggregateId, aggregate.Id);
-            Assert.Equal(evt.Title, aggregate.Title);
-            Assert.Equal(evt.Url, aggregate.Url);
-            Assert.Equal(evt.Description, aggregate.Description);
-            Assert.Equal(evt.Type, aggregate.Type);
+            Assert.Equal(evt.Title, aggregate.Title.Value);
+            Assert.Equal(evt.Url, aggregate.Url.Value);
+            Assert.Equal(evt.Description, aggregate.Description.Value);
+            Assert.Equal(evt.Type, aggregate.Type.Value.ToString());
 
             Assert.IsAssignableFrom<IDomainEvent>(evt);
         }

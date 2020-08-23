@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LogCorner.EduSync.Speech.Domain.Events
+namespace LogCorner.EduSync.Speech.SharedKernel.Events
 {
     public class SpeechTitleChangedEvent : Event
     {

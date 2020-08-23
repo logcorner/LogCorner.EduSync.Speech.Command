@@ -1,10 +1,10 @@
-using LogCorner.EduSync.Speech.Domain.Events;
 using LogCorner.EduSync.Speech.Domain.Exceptions;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
 using System;
 using System.Linq;
 using System.Reflection;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
@@ -195,10 +195,10 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
             Assert.IsAssignableFrom<SpeechCreatedEvent>(domainEvent);
             Assert.NotNull(speechCreateEvent);
             Assert.Equal(id, speechCreateEvent.AggregateId);
-            Assert.Equal(url, speechCreateEvent.Url);
-            Assert.Equal(title, speechCreateEvent.Title);
-            Assert.Equal(description, speechCreateEvent.Description);
-            Assert.Equal(speechType, speechCreateEvent.Type);
+            Assert.Equal(url.Value, speechCreateEvent.Url);
+            Assert.Equal(title.Value, speechCreateEvent.Title);
+            Assert.Equal(description.Value, speechCreateEvent.Description);
+            Assert.Equal(speechType, new SpeechType(speechCreateEvent.Type));
             Assert.True(DateTime.UtcNow < speechCreateEvent.OcurrendOn);
         }
 
@@ -266,7 +266,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
             Assert.True(speech.Version == 1);
             Assert.NotNull(mediaFileCreatedEvent);
             Assert.NotNull(mediaFileCreatedEvent.File);
-            Assert.NotNull(mediaFileCreatedEvent.File.Value);
+            Assert.NotNull(mediaFileCreatedEvent.File);
         }
 
         [Fact]

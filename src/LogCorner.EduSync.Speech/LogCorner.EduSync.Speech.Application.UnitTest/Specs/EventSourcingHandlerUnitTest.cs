@@ -1,12 +1,11 @@
 using LogCorner.EduSync.Speech.Application.Exceptions;
 using LogCorner.EduSync.Speech.Application.UseCases;
-using LogCorner.EduSync.Speech.Domain;
-using LogCorner.EduSync.Speech.Domain.Events;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using LogCorner.EduSync.Speech.Infrastructure;
 using Moq;
 using System;
 using System.Threading.Tasks;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
@@ -42,9 +41,9 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
 
             var mockEventSerializer = new Mock<IEventSerializer>();
 
-            var @event = new SpeechCreatedEvent(It.IsAny<Guid>(), It.IsAny<Title>(),
-                It.IsAny<UrlValue>(), It.IsAny<Description>(),
-                It.IsAny<SpeechType>());
+            var @event = new SpeechCreatedEvent(It.IsAny<Guid>(), It.IsAny<string>(),
+                It.IsAny<string>(), It.IsAny<string>(),
+                It.IsAny<string>());
 
             long version = 0;
 

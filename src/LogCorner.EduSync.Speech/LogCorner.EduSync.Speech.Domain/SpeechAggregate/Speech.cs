@@ -1,8 +1,8 @@
-﻿using LogCorner.EduSync.Speech.Domain.Events;
-using LogCorner.EduSync.Speech.Domain.Exceptions;
+﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 
 namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
@@ -30,7 +30,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             Description = description ?? throw new ArgumentNullAggregateException(nameof(description));
             Type = type ?? throw new ArgumentNullAggregateException(nameof(type));
             _mediaFileItems = new List<MediaFile>();
-            AddDomainEvent(new SpeechCreatedEvent(Id, Title, Url, Description, Type));
+            AddDomainEvent(new SpeechCreatedEvent(Id, Title.Value, Url.Value, Description.Value, Type.Value.ToString()));
         }
 
         public Speech(Guid id, Title title, UrlValue urlValue, Description description, SpeechType type)
@@ -42,7 +42,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             Type = type ?? throw new ArgumentNullAggregateException(nameof(type));
             _mediaFileItems = new List<MediaFile>();
 
-            AddDomainEvent(new SpeechCreatedEvent(Id, Title, Url, Description, Type));
+            AddDomainEvent(new SpeechCreatedEvent(Id, Title.Value, Url.Value, Description.Value, Type.Value.ToString()));
         }
 
         /*
@@ -64,23 +64,23 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
                 throw new MediaFileAlreadyExisteDomainException(nameof(mediaFile));
             }
 
-            AddDomainEvent(new MediaFileCreatedEvent(Id, mediaFile.Id, mediaFile.File), originalVersion);
+            AddDomainEvent(new MediaFileCreatedEvent(Id, mediaFile.Id, mediaFile.File.Value), originalVersion);
         }
 
         public void Apply(SpeechCreatedEvent ev)
         {
             Id = ev.AggregateId;
-            _title = ev.Title.Value;
-            Url = ev.Url;
-            Description = ev.Description;
-            Type = ev.Type;
+            _title = ev.Title;
+            Url = new UrlValue( ev.Url);
+            Description = new Description(ev.Description);
+            Type = new SpeechType(ev.Type);
         }
 
         public void Apply(MediaFileCreatedEvent ev)
         {
-            if (_mediaFileItems.All(c => c.File != ev.File))
+            if (_mediaFileItems.All(c => c.File.Value != ev.File))
             {
-                _mediaFileItems.Add(new MediaFile(ev.MediaFileId, ev.File));
+                _mediaFileItems.Add(new MediaFile(ev.MediaFileId, new UrlValue(ev.File)));
             }
         }
 

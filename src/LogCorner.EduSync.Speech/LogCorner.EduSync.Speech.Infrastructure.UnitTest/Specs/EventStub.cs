@@ -1,4 +1,4 @@
-using LogCorner.EduSync.Speech.Domain.Events;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 
 namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
 {

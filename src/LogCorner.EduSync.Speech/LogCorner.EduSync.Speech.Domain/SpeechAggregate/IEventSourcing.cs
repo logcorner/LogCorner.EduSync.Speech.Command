@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 
 namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {

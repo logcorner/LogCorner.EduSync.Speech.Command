@@ -1,9 +1,9 @@
 ﻿using LogCorner.EduSync.Speech.Application.Exceptions;
-using LogCorner.EduSync.Speech.Domain.Events;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using LogCorner.EduSync.Speech.Infrastructure;
 using System;
 using System.Threading.Tasks;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 
 namespace LogCorner.EduSync.Speech.Application.UseCases
 {
