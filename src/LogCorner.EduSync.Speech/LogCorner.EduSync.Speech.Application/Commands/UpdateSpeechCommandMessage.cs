@@ -1,7 +1,7 @@
-﻿using LogCorner.EduSync.Speech.Application.Interfaces;
-using System;
+﻿using System;
+using LogCorner.EduSync.Speech.Application.Interfaces;
 
-namespace LogCorner.EduSync.Speech.Application.UseCases
+namespace LogCorner.EduSync.Speech.Application.Commands
 {
     public class UpdateSpeechCommandMessage : ICommand
     {

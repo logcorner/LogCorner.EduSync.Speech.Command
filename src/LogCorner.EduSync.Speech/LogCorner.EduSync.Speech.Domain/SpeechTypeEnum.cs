@@ -19,6 +19,10 @@ namespace LogCorner.EduSync.Speech.Domain
 
         public SpeechTypeEnum Value { get; }
 
+        public string StringValue => Value.ToString();
+
+        public int IntValue => (int)Value;
+
         private SpeechType(SpeechTypeEnum value)
         {
             Value = value;
@@ -34,10 +38,7 @@ namespace LogCorner.EduSync.Speech.Domain
 
         public SpeechType(int value)
         {
-
             Value = (SpeechTypeEnum)Enum.ToObject(typeof(SpeechTypeEnum), value);
-
-           
         }
 
         public override bool Equals(object obj)

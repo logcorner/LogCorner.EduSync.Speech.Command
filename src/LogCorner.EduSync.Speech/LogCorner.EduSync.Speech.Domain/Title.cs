@@ -12,6 +12,10 @@ namespace LogCorner.EduSync.Speech.Domain
 
         public Title(string value)
         {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new InvalidLenghtAggregateException("Value is null or whitespace");
+            }
             if (value?.Length < MinLenght)
                 throw new InvalidLenghtAggregateException("Value is too short");
 

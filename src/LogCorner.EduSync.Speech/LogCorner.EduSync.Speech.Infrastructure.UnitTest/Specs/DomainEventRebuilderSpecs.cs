@@ -1,9 +1,9 @@
-using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LogCorner.EduSync.Speech.SharedKernel.Events;
+using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs

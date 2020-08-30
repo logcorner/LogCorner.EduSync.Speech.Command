@@ -1,4 +1,4 @@
-﻿namespace LogCorner.EduSync.Speech.Infrastructure
+﻿namespace LogCorner.EduSync.Speech.SharedKernel.Serialyser
 {
     public interface IJsonProvider
     {

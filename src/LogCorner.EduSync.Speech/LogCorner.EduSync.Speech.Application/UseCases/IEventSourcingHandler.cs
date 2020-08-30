@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using LogCorner.EduSync.Speech.SharedKernel.Events;
+﻿using LogCorner.EduSync.Speech.SharedKernel.Events;
+using System.Threading.Tasks;
 
 namespace LogCorner.EduSync.Speech.Application.UseCases
 {

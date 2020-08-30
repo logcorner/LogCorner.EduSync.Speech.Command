@@ -46,34 +46,6 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             await Assert.ThrowsAsync<ArgumentNullRepositoryException>(() => sut.UpdateAsync(null));
         }
 
-        [Fact(DisplayName = @"Handling Update when the speech  does not exist should raise
-                            RepositoryNotFoundException")]
-        public async Task HandlingUpdateWhenTheSpeechDoesNotExistShouldRaiseRepositoryNotFoundException()
-        {
-            //Arrange
-            string newTitle = @"New Lorem Ipsum is simply dummy text";
-            string description = @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book";
-
-            var speech = new Domain.SpeechAggregate.Speech(Guid.NewGuid(),
-                new Title(newTitle),
-                new UrlValue("http://mysite.com"),
-                new Description(description), SpeechType.Conferences);
-
-            Mock<IRepository<Domain.SpeechAggregate.Speech, Guid>> mockRepository =
-                new Mock<IRepository<Domain.SpeechAggregate.Speech, Guid>>();
-
-            DbContextOptionsBuilder<DataBaseContext> optionsBuilder
-                = new DbContextOptionsBuilder<DataBaseContext>();
-            optionsBuilder.UseInMemoryDatabase("FakeInMemoryData");
-            var context = new DataBaseContext(optionsBuilder.Options);
-
-            ISpeechRepository sut = new SpeechRepository(mockRepository.Object, context);
-
-            //Act
-            //Assert
-            await Assert.ThrowsAsync<NotFoundRepositoryException>(() => sut.UpdateAsync(speech));
-        }
-
         [Fact(DisplayName = "Handling Update when the speech  is valid and exist should perform update")]
         public async Task HandlingUpdateWhenTheSpeechIsValidAndExistShouldPerformUpdate()
         {
@@ -95,8 +67,8 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             DbContextOptionsBuilder<DataBaseContext> optionsBuilder = new DbContextOptionsBuilder<DataBaseContext>();
             optionsBuilder.UseInMemoryDatabase("FakeInMemoryData");
             var context = new DataBaseContext(optionsBuilder.Options);
-            context.Speech.Add(speechToUpdate);
-            context.SaveChanges();
+            //context.Speech.Add(speechToUpdate);
+            //context.SaveChanges();
             ISpeechRepository sut = new SpeechRepository(mockRepository.Object, context);
 
             //Act

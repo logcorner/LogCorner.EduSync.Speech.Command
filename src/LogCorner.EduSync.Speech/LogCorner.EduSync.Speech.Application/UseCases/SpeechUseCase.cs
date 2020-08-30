@@ -1,4 +1,5 @@
-﻿using LogCorner.EduSync.Speech.Application.Exceptions;
+﻿using LogCorner.EduSync.Speech.Application.Commands;
+using LogCorner.EduSync.Speech.Application.Exceptions;
 using LogCorner.EduSync.Speech.Domain;
 using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
@@ -6,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace LogCorner.EduSync.Speech.Application.UseCases
 {
-    public class RegisterSpeechUseCase : IRegisterSpeechUseCase, IUpdateSpeechUseCase
+    public class SpeechUseCase : IRegisterSpeechUseCase, IUpdateSpeechUseCase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ISpeechRepository _speechRepository;
         private readonly IEventSourcingSubscriber _domainEventSubscriber;
         private readonly IEventStoreRepository<Domain.SpeechAggregate.Speech> _eventStoreRepository;
 
-        public RegisterSpeechUseCase(IUnitOfWork unitOfWork, ISpeechRepository speechRepository, IEventSourcingSubscriber domainEventSubscriber, IEventStoreRepository<Domain.SpeechAggregate.Speech> eventStoreRepository)
+        public SpeechUseCase(IUnitOfWork unitOfWork, ISpeechRepository speechRepository, IEventSourcingSubscriber domainEventSubscriber, IEventStoreRepository<Domain.SpeechAggregate.Speech> eventStoreRepository)
         {
             _unitOfWork = unitOfWork;
             _speechRepository = speechRepository;
@@ -52,11 +53,25 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
             {
                 throw new NotFoundApplicationException($"speech not found {command.SpeechId}");
             }
-
-            if (speech.Title.Value != command.Title)
+            long committedVersion = command.OriginalVersion;
+            if (command.Title != null && speech.Title.Value != command.Title)
             {
-                speech.ChangeTitle(command.Title, command.OriginalVersion);
+                speech.ChangeTitle(new Title(command.Title), committedVersion++);
             }
+            if (command.Description != null && speech.Description.Value != command.Description)
+            {
+                speech.ChangeDescription(new Description(command.Description), committedVersion++);
+            }
+            if (command.Url != null && speech.Url.Value != command.Url)
+            {
+                speech.ChangeUrl(new UrlValue(command.Url), committedVersion++);
+            }
+
+            if (command.Type != null && speech.Type != new SpeechType(command.Type))
+            {
+                speech.ChangeType(new SpeechType(command.Type), committedVersion);
+            }
+
             await _speechRepository.UpdateAsync(speech);
             await _domainEventSubscriber.Subscribe(speech);
             _unitOfWork.Commit();

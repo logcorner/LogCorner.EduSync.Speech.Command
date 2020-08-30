@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using LogCorner.EduSync.Speech.Application.Commands;
 using Xunit;
 using ILoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
 

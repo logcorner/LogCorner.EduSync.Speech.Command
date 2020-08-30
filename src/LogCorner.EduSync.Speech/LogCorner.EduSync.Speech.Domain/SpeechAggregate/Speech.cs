@@ -1,8 +1,8 @@
 ﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LogCorner.EduSync.Speech.SharedKernel.Events;
 
 namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
@@ -10,11 +10,18 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
     {
         public Title Title => new Title(_title);
         private string _title;
-        public UrlValue Url { get; private set; }
-        public Description Description { get; private set; }
-        public SpeechType Type { get; private set; }
+
+        private string _url;
+        public UrlValue Url => new UrlValue(_url);
+
+        private string _description;
+        public Description Description => new Description(_description);
+
+        private int _type;
+        public SpeechType Type => new SpeechType(_type);
 
         private readonly List<MediaFile> _mediaFileItems;
+
         public IReadOnlyCollection<MediaFile> MediaFileItems => _mediaFileItems;
 
         //EF Core need a parameterless constructor
@@ -26,9 +33,9 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         public Speech(Title title, UrlValue urlValue, Description description, SpeechType type)
         {
             _title = title?.Value ?? throw new ArgumentNullAggregateException(nameof(title));
-            Url = urlValue ?? throw new ArgumentNullAggregateException(nameof(urlValue));
-            Description = description ?? throw new ArgumentNullAggregateException(nameof(description));
-            Type = type ?? throw new ArgumentNullAggregateException(nameof(type));
+            _url = urlValue?.Value ?? throw new ArgumentNullAggregateException(nameof(urlValue));
+            _description = description?.Value ?? throw new ArgumentNullAggregateException(nameof(description));
+            _type = type != null ? type.IntValue : throw new ArgumentNullAggregateException(nameof(type));
             _mediaFileItems = new List<MediaFile>();
             AddDomainEvent(new SpeechCreatedEvent(Id, Title.Value, Url.Value, Description.Value, Type.Value.ToString()));
         }
@@ -37,9 +44,9 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         {
             Id = id;
             _title = title.Value ?? throw new ArgumentNullAggregateException(nameof(title));
-            Url = urlValue ?? throw new ArgumentNullAggregateException(nameof(urlValue));
-            Description = description ?? throw new ArgumentNullAggregateException(nameof(description));
-            Type = type ?? throw new ArgumentNullAggregateException(nameof(type));
+            _url = urlValue.Value ?? throw new ArgumentNullAggregateException(nameof(urlValue));
+            _description = description.Value ?? throw new ArgumentNullAggregateException(nameof(description));
+            _type = type.IntValue;
             _mediaFileItems = new List<MediaFile>();
 
             AddDomainEvent(new SpeechCreatedEvent(Id, Title.Value, Url.Value, Description.Value, Type.Value.ToString()));
@@ -71,9 +78,9 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         {
             Id = ev.AggregateId;
             _title = ev.Title;
-            Url = new UrlValue( ev.Url);
-            Description = new Description(ev.Description);
-            Type = new SpeechType(ev.Type);
+            _url = ev.Url;
+            _description = ev.Description;
+            _type = new SpeechType(ev.Type).IntValue;
         }
 
         public void Apply(MediaFileCreatedEvent ev)
@@ -86,18 +93,60 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 
         #region - update title
 
-        public void ChangeTitle(string title, long originalVersion)
+        public void ChangeTitle(Title title, long originalVersion)
         {
-            if (string.IsNullOrWhiteSpace(title))
-            {
-                throw new ArgumentNullAggregateException(nameof(title));
-            }
-            AddDomainEvent(new SpeechTitleChangedEvent(Id, title), originalVersion);
+            AddDomainEvent(new SpeechTitleChangedEvent(Id, title.Value), originalVersion);
+        }
+
+        public void ChangeDescription(Description description, long originalVersion)
+        {
+            AddDomainEvent(new SpeechDescriptionChangedEvent(Id, description.Value), originalVersion);
+        }
+
+        public void ChangeUrl(UrlValue url, long originalVersion)
+        {
+            AddDomainEvent(new SpeechUrlChangedEvent(Id, url.Value), originalVersion);
+        }
+
+        public void ChangeType(SpeechType type, long originalVersion)
+        {
+            AddDomainEvent(new SpeechTypeChangedEvent(Id, type.StringValue), originalVersion);
         }
 
         public void Apply(SpeechTitleChangedEvent ev)
         {
+            if (ev.AggregateId != Id)
+            {
+                throw new InvalidDomainEventException($"Cannot apply event : Speech Id ({Id}) is not equals to AggregateId ({ev.AggregateId}) of the event , {nameof(SpeechTitleChangedEvent)}");
+            }
             _title = ev.Title;
+        }
+
+        public void Apply(SpeechDescriptionChangedEvent ev)
+        {
+            if (ev.AggregateId != Id)
+            {
+                throw new InvalidDomainEventException($"Cannot apply event : Speech Id ({Id}) is not equals to AggregateId ({ev.AggregateId}) of the event , {nameof(SpeechDescriptionChangedEvent)}");
+            }
+            _description = ev.Description;
+        }
+
+        public void Apply(SpeechUrlChangedEvent ev)
+        {
+            if (ev.AggregateId != Id)
+            {
+                throw new InvalidDomainEventException($"Cannot apply event : Speech Id ({Id}) is not equals to AggregateId ({ev.AggregateId}) of the event , {nameof(SpeechUrlChangedEvent)}");
+            }
+            _url = ev.Url;
+        }
+
+        public void Apply(SpeechTypeChangedEvent ev)
+        {
+            if (ev.AggregateId != Id)
+            {
+                throw new InvalidDomainEventException($"Cannot apply event : Speech Id ({Id}) is not equals to AggregateId ({ev.AggregateId}) of the event , {nameof(SpeechTypeChangedEvent)}");
+            }
+            _type = new SpeechType(ev.Type).IntValue;
         }
 
         #endregion - update title

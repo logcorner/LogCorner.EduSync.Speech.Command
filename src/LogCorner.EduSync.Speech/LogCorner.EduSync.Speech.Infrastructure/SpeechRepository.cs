@@ -29,12 +29,17 @@ namespace LogCorner.EduSync.Speech.Infrastructure
             {
                 throw new ArgumentNullRepositoryException(nameof(speech));
             }
+            _context.ChangeTracker.TrackGraph(speech, a =>
+           {
+               a.Entry.State = a.Entry.IsKeySet ? EntityState.Modified : EntityState.Added;
+           });
 
-            var existingSpeech = await _context.Speech
-                .Include(b => b.MediaFileItems)
-                .FirstOrDefaultAsync(b => b.Id == speech.Id);
+            foreach (var item in _context.ChangeTracker.Entries())
+            {
+                Console.WriteLine(item.Entity.GetType().Name, item.State.ToString());
+            }
 
-            _context.Entry(existingSpeech ?? throw new NotFoundRepositoryException(nameof(existingSpeech))).CurrentValues.SetValues(speech);
+            await Task.CompletedTask;
         }
     }
 }

@@ -1,11 +1,11 @@
 using LogCorner.EduSync.Speech.Domain.Exceptions;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using LogCorner.EduSync.Speech.SharedKernel.Events;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs

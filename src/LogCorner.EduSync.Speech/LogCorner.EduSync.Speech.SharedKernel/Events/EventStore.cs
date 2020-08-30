@@ -1,17 +1,17 @@
 ﻿using System;
 
-namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
+namespace LogCorner.EduSync.Speech.SharedKernel.Events
 {
     public class EventStore
     {
-        public int Id { get; private set; }
-        public long Version { get; private set; }
-        public Guid AggregateId { get; private set; }
-        public string Name { get; private set; }
-        public string TypeName { get; private set; }
-        public DateTime OccurredOn { get; private set; }
-        public string PayLoad { get; private set; }
-        public bool IsSync { get; private set; }
+        public int Id { get; set; }
+        public long Version { get; set; }
+        public Guid AggregateId { get; set; }
+        public string Name { get; set; }
+        public string TypeName { get; set; }
+        public DateTime OccurredOn { get; set; }
+        public string PayLoad { get; set; }
+        public bool IsSync { get; set; }
 
         private EventStore()
         {

@@ -1,4 +1,5 @@
-﻿using LogCorner.EduSync.Speech.Application.UseCases;
+﻿using LogCorner.EduSync.Speech.Application.Commands;
+using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Presentation.Dtos;
 using LogCorner.EduSync.Speech.Presentation.Exceptions;
 using Microsoft.AspNetCore.Mvc;

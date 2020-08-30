@@ -1,9 +1,10 @@
-﻿using LogCorner.EduSync.Speech.Application.Exceptions;
+﻿using LogCorner.EduSync.SignalR.Common;
+using LogCorner.EduSync.Speech.Application.Exceptions;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
-using LogCorner.EduSync.Speech.Infrastructure;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
+using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
 using System;
 using System.Threading.Tasks;
-using LogCorner.EduSync.Speech.SharedKernel.Events;
 
 namespace LogCorner.EduSync.Speech.Application.UseCases
 {
@@ -11,12 +12,14 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
     {
         private readonly IEventStoreRepository<T> _eventStoreRepository;
         private readonly IEventSerializer _eventSerializer;
+        private readonly ISignalRPublisher _publisher;
 
         public EventSourcingHandler(IEventStoreRepository<T> eventStoreRepository,
-            IEventSerializer eventSerializer)
+            IEventSerializer eventSerializer, ISignalRPublisher publisher)
         {
             _eventStoreRepository = eventStoreRepository;
             _eventSerializer = eventSerializer;
+            _publisher = publisher;
         }
 
         public async Task Handle(Event @event, long aggregateVersion)
@@ -34,6 +37,10 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
                 @event.OcurrendOn,
                 serializedBody);
             await _eventStoreRepository.AppendAsync(eventStore);
+
+            await _publisher.SubscribeAsync(Topics.Speech);
+
+            await _publisher.PublishAsync(Topics.Speech, eventStore);
         }
     }
 }

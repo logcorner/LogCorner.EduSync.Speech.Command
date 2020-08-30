@@ -1,6 +1,6 @@
 ﻿using LogCorner.EduSync.Speech.SharedKernel.Events;
 
-namespace LogCorner.EduSync.Speech.Infrastructure
+namespace LogCorner.EduSync.Speech.SharedKernel.Serialyser
 {
     public class JsonEventSerializer : IEventSerializer
     {

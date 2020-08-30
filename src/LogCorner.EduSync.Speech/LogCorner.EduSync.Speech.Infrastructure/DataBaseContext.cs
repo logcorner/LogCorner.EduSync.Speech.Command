@@ -1,5 +1,6 @@
 ﻿using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using LogCorner.EduSync.Speech.Infrastructure.Mapping;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 using Microsoft.EntityFrameworkCore;
 
 namespace LogCorner.EduSync.Speech.Infrastructure

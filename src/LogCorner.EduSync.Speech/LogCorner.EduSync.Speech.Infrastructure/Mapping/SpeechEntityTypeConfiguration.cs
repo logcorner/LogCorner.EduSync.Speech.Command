@@ -9,10 +9,10 @@ namespace LogCorner.EduSync.Speech.Infrastructure.Mapping
         {
             speechEntityConfiguration.ToTable("Speech");
             speechEntityConfiguration.HasKey(o => o.Id);
-            speechEntityConfiguration.OwnsOne(s => s.Url).Property(b => b.Value).HasColumnName("Url");
+            speechEntityConfiguration.Property<string>("_url").IsRequired().HasColumnName("Url");
             speechEntityConfiguration.Property<string>("_title").IsRequired().HasColumnName("Title");
-            speechEntityConfiguration.OwnsOne(s => s.Description).Property(b => b.Value).HasColumnName("Description");
-            speechEntityConfiguration.OwnsOne(s => s.Type).Property(b => b.Value).HasColumnName("Type");
+            speechEntityConfiguration.Property<string>("_description").IsRequired().HasColumnName("Description");
+            speechEntityConfiguration.Property<int>("_type").IsRequired().HasColumnName("Type");
 
             speechEntityConfiguration.HasMany(b => b.MediaFileItems);
         }

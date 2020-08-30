@@ -1,3 +1,4 @@
+using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
 using Newtonsoft.Json;
 using Xunit;
 

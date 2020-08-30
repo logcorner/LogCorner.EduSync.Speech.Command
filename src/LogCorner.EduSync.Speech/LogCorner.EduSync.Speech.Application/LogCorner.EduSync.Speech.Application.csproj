@@ -5,17 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="UseCases\RegisterSpeechCommandMessage.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Domain\LogCorner.EduSync.Speech.Domain.csproj" />
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Infrastructure\LogCorner.EduSync.Speech.Infrastructure.csproj" />
     <ProjectReference Include="..\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.SharedKernel.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
+    <Reference Include="LogCorner.EduSync.SignalR.Common">
+      <HintPath>..\..\SharedKernel\LogCorner.EduSync.SignalR.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

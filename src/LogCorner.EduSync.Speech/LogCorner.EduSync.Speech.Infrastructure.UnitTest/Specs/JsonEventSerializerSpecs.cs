@@ -1,4 +1,5 @@
 using LogCorner.EduSync.Speech.SharedKernel.Events;
+using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
 using Moq;
 using Xunit;
 

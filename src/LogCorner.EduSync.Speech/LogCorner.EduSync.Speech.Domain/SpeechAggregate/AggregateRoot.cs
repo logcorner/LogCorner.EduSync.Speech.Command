@@ -1,7 +1,7 @@
 ﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
 using System.Collections.Generic;
 using System.Linq;
-using LogCorner.EduSync.Speech.SharedKernel.Events;
 
 namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {

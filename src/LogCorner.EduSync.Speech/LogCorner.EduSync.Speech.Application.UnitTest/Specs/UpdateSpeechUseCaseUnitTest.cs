@@ -7,6 +7,7 @@ using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
 using System;
 using System.Threading.Tasks;
+using LogCorner.EduSync.Speech.Application.Commands;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
@@ -23,7 +24,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
 
             //Act
-            IUpdateSpeechUseCase usecase = new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+            IUpdateSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
                 mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository<Domain.SpeechAggregate.Speech>>());
 
             //Assert
@@ -48,7 +49,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             moqEventStoreRepository.Setup(m => m.GetByIdAsync<Domain.SpeechAggregate.Speech>(command.SpeechId))
                 .Returns(Task.FromResult((Domain.SpeechAggregate.Speech)null));
 
-            IUpdateSpeechUseCase usecase = new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+            IUpdateSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
                 mockEventSourcingSubscriber.Object, moqEventStoreRepository.Object);
 
             //Act
@@ -63,10 +64,15 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             string title = @"Lorem Ipsum is simply dummy text";
             string newTitle = @"New Lorem Ipsum is simply dummy text";
             string description = @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book";
-            string url = "http://www.test.com";
 
+            string newDescription = @"new Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book";
+            string url = "http://www.test.com";
+            string newUrl = "http://www.test_new.com";
+
+            var type = SpeechType.Conferences.Value.ToString();
+            var newType = SpeechType.SelfPacedLabs.Value.ToString();
             UpdateSpeechCommandMessage command = new UpdateSpeechCommandMessage(Guid.NewGuid(),
-                newTitle, description, url, SpeechType.Conferences.Value.ToString(), 0);
+                newTitle, newDescription, newUrl, newType, 0);
 
             Mock<IUnitOfWork> moqUnitOfWork = new Mock<IUnitOfWork>();
             var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
@@ -78,7 +84,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
 
             var speech = new Domain.SpeechAggregate.Speech(Guid.NewGuid(),
                 new Title(title), new UrlValue(url),
-                new Description(description), SpeechType.Conferences);
+                new Description(description), new SpeechType(type));
 
             Mock<IEventStoreRepository<Domain.SpeechAggregate.Speech>> moqEventStoreRepository =
                 new Mock<IEventStoreRepository<Domain.SpeechAggregate.Speech>>();
@@ -86,7 +92,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
                     m.GetByIdAsync<Domain.SpeechAggregate.Speech>(It.IsAny<Guid>()))
                 .Returns(Task.FromResult(speech));
 
-            IUpdateSpeechUseCase usecase = new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+            IUpdateSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
                 mockEventSourcingSubscriber.Object, moqEventStoreRepository.Object);
 
             //Act
@@ -134,7 +140,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
                     m.GetByIdAsync<Domain.SpeechAggregate.Speech>(It.IsAny<Guid>()))
                 .Returns(Task.FromResult(speech));
 
-            IUpdateSpeechUseCase usecase = new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+            IUpdateSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
                 mockEventSourcingSubscriber.Object, moqEventStoreRepository.Object);
             //Act
             //Assert

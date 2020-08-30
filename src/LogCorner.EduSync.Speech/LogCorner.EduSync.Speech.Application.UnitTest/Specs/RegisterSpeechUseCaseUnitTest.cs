@@ -4,6 +4,7 @@ using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
 using System.Threading.Tasks;
+using LogCorner.EduSync.Speech.Application.Commands;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
@@ -37,7 +38,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             //Act
             // ------------ RegisterSpeechUseCase is the object under test
             IRegisterSpeechUseCase usecase =
-                new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object, mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository<Domain.SpeechAggregate.Speech>>());
+                new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object, mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository<Domain.SpeechAggregate.Speech>>());
 
             await usecase.Handle(registerSpeechCommand);
 
@@ -62,7 +63,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
 
             //Act
-            IRegisterSpeechUseCase usecase = new RegisterSpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+            IRegisterSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
                 mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository<Domain.SpeechAggregate.Speech>>());
 
             //Assert

@@ -1,8 +1,11 @@
-﻿using LogCorner.EduSync.Speech.Application.UseCases;
+﻿using LogCorner.EduSync.SignalR.Common;
+using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using LogCorner.EduSync.Speech.Infrastructure;
 using LogCorner.EduSync.Speech.Presentation.Exceptions;
+using LogCorner.EduSync.Speech.SharedKernel.Events;
+using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +13,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using LogCorner.EduSync.Speech.SharedKernel.Events;
 
 namespace LogCorner.EduSync.Speech.Presentation
 {
@@ -26,8 +28,8 @@ namespace LogCorner.EduSync.Speech.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IRegisterSpeechUseCase, RegisterSpeechUseCase>();
-            services.AddScoped<IUpdateSpeechUseCase, RegisterSpeechUseCase>();
+            services.AddScoped<IRegisterSpeechUseCase, SpeechUseCase>();
+            services.AddScoped<IUpdateSpeechUseCase, SpeechUseCase>();
 
             var connectionString = Configuration["ConnectionStrings:SpeechDB"];
 
@@ -39,7 +41,7 @@ namespace LogCorner.EduSync.Speech.Presentation
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddTransient<IRegisterSpeechUseCase, RegisterSpeechUseCase>();
+            services.AddTransient<IRegisterSpeechUseCase, SpeechUseCase>();
 
             services.AddTransient<IEventSourcingSubscriber, EventSourcingSubscriber>();
 
@@ -50,6 +52,7 @@ namespace LogCorner.EduSync.Speech.Presentation
             services.AddTransient<IDomainEventRebuilder, DomainEventRebuilder>();
             services.AddTransient<IJsonProvider, JsonProvider>();
 
+            services.AddSignalRServices("https://localhost:5001/logcornerhub");
             services.AddControllers();
         }
 
