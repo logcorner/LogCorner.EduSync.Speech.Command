@@ -3,6 +3,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
+
 namespace LogCorner.EduSync.Speech.SharedKernel.Serialyser
 {
     public class JsonProvider : IJsonProvider

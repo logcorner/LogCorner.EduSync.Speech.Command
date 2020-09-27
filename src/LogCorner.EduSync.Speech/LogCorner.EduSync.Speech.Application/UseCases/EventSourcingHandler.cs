@@ -38,8 +38,6 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
                 serializedBody);
             await _eventStoreRepository.AppendAsync(eventStore);
 
-            await _publisher.SubscribeAsync(Topics.Speech);
-
             await _publisher.PublishAsync(Topics.Speech, eventStore);
         }
     }
