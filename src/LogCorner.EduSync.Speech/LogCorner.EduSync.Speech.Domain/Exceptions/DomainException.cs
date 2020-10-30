@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace LogCorner.EduSync.Speech.Domain.Exceptions
+﻿namespace LogCorner.EduSync.Speech.Domain.Exceptions
 {
-    public class DomainException : Exception
+    public class DomainException : BaseException
     {
-        protected DomainException(string message) : base(message)
+        protected DomainException(int errorCode, string message) : base(errorCode, message)
         {
         }
     }

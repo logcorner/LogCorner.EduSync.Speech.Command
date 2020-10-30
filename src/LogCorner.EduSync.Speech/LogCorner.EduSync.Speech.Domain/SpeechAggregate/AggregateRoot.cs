@@ -20,9 +20,8 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         {
             if (Version != expectedVersion)
             {
-                throw new ConcurrencyException(
-                    $@"Invalid version specified : expectedVersion = {Version}
-                          but  originalVersion = {expectedVersion}.");
+                throw new ConcurrencyException(ErrorCode.InvalidVersionSpecified,
+                    $@"Invalid version specified expectedVersion = {expectedVersion} is not equals to aggregateVersion");
             }
         }
 

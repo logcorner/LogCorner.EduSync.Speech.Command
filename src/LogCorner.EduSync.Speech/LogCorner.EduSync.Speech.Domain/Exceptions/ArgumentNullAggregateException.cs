@@ -2,7 +2,7 @@
 {
     public class ArgumentNullAggregateException : AggregateException
     {
-        public ArgumentNullAggregateException(string message) : base(message)
+        public ArgumentNullAggregateException(int errorCode, string message) : base(errorCode, message)
         {
         }
     }

@@ -1,3 +1,4 @@
+using LogCorner.EduSync.Speech.Application.Commands;
 using LogCorner.EduSync.Speech.Application.Exceptions;
 using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Domain;
@@ -7,7 +8,6 @@ using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
 using System;
 using System.Threading.Tasks;
-using LogCorner.EduSync.Speech.Application.Commands;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
@@ -25,7 +25,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
 
             //Act
             IUpdateSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
-                mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository<Domain.SpeechAggregate.Speech>>());
+                mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository>());
 
             //Assert
             await Assert.ThrowsAsync<ArgumentNullApplicationException>(() => usecase.Handle(null));
@@ -43,8 +43,8 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
 
             var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
 
-            Mock<IEventStoreRepository<Domain.SpeechAggregate.Speech>> moqEventStoreRepository =
-                new Mock<IEventStoreRepository<Domain.SpeechAggregate.Speech>>();
+            Mock<IEventStoreRepository> moqEventStoreRepository =
+                new Mock<IEventStoreRepository>();
 
             moqEventStoreRepository.Setup(m => m.GetByIdAsync<Domain.SpeechAggregate.Speech>(command.SpeechId))
                 .Returns(Task.FromResult((Domain.SpeechAggregate.Speech)null));
@@ -86,8 +86,8 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
                 new Title(title), new UrlValue(url),
                 new Description(description), new SpeechType(type));
 
-            Mock<IEventStoreRepository<Domain.SpeechAggregate.Speech>> moqEventStoreRepository =
-                new Mock<IEventStoreRepository<Domain.SpeechAggregate.Speech>>();
+            Mock<IEventStoreRepository> moqEventStoreRepository =
+                new Mock<IEventStoreRepository>();
             moqEventStoreRepository.Setup(m =>
                     m.GetByIdAsync<Domain.SpeechAggregate.Speech>(It.IsAny<Guid>()))
                 .Returns(Task.FromResult(speech));
@@ -134,8 +134,8 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
                 new Title(title), new UrlValue("http://mysite.com"),
                 new Description(description), SpeechType.Conferences);
 
-            Mock<IEventStoreRepository<Domain.SpeechAggregate.Speech>> moqEventStoreRepository =
-                new Mock<IEventStoreRepository<Domain.SpeechAggregate.Speech>>();
+            Mock<IEventStoreRepository> moqEventStoreRepository =
+                new Mock<IEventStoreRepository>();
             moqEventStoreRepository.Setup(m =>
                     m.GetByIdAsync<Domain.SpeechAggregate.Speech>(It.IsAny<Guid>()))
                 .Returns(Task.FromResult(speech));

@@ -7,5 +7,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
     public interface ISpeechRepository : IRepository<Speech, Guid>
     {
         Task UpdateAsync(Speech speech);
+
+        Task DeleteAsync(Speech speech);
     }
 }

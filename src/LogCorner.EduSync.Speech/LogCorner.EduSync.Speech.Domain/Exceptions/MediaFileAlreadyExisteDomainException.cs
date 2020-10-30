@@ -1,8 +1,8 @@
 ﻿namespace LogCorner.EduSync.Speech.Domain.Exceptions
 {
-    public class MediaFileAlreadyExisteDomainException : DomainException
+    public class MediaFileAlreadyExistDomainException : DomainException
     {
-        public MediaFileAlreadyExisteDomainException(string message) : base(message)
+        public MediaFileAlreadyExistDomainException(int errorCode, string message) : base(errorCode, message)
         {
         }
     }

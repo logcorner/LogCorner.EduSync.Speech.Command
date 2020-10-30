@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LogCorner.EduSync.Speech.Infrastructure
 {
-    public class EventStoreRepository<T> : IEventStoreRepository<T> where T : AggregateRoot<Guid>
+    public class EventStoreRepository<T> : IEventStoreRepository where T : AggregateRoot<Guid>
     {
         private readonly IInvoker<T> _invoker;
         private readonly DbSet<EventStore> _dbSet;
@@ -37,13 +37,13 @@ namespace LogCorner.EduSync.Speech.Infrastructure
         {
             if (aggregateId == Guid.Empty)
             {
-                throw new BadAggregateIdException(nameof(aggregateId));
+                throw new BadAggregateIdException(ErrorCode.BadAggregateId, nameof(aggregateId));
             }
 
             var aggregate = _invoker.CreateInstanceOfAggregateRoot<T>();
             if (aggregate == null)
             {
-                throw new NullInstanceOfAggregateIdException(nameof(aggregate));
+                throw new NullInstanceOfAggregateException(ErrorCode.NullInstanceOfAggregate, nameof(aggregate));
             }
 
             var eventStoreItems = _dbSet.AsNoTracking().Where(e => e.AggregateId == aggregateId).AsQueryable();

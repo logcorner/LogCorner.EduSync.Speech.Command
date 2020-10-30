@@ -7,10 +7,10 @@ namespace LogCorner.EduSync.Speech.SharedKernel.Events
         public string Title { get; }
         public string Url { get; }
         public string Description { get; }
-        public string Type { get; }
+        public SpeechTypeEnum Type { get; }
 
         public SpeechCreatedEvent(Guid id, string title, string url,
-            string description, string type)
+            string description, SpeechTypeEnum type)
         {
             AggregateId = id;
             Title = title;

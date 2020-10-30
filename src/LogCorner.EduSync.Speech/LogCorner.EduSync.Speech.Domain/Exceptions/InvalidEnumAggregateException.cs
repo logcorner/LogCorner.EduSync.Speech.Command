@@ -2,7 +2,7 @@
 {
     public class InvalidEnumAggregateException : AggregateException
     {
-        public InvalidEnumAggregateException(string message) : base(message)
+        public InvalidEnumAggregateException(int errorCode, string message) : base(errorCode, message)
         {
         }
     }

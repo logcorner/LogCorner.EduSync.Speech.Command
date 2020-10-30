@@ -28,8 +28,9 @@ namespace LogCorner.EduSync.Speech.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IRegisterSpeechUseCase, SpeechUseCase>();
+            services.AddScoped<ICreateSpeechUseCase, SpeechUseCase>();
             services.AddScoped<IUpdateSpeechUseCase, SpeechUseCase>();
+            services.AddScoped<IDeleteSpeechUseCase, SpeechUseCase>();
 
             var connectionString = Configuration["ConnectionStrings:SpeechDB"];
 
@@ -41,18 +42,26 @@ namespace LogCorner.EduSync.Speech.Presentation
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddTransient<IRegisterSpeechUseCase, SpeechUseCase>();
-
             services.AddTransient<IEventSourcingSubscriber, EventSourcingSubscriber>();
 
-            services.AddScoped(typeof(IEventStoreRepository<>), typeof(EventStoreRepository<>));
+            services.AddScoped(typeof(IEventStoreRepository), typeof(EventStoreRepository<>));
             services.AddTransient<IEventSerializer, JsonEventSerializer>();
             services.AddTransient<IEventSourcingHandler<Event>, EventSourcingHandler<AggregateRoot<Guid>>>();
             services.AddScoped(typeof(IInvoker<>), typeof(Invoker<>));
             services.AddTransient<IDomainEventRebuilder, DomainEventRebuilder>();
             services.AddTransient<IJsonProvider, JsonProvider>();
 
-            services.AddSignalRServices("https://localhost:5001/logcornerhub");
+            services.AddSignalRServices("http://localhost:5000/logcornerhub");
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    "CorsPolicy",
+                    builder => builder.WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
             services.AddControllers();
         }
 
@@ -70,7 +79,7 @@ namespace LogCorner.EduSync.Speech.Presentation
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseRouting();
-
+            app.UseCors("CorsPolicy");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

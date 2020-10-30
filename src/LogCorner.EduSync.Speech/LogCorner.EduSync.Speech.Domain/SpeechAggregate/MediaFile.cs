@@ -15,7 +15,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         public MediaFile(Guid id, UrlValue file)
         {
             Id = id;
-            File = file ?? throw new ArgumentNullAggregateException(nameof(file));
+            File = file ?? throw new ArgumentNullAggregateException(0, nameof(file));
         }
     }
 }

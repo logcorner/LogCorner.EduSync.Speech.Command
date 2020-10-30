@@ -2,7 +2,7 @@
 {
     public class InvalidDomainEventException : AggregateException
     {
-        public InvalidDomainEventException(string message) : base(message)
+        public InvalidDomainEventException(int errorCode, string message) : base(errorCode, message)
         {
         }
     }

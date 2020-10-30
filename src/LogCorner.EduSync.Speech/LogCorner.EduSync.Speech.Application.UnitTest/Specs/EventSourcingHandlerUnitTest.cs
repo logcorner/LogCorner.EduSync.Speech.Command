@@ -3,10 +3,10 @@ using LogCorner.EduSync.Speech.Application.Exceptions;
 using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using LogCorner.EduSync.Speech.SharedKernel.Events;
+using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
 using Moq;
 using System;
 using System.Threading.Tasks;
-using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
@@ -17,7 +17,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
         public async Task HandleWithNullEventsShouldRaiseEventNullException()
         {
             //Arrange
-            var mockEventStoreRepository = new Mock<IEventStoreRepository<AggregateRoot<Guid>>>();
+            var mockEventStoreRepository = new Mock<IEventStoreRepository>();
             mockEventStoreRepository.Setup(e => e.AppendAsync(It.IsAny<EventStore>()))
                 .Verifiable();
 
@@ -35,7 +35,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
         public async Task HandleWithEventsShouldCallAppendAsync()
         {
             //Arrange
-            var mockEventStoreRepository = new Mock<IEventStoreRepository<AggregateRoot<Guid>>>();
+            var mockEventStoreRepository = new Mock<IEventStoreRepository>();
             mockEventStoreRepository.Setup(e => e.AppendAsync(It.IsAny<EventStore>()))
                 .Returns(Task.FromResult(true))
                 .Verifiable();
@@ -44,7 +44,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
 
             var @event = new SpeechCreatedEvent(It.IsAny<Guid>(), It.IsAny<string>(),
                 It.IsAny<string>(), It.IsAny<string>(),
-                It.IsAny<string>());
+                It.IsAny<SpeechTypeEnum>());
 
             long version = 0;
 

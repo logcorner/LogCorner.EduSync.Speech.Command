@@ -2,7 +2,7 @@
 {
     public class InvalidLenghtAggregateException : AggregateException
     {
-        public InvalidLenghtAggregateException(string message) : base(message)
+        public InvalidLenghtAggregateException(int errorCode, string message) : base(errorCode, message)
         {
         }
     }

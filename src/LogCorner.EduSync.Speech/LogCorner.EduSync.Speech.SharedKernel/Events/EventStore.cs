@@ -17,8 +17,7 @@ namespace LogCorner.EduSync.Speech.SharedKernel.Events
         {
         }
 
-        public EventStore(Guid aggregateId, long aggregateVersion, string name,
-            string typeName, DateTime occurredOn, string serializedBody)
+        public EventStore(Guid aggregateId, long aggregateVersion, string name, string typeName, DateTime occurredOn, string serializedBody)
         {
             Version = aggregateVersion;
             AggregateId = aggregateId;

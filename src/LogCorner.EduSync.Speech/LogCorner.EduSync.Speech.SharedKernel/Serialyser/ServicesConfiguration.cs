@@ -6,6 +6,7 @@ namespace LogCorner.EduSync.Speech.SharedKernel.Serialyser
     {
         public static void AddSharedKernel(this IServiceCollection services) 
         {
+            services.AddSingleton<IJsonSerializer, JsonSerializer>();
             services.AddSingleton<IEventSerializer, JsonEventSerializer>();
             services.AddSingleton<IJsonProvider, JsonProvider>();
         }

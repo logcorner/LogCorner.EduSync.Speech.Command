@@ -33,7 +33,7 @@ namespace LogCorner.EduSync.Speech.Domain
             Enum.TryParse(typeof(SpeechTypeEnum), value, out var result);
 
             Value = (SpeechTypeEnum?)result ??
-                    throw new InvalidEnumAggregateException("SpeechType should be valid and not empty");
+                    throw new InvalidEnumAggregateException(ErrorCode.InvalidLenght, "SpeechType should be valid and not empty");
         }
 
         public SpeechType(int value)

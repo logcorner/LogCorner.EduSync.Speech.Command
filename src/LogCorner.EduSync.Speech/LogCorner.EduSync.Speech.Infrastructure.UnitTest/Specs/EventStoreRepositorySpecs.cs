@@ -80,7 +80,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
 
             //Act
             //Assert
-            await Assert.ThrowsAsync<NullInstanceOfAggregateIdException>(() =>
+            await Assert.ThrowsAsync<NullInstanceOfAggregateException>(() =>
                 sut.GetByIdAsync<StubAggregate>(aggregateId));
         }
 

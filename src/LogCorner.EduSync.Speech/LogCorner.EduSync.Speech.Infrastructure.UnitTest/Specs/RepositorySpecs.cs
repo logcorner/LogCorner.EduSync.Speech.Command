@@ -51,5 +51,25 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
 
             return dbSet;
         }
+
+        [Fact(DisplayName = "Verify that UpdateAsync can be called on Repository and should trigger dbset.AddAsync")]
+        public async Task Verify_that_UpdateAsync_can_be_called_on_Repository_and_trigger_dbsetAddAsyncTest()
+        {
+            //Arrange
+            var dbSet = GetQueryableMockDbSet(new List<EntityAsAggregateRoot>
+            {
+                new EntityAsAggregateRoot()
+            });
+
+            var context = new Mock<DataBaseContext>();
+            context.Setup(c => c.Set<EntityAsAggregateRoot>()).Returns(dbSet.Object);
+
+            //Act
+            IRepository<EntityAsAggregateRoot, Guid> repository = new Repository<EntityAsAggregateRoot, Guid>(context.Object);
+            await repository.UpdateAsync(new EntityAsAggregateRoot());
+
+            //Assert
+            dbSet.Verify(m => m.Update(It.IsAny<EntityAsAggregateRoot>()), Times.Once, "Commit must be called only once");
+        }
     }
 }

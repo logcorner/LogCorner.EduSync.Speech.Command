@@ -19,5 +19,12 @@ namespace LogCorner.EduSync.Speech.Infrastructure
         {
             await _dbSet.AddAsync(entity);
         }
+
+        public async Task UpdateAsync(T entity)
+        {
+            _dbSet.Update(entity);
+
+            await Task.CompletedTask;
+        }
     }
 }

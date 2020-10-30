@@ -2,7 +2,7 @@
 {
     public class BadAggregateIdException : AggregateException
     {
-        public BadAggregateIdException(string message) : base(message)
+        public BadAggregateIdException(int errorCode, string message) : base(errorCode, message)
         {
         }
     }

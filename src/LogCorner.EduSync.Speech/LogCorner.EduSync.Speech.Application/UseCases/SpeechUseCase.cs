@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace LogCorner.EduSync.Speech.Application.UseCases
 {
-    public class SpeechUseCase : IRegisterSpeechUseCase, IUpdateSpeechUseCase
+    public class SpeechUseCase : ICreateSpeechUseCase,
+                                 IUpdateSpeechUseCase,
+                                 IDeleteSpeechUseCase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ISpeechRepository _speechRepository;
         private readonly IEventSourcingSubscriber _domainEventSubscriber;
-        private readonly IEventStoreRepository<Domain.SpeechAggregate.Speech> _eventStoreRepository;
+        private readonly IEventStoreRepository _eventStoreRepository;
 
-        public SpeechUseCase(IUnitOfWork unitOfWork, ISpeechRepository speechRepository, IEventSourcingSubscriber domainEventSubscriber, IEventStoreRepository<Domain.SpeechAggregate.Speech> eventStoreRepository)
+        public SpeechUseCase(IUnitOfWork unitOfWork, ISpeechRepository speechRepository, IEventSourcingSubscriber domainEventSubscriber, IEventStoreRepository eventStoreRepository)
         {
             _unitOfWork = unitOfWork;
             _speechRepository = speechRepository;
@@ -73,6 +75,25 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
             }
 
             await _speechRepository.UpdateAsync(speech);
+            await _domainEventSubscriber.Subscribe(speech);
+            _unitOfWork.Commit();
+        }
+
+        public async Task Handle(DeleteSpeechCommandMessage command)
+        {
+            if (command == null)
+            {
+                throw new ArgumentNullApplicationException(nameof(command));
+            }
+            var speech = await _eventStoreRepository.GetByIdAsync<Domain.SpeechAggregate.Speech>(command.SpeechId);
+            if (speech == null)
+            {
+                throw new NotFoundApplicationException($"speech not found {command.SpeechId}");
+            }
+
+            speech.Delete(command.SpeechId, command.OriginalVersion);
+
+            await _speechRepository.DeleteAsync(speech);
             await _domainEventSubscriber.Subscribe(speech);
             _unitOfWork.Commit();
         }

@@ -45,7 +45,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             {
                 new SpeechCreatedEvent(It.IsAny<Guid>(), It.IsAny<string>(),
                     It.IsAny<string>(), It.IsAny<string>(),
-                    It.IsAny<string>())
+                    It.IsAny<SpeechTypeEnum>())
             });
 
             //Act

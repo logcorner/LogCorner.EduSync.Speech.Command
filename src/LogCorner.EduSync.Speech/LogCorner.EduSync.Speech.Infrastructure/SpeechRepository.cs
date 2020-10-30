@@ -41,5 +41,19 @@ namespace LogCorner.EduSync.Speech.Infrastructure
 
             await Task.CompletedTask;
         }
+
+        public async Task DeleteAsync(Domain.SpeechAggregate.Speech speech)
+        {
+            if (speech == null)
+            {
+                throw new ArgumentNullRepositoryException(nameof(speech));
+            }
+            _context.ChangeTracker.TrackGraph(speech, a =>
+              {
+                  a.Entry.State = EntityState.Modified;
+              });
+
+            await _repository.UpdateAsync(speech);
+        }
     }
 }

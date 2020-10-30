@@ -11,10 +11,10 @@ namespace LogCorner.EduSync.Speech.Domain
         public UrlValue(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new InvalidLenghtAggregateException("url should not be empty");
+                throw new InvalidLenghtAggregateException(ErrorCode.InvalidLenght, "url should not be empty");
 
             if (!CheckUrlValid(value))
-                throw new InvalidUrlAggregateException("url is invalid");
+                throw new InvalidUrlAggregateException(ErrorCode.InvalidLenght, "url is invalid");
             Value = value;
         }
 

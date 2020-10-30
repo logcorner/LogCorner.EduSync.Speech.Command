@@ -12,8 +12,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
 {
     public class SpeechRepositorySpecs
     {
-        [Fact(DisplayName = @"Verify that CreateAsync can be called on SpeechRepository
-                             and fire Repository.CreateAsync only once")]
+        [Fact(DisplayName = @"Verify that CreateAsync can be called on SpeechRepository  and fire Repository.CreateAsync only once")]
         public async Task Verify_that_CreateAsync_can_be_called_on_SpeechRepository_and_fire_RepositoryCreateAsync_only_once()
         {
             //Arrange
@@ -51,14 +50,10 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
         {
             //Arrange
             Guid speechId = Guid.NewGuid();
-            string title = @"Lorem Ipsum is simply dummy text";
             string newTitle = @"New Lorem Ipsum is simply dummy text";
             string description = @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book";
             var speech = new Domain.SpeechAggregate.Speech(speechId,
                 new Title(newTitle), new UrlValue("http://mysite.com"), new Description(description),
-                SpeechType.Conferences);
-            var speechToUpdate = new Domain.SpeechAggregate.Speech(speechId,
-                new Title(title), new UrlValue("http://mysite.com"), new Description(description),
                 SpeechType.Conferences);
 
             Mock<IRepository<Domain.SpeechAggregate.Speech, Guid>> mockRepository =
@@ -77,6 +72,38 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             //Assert
             var result = context.Entry(speech).Entity.Title.Value;
             Assert.Equal(newTitle, result);
+        }
+
+        [Fact(DisplayName = @"Verify that UpdateAsync can be called on SpeechRepository and fire Repository.UpdateAsync only once")]
+        public async Task Verify_that_UpdateAsync_can_be_called_on_SpeechRepository_and_fire_RepositoryUpdateAsync_only_once()
+        {
+            //Arrange
+
+            Guid speechId = Guid.NewGuid();
+            string newTitle = @"New Lorem Ipsum is simply dummy text";
+            string description = @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book";
+            var speech = new Domain.SpeechAggregate.Speech(speechId,
+                new Title(newTitle), new UrlValue("http://mysite.com"), new Description(description),
+                SpeechType.Conferences);
+
+            Mock<IRepository<Domain.SpeechAggregate.Speech, Guid>> mockRepository =
+                new Mock<IRepository<Domain.SpeechAggregate.Speech, Guid>>();
+
+            mockRepository.Setup(x => x.UpdateAsync(It.IsAny<Domain.SpeechAggregate.Speech>()))
+                .Returns(Task.CompletedTask)
+                .Callback<Domain.SpeechAggregate.Speech>(x => { });
+
+            var options = new DbContextOptionsBuilder<DataBaseContext>().UseInMemoryDatabase(databaseName: "InMemoryDB").Options;
+            var context = new DataBaseContext(options);
+            await context.Speech.AddAsync(speech);
+
+            ISpeechRepository sut = new SpeechRepository(mockRepository.Object, context);
+
+            //Act
+            await sut.DeleteAsync(speech);
+
+            //Assert
+            mockRepository.Verify(x => x.UpdateAsync(It.IsAny<Domain.SpeechAggregate.Speech>()), Times.Once);
         }
     }
 }

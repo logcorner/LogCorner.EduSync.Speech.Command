@@ -11,13 +11,15 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
     [Route("api/speech")]
     public class SpeechController : ControllerBase
     {
-        private readonly IRegisterSpeechUseCase _registerSpeechUseCase;
+        private readonly ICreateSpeechUseCase _createSpeechUseCase;
         private readonly IUpdateSpeechUseCase _updateSpeechUseCase;
+        private readonly IDeleteSpeechUseCase _deleteSpeechUseCase;
 
-        public SpeechController(IRegisterSpeechUseCase registerSpeechUseCase, IUpdateSpeechUseCase updateSpeechUseCase)
+        public SpeechController(ICreateSpeechUseCase createSpeechUseCase, IUpdateSpeechUseCase updateSpeechUseCase, IDeleteSpeechUseCase deleteSpeechUseCase)
         {
-            _registerSpeechUseCase = registerSpeechUseCase;
+            _createSpeechUseCase = createSpeechUseCase;
             _updateSpeechUseCase = updateSpeechUseCase;
+            _deleteSpeechUseCase = deleteSpeechUseCase;
         }
 
         [HttpPost]
@@ -28,9 +30,9 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            var command = new RegisterSpeechCommandMessage(dto.Title, dto.Description, dto.Url, dto.Type);
+            var command = new RegisterSpeechCommandMessage(dto.Title, dto.Description, dto.Url, dto.Type.Value);
 
-            await _registerSpeechUseCase.Handle(command);
+            await _createSpeechUseCase.Handle(command);
             return Ok();
         }
 
@@ -46,10 +48,24 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
                 dto.Id == Guid.Empty ? throw new PresentationException("The speechId cannot be empty") : dto.Id,
                 dto.Title, dto.Description,
                 dto.Url,
-                dto.Type,
+                dto.Type?.Value.ToString(),
                 dto.Version);
 
             await _updateSpeechUseCase.Handle(command);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] SpeechForDeleteDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var command = new DeleteSpeechCommandMessage(dto.Id, dto.Version);
+
+            await _deleteSpeechUseCase.Handle(command);
             return Ok();
         }
     }

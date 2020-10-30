@@ -198,7 +198,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
             Assert.Equal(url.Value, speechCreateEvent.Url);
             Assert.Equal(title.Value, speechCreateEvent.Title);
             Assert.Equal(description.Value, speechCreateEvent.Description);
-            Assert.Equal(speechType, new SpeechType(speechCreateEvent.Type));
+            Assert.Equal(speechType, new SpeechType(speechCreateEvent.Type.Name));
             Assert.True(DateTime.UtcNow < speechCreateEvent.OcurrendOn);
         }
 
@@ -298,7 +298,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
             var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
             speech.CreateMedia(file, 0);
 
-            Assert.Throws<MediaFileAlreadyExisteDomainException>(() => speech.CreateMedia(file, 0));
+            Assert.Throws<MediaFileAlreadyExistDomainException>(() => speech.CreateMedia(file, 0));
             var domainEvent = speech.GetUncommittedEvents().SingleOrDefault(s => s is MediaFileCreatedEvent);
             var mediaFileCreatedEvent = (MediaFileCreatedEvent)domainEvent;
 
@@ -558,7 +558,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
 
             //Act
             //Assert
-            Assert.Throws<InvalidDomainEventException>(() => speech.Apply(new SpeechTypeChangedEvent(Guid.NewGuid(), It.IsAny<string>())));
+            Assert.Throws<InvalidDomainEventException>(() => speech.Apply(new SpeechTypeChangedEvent(Guid.NewGuid(), It.IsAny<LogCorner.EduSync.Speech.SharedKernel.Events.SpeechTypeEnum>())));
         }
 
         #endregion changeType
@@ -641,5 +641,64 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
         }
 
         #endregion changeUrl
+
+        #region delete Speech
+
+        [Fact]
+        public void DeleteSpeechWhenIdIsNotEqualsToAggregateIdShouldRaiseConcurrencyException()
+        {
+            //Arrange
+            long expectedVersion = 1;
+            var title = new Title("Lorem Ipsum is simply dummy text of the printin");
+            var description = new Description(@"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
+            var url = new UrlValue("http://url.com");
+
+            var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
+
+            //Act
+            //Assert
+            Assert.Throws<ConcurrencyException>(() => speech.Delete(It.IsAny<Guid>(), expectedVersion));
+        }
+
+        [Fact]
+        public void DeleteSpeechWhenExpectedVersionIsNotEqualsToAggregateVersionShouldRaiseConcurrencyException()
+        {
+            //Arrange
+            long expectedVersion = 1;
+            var title = new Title("Lorem Ipsum is simply dummy text of the printin");
+            var description = new Description(@"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
+            var url = new UrlValue("http://url.com");
+
+            var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
+
+            //Act
+            //Assert
+            Assert.Throws<ConcurrencyException>(() => speech.Delete(It.IsAny<Guid>(), expectedVersion));
+        }
+
+        [Fact]
+        public void DeleteSpeechWhenExpectedVersionIsEqualsToAggregateVersionShouldMarkSpeechAsDeleted()
+        {
+            //Arrange
+            long expectedVersion = 0;
+            var id = Guid.NewGuid();
+            var title = new Title("Lorem Ipsum is simply dummy text of the printin");
+            var description = new Description(@"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
+            var url = new UrlValue("http://url.com");
+
+            var speech = new SpeechAggregate.Speech(id, title, url, description, SpeechType.Conferences);
+
+            //Act
+            speech.Delete(id, expectedVersion);
+
+            //Assert
+
+            Assert.True(speech.IsDeleted);
+        }
+
+        #endregion delete Speech
     }
 }

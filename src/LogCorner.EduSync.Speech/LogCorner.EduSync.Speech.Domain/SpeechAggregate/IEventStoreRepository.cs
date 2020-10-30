@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
-    public interface IEventStoreRepository<T> where T : AggregateRoot<Guid>
+    public interface IEventStoreRepository
     {
         Task AppendAsync(EventStore @event);
 

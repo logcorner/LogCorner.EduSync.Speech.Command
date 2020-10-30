@@ -2,7 +2,7 @@
 {
     public class InvalidUrlAggregateException : AggregateException
     {
-        public InvalidUrlAggregateException(string message) : base(message)
+        public InvalidUrlAggregateException(int errorCode, string message) : base(errorCode, message)
         {
         }
     }

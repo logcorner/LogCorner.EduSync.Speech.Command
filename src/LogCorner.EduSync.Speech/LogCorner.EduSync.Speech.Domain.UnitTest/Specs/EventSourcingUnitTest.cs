@@ -41,12 +41,12 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
         {
             //Arrange
             long expectedVersion = -1;
-
+            var speechType = new LogCorner.EduSync.Speech.Domain.SpeechType("Conferences");
             var evt = new SpeechCreatedEvent(Guid.NewGuid(),
                "SpeechCreatedEvent Title ",
                 "http://url-evt.com",
                "SpeechCreatedEvent description must be very long as a description than people can understand without efforts",
-                "Conferences");
+                new SharedKernel.Events.SpeechTypeEnum(speechType.IntValue, speechType.StringValue));
             var aggregate = CreateNewAggregate<SpeechAggregate.Speech>();
 
             //Act
@@ -57,7 +57,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
             Assert.Equal(evt.Title, aggregate.Title.Value);
             Assert.Equal(evt.Url, aggregate.Url.Value);
             Assert.Equal(evt.Description, aggregate.Description.Value);
-            Assert.Equal(evt.Type, aggregate.Type.Value.ToString());
+            Assert.Equal(evt.Type.Name, aggregate.Type.Value.ToString());
 
             Assert.IsAssignableFrom<IDomainEvent>(evt);
         }

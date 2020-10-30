@@ -10,11 +10,11 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
 {
     public class EventSourcingHandler<T> : IEventSourcingHandler<Event> where T : AggregateRoot<Guid>
     {
-        private readonly IEventStoreRepository<T> _eventStoreRepository;
+        private readonly IEventStoreRepository _eventStoreRepository;
         private readonly IEventSerializer _eventSerializer;
         private readonly ISignalRPublisher _publisher;
 
-        public EventSourcingHandler(IEventStoreRepository<T> eventStoreRepository,
+        public EventSourcingHandler(IEventStoreRepository eventStoreRepository,
             IEventSerializer eventSerializer, ISignalRPublisher publisher)
         {
             _eventStoreRepository = eventStoreRepository;

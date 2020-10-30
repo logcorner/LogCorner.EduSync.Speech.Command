@@ -7,9 +7,9 @@ namespace LogCorner.EduSync.Speech.Application.Commands
         public string Title { get; }
         public string Description { get; }
         public string Url { get; }
-        public string Type { get; }
+        public int Type { get; }
 
-        public RegisterSpeechCommandMessage(string title, string description, string url, string type)
+        public RegisterSpeechCommandMessage(string title, string description, string url, int type)
         {
             Title = title;
             Description = description;

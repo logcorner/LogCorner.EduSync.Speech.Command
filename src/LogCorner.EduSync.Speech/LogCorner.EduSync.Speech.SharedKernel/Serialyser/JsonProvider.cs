@@ -1,13 +1,19 @@
-﻿using System;
-using System.Reflection;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-
+using System;
+using System.Reflection;
 
 namespace LogCorner.EduSync.Speech.SharedKernel.Serialyser
 {
     public class JsonProvider : IJsonProvider
     {
+        public T DeserializeObject<T>(string serializedEvent)
+        {
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            { ContractResolver = new PrivateSetterContractResolver() };
+            return JsonConvert.DeserializeObject<T>(serializedEvent, settings);
+        }
+
         public TEvent DeserializeObject<TEvent>(string serializedEvent, string eventType)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings

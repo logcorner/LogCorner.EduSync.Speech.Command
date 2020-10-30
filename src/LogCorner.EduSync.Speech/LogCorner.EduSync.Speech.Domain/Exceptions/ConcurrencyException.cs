@@ -2,7 +2,7 @@
 {
     public class ConcurrencyException : AggregateException
     {
-        public ConcurrencyException(string message) : base(message)
+        public ConcurrencyException(int errorCode, string message) : base(errorCode, message)
         {
         }
     }

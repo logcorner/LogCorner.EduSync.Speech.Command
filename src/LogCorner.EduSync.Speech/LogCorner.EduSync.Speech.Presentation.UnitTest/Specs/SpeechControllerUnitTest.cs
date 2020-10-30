@@ -1,3 +1,4 @@
+using LogCorner.EduSync.Speech.Application.Commands;
 using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Presentation.Controllers;
 using LogCorner.EduSync.Speech.Presentation.Dtos;
@@ -9,7 +10,6 @@ using Moq;
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using LogCorner.EduSync.Speech.Application.Commands;
 using Xunit;
 using ILoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
 
@@ -21,9 +21,9 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
         public async Task RegisterSpeechWithInvalidModelStateReturnBadRequest()
         {
             //Arrange
-            var moqRegisterSpeechUseCase = new Mock<IRegisterSpeechUseCase>();
+            var moqRegisterSpeechUseCase = new Mock<ICreateSpeechUseCase>();
             var moqUpdateSpeechUseCase = new Mock<IUpdateSpeechUseCase>();
-            var sut = new SpeechController(moqRegisterSpeechUseCase.Object, moqUpdateSpeechUseCase.Object);
+            var sut = new SpeechController(moqRegisterSpeechUseCase.Object, moqUpdateSpeechUseCase.Object, It.IsAny<IDeleteSpeechUseCase>());
             sut.ModelState.AddModelError("x", "Invalid ModelState");
 
             //Act
@@ -38,7 +38,7 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
         {
             //Arrange
             RegisterSpeechCommandMessage registerSpeechCommandMessage = null;
-            var moqRegisterSpeechUseCase = new Mock<IRegisterSpeechUseCase>();
+            var moqRegisterSpeechUseCase = new Mock<ICreateSpeechUseCase>();
             moqRegisterSpeechUseCase.Setup(x => x.Handle(It.IsAny<RegisterSpeechCommandMessage>()))
                 .Returns(Task.CompletedTask)
                 .Callback<RegisterSpeechCommandMessage>(x => registerSpeechCommandMessage = x);
@@ -49,11 +49,14 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
                 Description =
                     @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
                                 text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged",
-                Type = "1",
+                Type = new SpeechTypeDto
+                {
+                    Value = 1
+                },
                 Url = "http://myjpg.jpg",
             };
 
-            var sut = new SpeechController(moqRegisterSpeechUseCase.Object, moqUpdateSpeechUseCase.Object);
+            var sut = new SpeechController(moqRegisterSpeechUseCase.Object, moqUpdateSpeechUseCase.Object, It.IsAny<IDeleteSpeechUseCase>());
 
             //Act
             IActionResult result = await sut.Post(speechForCreationDto);
@@ -63,7 +66,7 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
             moqRegisterSpeechUseCase.Verify(x => x.Handle(It.IsAny<RegisterSpeechCommandMessage>()), Times.Once);
             Assert.Equal(speechForCreationDto.Title, registerSpeechCommandMessage.Title);
             Assert.Equal(speechForCreationDto.Description, registerSpeechCommandMessage.Description);
-            Assert.Equal(speechForCreationDto.Type, registerSpeechCommandMessage.Type);
+            Assert.Equal(speechForCreationDto.Type.Value, registerSpeechCommandMessage.Type);
             Assert.Equal(speechForCreationDto.Url, registerSpeechCommandMessage.Url);
         }
 
@@ -92,9 +95,9 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
         public async Task UpdateSpeechWhenModelStateIsInvalidReturnBadRequest()
         {
             //Arrange
-            var moq = new Mock<IRegisterSpeechUseCase>();
+            var moq = new Mock<ICreateSpeechUseCase>();
             var moqUpdateSpeechUseCase = new Mock<IUpdateSpeechUseCase>();
-            var sut = new SpeechController(moq.Object, moqUpdateSpeechUseCase.Object);
+            var sut = new SpeechController(moq.Object, moqUpdateSpeechUseCase.Object, It.IsAny<IDeleteSpeechUseCase>());
             sut.ModelState.AddModelError("x", "Invalid ModelState");
 
             //Act
@@ -108,9 +111,9 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
         public async Task UpdateSpeechWhenSpeechIdIsEmptySouldRaisePresentationException()
         {
             //Arrange
-            var moq = new Mock<IRegisterSpeechUseCase>();
+            var moq = new Mock<ICreateSpeechUseCase>();
             var moqUpdateSpeechUseCase = new Mock<IUpdateSpeechUseCase>();
-            var sut = new SpeechController(moq.Object, moqUpdateSpeechUseCase.Object);
+            var sut = new SpeechController(moq.Object, moqUpdateSpeechUseCase.Object, It.IsAny<IDeleteSpeechUseCase>());
 
             var dto = new SpeechForUpdateDto
             {
@@ -138,14 +141,14 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
                 Title = "New is simply dummy text of the printing",
                 Description = @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
                                 text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged",
-                Type = "1",
+                Type = new SpeechTypeDto { Value = 1, Name = "one" },
                 Url = "http://myjpg.jpg",
                 Version = 2,
                 Id = Guid.NewGuid()
             };
 
-            var sut = new SpeechController(It.IsAny<IRegisterSpeechUseCase>(),
-                moqUpdateSpeechUseCase.Object);
+            var sut = new SpeechController(It.IsAny<ICreateSpeechUseCase>(),
+                moqUpdateSpeechUseCase.Object, It.IsAny<IDeleteSpeechUseCase>());
 
             //Act
             var result = await sut.Put(speechForUpdateDto);
@@ -157,9 +160,53 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
             Assert.Equal(speechForUpdateDto.Id, updateSpeechCommandMessage.SpeechId);
             Assert.Equal(speechForUpdateDto.Title, updateSpeechCommandMessage.Title);
             Assert.Equal(speechForUpdateDto.Description, updateSpeechCommandMessage.Description);
-            Assert.Equal(speechForUpdateDto.Type, updateSpeechCommandMessage.Type);
+            Assert.Equal(speechForUpdateDto.Type.Value.ToString(), updateSpeechCommandMessage.Type);
             Assert.Equal(speechForUpdateDto.Url, updateSpeechCommandMessage.Url);
             Assert.Equal(speechForUpdateDto.Version, updateSpeechCommandMessage.OriginalVersion);
+        }
+
+        [Fact(DisplayName = "Delete Speech With Invalid ModelState Return BadRequest")]
+        public async Task DeleteSpeechWithInvalidModelStateReturnBadRequest()
+        {
+            //Arrange
+            var moqRegisterSpeechUseCase = new Mock<ICreateSpeechUseCase>();
+            var moqUpdateSpeechUseCase = new Mock<IUpdateSpeechUseCase>();
+            var sut = new SpeechController(moqRegisterSpeechUseCase.Object, moqUpdateSpeechUseCase.Object, It.IsAny<IDeleteSpeechUseCase>());
+            sut.ModelState.AddModelError("x", "Invalid ModelState");
+
+            //Act
+            IActionResult result = await sut.Delete(It.IsAny<SpeechForDeleteDto>());
+
+            //Assert
+            Assert.IsType<BadRequestObjectResult>(result);
+        }
+
+        [Fact(DisplayName = "Delete Speech With Valid ModelState Return Ok")]
+        public async Task DeleteSpeechWithValidModelStateReturnOk()
+        {
+            //Arrange
+            DeleteSpeechCommandMessage deleteSpeechCommandMessage = null;
+            var moqDeleteSpeechUseCase = new Mock<IDeleteSpeechUseCase>();
+            moqDeleteSpeechUseCase.Setup(x => x.Handle(It.IsAny<DeleteSpeechCommandMessage>()))
+                .Returns(Task.CompletedTask)
+                .Callback<DeleteSpeechCommandMessage>(x => deleteSpeechCommandMessage = x);
+
+            var speechForDeleteDto = new SpeechForDeleteDto
+            {
+                Id = Guid.NewGuid(),
+                Version = 1
+            };
+
+            var sut = new SpeechController(It.IsAny<ICreateSpeechUseCase>(), It.IsAny<IUpdateSpeechUseCase>(), moqDeleteSpeechUseCase.Object);
+
+            //Act
+            IActionResult result = await sut.Delete(speechForDeleteDto);
+
+            //Assert
+            Assert.IsType<OkResult>(result);
+            moqDeleteSpeechUseCase.Verify(x => x.Handle(It.IsAny<DeleteSpeechCommandMessage>()), Times.Once);
+            Assert.Equal(speechForDeleteDto.Id, deleteSpeechCommandMessage.SpeechId);
+            Assert.Equal(speechForDeleteDto.Version, deleteSpeechCommandMessage.OriginalVersion);
         }
     }
 }

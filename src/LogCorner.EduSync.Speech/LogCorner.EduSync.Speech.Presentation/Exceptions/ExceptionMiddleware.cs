@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -28,20 +29,27 @@ namespace LogCorner.EduSync.Speech.Presentation.Exceptions
             {
                 var logger = _loggerFactory.CreateLogger("ExceptionMiddleware");
                 logger.LogError($"Something went wrong: {ex.StackTrace}");
-                await HandleExceptionAsync(httpContext);
+                await HandleExceptionAsync(ex, httpContext);
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context)
+        private static Task HandleExceptionAsync(Exception ex, HttpContext context)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            var errorCode = (int)HttpStatusCode.InternalServerError;
+            var message = "Internal Server Error.";
+            if (ex is BaseException exception)
+            {
+                errorCode = exception.ErrorCode;
+                message = exception.Message;
+            }
 
             return context.Response.WriteAsync(JsonConvert.SerializeObject(
                 new
                 {
-                    context.Response.StatusCode,
-                    Message = "Internal Server Error."
+                    errorCode,
+                    message
                 }));
         }
     }
