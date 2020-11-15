@@ -69,9 +69,9 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
                 speech.ChangeUrl(new UrlValue(command.Url), committedVersion++);
             }
 
-            if (command.Type != null && speech.Type != new SpeechType(command.Type))
+            if (command.Type != null && speech.Type != new SpeechType(command.Type.Value))
             {
-                speech.ChangeType(new SpeechType(command.Type), committedVersion);
+                speech.ChangeType(new SpeechType(command.Type.Value), committedVersion);
             }
 
             await _speechRepository.UpdateAsync(speech);

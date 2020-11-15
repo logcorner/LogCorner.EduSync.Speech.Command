@@ -49,10 +49,8 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
                 Description =
                     @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
                                 text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged",
-                Type = new SpeechTypeDto
-                {
-                    Value = 1
-                },
+                TypeId =  1
+               ,
                 Url = "http://myjpg.jpg",
             };
 
@@ -66,7 +64,7 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
             moqRegisterSpeechUseCase.Verify(x => x.Handle(It.IsAny<RegisterSpeechCommandMessage>()), Times.Once);
             Assert.Equal(speechForCreationDto.Title, registerSpeechCommandMessage.Title);
             Assert.Equal(speechForCreationDto.Description, registerSpeechCommandMessage.Description);
-            Assert.Equal(speechForCreationDto.Type.Value, registerSpeechCommandMessage.Type);
+            Assert.Equal(speechForCreationDto.TypeId, registerSpeechCommandMessage.Type);
             Assert.Equal(speechForCreationDto.Url, registerSpeechCommandMessage.Url);
         }
 
@@ -141,7 +139,7 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
                 Title = "New is simply dummy text of the printing",
                 Description = @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
                                 text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged",
-                Type = new SpeechTypeDto { Value = 1, Name = "one" },
+                TypeId =  1,
                 Url = "http://myjpg.jpg",
                 Version = 2,
                 Id = Guid.NewGuid()
@@ -160,7 +158,7 @@ namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
             Assert.Equal(speechForUpdateDto.Id, updateSpeechCommandMessage.SpeechId);
             Assert.Equal(speechForUpdateDto.Title, updateSpeechCommandMessage.Title);
             Assert.Equal(speechForUpdateDto.Description, updateSpeechCommandMessage.Description);
-            Assert.Equal(speechForUpdateDto.Type.Value.ToString(), updateSpeechCommandMessage.Type);
+            Assert.Equal(speechForUpdateDto.TypeId.Value, updateSpeechCommandMessage.Type);
             Assert.Equal(speechForUpdateDto.Url, updateSpeechCommandMessage.Url);
             Assert.Equal(speechForUpdateDto.Version, updateSpeechCommandMessage.OriginalVersion);
         }

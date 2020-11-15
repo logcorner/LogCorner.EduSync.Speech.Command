@@ -19,7 +19,7 @@ namespace LogCorner.EduSync.Speech.Presentation.Dtos
         [DataType(DataType.Url)]
         public string Url { get; set; }
 
-        public SpeechTypeDto Type { get; set; }
+        public int? TypeId { get; set; }
 
         public long Version { get; set; }
     }

@@ -38,6 +38,11 @@ namespace LogCorner.EduSync.Speech.Domain
 
         public SpeechType(int value)
         {
+          
+            if (!Enum.IsDefined(typeof(SpeechTypeEnum), value))
+            {
+                throw new InvalidEnumAggregateException(ErrorCode.InvalidEnum, $"{value} is not valid for SpeechType");
+            }
             Value = (SpeechTypeEnum)Enum.ToObject(typeof(SpeechTypeEnum), value);
         }
 

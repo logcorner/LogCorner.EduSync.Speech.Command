@@ -18,5 +18,10 @@
         {
             return _jsonProvider.DeserializeObject<T>(stringValue);
         }
+
+        public T Deserialize<T>(string type, string stringValue) 
+        {
+            return _jsonProvider.DeserializeObject<T>(stringValue, type);
+        }
     }
 }

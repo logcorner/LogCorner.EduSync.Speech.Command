@@ -8,5 +8,6 @@
         public const int BadAggregateId = 5003;
         public const int NullInstanceOfAggregate = 5004;
         public const int AlreadyExist = 5005;
+        public const int InvalidEnum = 5006;
     }
 }

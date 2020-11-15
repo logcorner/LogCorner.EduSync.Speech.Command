@@ -1,17 +1,16 @@
 {
   "runtimeTarget": {
-    "name": ".NETStandard,Version=v2.0/",
+    "name": ".NETStandard,Version=v2.1/",
     "signature": ""
   },
   "compilationOptions": {},
   "targets": {
-    ".NETStandard,Version=v2.0": {},
-    ".NETStandard,Version=v2.0/": {
+    ".NETStandard,Version=v2.1": {},
+    ".NETStandard,Version=v2.1/": {
       "LogCorner.EduSync.SignalR.Common/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.SignalR.Client": "3.1.7",
-          "NETStandard.Library": "2.0.3",
-          "LogCorner.EduSync.Speech.SharedKernel": "1.0.0.0"
+          "LogCorner.EduSync.Speech.SharedKernel": "1.0.2.0"
         },
         "runtime": {
           "LogCorner.EduSync.SignalR.Common.dll": {}
@@ -20,11 +19,10 @@
       "Microsoft.AspNetCore.Connections.Abstractions/3.1.7": {
         "dependencies": {
           "Microsoft.AspNetCore.Http.Features": "3.1.7",
-          "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
           "System.IO.Pipelines": "4.7.1"
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Connections.Abstractions.dll": {
+          "lib/netstandard2.1/Microsoft.AspNetCore.Connections.Abstractions.dll": {
             "assemblyVersion": "3.1.7.0",
             "fileVersion": "3.100.720.37213"
           }
@@ -37,7 +35,7 @@
           "Microsoft.Extensions.Options": "3.1.7"
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Connections.Client.dll": {
+          "lib/netstandard2.1/Microsoft.AspNetCore.Http.Connections.Client.dll": {
             "assemblyVersion": "3.1.7.0",
             "fileVersion": "3.100.720.37213"
           }
@@ -83,13 +81,12 @@
         "dependencies": {
           "Microsoft.AspNetCore.SignalR.Common": "3.1.7",
           "Microsoft.AspNetCore.SignalR.Protocols.Json": "3.1.7",
-          "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
           "Microsoft.Extensions.DependencyInjection": "3.1.7",
           "Microsoft.Extensions.Logging": "3.1.7",
           "System.Threading.Channels": "4.7.1"
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.SignalR.Client.Core.dll": {
+          "lib/netstandard2.1/Microsoft.AspNetCore.SignalR.Client.Core.dll": {
             "assemblyVersion": "3.1.7.0",
             "fileVersion": "3.100.720.37213"
           }
@@ -119,14 +116,14 @@
           }
         }
       },
-      "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
+      "Microsoft.Bcl.AsyncInterfaces/1.1.0": {
         "dependencies": {
           "System.Threading.Tasks.Extensions": "4.5.4"
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "assemblyVersion": "1.0.0.0",
-            "fileVersion": "4.700.20.21406"
+            "fileVersion": "4.700.19.56404"
           }
         }
       },
@@ -165,11 +162,10 @@
       },
       "Microsoft.Extensions.DependencyInjection/3.1.7": {
         "dependencies": {
-          "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.7"
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {
+          "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.dll": {
             "assemblyVersion": "3.1.7.0",
             "fileVersion": "3.100.720.37108"
           }
@@ -230,12 +226,6 @@
           }
         }
       },
-      "Microsoft.NETCore.Platforms/1.1.0": {},
-      "NETStandard.Library/2.0.3": {
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0"
-        }
-      },
       "System.Buffers/4.5.1": {
         "runtime": {
           "lib/netstandard2.0/System.Buffers.dll": {
@@ -246,9 +236,9 @@
       },
       "System.ComponentModel.Annotations/4.7.0": {
         "runtime": {
-          "lib/netstandard2.0/System.ComponentModel.Annotations.dll": {
-            "assemblyVersion": "4.2.1.0",
-            "fileVersion": "4.6.26515.6"
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "assemblyVersion": "4.3.1.0",
+            "fileVersion": "4.700.19.56404"
           }
         }
       },
@@ -295,11 +285,8 @@
         }
       },
       "System.Text.Encodings.Web/4.7.1": {
-        "dependencies": {
-          "System.Memory": "4.5.4"
-        },
         "runtime": {
-          "lib/netstandard2.0/System.Text.Encodings.Web.dll": {
+          "lib/netstandard2.1/System.Text.Encodings.Web.dll": {
             "assemblyVersion": "4.0.5.0",
             "fileVersion": "4.700.20.21406"
           }
@@ -307,7 +294,7 @@
       },
       "System.Text.Json/4.7.2": {
         "dependencies": {
-          "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
+          "Microsoft.Bcl.AsyncInterfaces": "1.1.0",
           "System.Buffers": "4.5.1",
           "System.Memory": "4.5.4",
           "System.Numerics.Vectors": "4.5.0",
@@ -344,11 +331,11 @@
           }
         }
       },
-      "LogCorner.EduSync.Speech.SharedKernel/1.0.0.0": {
+      "LogCorner.EduSync.Speech.SharedKernel/1.0.2.0": {
         "runtime": {
           "LogCorner.EduSync.Speech.SharedKernel.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       }
@@ -416,12 +403,12 @@
       "path": "microsoft.aspnetcore.signalr.protocols.json/3.1.7",
       "hashPath": "microsoft.aspnetcore.signalr.protocols.json.3.1.7.nupkg.sha512"
     },
-    "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
+    "Microsoft.Bcl.AsyncInterfaces/1.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-yuvf07qFWFqtK3P/MRkEKLhn5r2UbSpVueRziSqj0yJQIKFwG1pq9mOayK3zE5qZCTs0CbrwL9M6R8VwqyGy2w==",
-      "path": "microsoft.bcl.asyncinterfaces/1.1.1",
-      "hashPath": "microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512"
+      "sha512": "sha512-1Am6l4Vpn3/K32daEqZI+FFr96OlZkgwK2LcT3pZ2zWubR5zTPW3/FkO1Rat9kb7oQOa4rxgl9LJHc5tspCWfg==",
+      "path": "microsoft.bcl.asyncinterfaces/1.1.0",
+      "hashPath": "microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration/3.1.7": {
       "type": "package",
@@ -485,20 +472,6 @@
       "sha512": "sha512-sa17s3vDAXTuIVGxuJcK713i0B0iaUoiwY4Sl2SLHhMqM8snznn0YVGiZAVkoKEUFWjvIg1Z/JNmAicBamI4mg==",
       "path": "microsoft.extensions.primitives/3.1.7",
       "hashPath": "microsoft.extensions.primitives.3.1.7.nupkg.sha512"
-    },
-    "Microsoft.NETCore.Platforms/1.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
-      "path": "microsoft.netcore.platforms/1.1.0",
-      "hashPath": "microsoft.netcore.platforms.1.1.0.nupkg.sha512"
-    },
-    "NETStandard.Library/2.0.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
-      "path": "netstandard.library/2.0.3",
-      "hashPath": "netstandard.library.2.0.3.nupkg.sha512"
     },
     "System.Buffers/4.5.1": {
       "type": "package",
@@ -570,7 +543,7 @@
       "path": "system.threading.tasks.extensions/4.5.4",
       "hashPath": "system.threading.tasks.extensions.4.5.4.nupkg.sha512"
     },
-    "LogCorner.EduSync.Speech.SharedKernel/1.0.0.0": {
+    "LogCorner.EduSync.Speech.SharedKernel/1.0.2.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

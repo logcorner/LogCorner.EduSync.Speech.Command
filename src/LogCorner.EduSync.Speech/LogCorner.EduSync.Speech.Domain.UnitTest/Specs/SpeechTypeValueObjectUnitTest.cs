@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
+using Xunit;
 
 namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
 {
@@ -26,5 +27,14 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
 
             Assert.False(url1 == url2);
         }
+
+        [Fact]
+        public void SpeechTypeWithNotDefinedValueShouldRaiseInvalidEnumAggregateException()
+        {
+            //Arrange
+            //Act
+            //Assert
+            Assert.Throws<InvalidEnumAggregateException>(() => new SpeechType(4));
+      }
     }
 }

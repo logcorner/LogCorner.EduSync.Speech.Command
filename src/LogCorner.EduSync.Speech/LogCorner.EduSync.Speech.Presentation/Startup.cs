@@ -44,7 +44,8 @@ namespace LogCorner.EduSync.Speech.Presentation
 
             services.AddTransient<IEventSourcingSubscriber, EventSourcingSubscriber>();
 
-            services.AddScoped(typeof(IEventStoreRepository), typeof(EventStoreRepository<>));
+            //services.AddScoped(typeof(IEventStoreRepository), typeof(EventStoreRepository<>));
+            services.AddScoped<IEventStoreRepository,EventStoreRepository<AggregateRoot<Guid>>>();
             services.AddTransient<IEventSerializer, JsonEventSerializer>();
             services.AddTransient<IEventSourcingHandler<Event>, EventSourcingHandler<AggregateRoot<Guid>>>();
             services.AddScoped(typeof(IInvoker<>), typeof(Invoker<>));
@@ -52,6 +53,8 @@ namespace LogCorner.EduSync.Speech.Presentation
             services.AddTransient<IJsonProvider, JsonProvider>();
 
             services.AddSignalRServices("http://localhost:5000/logcornerhub");
+
+            services.AddSharedKernel();
 
             services.AddCors(options =>
             {

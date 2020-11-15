@@ -30,7 +30,7 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            var command = new RegisterSpeechCommandMessage(dto.Title, dto.Description, dto.Url, dto.Type.Value);
+            var command = new RegisterSpeechCommandMessage(dto.Title, dto.Description, dto.Url, dto.TypeId);
 
             await _createSpeechUseCase.Handle(command);
             return Ok();
@@ -48,7 +48,7 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
                 dto.Id == Guid.Empty ? throw new PresentationException("The speechId cannot be empty") : dto.Id,
                 dto.Title, dto.Description,
                 dto.Url,
-                dto.Type?.Value.ToString(),
+                dto.TypeId,
                 dto.Version);
 
             await _updateSpeechUseCase.Handle(command);

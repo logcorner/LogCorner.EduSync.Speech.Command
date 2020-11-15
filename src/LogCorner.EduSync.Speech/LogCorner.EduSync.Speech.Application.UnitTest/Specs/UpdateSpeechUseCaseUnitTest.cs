@@ -70,7 +70,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             string newUrl = "http://www.test_new.com";
 
             var type = SpeechType.Conferences.Value.ToString();
-            var newType = SpeechType.SelfPacedLabs.Value.ToString();
+            var newType = SpeechType.SelfPacedLabs.IntValue;
             UpdateSpeechCommandMessage command = new UpdateSpeechCommandMessage(Guid.NewGuid(),
                 newTitle, newDescription, newUrl, newType, 0);
 
@@ -106,7 +106,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
              && n.Description.Value.Equals(command.Description, StringComparison.InvariantCultureIgnoreCase)
              && n.Title.Value.Equals(command.Title)
              && n.Url.Value.Equals(command.Url, StringComparison.InvariantCultureIgnoreCase)
-             && n.Type.Equals(new SpeechType(command.Type))
+             && n.Type.Equals(new SpeechType(command.Type.Value))
             )), Times.Once);
 
             mockEventSourcingSubscriber.Verify(m =>
@@ -124,7 +124,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             string description = @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book";
             string url = "http://www.test.com";
             UpdateSpeechCommandMessage command = new UpdateSpeechCommandMessage(Guid.NewGuid(),
-                newTitle, description, url, SpeechType.Conferences.ToString(), 2);
+                newTitle, description, url, SpeechType.Conferences.IntValue, 2);
 
             Mock<IUnitOfWork> moqUnitOfWork = new Mock<IUnitOfWork>();
             var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
