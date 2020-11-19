@@ -160,7 +160,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             {
                 throw new InvalidDomainEventException(ErrorCode.InvalidDomainEvent, $"Cannot apply event : Speech Id ({Id}) is not equals to AggregateId ({id}) of the event , {nameof(SpeechDeletedEvent)}");
             }
-            AddDomainEvent(new SpeechDeletedEvent(Id), originalVersion);
+            AddDomainEvent(new SpeechDeletedEvent(Id, true), originalVersion);
         }
 
         public void Apply(SpeechDeletedEvent ev)
@@ -170,7 +170,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
                 throw new InvalidDomainEventException(ErrorCode.InvalidDomainEvent, $"Cannot apply event : Speech Id ({Id}) is not equals to AggregateId ({ev.AggregateId}) of the event , {nameof(SpeechDeletedEvent)}");
             }
 
-            IsDeleted = true;
+            IsDeleted = ev.IsDeleted;
         }
 
         #endregion delete speech

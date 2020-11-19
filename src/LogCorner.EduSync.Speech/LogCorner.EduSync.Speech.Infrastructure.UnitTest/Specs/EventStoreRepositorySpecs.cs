@@ -51,7 +51,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             Assert.Equal(evt.TypeName, result.TypeName);
             Assert.Equal(evt.OccurredOn, result.OccurredOn);
             Assert.Equal(evt.PayLoad, result.PayLoad);
-            Assert.Equal(evt.IsSync, result.IsSync);
+            Assert.Equal(evt.Version, result.Version);
         }
 
         [Fact]

@@ -5,7 +5,7 @@ namespace LogCorner.EduSync.Speech.Presentation.Dtos
 {
     public class SpeechForUpdateDto
     {
-        [Required(ErrorMessage = "Please provide an Identifier")]
+        [NotEmpty]
         public Guid Id { get; set; }
 
         [StringLength(60, ErrorMessage = "The Title length must be between 10 and 60 characters",

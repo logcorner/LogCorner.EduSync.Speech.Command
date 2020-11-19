@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "60. SharedKernel", "60. Sha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.SharedKernel", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.SharedKernel.csproj", "{9873D9F6-A47E-4BBE-A507-1FD9470F82ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogCorner.EduSync.Speech.SharedKernel.UnitTest", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.SharedKernel.UnitTest\LogCorner.EduSync.Speech.SharedKernel.UnitTest.csproj", "{0F5AC26C-45DA-4616-A120-75B0F8EFAB59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +91,10 @@ Global
 		{9873D9F6-A47E-4BBE-A507-1FD9470F82ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9873D9F6-A47E-4BBE-A507-1FD9470F82ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9873D9F6-A47E-4BBE-A507-1FD9470F82ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F5AC26C-45DA-4616-A120-75B0F8EFAB59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F5AC26C-45DA-4616-A120-75B0F8EFAB59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F5AC26C-45DA-4616-A120-75B0F8EFAB59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F5AC26C-45DA-4616-A120-75B0F8EFAB59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +110,7 @@ Global
 		{0964135D-D2D0-46EB-966A-6B01B3882F90} = {323CC586-A3DE-4B9B-A566-350999394325}
 		{B3EC16EC-B89A-4352-B2DB-8A839AAEDC75} = {40DC0A61-1AF3-446C-9D8B-068EA1E7D71D}
 		{9873D9F6-A47E-4BBE-A507-1FD9470F82ED} = {B0FD6F43-353B-41A4-A3DE-54499DE82E23}
+		{0F5AC26C-45DA-4616-A120-75B0F8EFAB59} = {B0FD6F43-353B-41A4-A3DE-54499DE82E23}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5279CE35-3C1B-4719-9C6B-F96FE2C24172}

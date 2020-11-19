@@ -3,12 +3,11 @@ using LogCorner.EduSync.Speech.Application.Exceptions;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using LogCorner.EduSync.Speech.SharedKernel.Events;
 using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
-using System;
 using System.Threading.Tasks;
 
 namespace LogCorner.EduSync.Speech.Application.UseCases
 {
-    public class EventSourcingHandler<T> : IEventSourcingHandler<Event> where T : AggregateRoot<Guid>
+    public class EventSourcingHandler : IEventSourcingHandler<Event>
     {
         private readonly IEventStoreRepository _eventStoreRepository;
         private readonly IEventSerializer _eventSerializer;

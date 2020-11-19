@@ -11,7 +11,6 @@ namespace LogCorner.EduSync.Speech.SharedKernel.Events
         public string TypeName { get; set; }
         public DateTime OccurredOn { get; set; }
         public string PayLoad { get; set; }
-        public bool IsSync { get; set; }
 
         private EventStore()
         {

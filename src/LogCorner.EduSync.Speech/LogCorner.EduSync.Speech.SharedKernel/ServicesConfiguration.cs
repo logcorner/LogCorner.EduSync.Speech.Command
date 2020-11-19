@@ -1,10 +1,11 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace LogCorner.EduSync.Speech.SharedKernel.Serialyser
+namespace LogCorner.EduSync.Speech.SharedKernel
 {
     public static class ServicesConfiguration
     {
-        public static void AddSharedKernel(this IServiceCollection services) 
+        public static void AddSharedKernel(this IServiceCollection services)
         {
             services.AddSingleton<IJsonSerializer, JsonSerializer>();
             services.AddSingleton<IEventSerializer, JsonEventSerializer>();

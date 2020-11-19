@@ -7,7 +7,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
     public class JsonProviderSpecs
     {
         [Fact(DisplayName = "given string DeserializeObject should return object")]
-        public void GivenStringDeserializeObjectShouldReturnObject()
+        public void GivenStringDeserializeObjectWithTypeShouldReturnObject()
         {
             //Arrange
 
@@ -47,6 +47,27 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             //Assert
 
             Assert.Equal(json, result);
+        }
+
+        [Fact(DisplayName = "given string DeserializeObject should return object")]
+        public void GivenStringDeserializeObjectShouldReturnObject()
+        {
+            //Arrange
+
+            var json = @"
+                {
+                    'Id' :1,
+                    'Name':'Dupont'
+                }";
+            var obj = new ObjectToDeserializeTo(1, "Dupont");
+
+            //Act
+            IJsonProvider sut = new JsonProvider();
+            var result = sut.DeserializeObject<ObjectToDeserializeTo>(json);
+            //Assert
+
+            Assert.Equal(obj.Id, result.Id);
+            Assert.Equal(obj.Name, result.Name);
         }
     }
 }

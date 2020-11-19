@@ -654,11 +654,11 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
                                               Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
             var url = new UrlValue("http://url.com");
 
-            var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
+            var speech = new SpeechAggregate.Speech(Guid.NewGuid(), title, url, description, SpeechType.Conferences);
 
             //Act
             //Assert
-            Assert.Throws<ConcurrencyException>(() => speech.Delete(It.IsAny<Guid>(), expectedVersion));
+            Assert.Throws<InvalidDomainEventException>(() => speech.Delete(It.IsAny<Guid>(), expectedVersion));
         }
 
         [Fact]
@@ -697,6 +697,22 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
             //Assert
 
             Assert.True(speech.IsDeleted);
+        }
+
+        [Fact]
+        public void ApplySpeechDeletedEventWithInvalidAggregateIdShouldRaiseInvalidDomainEventException()
+        {
+            //Arrange
+            var title = new Title("Lorem Ipsum is simply dummy text of the printin");
+            var description = new Description(@"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took ");
+            var url = new UrlValue("http://url.com");
+
+            var speech = new SpeechAggregate.Speech(title, url, description, SpeechType.Conferences);
+
+            //Act
+            //Assert
+            Assert.Throws<InvalidDomainEventException>(() => speech.Apply(new SpeechDeletedEvent(Guid.NewGuid(), It.IsAny<bool>())));
         }
 
         #endregion delete Speech

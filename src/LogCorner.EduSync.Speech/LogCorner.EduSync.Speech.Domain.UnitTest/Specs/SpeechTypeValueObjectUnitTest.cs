@@ -35,6 +35,6 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
             //Act
             //Assert
             Assert.Throws<InvalidEnumAggregateException>(() => new SpeechType(4));
-      }
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
 
             //Act
             //Assert
-            var sut = new EventSourcingHandler<AggregateRoot<Guid>>(mockEventStoreRepository.Object, mockEventSerializer.Object, It.IsAny<ISignalRPublisher>());
+            var sut = new EventSourcingHandler(mockEventStoreRepository.Object, mockEventSerializer.Object, It.IsAny<ISignalRPublisher>());
             await Assert.ThrowsAsync<EventNullException>(() => sut.Handle(null, version));
         }
 
@@ -54,7 +54,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             moqSignalRPublisher.Setup(p => p.PublishAsync(It.IsAny<string>(), It.IsAny<EventStore>())).Returns(Task.CompletedTask);
 
             //Act
-            var sut = new EventSourcingHandler<AggregateRoot<Guid>>(mockEventStoreRepository.Object,
+            var sut = new EventSourcingHandler(mockEventStoreRepository.Object,
                 mockEventSerializer.Object, moqSignalRPublisher.Object);
             await sut.Handle(@event, version);
 

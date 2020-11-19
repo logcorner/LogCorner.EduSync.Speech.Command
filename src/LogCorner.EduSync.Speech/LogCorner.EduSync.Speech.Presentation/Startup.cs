@@ -4,6 +4,7 @@ using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using LogCorner.EduSync.Speech.Infrastructure;
 using LogCorner.EduSync.Speech.Presentation.Exceptions;
+using LogCorner.EduSync.Speech.SharedKernel;
 using LogCorner.EduSync.Speech.SharedKernel.Events;
 using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
 using Microsoft.AspNetCore.Builder;
@@ -45,9 +46,9 @@ namespace LogCorner.EduSync.Speech.Presentation
             services.AddTransient<IEventSourcingSubscriber, EventSourcingSubscriber>();
 
             //services.AddScoped(typeof(IEventStoreRepository), typeof(EventStoreRepository<>));
-            services.AddScoped<IEventStoreRepository,EventStoreRepository<AggregateRoot<Guid>>>();
+            services.AddScoped<IEventStoreRepository, EventStoreRepository<AggregateRoot<Guid>>>();
             services.AddTransient<IEventSerializer, JsonEventSerializer>();
-            services.AddTransient<IEventSourcingHandler<Event>, EventSourcingHandler<AggregateRoot<Guid>>>();
+            services.AddTransient<IEventSourcingHandler<Event>, EventSourcingHandler>();
             services.AddScoped(typeof(IInvoker<>), typeof(Invoker<>));
             services.AddTransient<IDomainEventRebuilder, DomainEventRebuilder>();
             services.AddTransient<IJsonProvider, JsonProvider>();
