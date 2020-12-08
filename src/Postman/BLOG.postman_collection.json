@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "dae1defe-baa0-4210-b1f1-ac98a079b478",
+		"_postman_id": "fc9544c9-7458-4879-9710-355f5efebccc",
 		"name": "BLOG",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,11 +15,52 @@
 						"name": "Content-Type",
 						"value": "application/json",
 						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"Title\":\"Le Lorem Ipsum est simplement du faux texte\",\n\t\"Description\":\"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte\",\n\t\"Url\":\"http://www.yahoo_1.fr\",\n\t\"Type\":\"3\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5001/api/speech",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"speech"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:62694/api/speech/update-title",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Id\":\"CF17D255-9991-4B7B-B08E-F65B54AA9335\",\n     \"Title\":\"UPDATE_1__Le Lorem Ipsum est simplement du faux texte\",\n\t\"Version\":0\n}"
 				},
 				"url": {
 					"raw": "http://localhost:62694/api/speech",
@@ -37,7 +78,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:62694/api/speech/update",
+			"name": "http://localhost:62694/api/speech/update-description",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -50,15 +91,77 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"Id\":\"CF17D255-9991-4B7B-B08E-F65B54AA9335\",\n\"Title\":\"UPDATE_1__Le Lorem Ipsum est simplement du faux texte\",\n\t\"Description\":\"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte\",\n\t\"Url\":\"http://www.yahoo_1.fr\",\n\t\"Type\":3,\n\t\"Version\":0\n}"
+					"raw": "{\n\t\"Id\":\"0ef5cb0d-826a-4c78-b3fb-3f9285b4a2f1\",\n\t\"Description\":\"UPDATE DESC1Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte\",\n\t\t\"Version\":1\n}"
 				},
 				"url": {
-					"raw": "http://localhost:62694/api/speech",
+					"raw": "http://localhost:5001/api/speech",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "62694",
+					"port": "5001",
+					"path": [
+						"api",
+						"speech"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:62694/api/speech/update-url",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Id\":\"11ae9ca9-a62b-458d-b44a-5a2c71980889\",\n\t\"Url\":\"http://www.yahoo_update_1.fr\",\n\t\"Version\":2\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5001/api/speech",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"speech"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:62694/api/speech/update-type",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Id\":\"0ef5cb0d-826a-4c78-b3fb-3f9285b4a2f1\",\n\t\"Type\":\"4\",\n\t\"Version\":3\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5001/api/speech",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
 					"path": [
 						"api",
 						"speech"
@@ -95,6 +198,182 @@
 						"speech"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:62694/api/speech_delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"F0DAA7A9-B21D-47A0-A0E1-E5C5E874E179\",\n\t\"version\":0\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5001/api/speech",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"speech"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:5002/api/speech",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5002/api/speech",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"api",
+						"speech"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:5002/api/speech Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5002/api/speech",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"api",
+						"speech"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:5002/api/speech Copy 2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5002/api/speech",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"api",
+						"speech"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:5002/api/speechById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5002/api/speech/eb19ca61-b84b-4f4a-8131-5932b5c9ee6e",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"api",
+						"speech",
+						"eb19ca61-b84b-4f4a-8131-5932b5c9ee6e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Access Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "redirect_uri",
+							"value": "http://localhost:4204",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "a76237af-4e90-49ab-b8d4-8714fb261b1f",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"type": "text"
+						},
+						{
+							"key": "code",
+							"value": "0.ASEAenQq8d_NJkSW_-vgVeIVo683YqeQTqtJuNSHFPsmGx8hAH4.AQABAAIAAAB2UyzwtQEKR7-rWbgdcBZIwj-0uoUpW5EDGzVDmdGK0Gf05VtgFoZy991tTZ0NrQPIgTmtdexHtsYvySqodQn5t5YL9-oqsn0AK9qjJnE-MEHfiubrvQMAL-1_Szb4K66Gf-7Ed_I78q-lYt550pqPTGlCTCpJLtZv-BrZpVyS4wlSKag_5YwpR2wQK8bJwvmnt1MawzaS4g-sB6ifka_Kx8XdyYe7wF6GzyeiveC_Ktv3PBEQiuFo8ivxwaTssa3St-YdX1hetGwXpbrMh739D1nmYbn7qF-J1dNbkEjD_XgUdPaRzcQAtAy7_zL3KBpixMViep9rIOy-PRXVJRGuOb_eJgEj5T1G78pZrJP6hReA3-y-TwQrtslj4B2Pq-VihmIDsw_Sc0Z0Zb1A0fmzqG29l5l7qQWEZpKeqPNaJL_tQbHJvDBMF19_V0Ldwz78rYswgGMMjkK09X-OsOB9MChdDlGUzJVzKaWAjpPM2PC_tn6kQP-UYKSwfXdQttOG5iE5Bz9cK7O_SkCuWd1Xnxs_hzeywdR3Avjby0C75VgRUcLC4hzhSkmf5FEbmWzUkvfc0IsnokM0nCqRvZIUi6bmUqHmp0gqM7r1EVHi-cmkjwXx0xtkO3TYSeiQ5qsFiKWYXnFBL0yLY49_8UVdn-qRP4yyFfmUhe9UTcOnRM7y5ERqyHper71GIr9-cISq4DeU-ZK9pt2eZnTwU70WM4Ul_REsTorvfKzpfAkGZwEKCiU1kqJzCxXZJGQr9S90L_yLRSALqHrINnyKX91Nsdr3IoDZ0qj_aPYHZ3tQYBt_ySh6QDKKInfpHwrlhDS7fFQPhNP7ZiNt0VHFA8jcLE_cnBDjK10xX83ilA8C4Rd8g7F8MQfBzAvh-TfoNtaR6D7IvikAXQJgm1Hwn8M4ycVYHpdbp9g1xh5h4bIxE7QOHIfpWUGLHRjkZq-oxe3GctwnZaIKIgj3uXXuX1olmucdrUiYsySQFpa49c1pmpDT7OJesGOmO4cN7WFYQ87MdBlkbV4ytem91Sny12A9zIZwMidxQar7tV2V-a_ZXyOVNaMSmq6_wfcfmbLk5Chzpczx4yEnv3-ZupEsxOAH3Asmj-tml1pIDRaQVL5G__ehG585Sibsd96kD5a_IgJZUFfTh04BVNl1vU593b-9FCQTmrsZrkT42Q9CMNN7WiAA",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "2U-7Z~CR2t9.aK317-twTWJY3jwwcktW3ahuuuu",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "http://leyegorayahoo.onmicrosoft.com/commandapi/api-access",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://login.microsoftonline.com/leyegorayahoo.onmicrosoft.com/oauth2/v2.0/token",
+					"protocol": "https",
+					"host": [
+						"login",
+						"microsoftonline",
+						"com"
+					],
+					"path": [
+						"leyegorayahoo.onmicrosoft.com",
+						"oauth2",
+						"v2.0",
+						"token"
+					]
+				},
+				"description": "https://login.microsoftonline.com/leyegorayahoo.onmicrosoft.com/oauth2/v2.0/authorize?response_type=code&client_id=a76237af-4e90-49ab-b8d4-8714fb261b1f&redirect_uri=http://localhost:4200/signin-oidc&scope=openid"
 			},
 			"response": []
 		}

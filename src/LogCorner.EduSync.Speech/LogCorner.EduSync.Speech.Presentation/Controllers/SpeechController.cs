@@ -5,9 +5,11 @@ using LogCorner.EduSync.Speech.Presentation.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LogCorner.EduSync.Speech.Presentation.Controllers
 {
+    [Authorize]
     [Route("api/speech")]
     public class SpeechController : ControllerBase
     {

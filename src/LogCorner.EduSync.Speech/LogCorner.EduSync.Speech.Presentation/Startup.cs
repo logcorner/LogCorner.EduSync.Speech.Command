@@ -7,6 +7,7 @@ using LogCorner.EduSync.Speech.Presentation.Exceptions;
 using LogCorner.EduSync.Speech.SharedKernel;
 using LogCorner.EduSync.Speech.SharedKernel.Events;
 using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +46,6 @@ namespace LogCorner.EduSync.Speech.Presentation
 
             services.AddTransient<IEventSourcingSubscriber, EventSourcingSubscriber>();
 
-            //services.AddScoped(typeof(IEventStoreRepository), typeof(EventStoreRepository<>));
             services.AddScoped<IEventStoreRepository, EventStoreRepository<AggregateRoot<Guid>>>();
             services.AddTransient<IEventSerializer, JsonEventSerializer>();
             services.AddTransient<IEventSourcingHandler<Event>, EventSourcingHandler>();
@@ -61,11 +61,19 @@ namespace LogCorner.EduSync.Speech.Presentation
             {
                 options.AddPolicy(
                     "CorsPolicy",
-                    builder => builder.WithOrigins("http://localhost:4200")
+                    builder => builder.WithOrigins("http://localhost:4204")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials());
             });
+
+            services
+                .AddAuthentication(options =>
+                    {
+                        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    }
+                ).AddJwtBearer(options => Configuration.Bind("AzureAd", options));
+
             services.AddControllers();
         }
 
@@ -84,6 +92,7 @@ namespace LogCorner.EduSync.Speech.Presentation
 
             app.UseRouting();
             app.UseCors("CorsPolicy");
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
