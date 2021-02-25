@@ -9,7 +9,8 @@ services:
       dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/Dockerfile
     depends_on:
       - logcorner.edusync.speech.presentation.data
- 
+    networks:
+      - my_network
  # database service
   logcorner.edusync.speech.presentation.data:
     image: logcorner-edusync-speech-presentation-data
@@ -18,7 +19,12 @@ services:
       dockerfile: Dockerfile
       args:
         SA_PASSWORD: PassW0rd
-        
+    networks:
+      - my_network    
 
- 
+
+networks:
+  my_network:
+    external:
+      name: my_network
 

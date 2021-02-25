@@ -4,8 +4,11 @@
     [Description] NVARCHAR (MAX)   NOT NULL,
     [Url]         NVARCHAR (250)   NOT NULL,
     [Type]        INT              DEFAULT ((1)) NOT NULL,
+    [IsDeleted]   BIT              DEFAULT ((0)) NULL,
     CONSTRAINT [PK_Presentation] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
+
+
 
 
 

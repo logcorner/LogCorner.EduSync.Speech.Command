@@ -6,7 +6,8 @@
     [TypeName]    NVARCHAR (250)   NOT NULL,
     [OccurredOn]  DATETIME         NOT NULL,
     [PayLoad]     TEXT             NOT NULL,
-    [IsSync]      BIT              NOT NULL,
     CONSTRAINT [PK__EventStore] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
+
 

@@ -53,7 +53,7 @@ namespace LogCorner.EduSync.Speech.Presentation
             services.AddTransient<IDomainEventRebuilder, DomainEventRebuilder>();
             services.AddTransient<IJsonProvider, JsonProvider>();
 
-            services.AddSignalRServices("http://localhost:5000/logcornerhub");
+            services.AddSignalRServices(Configuration["HubUrl"]);
 
             services.AddSharedKernel();
 
