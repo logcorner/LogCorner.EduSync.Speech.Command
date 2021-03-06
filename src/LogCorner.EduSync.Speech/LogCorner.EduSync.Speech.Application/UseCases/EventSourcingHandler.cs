@@ -1,5 +1,6 @@
 ﻿using LogCorner.EduSync.SignalR.Common;
 using LogCorner.EduSync.Speech.Application.Exceptions;
+using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using LogCorner.EduSync.Speech.SharedKernel.Events;
 using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
@@ -9,13 +10,15 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
 {
     public class EventSourcingHandler : IEventSourcingHandler<Event>
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IEventStoreRepository _eventStoreRepository;
         private readonly IEventSerializer _eventSerializer;
         private readonly ISignalRPublisher _publisher;
 
-        public EventSourcingHandler(IEventStoreRepository eventStoreRepository,
+        public EventSourcingHandler(IUnitOfWork unitOfWork, IEventStoreRepository eventStoreRepository,
             IEventSerializer eventSerializer, ISignalRPublisher publisher)
         {
+            _unitOfWork = unitOfWork;
             _eventStoreRepository = eventStoreRepository;
             _eventSerializer = eventSerializer;
             _publisher = publisher;
@@ -36,7 +39,7 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
                 @event.OcurrendOn,
                 serializedBody);
             await _eventStoreRepository.AppendAsync(eventStore);
-
+            _unitOfWork.Commit();
             await _publisher.PublishAsync(Topics.Speech, eventStore);
         }
     }

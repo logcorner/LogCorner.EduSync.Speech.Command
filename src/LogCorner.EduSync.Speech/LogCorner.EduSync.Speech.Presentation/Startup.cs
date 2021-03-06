@@ -19,12 +19,12 @@ namespace LogCorner.EduSync.Speech.Presentation
 {
     public class Startup
     {
+        private IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -45,7 +45,6 @@ namespace LogCorner.EduSync.Speech.Presentation
 
             services.AddTransient<IEventSourcingSubscriber, EventSourcingSubscriber>();
 
-            //services.AddScoped(typeof(IEventStoreRepository), typeof(EventStoreRepository<>));
             services.AddScoped<IEventStoreRepository, EventStoreRepository<AggregateRoot<Guid>>>();
             services.AddTransient<IEventSerializer, JsonEventSerializer>();
             services.AddTransient<IEventSourcingHandler<Event>, EventSourcingHandler>();
@@ -61,7 +60,7 @@ namespace LogCorner.EduSync.Speech.Presentation
             {
                 options.AddPolicy(
                     "CorsPolicy",
-                    builder => builder.WithOrigins("http://localhost:4200")
+                    builder => builder.WithOrigins(Configuration["allowedOrigins"].Split(","))
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials());

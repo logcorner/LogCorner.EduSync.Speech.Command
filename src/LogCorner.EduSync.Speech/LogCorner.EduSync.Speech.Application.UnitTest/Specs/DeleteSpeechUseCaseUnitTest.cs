@@ -18,13 +18,12 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
         public async Task HandlingDeleteWhenCommandIsNullShouldRaiseApplicationArgumentNullException()
         {
             //Arrange
-            Mock<IUnitOfWork> moqUnitOfWork = new Mock<IUnitOfWork>();
 
             Mock<ISpeechRepository> moqSpeechRepository = new Mock<ISpeechRepository>();
             var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
 
             //Act
-            IDeleteSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+            IDeleteSpeechUseCase usecase = new SpeechUseCase(moqSpeechRepository.Object,
                 mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository>());
 
             //Assert
@@ -49,7 +48,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             moqEventStoreRepository.Setup(m => m.GetByIdAsync<Domain.SpeechAggregate.Speech>(command.SpeechId))
                 .Returns(Task.FromResult((Domain.SpeechAggregate.Speech)null));
 
-            IDeleteSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+            IDeleteSpeechUseCase usecase = new SpeechUseCase(moqSpeechRepository.Object,
                 mockEventSourcingSubscriber.Object, moqEventStoreRepository.Object);
 
             //Act
@@ -80,7 +79,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
                     m.GetByIdAsync<Domain.SpeechAggregate.Speech>(It.IsAny<Guid>()))
                 .Returns(Task.FromResult(speech));
 
-            IDeleteSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+            IDeleteSpeechUseCase usecase = new SpeechUseCase(moqSpeechRepository.Object,
                 mockEventSourcingSubscriber.Object, moqEventStoreRepository.Object);
             //Act
             //Assert
@@ -99,11 +98,6 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
                 new Title(title), new UrlValue("http://mysite.com"),
                 new Description(description), SpeechType.Conferences);
 
-            /* ------------ I will use UnitOfWork pattern, it will help me to treat aggregate roots
-                            as a unit for the purpose of data changes */
-            Mock<IUnitOfWork> moqUnitOfWork = new Mock<IUnitOfWork>();
-            moqUnitOfWork.Setup(m => m.Commit()).Verifiable();
-
             /* ------------ I will use repository pattern, aggregate roots are the only objects my
                             code loads from the repository.*/
             Mock<ISpeechRepository> moqSpeechRepository = new Mock<ISpeechRepository>();
@@ -120,7 +114,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
             //Act
             // ------------ DeleteSpeechUseCase is the object under test
-            IDeleteSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object, mockEventSourcingSubscriber.Object, mockEventStoreRepository.Object);
+            IDeleteSpeechUseCase usecase = new SpeechUseCase(moqSpeechRepository.Object, mockEventSourcingSubscriber.Object, mockEventStoreRepository.Object);
 
             await usecase.Handle(deleteSpeechCommand);
 
@@ -130,9 +124,6 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
 
             moqSpeechRepository.Verify(m => m.DeleteAsync(It.IsAny<Domain.SpeechAggregate.Speech>()), Times.Once,
                 "DeleteAsync must be called only once");
-
-            // Verify that SaveChanges is called
-            moqUnitOfWork.Verify(m => m.Commit(), Times.Once, "Commit must be called only once");
         }
     }
 }

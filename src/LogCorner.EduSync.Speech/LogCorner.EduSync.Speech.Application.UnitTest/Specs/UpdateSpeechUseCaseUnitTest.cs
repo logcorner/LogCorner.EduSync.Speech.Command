@@ -3,7 +3,6 @@ using LogCorner.EduSync.Speech.Application.Exceptions;
 using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Domain;
 using LogCorner.EduSync.Speech.Domain.Exceptions;
-using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
 using System;
@@ -18,13 +17,12 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
         public async Task HandlingUpdateWhenCommandIsNullShouldRaiseApplicationArgumentNullException()
         {
             //Arrange
-            Mock<IUnitOfWork> moqUnitOfWork = new Mock<IUnitOfWork>();
 
             Mock<ISpeechRepository> moqSpeechRepository = new Mock<ISpeechRepository>();
             var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
 
             //Act
-            IUpdateSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+            IUpdateSpeechUseCase usecase = new SpeechUseCase(moqSpeechRepository.Object,
                 mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository>());
 
             //Assert
@@ -37,7 +35,6 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             //Arrange
             UpdateSpeechCommandMessage command = new UpdateSpeechCommandMessage(
                 Guid.Empty, null, null, null, null, 0);
-            Mock<IUnitOfWork> moqUnitOfWork = new Mock<IUnitOfWork>();
 
             Mock<ISpeechRepository> moqSpeechRepository = new Mock<ISpeechRepository>();
 
@@ -49,7 +46,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             moqEventStoreRepository.Setup(m => m.GetByIdAsync<Domain.SpeechAggregate.Speech>(command.SpeechId))
                 .Returns(Task.FromResult((Domain.SpeechAggregate.Speech)null));
 
-            IUpdateSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+            IUpdateSpeechUseCase usecase = new SpeechUseCase(moqSpeechRepository.Object,
                 mockEventSourcingSubscriber.Object, moqEventStoreRepository.Object);
 
             //Act
@@ -74,7 +71,6 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             UpdateSpeechCommandMessage command = new UpdateSpeechCommandMessage(Guid.NewGuid(),
                 newTitle, newDescription, newUrl, newType, 0);
 
-            Mock<IUnitOfWork> moqUnitOfWork = new Mock<IUnitOfWork>();
             var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
 
             Mock<ISpeechRepository> moqSpeechRepository = new Mock<ISpeechRepository>();
@@ -92,7 +88,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
                     m.GetByIdAsync<Domain.SpeechAggregate.Speech>(It.IsAny<Guid>()))
                 .Returns(Task.FromResult(speech));
 
-            IUpdateSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+            IUpdateSpeechUseCase usecase = new SpeechUseCase(moqSpeechRepository.Object,
                 mockEventSourcingSubscriber.Object, moqEventStoreRepository.Object);
 
             //Act
@@ -111,7 +107,6 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
 
             mockEventSourcingSubscriber.Verify(m =>
                 m.Subscribe(It.IsAny<IEventSourcing>()), Times.Once);
-            moqUnitOfWork.Verify(m => m.Commit(), Times.Once);
         }
 
         [Fact(DisplayName =
@@ -126,7 +121,6 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             UpdateSpeechCommandMessage command = new UpdateSpeechCommandMessage(Guid.NewGuid(),
                 newTitle, description, url, SpeechType.Conferences.IntValue, 2);
 
-            Mock<IUnitOfWork> moqUnitOfWork = new Mock<IUnitOfWork>();
             var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
             Mock<ISpeechRepository> moqSpeechRepository = new Mock<ISpeechRepository>();
 
@@ -140,7 +134,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
                     m.GetByIdAsync<Domain.SpeechAggregate.Speech>(It.IsAny<Guid>()))
                 .Returns(Task.FromResult(speech));
 
-            IUpdateSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+            IUpdateSpeechUseCase usecase = new SpeechUseCase(moqSpeechRepository.Object,
                 mockEventSourcingSubscriber.Object, moqEventStoreRepository.Object);
             //Act
             //Assert

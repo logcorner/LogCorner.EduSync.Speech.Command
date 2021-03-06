@@ -1,7 +1,6 @@
 ﻿using LogCorner.EduSync.Speech.Application.Commands;
 using LogCorner.EduSync.Speech.Application.Exceptions;
 using LogCorner.EduSync.Speech.Domain;
-using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using System.Threading.Tasks;
 
@@ -11,14 +10,12 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
                                  IUpdateSpeechUseCase,
                                  IDeleteSpeechUseCase
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly ISpeechRepository _speechRepository;
         private readonly IEventSourcingSubscriber _domainEventSubscriber;
         private readonly IEventStoreRepository _eventStoreRepository;
 
-        public SpeechUseCase(IUnitOfWork unitOfWork, ISpeechRepository speechRepository, IEventSourcingSubscriber domainEventSubscriber, IEventStoreRepository eventStoreRepository)
+        public SpeechUseCase(ISpeechRepository speechRepository, IEventSourcingSubscriber domainEventSubscriber, IEventStoreRepository eventStoreRepository)
         {
-            _unitOfWork = unitOfWork;
             _speechRepository = speechRepository;
             _domainEventSubscriber = domainEventSubscriber;
             _eventStoreRepository = eventStoreRepository;
@@ -39,7 +36,6 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
             var speech = new Domain.SpeechAggregate.Speech(AggregateId.NewId(), title, urlValue, description, type);
             await _speechRepository.CreateAsync(speech);
             await _domainEventSubscriber.Subscribe(speech);
-            _unitOfWork.Commit();
         }
 
         public async Task Handle(UpdateSpeechCommandMessage command)
@@ -76,7 +72,6 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
 
             await _speechRepository.UpdateAsync(speech);
             await _domainEventSubscriber.Subscribe(speech);
-            _unitOfWork.Commit();
         }
 
         public async Task Handle(DeleteSpeechCommandMessage command)
@@ -95,7 +90,6 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
 
             await _speechRepository.DeleteAsync(speech);
             await _domainEventSubscriber.Subscribe(speech);
-            _unitOfWork.Commit();
         }
     }
 }
