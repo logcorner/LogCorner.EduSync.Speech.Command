@@ -10,7 +10,7 @@ services:
     depends_on:
       - logcorner.edusync.speech.command.data
     networks:
-      - my_network
+      - speech_network
  # database service
   logcorner.edusync.speech.command.data:
     image: logcorner-edusync-speech-command-data
@@ -20,11 +20,11 @@ services:
       args:
         SA_PASSWORD: PassW0rd
     networks:
-      - my_network    
+      - speech_network    
 
 
 networks:
-  my_network:
+  speech_network:
     external:
-      name: my_network
+      name: speech_network
 
