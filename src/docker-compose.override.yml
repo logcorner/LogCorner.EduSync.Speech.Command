@@ -2,14 +2,14 @@ version: '3.4'
 
 services:
   # web api service
-  logcorner.edusync.speech.presentation:
+  logcorner.edusync.speech.command:
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
     ports:
       - "8080:80"
 
   # database service
-  logcorner.edusync.speech.presentation.data:
+  logcorner.edusync.speech.command.data:
     ports:
       - "1433:1433"
    

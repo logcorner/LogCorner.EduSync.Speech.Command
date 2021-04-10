@@ -1,7 +1,6 @@
 using LogCorner.EduSync.Speech.Application.Commands;
 using LogCorner.EduSync.Speech.Application.Exceptions;
 using LogCorner.EduSync.Speech.Application.UseCases;
-using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
 using System.Threading.Tasks;
@@ -15,10 +14,6 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
         public async Task RegisterSpeechUseCaseWithValidInputReturnSuccessTest()
         {
             //Arrange
-            /* ------------ I will use UnitOfWork pattern, it will help me to treat aggregate roots
-                            as a unit for the purpose of data changes */
-            Mock<IUnitOfWork> moqUnitOfWork = new Mock<IUnitOfWork>();
-            moqUnitOfWork.Setup(m => m.Commit()).Verifiable();
 
             /* ------------ I will use repository pattern, aggregate roots are the only objects my
                             code loads from the repository.*/
@@ -38,7 +33,7 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
             //Act
             // ------------ RegisterSpeechUseCase is the object under test
             ICreateSpeechUseCase usecase =
-                new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object, mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository>());
+                new SpeechUseCase(moqSpeechRepository.Object, mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository>());
 
             await usecase.Handle(registerSpeechCommand);
 
@@ -50,20 +45,19 @@ namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
                 "CreateAsync must be called only once");
 
             // Verify that SaveChanges is called
-            moqUnitOfWork.Verify(m => m.Commit(), Times.Once, "Commit must be called only once");
+            // moqUnitOfWork.Verify(m => m.Commit(), Times.Once, "Commit must be called only once");
         }
 
         [Fact(DisplayName = "register speech use case with null speech throws an ApplicationArgumentNullException")]
         public async Task RegisterSpeechUseCaseWithNullSpeechThrowsExceptionTest()
         {
             //Arrange
-            Mock<IUnitOfWork> moqUnitOfWork = new Mock<IUnitOfWork>();
 
             Mock<ISpeechRepository> moqSpeechRepository = new Mock<ISpeechRepository>();
             var mockEventSourcingSubscriber = new Mock<IEventSourcingSubscriber>();
 
             //Act
-            ICreateSpeechUseCase usecase = new SpeechUseCase(moqUnitOfWork.Object, moqSpeechRepository.Object,
+            ICreateSpeechUseCase usecase = new SpeechUseCase(moqSpeechRepository.Object,
                 mockEventSourcingSubscriber.Object, It.IsAny<IEventStoreRepository>());
 
             //Assert
