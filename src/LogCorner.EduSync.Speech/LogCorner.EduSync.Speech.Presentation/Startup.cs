@@ -7,7 +7,6 @@ using LogCorner.EduSync.Speech.Presentation.Exceptions;
 using LogCorner.EduSync.Speech.SharedKernel;
 using LogCorner.EduSync.Speech.SharedKernel.Events;
 using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -66,13 +65,17 @@ namespace LogCorner.EduSync.Speech.Presentation
                         .AllowAnyHeader()
                         .AllowCredentials());
             });
+            /*
+                        services
+                            .AddAuthentication(options =>
+                                {
+                                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                                }
+                            ).AddJwtBearer(options => Configuration.Bind("AzureAd", options));
+            */
+            services.AddCustomAuthentication(Configuration);
 
-            services
-                .AddAuthentication(options =>
-                    {
-                        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                    }
-                ).AddJwtBearer(options => Configuration.Bind("AzureAd", options));
+            services.AddCustomSwagger(Configuration);
 
             services.AddControllers();
         }
@@ -89,7 +92,18 @@ namespace LogCorner.EduSync.Speech.Presentation
                 app.UseHsts();
             }
             app.UseMiddleware<ExceptionMiddleware>();
+            app.UseSwagger()
+                .UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1");
+                    c.OAuthClientId("ea949966-4b5b-43a5-9917-d0918fb85873");
+                    c.OAuthClientSecret("oKK97I2T5rHw_f~N_wHN_Z2-J8H8_-P-9R");
+                    c.OAuthAppName("The Speech Micro Service Command Swagger UI");
+                    c.OAuthScopeSeparator(" ");
 
+                    c.OAuthUsePkce();
+                });
+            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("CorsPolicy");
             app.UseAuthentication();

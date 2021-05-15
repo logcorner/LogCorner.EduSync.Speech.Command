@@ -26,6 +26,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
         public bool IsDeleted { get; private set; }
 
         //EF Core need a parameterless constructor
+        // ReSharper disable once UnusedMember.Local
         private Speech()
         {
             _mediaFileItems = new List<MediaFile>();
