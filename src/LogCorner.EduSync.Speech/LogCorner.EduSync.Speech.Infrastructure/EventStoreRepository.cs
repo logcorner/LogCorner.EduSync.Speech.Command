@@ -50,7 +50,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure
 
             if (!eventStoreItems.Any())
             {
-                return await Task.FromResult(aggregate);
+                return await Task.FromResult<T>(null);
             }
 
             var events = _eventStoreToEVent.RebuildDomainEvents(eventStoreItems);

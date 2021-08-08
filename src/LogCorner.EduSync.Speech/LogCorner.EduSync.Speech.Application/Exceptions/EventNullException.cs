@@ -2,7 +2,7 @@
 {
     public class EventNullException : ArgumentNullApplicationException
     {
-        internal EventNullException(string message) : base(message)
+        public EventNullException(string message) : base(message)
         {
         }
     }

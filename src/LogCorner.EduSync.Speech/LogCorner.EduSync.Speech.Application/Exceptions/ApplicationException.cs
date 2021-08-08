@@ -1,10 +1,10 @@
-﻿using System;
+﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
 
 namespace LogCorner.EduSync.Speech.Application.Exceptions
 {
-    public class ApplicationException : Exception
+    public class ApplicationException : BaseException
     {
-        internal ApplicationException(string message) : base(message)
+        public ApplicationException(int errorCode, string message) : base(errorCode, message)
         {
         }
     }

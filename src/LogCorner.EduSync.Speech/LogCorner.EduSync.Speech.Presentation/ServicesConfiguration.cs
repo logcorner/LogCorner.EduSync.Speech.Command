@@ -44,9 +44,9 @@ namespace LogCorner.EduSync.Speech.Presentation
                             TokenUrl = new Uri("https://datasynchrob2c.b2clogin.com/datasynchrob2c.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/token"),
                             Scopes = new Dictionary<string, string>
                             {
-                                {"https://datasynchrob2c.onmicrosoft.com/api/Speech.Create","Create a new Speech"},
-                                {"https://datasynchrob2c.onmicrosoft.com/api/Speech.Edit", "Edit and Update a  Speech" },
-                                {"https://datasynchrob2c.onmicrosoft.com/api/Speech.Delete","Delete a Speech"}
+                                {"https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Create","Create a new Speech"},
+                                {"https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Edit", "Edit and Update a  Speech" },
+                                {"https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Delete","Delete a Speech"}
                             }
                         }
                     }
@@ -64,9 +64,9 @@ namespace LogCorner.EduSync.Speech.Presentation
                             }
                         },
                         new[] {
-                                "https://datasynchrob2c.onmicrosoft.com/api/Speech.Create",
-                                "https://datasynchrob2c.onmicrosoft.com/api/Speech.Edit",
-                                "https://datasynchrob2c.onmicrosoft.com/api/Speech.Delete"
+                                "https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Create",
+                                "https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Edit",
+                                "https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Delete"
                               }
                     }
                 });

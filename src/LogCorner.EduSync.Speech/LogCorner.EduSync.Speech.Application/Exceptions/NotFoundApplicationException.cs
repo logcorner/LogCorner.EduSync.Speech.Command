@@ -2,7 +2,9 @@
 {
     public class NotFoundApplicationException : ApplicationException
     {
-        internal NotFoundApplicationException(string message) : base(message)
+        private static int errorCode = Exceptions.ErrorCode.NotFoundApplicationException;
+
+        public NotFoundApplicationException(string message) : base(errorCode, message)
         {
         }
     }
