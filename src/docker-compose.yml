@@ -18,7 +18,7 @@ services:
       context: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Database/Docker
       dockerfile: Dockerfile
       args:
-        SA_PASSWORD: PassW0rd
+        SA_PASSWORD: MyC0m9l&xP@ssw0rd
     networks:
       - speech_network    
 

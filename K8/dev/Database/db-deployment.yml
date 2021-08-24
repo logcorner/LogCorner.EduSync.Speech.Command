@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-domainservice-deployment
+  namespace: dev
+spec:
+  replicas: 1
+  selector:
+     matchLabels:
+       app: db-domainservice
+  template:
+    metadata:
+      labels:
+        app: db-domainservice
+    spec:
+      terminationGracePeriodSeconds: 30
+      hostname: mssqlinst
+      securityContext:
+        fsGroup: 10001
+      containers:
+      - name: db-domainservice
+        image: local/logcorner-edusync-speech-command-data:1.0.0
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 1433
+        env:
+        - name: MSSQL_PID
+          value: "Developer"
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mssql
+              key: SA_PASSWORD 
+        # volumeMounts:
+        # - name: mssqldb
+          # mountPath: /var/opt/mssql/data
+      # volumes:
+      # - name: mssqldb
+        # persistentVolumeClaim:
+          # claimName: mssql-data

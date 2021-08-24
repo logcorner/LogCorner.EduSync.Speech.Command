@@ -1,0 +1,35 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+
+metadata:
+  name: domainservice-deployment
+  namespace: dev
+  labels:
+    run: domainservice
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: domainservice
+  
+  template:
+    metadata:
+      labels:
+        run: domainservice
+    spec:
+      containers:
+      - name: catmash-domainservice-cat
+        image: edusyncregistry.azurecr.io/logcorner-hackaton-catmash-domainservice-cat
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Kubernetes"
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+       - name: registrysecret
