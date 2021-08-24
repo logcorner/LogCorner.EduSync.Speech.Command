@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 
 metadata:
@@ -20,16 +20,16 @@ spec:
     spec:
       containers:
       - name: catmash-domainservice-cat
-        image: edusyncregistry.azurecr.io/logcorner-hackaton-catmash-domainservice-cat
+        image: local/logcorner-edusync-speech-command:1.0.1
+        imagePullPolicy: Never
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: "Kubernetes"
         ports:
         - containerPort: 80
           protocol: TCP
-        imagePullPolicy: Always
+        # imagePullPolicy: Always
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
-      imagePullSecrets:
-       - name: registrysecret
+    
