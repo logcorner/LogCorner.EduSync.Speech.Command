@@ -2,33 +2,33 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: domainservice-deployment
+  name: command-api-deployment
   namespace: dev
   labels:
-    run: domainservice
+    run: command-api
 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: domainservice
+      run: command-api
   
   template:
     metadata:
       labels:
-        run: domainservice
+        run: command-api
     spec:
       containers:
-      - name: catmash-domainservice-cat
-        image: local/logcorner-edusync-speech-command:1.0.1
+      - name: command-api-container
+        image: logcornerhub/logcorner-edusync-speech-command:1.0.0
         imagePullPolicy: Never
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: "Kubernetes"
         ports:
         - containerPort: 80
+        - containerPort: 443
           protocol: TCP
-        # imagePullPolicy: Always
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
