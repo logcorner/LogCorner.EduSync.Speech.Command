@@ -1,17 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db-domainservice-deployment
+  name: db-speech-command-api-deployment
   namespace: dev
+  labels:
+    version: 1.0.0
+    product: db-speech-command-api
+    environment: dev
 spec:
   replicas: 1
   selector:
      matchLabels:
-       app: db-domainservice
+       app: db-speech-command-api
+       env: dev
   template:
     metadata:
       labels:
-        app: db-domainservice
+       app: db-speech-command-api
+       env: dev
     spec:
       terminationGracePeriodSeconds: 30
       hostname: mssqlinst
@@ -19,7 +25,7 @@ spec:
         fsGroup: 10001
       containers:
       - name: db-domainservice
-        image: local/logcorner-edusync-speech-command-data:1.0.0
+        image: logcornerhub/logcorner-edusync-speech-command-data
         imagePullPolicy: Never
         ports:
         - containerPort: 1433
@@ -33,10 +39,10 @@ spec:
             secretKeyRef:
               name: mssql
               key: SA_PASSWORD 
-        # volumeMounts:
-        # - name: mssqldb
-          # mountPath: /var/opt/mssql/data
-      # volumes:
-      # - name: mssqldb
-        # persistentVolumeClaim:
-          # claimName: mssql-data
+        volumeMounts:
+        - name: mssqldb
+          mountPath: /var/opt/mssql/data
+      volumes:
+      - name: mssqldb
+        persistentVolumeClaim:
+          claimName: mssql-data

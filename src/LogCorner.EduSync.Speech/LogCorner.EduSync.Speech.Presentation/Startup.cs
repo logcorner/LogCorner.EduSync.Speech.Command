@@ -1,4 +1,5 @@
 ﻿using LogCorner.EduSync.SignalR.Common;
+using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
@@ -52,7 +53,7 @@ namespace LogCorner.EduSync.Speech.Presentation
             services.AddTransient<IDomainEventRebuilder, DomainEventRebuilder>();
             services.AddTransient<IJsonProvider, JsonProvider>();
 
-            services.AddSignalRServices(Configuration["HubUrl"]);
+            services.AddSignalRServices($"{Configuration["HubUrl"]}?clientName=speech-http-command-api");
 
             services.AddSharedKernel();
 
@@ -65,14 +66,7 @@ namespace LogCorner.EduSync.Speech.Presentation
                         .AllowAnyHeader()
                         .AllowCredentials());
             });
-            /*
-                        services
-                            .AddAuthentication(options =>
-                                {
-                                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                                }
-                            ).AddJwtBearer(options => Configuration.Bind("AzureAd", options));
-            */
+
             services.AddCustomAuthentication(Configuration);
 
             services.AddCustomSwagger(Configuration);
@@ -95,9 +89,12 @@ namespace LogCorner.EduSync.Speech.Presentation
             app.UseSwagger()
                 .UseSwaggerUI(c =>
                 {
+                    var OAuthClientId = Configuration["SwaggerUI:OAuthClientId"];
+                    var OAuthClientSecret = Configuration["SwaggerUI:OAuthClientSecret"];
+
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1");
-                    c.OAuthClientId("ea949966-4b5b-43a5-9917-d0918fb85873");
-                    c.OAuthClientSecret("oKK97I2T5rHw_f~N_wHN_Z2-J8H8_-P-9R");
+                    c.OAuthClientId(OAuthClientId);
+                    c.OAuthClientSecret(OAuthClientSecret);
                     c.OAuthAppName("The Speech Micro Service Command Swagger UI");
                     c.OAuthScopeSeparator(" ");
 

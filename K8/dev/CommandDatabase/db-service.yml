@@ -1,13 +1,18 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: db-domainservice-deployment
+  name: db-speech-command-api-service
   namespace: dev
+  labels:
+    version: 1.0.0
+    product: db-speech-command-api
+    environment: dev
 spec:
   selector:
-    app: db-domainservice
+    app: db-speech-command-api
+    env: dev
   ports:
     - protocol: TCP
       port: 1433
       targetPort: 1433
-  type: LoadBalancer
+  type: NodePort

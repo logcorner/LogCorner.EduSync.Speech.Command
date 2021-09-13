@@ -28,7 +28,8 @@ namespace LogCorner.EduSync.Speech.Presentation.Exceptions
             catch (Exception ex)
             {
                 var logger = _loggerFactory.CreateLogger("ExceptionMiddleware");
-                logger.LogError($"Something went wrong: {ex.StackTrace}");
+                logger.LogError($"Something went wrong: {ex.Message}");
+                logger.LogError(ex.StackTrace);
                 await HandleExceptionAsync(ex, httpContext);
             }
         }
