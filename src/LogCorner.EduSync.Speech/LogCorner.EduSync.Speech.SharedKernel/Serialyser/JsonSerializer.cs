@@ -7,8 +7,8 @@
         public JsonSerializer(IJsonProvider jsonProvider)
         {
             _jsonProvider = jsonProvider;
-          
         }
+
         public string Serialize<T>(T objectValue)
         {
             return _jsonProvider.SerializeObject<T>(objectValue);
@@ -19,7 +19,7 @@
             return _jsonProvider.DeserializeObject<T>(stringValue);
         }
 
-        public T Deserialize<T>(string type, string stringValue) 
+        public T Deserialize<T>(string type, string stringValue)
         {
             return _jsonProvider.DeserializeObject<T>(stringValue, type);
         }

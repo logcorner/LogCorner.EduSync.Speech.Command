@@ -1,5 +1,6 @@
 ﻿using LogCorner.EduSync.SignalR.Common;
 using LogCorner.EduSync.Speech.Application.Exceptions;
+using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using LogCorner.EduSync.Speech.SharedKernel.Events;
