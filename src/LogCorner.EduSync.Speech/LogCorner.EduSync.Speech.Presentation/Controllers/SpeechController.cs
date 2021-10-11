@@ -2,14 +2,12 @@
 using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Presentation.Dtos;
 using LogCorner.EduSync.Speech.Presentation.Exceptions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
 namespace LogCorner.EduSync.Speech.Presentation.Controllers
 {
-    [Authorize]
     [Route("api/speech")]
     public class SpeechController : ControllerBase
     {

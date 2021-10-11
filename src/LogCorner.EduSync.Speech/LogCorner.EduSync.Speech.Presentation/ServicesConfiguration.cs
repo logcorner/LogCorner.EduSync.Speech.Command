@@ -24,6 +24,7 @@ namespace LogCorner.EduSync.Speech.Presentation
 
         public static void AddCustomSwagger(this IServiceCollection services, IConfiguration configuration)
         {
+            var TenantName = configuration["SwaggerUI:TenantName"];
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
@@ -40,13 +41,13 @@ namespace LogCorner.EduSync.Speech.Presentation
                     {
                         AuthorizationCode = new OpenApiOAuthFlow
                         {
-                            AuthorizationUrl = new Uri("https://datasynchrob2c.b2clogin.com/datasynchrob2c.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/authorize"),
-                            TokenUrl = new Uri("https://datasynchrob2c.b2clogin.com/datasynchrob2c.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/token"),
+                            AuthorizationUrl = new Uri($"https://{TenantName}.b2clogin.com/{TenantName}.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/authorize"),
+                            TokenUrl = new Uri($"https://{TenantName}.b2clogin.com/{TenantName}.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/token"),
                             Scopes = new Dictionary<string, string>
                             {
-                                {"https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Create","Create a new Speech"},
-                                {"https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Edit", "Edit and Update a  Speech" },
-                                {"https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Delete","Delete a Speech"}
+                                {$"https://{TenantName}.onmicrosoft.com/command/api/Speech.Create","Create a new Speech"},
+                                {$"https://{TenantName}.onmicrosoft.com/command/api/Speech.Edit", "Edit and Update a  Speech" },
+                                {$"https://{TenantName}.onmicrosoft.com/command/api/Speech.Delete","Delete a Speech"}
                             }
                         }
                     }
@@ -64,9 +65,9 @@ namespace LogCorner.EduSync.Speech.Presentation
                             }
                         },
                         new[] {
-                                "https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Create",
-                                "https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Edit",
-                                "https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Delete"
+                                $"https://{TenantName}.onmicrosoft.com/command/api/Speech.Create",
+                                $"https://{TenantName}.onmicrosoft.com/command/api/Speech.Edit",
+                                $"https://{TenantName}.onmicrosoft.com/command/api/Speech.Delete"
                               }
                     }
                 });

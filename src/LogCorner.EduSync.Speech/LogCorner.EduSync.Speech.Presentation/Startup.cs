@@ -27,7 +27,6 @@ namespace LogCorner.EduSync.Speech.Presentation
             Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ICreateSpeechUseCase, SpeechUseCase>();
@@ -52,8 +51,8 @@ namespace LogCorner.EduSync.Speech.Presentation
             services.AddScoped(typeof(IInvoker<>), typeof(Invoker<>));
             services.AddTransient<IDomainEventRebuilder, DomainEventRebuilder>();
             services.AddTransient<IJsonProvider, JsonProvider>();
-
-            services.AddSignalRServices($"{Configuration["HubUrl"]}?clientName=speech-http-command-api",Configuration);
+          
+           services.AddSignalRServices($"{Configuration["HubUrl"]}?clientName=speech-http-command-api",Configuration);
 
             services.AddSharedKernel();
 
@@ -74,7 +73,6 @@ namespace LogCorner.EduSync.Speech.Presentation
             services.AddControllers();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -108,7 +106,7 @@ namespace LogCorner.EduSync.Speech.Presentation
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireAuthorization();
             });
         }
     }
