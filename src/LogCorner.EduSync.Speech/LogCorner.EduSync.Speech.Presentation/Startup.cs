@@ -14,7 +14,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
+using System.Collections.Generic;
 
 namespace LogCorner.EduSync.Speech.Presentation
 {
@@ -51,8 +53,8 @@ namespace LogCorner.EduSync.Speech.Presentation
             services.AddScoped(typeof(IInvoker<>), typeof(Invoker<>));
             services.AddTransient<IDomainEventRebuilder, DomainEventRebuilder>();
             services.AddTransient<IJsonProvider, JsonProvider>();
-          
-           services.AddSignalRServices($"{Configuration["HubUrl"]}?clientName=speech-http-command-api",Configuration);
+
+            services.AddSignalRServices($"{Configuration["HubUrl"]}?clientName=speech-http-command-api", Configuration);
 
             services.AddSharedKernel();
 
@@ -83,21 +85,34 @@ namespace LogCorner.EduSync.Speech.Presentation
             {
                 app.UseHsts();
             }
+
+            string pathBase = Configuration["pathBase"];
             app.UseMiddleware<ExceptionMiddleware>();
-            app.UseSwagger()
-                .UseSwaggerUI(c =>
+            app.UseSwagger(x =>
+            {
+                if (!string.IsNullOrWhiteSpace(pathBase))
                 {
-                    var oAuthClientId = Configuration["SwaggerUI:OAuthClientId"];
-                    var oAuthClientSecret = Configuration["SwaggerUI:OAuthClientSecret"];
+                    x.RouteTemplate = "swagger/{documentName}/swagger.json";
+                    x.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
+                    {
+         
+                        swaggerDoc.Servers = new List<OpenApiServer> { new OpenApiServer { Url = $"https://{httpReq.Host.Value}{pathBase}" } };
+                    });
+                }
+            })
+            .UseSwaggerUI(c =>
+            {
+                var oAuthClientId = Configuration["SwaggerUI:OAuthClientId"];
+                var oAuthClientSecret = Configuration["SwaggerUI:OAuthClientSecret"];
 
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1");
-                    c.OAuthClientId(oAuthClientId);
-                    c.OAuthClientSecret(oAuthClientSecret);
-                    c.OAuthAppName("The Speech Micro Service Command Swagger UI");
-                    c.OAuthScopeSeparator(" ");
+                c.SwaggerEndpoint("../swagger/v1/swagger.json", "WebApi v1");
+                c.OAuthClientId(oAuthClientId);
+                c.OAuthClientSecret(oAuthClientSecret);
+                c.OAuthAppName("The Speech Micro Service Command Swagger UI");
+                c.OAuthScopeSeparator(" ");
 
-                    c.OAuthUsePkce();
-                });
+                c.OAuthUsePkce();
+            });
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("CorsPolicy");
@@ -108,6 +123,11 @@ namespace LogCorner.EduSync.Speech.Presentation
             {
                 endpoints.MapControllers().RequireAuthorization();
             });
+
+            if (!string.IsNullOrWhiteSpace(pathBase))
+            {
+                app.UsePathBase(new Microsoft.AspNetCore.Http.PathString(pathBase));
+            }
         }
     }
 }
