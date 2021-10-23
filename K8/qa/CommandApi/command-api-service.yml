@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: speech-command-http-api-service
-  # namespace: qa
+  namespace: qa
   labels:
     version: 1.0.0
     product: speech-command-http-api

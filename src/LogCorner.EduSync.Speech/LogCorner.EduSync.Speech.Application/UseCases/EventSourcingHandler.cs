@@ -41,8 +41,7 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
                 serializedBody);
             await _eventStoreRepository.AppendAsync(eventStore);
             _unitOfWork.Commit();
-            //TODO : uncomment after signarl hub identity congiguration
-            // await _publisher.PublishAsync(Topics.Speech, eventStore);
+             await _publisher.PublishAsync(Topics.Speech, eventStore);
         }
     }
 }

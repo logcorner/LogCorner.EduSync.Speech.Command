@@ -3,7 +3,7 @@ kind: Deployment
 
 metadata:
   name: speech-command-http-api-deployment
-  # namespace: qa
+  namespace: qa
   labels:
     version: 1.0.0
     product: speech-command-http-api

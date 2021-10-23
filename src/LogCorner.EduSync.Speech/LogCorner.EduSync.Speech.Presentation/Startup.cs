@@ -84,6 +84,7 @@ namespace LogCorner.EduSync.Speech.Presentation
             else
             {
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
 
             string pathBase = Configuration["pathBase"];
@@ -95,7 +96,6 @@ namespace LogCorner.EduSync.Speech.Presentation
                     x.RouteTemplate = "swagger/{documentName}/swagger.json";
                     x.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
                     {
-         
                         swaggerDoc.Servers = new List<OpenApiServer> { new OpenApiServer { Url = $"https://{httpReq.Host.Value}{pathBase}" } };
                     });
                 }
@@ -113,7 +113,6 @@ namespace LogCorner.EduSync.Speech.Presentation
 
                 c.OAuthUsePkce();
             });
-            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("CorsPolicy");
             app.UseAuthentication();
