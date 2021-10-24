@@ -10,6 +10,7 @@
   <PropertyGroup>
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
 <EnableDefaultItems>false</EnableDefaultItems>
+<UserSecretsId>ceb20177-ef4d-46e8-abd7-7d91d7e3534d</UserSecretsId>
 </PropertyGroup>
 
   <ItemGroup>
