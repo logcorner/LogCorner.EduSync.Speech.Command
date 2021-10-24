@@ -110,7 +110,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             var result = await sut.GetByIdAsync<StubAggregate>(aggregateId);
 
             //Assert
-            Assert.Equal(aggregate, result);
+            Assert.Null(result);
         }
 
         [Fact(DisplayName = "GetByIdAsync with events should return the current state of the aggregate")]

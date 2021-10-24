@@ -1,5 +1,5 @@
 using LogCorner.EduSync.Speech.Application.Commands;
-using LogCorner.EduSync.Speech.Application.UseCases;
+using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Presentation.Controllers;
 using LogCorner.EduSync.Speech.Presentation.Dtos;
 using LogCorner.EduSync.Speech.Presentation.Exceptions;

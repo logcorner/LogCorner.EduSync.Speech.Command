@@ -19,11 +19,12 @@
     },
     "LogCorner.EduSync.Speech.Presentation": {
       "commandName": "Project",
-      "launchUrl": "api/values",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5001"
+      "applicationUrl": "https://localhost:6001;http://localhost:6000"
     },
     "Docker": {
       "commandName": "Docker",

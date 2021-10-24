@@ -1,7 +1,9 @@
 ﻿using LogCorner.EduSync.Speech.Application.Commands;
 using LogCorner.EduSync.Speech.Application.Exceptions;
+using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Domain;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
+using System;
 using System.Threading.Tasks;
 
 namespace LogCorner.EduSync.Speech.Application.UseCases
@@ -47,7 +49,7 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
 
             var speech = await _eventStoreRepository.GetByIdAsync<Domain.SpeechAggregate.Speech>(command.SpeechId);
 
-            if (speech == null)
+            if (speech == null || speech.Id == Guid.Empty)
             {
                 throw new NotFoundApplicationException($"speech not found {command.SpeechId}");
             }

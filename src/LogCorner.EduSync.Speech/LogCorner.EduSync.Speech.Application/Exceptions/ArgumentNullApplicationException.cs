@@ -2,7 +2,9 @@
 {
     public class ArgumentNullApplicationException : ApplicationException
     {
-        internal ArgumentNullApplicationException(string message) : base(message)
+        private static int errorCode = Exceptions.ErrorCode.ArgumentNullApplicationException;
+
+        public ArgumentNullApplicationException(string message) : base(errorCode, message)
         {
         }
     }

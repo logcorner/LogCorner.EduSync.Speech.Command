@@ -49,7 +49,7 @@ BEGIN
 END
 
 GO
-PRINT N'Creating $(DatabaseName)...'
+PRINT N'Creating database $(DatabaseName)...'
 GO
 CREATE DATABASE [$(DatabaseName)] COLLATE SQL_Latin1_General_CP1_CI_AS
 GO
@@ -230,36 +230,7 @@ IF fulltextserviceproperty(N'IsFulltextInstalled') = 1
 
 
 GO
-PRINT N'Creating [dbo].[MediaFile]...';
-
-
-GO
-CREATE TABLE [dbo].[MediaFile] (
-    [ID]       UNIQUEIDENTIFIER NOT NULL,
-    [Url]      NVARCHAR (250)   NULL,
-    [SpeechID] UNIQUEIDENTIFIER NOT NULL,
-    PRIMARY KEY CLUSTERED ([ID] ASC)
-);
-
-
-GO
-PRINT N'Creating [dbo].[Speech]...';
-
-
-GO
-CREATE TABLE [dbo].[Speech] (
-    [ID]          UNIQUEIDENTIFIER NOT NULL,
-    [Title]       NVARCHAR (250)   NOT NULL,
-    [Description] NVARCHAR (MAX)   NOT NULL,
-    [Url]         NVARCHAR (250)   NOT NULL,
-    [Type]        INT              NOT NULL,
-    [IsDeleted]   BIT              NULL,
-    CONSTRAINT [PK_Presentation] PRIMARY KEY CLUSTERED ([ID] ASC)
-);
-
-
-GO
-PRINT N'Creating [dbo].[EventStore]...';
+PRINT N'Creating Table [dbo].[EventStore]...';
 
 
 GO
@@ -276,7 +247,36 @@ CREATE TABLE [dbo].[EventStore] (
 
 
 GO
-PRINT N'Creating unnamed constraint on [dbo].[Speech]...';
+PRINT N'Creating Table [dbo].[MediaFile]...';
+
+
+GO
+CREATE TABLE [dbo].[MediaFile] (
+    [ID]       UNIQUEIDENTIFIER NOT NULL,
+    [Url]      NVARCHAR (250)   NULL,
+    [SpeechID] UNIQUEIDENTIFIER NOT NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC)
+);
+
+
+GO
+PRINT N'Creating Table [dbo].[Speech]...';
+
+
+GO
+CREATE TABLE [dbo].[Speech] (
+    [ID]          UNIQUEIDENTIFIER NOT NULL,
+    [Title]       NVARCHAR (250)   NOT NULL,
+    [Description] NVARCHAR (MAX)   NOT NULL,
+    [Url]         NVARCHAR (250)   NOT NULL,
+    [Type]        INT              NOT NULL,
+    [IsDeleted]   BIT              NULL,
+    CONSTRAINT [PK_Presentation] PRIMARY KEY CLUSTERED ([ID] ASC)
+);
+
+
+GO
+PRINT N'Creating Default Constraint unnamed constraint on [dbo].[Speech]...';
 
 
 GO
@@ -285,7 +285,7 @@ ALTER TABLE [dbo].[Speech]
 
 
 GO
-PRINT N'Creating unnamed constraint on [dbo].[Speech]...';
+PRINT N'Creating Default Constraint unnamed constraint on [dbo].[Speech]...';
 
 
 GO
@@ -294,7 +294,7 @@ ALTER TABLE [dbo].[Speech]
 
 
 GO
-PRINT N'Creating unnamed constraint on [dbo].[Speech]...';
+PRINT N'Creating Default Constraint unnamed constraint on [dbo].[Speech]...';
 
 
 GO
@@ -303,7 +303,7 @@ ALTER TABLE [dbo].[Speech]
 
 
 GO
-PRINT N'Creating [dbo].[FK_MediaFile_Speech]...';
+PRINT N'Creating Foreign Key [dbo].[FK_MediaFile_Speech]...';
 
 
 GO

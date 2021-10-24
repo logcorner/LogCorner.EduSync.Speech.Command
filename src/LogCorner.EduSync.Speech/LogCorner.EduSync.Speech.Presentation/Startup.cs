@@ -1,4 +1,5 @@
 ﻿using LogCorner.EduSync.SignalR.Common;
+using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
@@ -26,7 +27,6 @@ namespace LogCorner.EduSync.Speech.Presentation
             Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ICreateSpeechUseCase, SpeechUseCase>();
@@ -51,8 +51,8 @@ namespace LogCorner.EduSync.Speech.Presentation
             services.AddScoped(typeof(IInvoker<>), typeof(Invoker<>));
             services.AddTransient<IDomainEventRebuilder, DomainEventRebuilder>();
             services.AddTransient<IJsonProvider, JsonProvider>();
-
-            services.AddSignalRServices(Configuration["HubUrl"]);
+          
+           services.AddSignalRServices($"{Configuration["HubUrl"]}?clientName=speech-http-command-api",Configuration);
 
             services.AddSharedKernel();
 
@@ -65,10 +65,14 @@ namespace LogCorner.EduSync.Speech.Presentation
                         .AllowAnyHeader()
                         .AllowCredentials());
             });
+
+            services.AddCustomAuthentication(Configuration);
+
+            services.AddCustomSwagger(Configuration);
+
             services.AddControllers();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -80,14 +84,29 @@ namespace LogCorner.EduSync.Speech.Presentation
                 app.UseHsts();
             }
             app.UseMiddleware<ExceptionMiddleware>();
+            app.UseSwagger()
+                .UseSwaggerUI(c =>
+                {
+                    var oAuthClientId = Configuration["SwaggerUI:OAuthClientId"];
+                    var oAuthClientSecret = Configuration["SwaggerUI:OAuthClientSecret"];
 
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1");
+                    c.OAuthClientId(oAuthClientId);
+                    c.OAuthClientSecret(oAuthClientSecret);
+                    c.OAuthAppName("The Speech Micro Service Command Swagger UI");
+                    c.OAuthScopeSeparator(" ");
+
+                    c.OAuthUsePkce();
+                });
+            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("CorsPolicy");
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireAuthorization();
             });
         }
     }
