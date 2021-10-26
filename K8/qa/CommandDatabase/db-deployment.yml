@@ -25,7 +25,7 @@ spec:
         fsGroup: 10001
       containers:
       - name: db-domainservice
-        image: logcornerhub/logcorner-edusync-speech-command-data 
+        image: mcr.microsoft.com/mssql/server:2019-latest 
         imagePullPolicy: Never
         ports:
         - containerPort: 1433
@@ -39,11 +39,11 @@ spec:
             secretKeyRef:
               name: mssql
               key: SA_PASSWORD 
-        # volumeMounts:
-        # - name: mssqldb
-          # mountPath: /var/opt/mssql/data
-      # volumes:
-      # - name: mssqldb
-        # persistentVolumeClaim:
-          # claimName: mssql-data
+        volumeMounts:
+        - name: mssqldb
+          mountPath: /var/opt/mssql/data
+      volumes: 
+      - name: mssqldb
+        persistentVolumeClaim:
+          claimName: mssql-pvc
      
