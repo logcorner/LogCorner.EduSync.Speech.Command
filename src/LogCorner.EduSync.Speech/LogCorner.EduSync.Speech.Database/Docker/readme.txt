@@ -1,0 +1,1 @@
+docker build . -t logcornerhub/mssql-tools -f mssql-tools/Dockerfile
