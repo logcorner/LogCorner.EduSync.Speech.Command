@@ -21,7 +21,13 @@ services:
         SA_PASSWORD: MyC0m9l&xP@ssw0rd
     networks:
       - speech_network    
-
+  # database service
+  logcorner.edusync.speech.mssql-tools:
+    image: ${DOCKER_REGISTRY-}/logcorner-edusync-speech-mssql-tools
+    build:
+      context: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Database/Docker
+      dockerfile: mssql-tools/Dockerfile
+   
 
 networks:
   speech_network:

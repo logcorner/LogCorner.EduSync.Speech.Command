@@ -3,6 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: mssql-pvc
   namespace: qa
+  labels:
+    version: 1.0.0
+    product: mssql-pvc
+    environment: qa
 spec:
   accessModes:
     - ReadWriteOnce
