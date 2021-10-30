@@ -54,7 +54,6 @@
 
   <ItemGroup>
     <Content Include="appsettings.Development.json" />
-    <Content Include="appsettings.Development.save.json" />
     <Content Include="appsettings.Docker.json" />
     <Content Include="appsettings.json" />
     <Content Include="appsettings.Kubernetes.json">
