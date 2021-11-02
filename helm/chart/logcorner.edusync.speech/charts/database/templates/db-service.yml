@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    product: {{ .Release.Name }}-{{ .Chart.Name }}
+    environment: {{ .Values.namespace }}
+spec:
+  selector:
+    app: {{ .Release.Name }}-{{ .Chart.Name }}
+    env: {{ .Values.namespace }}
+  ports:
+    - protocol: TCP
+      port: 1433
+      targetPort: 1433
+  type: NodePort
