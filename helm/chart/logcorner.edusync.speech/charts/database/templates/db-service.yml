@@ -12,6 +12,6 @@ spec:
     env: {{ .Values.namespace }}
   ports:
     - protocol: TCP
-      port: 1433
-      targetPort: 1433
-  type: NodePort
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+  type: {{ .Values.service.type }}
