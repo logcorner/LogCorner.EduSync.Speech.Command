@@ -76,6 +76,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LogCorner.EduSync.Notification.Common" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="5.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.11" />
@@ -92,12 +93,6 @@
   <ItemGroup>
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Application\LogCorner.EduSync.Speech.Application.csproj" />
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Infrastructure\LogCorner.EduSync.Speech.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="LogCorner.EduSync.SignalR.Common">
-      <HintPath>..\..\SharedKernel\LogCorner.EduSync.SignalR.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
