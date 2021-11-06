@@ -10,6 +10,7 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <FileVersion>1.2.0.0</FileVersion>
     <PackageProjectUrl>https://logcorner.com/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/logcorner/LogCorner.EduSync.Speech.Command/tree/develop/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.SharedKernel</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
