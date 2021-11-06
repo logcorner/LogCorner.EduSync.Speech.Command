@@ -23,13 +23,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.Presentation", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.Presentation\LogCorner.EduSync.Speech.Presentation.csproj", "{DDEABE5D-11EA-41E3-8922-2CC9C8064AFF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.Domain.UnitTest", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.Domain.UnitTest\LogCorner.EduSync.Speech.Domain.UnitTest.csproj", "{7F826944-9FD1-41FA-A3D0-23C676570CB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.Domain.UnitTests", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.Domain.UnitTest\LogCorner.EduSync.Speech.Domain.UnitTests.csproj", "{7F826944-9FD1-41FA-A3D0-23C676570CB6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.Application.UnitTest", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.Application.UnitTest\LogCorner.EduSync.Speech.Application.UnitTest.csproj", "{DB6AB3AD-DFED-43AB-8177-28D6D50F0A9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.Application.UnitTests", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.Application.UnitTest\LogCorner.EduSync.Speech.Application.UnitTests.csproj", "{DB6AB3AD-DFED-43AB-8177-28D6D50F0A9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.Infrastructure.UnitTest", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.Infrastructure.UnitTest\LogCorner.EduSync.Speech.Infrastructure.UnitTest.csproj", "{0964135D-D2D0-46EB-966A-6B01B3882F90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.Infrastructure.UnitTests", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.Infrastructure.UnitTest\LogCorner.EduSync.Speech.Infrastructure.UnitTests.csproj", "{0964135D-D2D0-46EB-966A-6B01B3882F90}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.Presentation.UnitTest", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.Presentation.UnitTest\LogCorner.EduSync.Speech.Presentation.UnitTest.csproj", "{B3EC16EC-B89A-4352-B2DB-8A839AAEDC75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.Presentation.UnitTests", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.Presentation.UnitTest\LogCorner.EduSync.Speech.Presentation.UnitTests.csproj", "{B3EC16EC-B89A-4352-B2DB-8A839AAEDC75}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C49F873D-4091-4616-8B06-3862A28E020F}"
 EndProject
@@ -37,7 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "60. SharedKernel", "60. Sha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.SharedKernel", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.SharedKernel.csproj", "{9873D9F6-A47E-4BBE-A507-1FD9470F82ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogCorner.EduSync.Speech.SharedKernel.UnitTest", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.SharedKernel.UnitTest\LogCorner.EduSync.Speech.SharedKernel.UnitTest.csproj", "{0F5AC26C-45DA-4616-A120-75B0F8EFAB59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.SharedKernel.UnitTests", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.SharedKernel.UnitTest\LogCorner.EduSync.Speech.SharedKernel.UnitTests.csproj", "{0F5AC26C-45DA-4616-A120-75B0F8EFAB59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
