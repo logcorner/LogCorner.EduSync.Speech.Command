@@ -26,7 +26,7 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
         {
             //Arrange
             var optionsBuilder = new DbContextOptionsBuilder<DataBaseContext>();
-            optionsBuilder.UseInMemoryDatabase("FakeInMemoryData");
+            optionsBuilder.UseInMemoryDatabase("FakeInMemoryDataEventStore");
             var moqContext = new DataBaseContext(optionsBuilder.Options);
             moqContext.Database.EnsureCreated();
 
@@ -42,7 +42,8 @@ namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
             await moqContext.SaveChangesAsync();
             var result = await moqContext.EventStore.SingleOrDefaultAsync();
             moqContext.Dispose();
-
+            Console.WriteLine(evt.Id);
+            Console.WriteLine(result.Id);
             // Assert
             Assert.NotNull(result);
             Assert.Equal(evt.Id, result.Id);
