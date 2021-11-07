@@ -10,7 +10,7 @@
   <PropertyGroup>
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
 <EnableDefaultItems>false</EnableDefaultItems>
-<UserSecretsId>24930b60-05f7-4403-88a9-cc7bf7e2717c</UserSecretsId>
+<UserSecretsId>ceb20177-ef4d-46e8-abd7-7d91d7e3534d</UserSecretsId>
 </PropertyGroup>
 
   <ItemGroup>
@@ -59,6 +59,9 @@
     <Content Include="appsettings.Kubernetes.AKS.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="appsettings.Kubernetes.helm.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="appsettings.Kubernetes.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -73,6 +76,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LogCorner.EduSync.Notification.Common" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="5.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.11" />
@@ -89,12 +93,6 @@
   <ItemGroup>
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Application\LogCorner.EduSync.Speech.Application.csproj" />
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Infrastructure\LogCorner.EduSync.Speech.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="LogCorner.EduSync.SignalR.Common">
-      <HintPath>..\..\SharedKernel\LogCorner.EduSync.SignalR.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

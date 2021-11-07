@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-service
+  namespace: helm
+  labels:
+    product: {{ .Release.Name }}-{{ .Chart.Name }}
+    environment: helm
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - port: {{ .Values.service.port }}
+    targetPort: {{ .Values.service.targetPort }}
+    protocol: TCP
+    name: http
+  - port: {{ .Values.service.ssl_port }}
+    targetPort: {{ .Values.service.ssl_targetPort }}
+    protocol: TCP
+    name: https
+  selector:
+    app: {{ .Release.Name }}-{{ .Chart.Name }}
+    env: helm
