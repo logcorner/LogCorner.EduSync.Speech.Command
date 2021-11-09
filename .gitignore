@@ -260,3 +260,9 @@ paket-files/
 __pycache__/
 *.pyc
 /src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/appsettings.Development.save.json
+/terraform/201-aks-acr-identity/.terraform
+/terraform/aks/.terraform
+/terraform/201-aks-acr-identity/terraform.tfstate.backup
+/terraform/201-aks-acr-identity/terraform.tfstate
+/terraform/201-aks-acr-identity/.terraform.lock.hcl
+*.hcl

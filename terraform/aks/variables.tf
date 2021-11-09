@@ -2,7 +2,7 @@
 variable "name" {
   type        = string
   description = "Location of the azure resource group."
-  default     = "logcorner-terraform"
+  default     = "terraform"
 }
 
 variable "environment" {
