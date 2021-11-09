@@ -1,0 +1,5 @@
+kubectl create secret docker-registry regsecret --docker-server=logcornerregistryhub.azurecr.io --docker-username=logcornerregistryhub  --docker-password=pPxXcgAi7/Rs5ut2I7qzaQBgPopYGtEa  --docker-email=admin@azurecr.io  
+
+az acr login --name tfqdemotfquickstartacr
+docker tag logcornerhub/logcorner-edusync-speech-mssql-tools tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-mssql-tools
+docker push tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-mssql-tools
