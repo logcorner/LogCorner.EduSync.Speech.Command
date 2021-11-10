@@ -8,7 +8,7 @@ metadata:
     product: speech-command-http-api
     environment: aks
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 80

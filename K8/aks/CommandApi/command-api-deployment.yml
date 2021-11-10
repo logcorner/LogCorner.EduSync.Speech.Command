@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: command-api-container
-        image: acrlogcorner.azurecr.io/logcorner-edusync-speech-command:1.0.0 
+        image: logcornerterraformacr.azurecr.io/logcorner-edusync-speech-command
         imagePullPolicy: Always
         env:
         - name: ASPNETCORE_ENVIRONMENT
@@ -36,6 +36,3 @@ spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
-      imagePullSecrets:
-       - name: regsecret
-    

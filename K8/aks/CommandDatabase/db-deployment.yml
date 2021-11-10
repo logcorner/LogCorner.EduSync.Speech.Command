@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: db-speech-command-api-deployment
+  namespace: aks
 spec:
   replicas: 1
   selector:
@@ -43,6 +44,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: db-speech-command-api-service
+  namespace: aks
 spec:
   selector:
     app: mssql
