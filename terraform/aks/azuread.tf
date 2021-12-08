@@ -10,7 +10,7 @@ resource "azuread_service_principal" "default" {
 resource "azuread_service_principal_password" "default" {
   service_principal_id = "${azuread_service_principal.default.id}"
 }
-/*
+
 resource "azurerm_role_assignment" "aks_network" {
   scope                = "${data.azurerm_subscription.current.id}/resourceGroups/${azurerm_resource_group.default.name}"
   role_definition_name = "Network Contributor"
@@ -22,4 +22,3 @@ resource "azurerm_role_assignment" "kubweb_to_acr" {
   role_definition_name = "AcrPull"
   principal_id         = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id
 }
-*/

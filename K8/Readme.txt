@@ -24,5 +24,8 @@ kubectl create secret tls logcorner-ingress-tls --namespace qa --key logcorner-i
 
 docker-compose --env-file ./config/docker/.env build
 
+kubectl create secret docker-registry regsecret --docker-server=logcornerregistryhub.azurecr.io --docker-username=logcornerregistryhub  --docker-password=pPxXcgAi7/Rs5ut2I7qzaQBgPopYGtEa  --docker-email=admin@azurecr.io  
 
-speech-http-query-api
+az acr login --name tfqdemotfquickstartacr
+docker tag logcornerhub/logcorner-edusync-speech-mssql-tools tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-mssql-tools
+docker push logcornerterraformacr.azurecr.io/logcorner-edusync-speech-mssql-tools
