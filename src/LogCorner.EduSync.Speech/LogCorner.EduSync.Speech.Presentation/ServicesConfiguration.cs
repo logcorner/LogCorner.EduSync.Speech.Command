@@ -88,6 +88,13 @@ namespace LogCorner.EduSync.Speech.Presentation
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var sourceName = configuration["OpenTelemetry:SourceName"];
 
+            var jaergerHostName = configuration["OpenTelemetry:Jaeger:Hostname"];
+            var jaergerPort = configuration["OpenTelemetry:Jaeger:PortNumber"];
+
+            var zipkinHostName = configuration["OpenTelemetry:Zipkin:Hostname"];
+
+            var zipkinPort = configuration["OpenTelemetry:Zipkin:PortNumber"];
+
             var resourceBuilder = ResourceBuilder
                 .CreateDefault()
                 .AddService(opentelemetryServiceName)
@@ -135,14 +142,14 @@ namespace LogCorner.EduSync.Speech.Presentation
 
                 tracerProviderBuilder.AddJaegerExporter(o =>
                 {
-                    o.AgentHost = "localhost";
-                    o.AgentPort = 6831;
+                    o.AgentHost = jaergerHostName;
+                    o.AgentPort = int.Parse(jaergerPort);
                 });
 
                 tracerProviderBuilder.AddZipkinExporter(b =>
                 {
-                    var zipkinHostName = "localhost";
-                    b.Endpoint = new Uri($"http://{zipkinHostName}:9412/api/v2/spans");
+                    
+                    b.Endpoint = new Uri($"http://{zipkinHostName}:{zipkinPort}/api/v2/spans");
                 });
             });
 

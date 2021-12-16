@@ -111,9 +111,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\LogCorner.EduSync.Speech.Telemetry\LogCorner.EduSync.Speech.Telemetry.csproj" />
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Application\LogCorner.EduSync.Speech.Application.csproj" />
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Infrastructure\LogCorner.EduSync.Speech.Infrastructure.csproj" />
+    <ProjectReference Include="..\LogCorner.EduSync.Speech.Telemetry\LogCorner.EduSync.Speech.Telemetry.csproj" />
   </ItemGroup>
 
 
