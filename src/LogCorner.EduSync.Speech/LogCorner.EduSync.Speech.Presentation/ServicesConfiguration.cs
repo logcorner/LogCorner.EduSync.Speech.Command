@@ -3,11 +3,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using System;
+using System.Collections.Generic;
 
 namespace LogCorner.EduSync.Speech.Presentation
 {
@@ -77,23 +77,23 @@ namespace LogCorner.EduSync.Speech.Presentation
             });
         }
 
-
-        public static void AddOpenTelemetry(this IServiceCollection services)
+        public static void AddOpenTelemetry(this IServiceCollection services, IConfiguration configuration)
         {
-
             // Define an OpenTelemetry resource
             // A resource represents a collection of attributes describing the
             // service. This collection of attributes will be associated with all
             // telemetry generated from this service (traces, metrics, logs).
+            var opentelemetryServiceName = configuration["OpenTelemetry:ServiceName"];
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var sourceName = configuration["OpenTelemetry:SourceName"];
+
             var resourceBuilder = ResourceBuilder
                 .CreateDefault()
-                .AddService("OpenTelemetry-Dotnet-Example")
+                .AddService(opentelemetryServiceName)
                 .AddAttributes(new Dictionary<string, object> {
-                    { "environment", "production" }
+                    { "environment", environment }
                 })
                 .AddTelemetrySdk();
-            
-
 
             // Configure the OpenTelemetry SDK for tracing
             services.AddOpenTelemetryTracing(tracerProviderBuilder =>
@@ -116,7 +116,7 @@ namespace LogCorner.EduSync.Speech.Presentation
 
                 // Step 3. Configure the SDK to listen to custom instrumentation.
                 tracerProviderBuilder
-                    .AddSource("WeatherForecast");
+                    .AddSource(sourceName);
 
                 // Step 4. Configure the OTLP exporter to export to New Relic
                 //     The OTEL_EXPORTER_OTLP_ENDPOINT environment variable should be set to New Relic's OTLP endpoint:
@@ -131,7 +131,6 @@ namespace LogCorner.EduSync.Speech.Presentation
                         options.Headers =
                             "api-key=bb413cc336625e6b6569a7dc4a03f858789cNRAL"; //Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
                     });
-
 
                 tracerProviderBuilder.AddJaegerExporter(o =>
                 {

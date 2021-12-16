@@ -3,7 +3,9 @@ using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Presentation.Dtos;
 using LogCorner.EduSync.Speech.Presentation.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -16,16 +18,23 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
         private readonly ICreateSpeechUseCase _createSpeechUseCase;
         private readonly IUpdateSpeechUseCase _updateSpeechUseCase;
         private readonly IDeleteSpeechUseCase _deleteSpeechUseCase;
+        private readonly IConfiguration _configuration;
 
         // An ActivitySource is .NET's term for an OpenTelemetry Tracer.
         // Spans generated from this ActivitySource are associated with the ActivitySource's name and version.
-        private static ActivitySource _tracer = new ActivitySource("WeatherForecast", "1.2.3");
-        private static  HttpClient HttpClient = new HttpClient();
-        public SpeechController(ICreateSpeechUseCase createSpeechUseCase, IUpdateSpeechUseCase updateSpeechUseCase, IDeleteSpeechUseCase deleteSpeechUseCase)
+        private ActivitySource _tracer;
+
+        private static HttpClient HttpClient = new HttpClient();
+
+        public SpeechController(ICreateSpeechUseCase createSpeechUseCase, IUpdateSpeechUseCase updateSpeechUseCase, IDeleteSpeechUseCase deleteSpeechUseCase,
+            IConfiguration configuration)
         {
             _createSpeechUseCase = createSpeechUseCase;
             _updateSpeechUseCase = updateSpeechUseCase;
             _deleteSpeechUseCase = deleteSpeechUseCase;
+            _configuration = configuration;
+            var sournceName = configuration["OpenTelemetry:SourceName"];
+            _tracer = new ActivitySource(sournceName);
         }
 
         [HttpPost]
@@ -37,9 +46,15 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
             }
 
             var command = new RegisterSpeechCommandMessage(dto.Title, dto.Description, dto.Url, dto.TypeId);
-
+            
             await _createSpeechUseCase.Handle(command);
-            await DoSomeWork();
+            DoSomeWork("Create speech", new Dictionary<string, object>
+            {
+                {"Title",command.Title},
+                {"Description",command.Description},
+                {"Url",command.Url},
+                {"Type",command.Type}
+            });
             return Ok();
         }
 
@@ -76,22 +91,17 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
             return Ok();
         }
 
-        private async Task DoSomeWork()
+        private void DoSomeWork(string workName, IDictionary<string, object> tags)
         {
             // Start a span using the OpenTelemetry API
-            using var span = _tracer.StartActivity("DoSomeWork", ActivityKind.Internal);
+            using var span = _tracer.StartActivity(workName, ActivityKind.Internal);
 
             // Decorate the span with additional attributes
-            span?.AddTag("SomeKey", "SomeValue");
 
-            // Do some work
-            await Task.Delay(50);
-
-            // Make an external call
-            await HttpClient.GetStringAsync("https://www.newrelic.com");
-
-            // Do some more work
-            await Task.Delay(10);
+            foreach (var item in tags)
+            {
+                span?.AddTag(item.Key, item.Value);
+            }
         }
     }
 }

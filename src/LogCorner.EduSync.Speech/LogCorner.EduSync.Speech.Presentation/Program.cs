@@ -17,8 +17,10 @@ namespace LogCorner.EduSync.Speech.Presentation
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .ConfigureLogging(loggingBuilder =>
+                .ConfigureLogging((context,loggingBuilder )=>
                 {
+                    var opentelemetryServiceName = context.Configuration["OpenTelemetry:ServiceName"];
+                    var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                     loggingBuilder.ClearProviders();
                     loggingBuilder.AddConsole();
 
@@ -33,18 +35,18 @@ namespace LogCorner.EduSync.Speech.Presentation
                                 .SetResourceBuilder(
                                     ResourceBuilder
                                         .CreateDefault()
-                                        .AddService("OpenTelemetry-Dotnet-Example")
+                                        .AddService(opentelemetryServiceName)
                                         .AddAttributes(new Dictionary<string, object> {
-                                            { "environment", "production" }
+                                            { "environment", environment }
                                         })
                                         .AddTelemetrySdk())
-                                .AddOtlpExporter(options =>
+                                .AddOtlpExporter(exporterOptions =>
                                 {
                                     //options.Endpoint = new Uri($"{Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT")}");
                                     //options.Headers = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
 
-                                    options.Endpoint = new Uri("https://otlp.nr-data.net:4317");//new Uri($"{Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT")}");
-                                    options.Headers =
+                                    exporterOptions.Endpoint = new Uri("https://otlp.nr-data.net:4317");//new Uri($"{Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT")}");
+                                    exporterOptions.Headers =
                                         "api-key=bb413cc336625e6b6569a7dc4a03f858789cNRAL"; //Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
                                 });
                         });
