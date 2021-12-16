@@ -8,6 +8,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using System;
 using System.Collections.Generic;
+using LogCorner.EduSync.Speech.Presentation.Controllers;
 
 namespace LogCorner.EduSync.Speech.Presentation
 {
@@ -177,6 +178,7 @@ namespace LogCorner.EduSync.Speech.Presentation
                         options.AggregationTemporality = AggregationTemporality.Delta;
                     });
             });
+            services.AddSingleton<IOpenTelemetryService, OpenTelemetryService>();
         }
     }
 }

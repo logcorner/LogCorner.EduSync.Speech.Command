@@ -40,6 +40,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Controllers\IOpenTelemetryService.cs" />
+    <Compile Include="Controllers\OpenTelemetryService.cs" />
     <Compile Include="Controllers\SpeechController.cs" />
     <Compile Include="Dtos\NotEmptyAttribute.cs" />
     <Compile Include="Dtos\SpeechForCreationDto.cs" />

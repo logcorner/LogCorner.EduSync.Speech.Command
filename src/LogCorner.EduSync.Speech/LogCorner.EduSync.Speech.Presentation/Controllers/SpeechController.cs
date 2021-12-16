@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -18,23 +17,16 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
         private readonly ICreateSpeechUseCase _createSpeechUseCase;
         private readonly IUpdateSpeechUseCase _updateSpeechUseCase;
         private readonly IDeleteSpeechUseCase _deleteSpeechUseCase;
-        private readonly IConfiguration _configuration;
 
-        // An ActivitySource is .NET's term for an OpenTelemetry Tracer.
-        // Spans generated from this ActivitySource are associated with the ActivitySource's name and version.
-        private ActivitySource _tracer;
-
-        private static HttpClient HttpClient = new HttpClient();
+        private readonly IOpenTelemetryService _openTelemetryService;
 
         public SpeechController(ICreateSpeechUseCase createSpeechUseCase, IUpdateSpeechUseCase updateSpeechUseCase, IDeleteSpeechUseCase deleteSpeechUseCase,
-            IConfiguration configuration)
+             IOpenTelemetryService openTelemetryService)
         {
             _createSpeechUseCase = createSpeechUseCase;
             _updateSpeechUseCase = updateSpeechUseCase;
             _deleteSpeechUseCase = deleteSpeechUseCase;
-            _configuration = configuration;
-            var sournceName = configuration["OpenTelemetry:SourceName"];
-            _tracer = new ActivitySource(sournceName);
+            _openTelemetryService = openTelemetryService;
         }
 
         [HttpPost]
@@ -46,9 +38,9 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
             }
 
             var command = new RegisterSpeechCommandMessage(dto.Title, dto.Description, dto.Url, dto.TypeId);
-            
+
             await _createSpeechUseCase.Handle(command);
-            DoSomeWork("Create speech", new Dictionary<string, object>
+            _openTelemetryService.DoSomeWork("Create speech", new Dictionary<string, object>
             {
                 {"Title",command.Title},
                 {"Description",command.Description},
@@ -89,19 +81,6 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
 
             await _deleteSpeechUseCase.Handle(command);
             return Ok();
-        }
-
-        private void DoSomeWork(string workName, IDictionary<string, object> tags)
-        {
-            // Start a span using the OpenTelemetry API
-            using var span = _tracer.StartActivity(workName, ActivityKind.Internal);
-
-            // Decorate the span with additional attributes
-
-            foreach (var item in tags)
-            {
-                span?.AddTag(item.Key, item.Value);
-            }
         }
     }
 }
