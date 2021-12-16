@@ -18,6 +18,9 @@ using LogCorner.EduSync.Speech.Command.SharedKernel;
 using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
 using LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser;
 
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 namespace LogCorner.EduSync.Speech.Presentation
 {
     public class Startup
@@ -71,6 +74,8 @@ namespace LogCorner.EduSync.Speech.Presentation
             services.AddCustomAuthentication(Configuration);
 
             services.AddCustomSwagger(Configuration);
+
+            services.AddOpenTelemetry();
 
             services.AddControllers();
         }

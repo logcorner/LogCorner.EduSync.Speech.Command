@@ -41,7 +41,7 @@ namespace LogCorner.EduSync.Speech.Application.UseCases
                 serializedBody);
             await _eventStoreRepository.AppendAsync(eventStore);
             _unitOfWork.Commit();
-             await _publisher.PublishAsync(Topics.Speech, eventStore);
+            // await _publisher.PublishAsync(Topics.Speech, eventStore);
         }
     }
 }

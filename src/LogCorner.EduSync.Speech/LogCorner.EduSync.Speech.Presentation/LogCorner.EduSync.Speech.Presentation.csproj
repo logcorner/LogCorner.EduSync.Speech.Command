@@ -76,7 +76,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="LogCorner.EduSync.Notification.Common" Version="1.0.6" />
+    <PackageReference Include="LogCorner.EduSync.Notification.Common" Version="1.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="5.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.11" />
@@ -88,6 +88,26 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.2.3" />
+
+    <!-- OpenTelemetry API & SDK -->
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+    <PackageReference Include="OpenTelemetry.Api" Version="1.2.0-beta1" />
+    <PackageReference Include="OpenTelemetry" Version="1.2.0-beta1" />
+
+    <!-- OpenTelemetry instrumentation packages -->
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc8" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc8" />
+
+    <!-- OpenTelemetry OTLP exporter.
+         Note that logs support is currently in a separate package because the OTLP log data model is still deemed beta -->
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.2.0-beta1" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol.Logs" Version="1.0.0-rc8" />
+
+    <!-- Misc .NET specific SDK extensions -->
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc8" />
+
+    <PackageReference Include="OpenTelemetry.Exporter.Zipkin" Version="1.1.0" />
+    <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>

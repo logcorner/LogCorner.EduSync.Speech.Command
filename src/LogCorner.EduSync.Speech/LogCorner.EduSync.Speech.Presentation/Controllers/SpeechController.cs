@@ -4,6 +4,8 @@ using LogCorner.EduSync.Speech.Presentation.Dtos;
 using LogCorner.EduSync.Speech.Presentation.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Diagnostics;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace LogCorner.EduSync.Speech.Presentation.Controllers
@@ -15,6 +17,10 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
         private readonly IUpdateSpeechUseCase _updateSpeechUseCase;
         private readonly IDeleteSpeechUseCase _deleteSpeechUseCase;
 
+        // An ActivitySource is .NET's term for an OpenTelemetry Tracer.
+        // Spans generated from this ActivitySource are associated with the ActivitySource's name and version.
+        private static ActivitySource _tracer = new ActivitySource("WeatherForecast", "1.2.3");
+        private static  HttpClient HttpClient = new HttpClient();
         public SpeechController(ICreateSpeechUseCase createSpeechUseCase, IUpdateSpeechUseCase updateSpeechUseCase, IDeleteSpeechUseCase deleteSpeechUseCase)
         {
             _createSpeechUseCase = createSpeechUseCase;
@@ -33,6 +39,7 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
             var command = new RegisterSpeechCommandMessage(dto.Title, dto.Description, dto.Url, dto.TypeId);
 
             await _createSpeechUseCase.Handle(command);
+            await DoSomeWork();
             return Ok();
         }
 
@@ -67,6 +74,24 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
 
             await _deleteSpeechUseCase.Handle(command);
             return Ok();
+        }
+
+        private async Task DoSomeWork()
+        {
+            // Start a span using the OpenTelemetry API
+            using var span = _tracer.StartActivity("DoSomeWork", ActivityKind.Internal);
+
+            // Decorate the span with additional attributes
+            span?.AddTag("SomeKey", "SomeValue");
+
+            // Do some work
+            await Task.Delay(50);
+
+            // Make an external call
+            await HttpClient.GetStringAsync("https://www.newrelic.com");
+
+            // Do some more work
+            await Task.Delay(10);
         }
     }
 }
