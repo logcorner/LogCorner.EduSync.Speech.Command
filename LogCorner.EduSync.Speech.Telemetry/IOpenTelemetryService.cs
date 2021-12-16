@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LogCorner.EduSync.Speech.Presentation.Controllers
+namespace LogCorner.EduSync.Speech.Telemetry
 {
     public interface IOpenTelemetryService
     {

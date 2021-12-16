@@ -3,11 +3,10 @@ using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Presentation.Dtos;
 using LogCorner.EduSync.Speech.Presentation.Exceptions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
+using LogCorner.EduSync.Speech.Telemetry;
 
 namespace LogCorner.EduSync.Speech.Presentation.Controllers
 {

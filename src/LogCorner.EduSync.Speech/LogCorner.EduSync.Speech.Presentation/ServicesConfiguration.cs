@@ -8,7 +8,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using System;
 using System.Collections.Generic;
-using LogCorner.EduSync.Speech.Presentation.Controllers;
+using LogCorner.EduSync.Speech.Telemetry;
 
 namespace LogCorner.EduSync.Speech.Presentation
 {

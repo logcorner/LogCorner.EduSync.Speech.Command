@@ -40,8 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Controllers\IOpenTelemetryService.cs" />
-    <Compile Include="Controllers\OpenTelemetryService.cs" />
     <Compile Include="Controllers\SpeechController.cs" />
     <Compile Include="Dtos\NotEmptyAttribute.cs" />
     <Compile Include="Dtos\SpeechForCreationDto.cs" />
@@ -113,6 +111,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\LogCorner.EduSync.Speech.Telemetry\LogCorner.EduSync.Speech.Telemetry.csproj" />
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Application\LogCorner.EduSync.Speech.Application.csproj" />
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Infrastructure\LogCorner.EduSync.Speech.Infrastructure.csproj" />
   </ItemGroup>
