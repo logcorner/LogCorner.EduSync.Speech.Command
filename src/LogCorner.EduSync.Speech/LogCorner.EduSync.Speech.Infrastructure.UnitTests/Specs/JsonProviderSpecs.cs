@@ -1,8 +1,8 @@
-using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
+namespace LogCorner.EduSync.Speech.Infrastructure.UnitTests.Specs
 {
     public class JsonProviderSpecs
     {

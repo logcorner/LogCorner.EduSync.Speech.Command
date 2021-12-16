@@ -1,7 +1,7 @@
-using LogCorner.EduSync.Speech.SharedKernel.Events;
 using System;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
 
-namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
+namespace LogCorner.EduSync.Speech.Infrastructure.UnitTests.Specs
 {
     public class EventOject : Event
     {

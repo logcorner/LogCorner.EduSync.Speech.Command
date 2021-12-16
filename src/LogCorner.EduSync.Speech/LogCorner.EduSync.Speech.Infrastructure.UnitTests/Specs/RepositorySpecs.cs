@@ -1,15 +1,15 @@
-using LogCorner.EduSync.Speech.Domain.IRepository;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using LogCorner.EduSync.Speech.Domain.IRepository;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Moq;
 using Xunit;
 
-namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
+namespace LogCorner.EduSync.Speech.Infrastructure.UnitTests.Specs
 {
     public class RepositorySpecs
     {

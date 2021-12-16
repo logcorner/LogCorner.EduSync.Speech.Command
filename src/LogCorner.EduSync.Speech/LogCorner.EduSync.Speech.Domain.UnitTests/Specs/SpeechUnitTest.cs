@@ -1,13 +1,13 @@
-using LogCorner.EduSync.Speech.Domain.Exceptions;
-using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
-using LogCorner.EduSync.Speech.SharedKernel.Events;
-using Moq;
 using System;
 using System.Linq;
 using System.Reflection;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
+using LogCorner.EduSync.Speech.Domain.Exceptions;
+using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
+using Moq;
 using Xunit;
 
-namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
+namespace LogCorner.EduSync.Speech.Domain.UnitTests.Specs
 {
     public class SpeechUnitTest
     {
@@ -558,7 +558,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
 
             //Act
             //Assert
-            Assert.Throws<InvalidDomainEventException>(() => speech.Apply(new SpeechTypeChangedEvent(Guid.NewGuid(), It.IsAny<LogCorner.EduSync.Speech.SharedKernel.Events.SpeechTypeEnum>())));
+            Assert.Throws<InvalidDomainEventException>(() => speech.Apply(new SpeechTypeChangedEvent(Guid.NewGuid(), It.IsAny<Command.SharedKernel.Events.SpeechTypeEnum>())));
         }
 
         #endregion changeType

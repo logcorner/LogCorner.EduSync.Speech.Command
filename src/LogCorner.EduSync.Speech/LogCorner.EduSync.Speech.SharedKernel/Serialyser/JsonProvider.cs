@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
 using System.Reflection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
-namespace LogCorner.EduSync.Speech.SharedKernel.Serialyser
+namespace LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser
 {
     public class JsonProvider : IJsonProvider
     {

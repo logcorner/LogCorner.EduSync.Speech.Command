@@ -1,3 +1,6 @@
+using System;
+using System.Net;
+using System.Threading.Tasks;
 using LogCorner.EduSync.Speech.Application.Commands;
 using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Presentation.Controllers;
@@ -7,13 +10,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Net;
-using System.Threading.Tasks;
 using Xunit;
 using ILoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
 
-namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
+namespace LogCorner.EduSync.Speech.Presentation.UnitTests.Specs
 {
     public class SpeechControllerUnitTest
     {

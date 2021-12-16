@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
+namespace LogCorner.EduSync.Speech.Infrastructure.UnitTests.Specs
 {
     public class InvokerSpecs
     {

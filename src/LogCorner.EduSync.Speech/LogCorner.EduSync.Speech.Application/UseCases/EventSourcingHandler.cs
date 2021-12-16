@@ -1,11 +1,11 @@
-﻿using LogCorner.EduSync.SignalR.Common;
-using LogCorner.EduSync.Speech.Application.Exceptions;
+﻿using LogCorner.EduSync.Speech.Application.Exceptions;
 using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
-using LogCorner.EduSync.Speech.SharedKernel.Events;
-using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
 using System.Threading.Tasks;
+using LogCorner.EduSync.Notification.Common;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser;
 
 namespace LogCorner.EduSync.Speech.Application.UseCases
 {

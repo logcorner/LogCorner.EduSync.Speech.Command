@@ -1,8 +1,8 @@
-﻿using LogCorner.EduSync.Speech.Presentation.Dtos;
-using System;
+﻿using System;
+using LogCorner.EduSync.Speech.Presentation.Dtos;
 using Xunit;
 
-namespace LogCorner.EduSync.Speech.Presentation.UnitTest.Specs
+namespace LogCorner.EduSync.Speech.Presentation.UnitTests.Specs
 {
     public class NotEmptyAttributeUnitTest
     {

@@ -1,14 +1,14 @@
-using LogCorner.EduSync.Speech.Application.Interfaces;
-using LogCorner.EduSync.Speech.Application.UseCases;
-using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
-using LogCorner.EduSync.Speech.SharedKernel.Events;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using LogCorner.EduSync.Speech.Application.Interfaces;
+using LogCorner.EduSync.Speech.Application.UseCases;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
+using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
+using Moq;
 using Xunit;
 
-namespace LogCorner.EduSync.Speech.Application.UnitTest.Specs
+namespace LogCorner.EduSync.Speech.Application.UnitTests.Specs
 {
     public class EventSourcingSubscriberUnitTest
     {

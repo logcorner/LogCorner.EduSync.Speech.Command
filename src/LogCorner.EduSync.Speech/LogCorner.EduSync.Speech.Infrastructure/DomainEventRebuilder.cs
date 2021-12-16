@@ -1,7 +1,7 @@
-﻿using LogCorner.EduSync.Speech.SharedKernel.Events;
-using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser;
 
 namespace LogCorner.EduSync.Speech.Infrastructure
 {

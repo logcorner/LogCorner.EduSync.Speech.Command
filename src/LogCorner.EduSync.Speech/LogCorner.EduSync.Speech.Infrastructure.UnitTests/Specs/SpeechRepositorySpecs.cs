@@ -1,14 +1,14 @@
+using System;
+using System.Threading.Tasks;
 using LogCorner.EduSync.Speech.Domain;
 using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using LogCorner.EduSync.Speech.Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
+namespace LogCorner.EduSync.Speech.Infrastructure.UnitTests.Specs
 {
     public class SpeechRepositorySpecs
     {

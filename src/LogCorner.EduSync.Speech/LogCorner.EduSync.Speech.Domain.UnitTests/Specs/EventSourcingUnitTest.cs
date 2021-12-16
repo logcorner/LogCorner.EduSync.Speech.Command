@@ -1,14 +1,14 @@
-using LogCorner.EduSync.Speech.Domain.Exceptions;
-using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
-using LogCorner.EduSync.Speech.SharedKernel.Events;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
+using LogCorner.EduSync.Speech.Domain.Exceptions;
+using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
+using Moq;
 using Xunit;
 
-namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
+namespace LogCorner.EduSync.Speech.Domain.UnitTests.Specs
 {
     public class EventSourcingUnitTest
     {
@@ -46,7 +46,7 @@ namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
                "SpeechCreatedEvent Title ",
                 "http://url-evt.com",
                "SpeechCreatedEvent description must be very long as a description than people can understand without efforts",
-                new SharedKernel.Events.SpeechTypeEnum(speechType.IntValue, speechType.StringValue));
+                new Command.SharedKernel.Events.SpeechTypeEnum(speechType.IntValue, speechType.StringValue));
             var aggregate = CreateNewAggregate<SpeechAggregate.Speech>();
 
             //Act

@@ -27,7 +27,7 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "60. SharedKernel", "60. SharedKernel", "{B0FD6F43-353B-41A4-A3DE-54499DE82E23}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.SharedKernel", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.SharedKernel.csproj", "{9873D9F6-A47E-4BBE-A507-1FD9470F82ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.Command.SharedKernel", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.Command.SharedKernel.csproj", "{9873D9F6-A47E-4BBE-A507-1FD9470F82ED}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogCorner.EduSync.Speech.Domain.UnitTests", "LogCorner.EduSync.Speech\LogCorner.EduSync.Speech.Domain.UnitTests\LogCorner.EduSync.Speech.Domain.UnitTests.csproj", "{F6FAB972-4FD1-4157-857F-A0AC03C3A5C5}"
 EndProject

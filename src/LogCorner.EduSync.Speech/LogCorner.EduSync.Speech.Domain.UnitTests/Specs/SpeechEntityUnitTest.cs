@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 
-namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
+namespace LogCorner.EduSync.Speech.Domain.UnitTests.Specs
 {
     public class SpeechEntityUnitTest
     {

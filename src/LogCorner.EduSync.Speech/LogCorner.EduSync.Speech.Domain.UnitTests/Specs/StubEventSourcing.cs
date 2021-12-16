@@ -1,8 +1,8 @@
-using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
-using LogCorner.EduSync.Speech.SharedKernel.Events;
 using System;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
+using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 
-namespace LogCorner.EduSync.Speech.Domain.UnitTest.Specs
+namespace LogCorner.EduSync.Speech.Domain.UnitTests.Specs
 {
     public class StubEventSourcing : AggregateRoot<Guid>
     {

@@ -1,4 +1,4 @@
-﻿using LogCorner.EduSync.Speech.SharedKernel.Events;
+﻿using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

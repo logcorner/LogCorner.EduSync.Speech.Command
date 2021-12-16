@@ -25,13 +25,9 @@
   <ItemGroup>
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Application\LogCorner.EduSync.Speech.Application.csproj" />
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Infrastructure\LogCorner.EduSync.Speech.Infrastructure.csproj" />
-    <ProjectReference Include="..\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.SharedKernel.csproj" />
+    <ProjectReference Include="..\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.Command.SharedKernel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="LogCorner.EduSync.SignalR.Common">
-      <HintPath>..\..\SharedKernel\LogCorner.EduSync.SignalR.Common.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+
 
 </Project>

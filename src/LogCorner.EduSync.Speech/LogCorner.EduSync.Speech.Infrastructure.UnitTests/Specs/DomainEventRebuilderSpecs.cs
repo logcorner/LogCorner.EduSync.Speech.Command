@@ -1,12 +1,12 @@
-using LogCorner.EduSync.Speech.SharedKernel.Events;
-using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser;
+using Moq;
 using Xunit;
 
-namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
+namespace LogCorner.EduSync.Speech.Infrastructure.UnitTests.Specs
 {
     public class DomainEventRebuilderSpecs
     {

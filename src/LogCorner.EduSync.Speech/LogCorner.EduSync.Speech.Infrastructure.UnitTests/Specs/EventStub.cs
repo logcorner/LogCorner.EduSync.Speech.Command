@@ -1,6 +1,6 @@
-using LogCorner.EduSync.Speech.SharedKernel.Events;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
 
-namespace LogCorner.EduSync.Speech.Infrastructure.UnitTest.Specs
+namespace LogCorner.EduSync.Speech.Infrastructure.UnitTests.Specs
 {
     public class EventStub : Event
     {
