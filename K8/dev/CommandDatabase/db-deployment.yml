@@ -25,8 +25,8 @@ spec:
         fsGroup: 10001
       containers:
       - name: db-domainservice
-        image: logcornerhub/logcorner-edusync-speech-command-data
-        imagePullPolicy: Never
+        image: mcr.microsoft.com/mssql/server:2019-latest 
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 1433
         env:
@@ -42,7 +42,8 @@ spec:
         volumeMounts:
         - name: mssqldb
           mountPath: /var/opt/mssql/data
-      volumes:
+      volumes: 
       - name: mssqldb
         persistentVolumeClaim:
-          claimName: mssql-data
+          claimName: mssql-pvc
+     

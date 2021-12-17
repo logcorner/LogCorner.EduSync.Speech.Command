@@ -9,6 +9,7 @@ C:\Windows\System32\drivers\etc\hosts
 127.0.0.1 kubernetes.docker.com
 
 curl http://kubernetes.docker.com
+https://kubernetes.docker.com/speech-command-http-api/swagger/index.html
 
 
 eneable ssl

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using System;
+using System.Collections.Generic;
 
 namespace LogCorner.EduSync.Speech.Telemetry.Configuration
 {
@@ -35,9 +35,6 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
                                 .AddTelemetrySdk())
                         .AddOtlpExporter(exporterOptions =>
                         {
-                            //options.Endpoint = new Uri($"{Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT")}");
-                            //options.Headers = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
-
                             exporterOptions.Endpoint =
                                 new Uri(
                                     "https://otlp.nr-data.net:4317"); //new Uri($"{Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT")}");
@@ -67,7 +64,8 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
             var resourceBuilder = ResourceBuilder
                 .CreateDefault()
                 .AddService(openTelemetryServiceName)
-                .AddAttributes(new Dictionary<string, object> {
+                .AddAttributes(new Dictionary<string, object>
+                {
                     { "environment", environment }
                 })
                 .AddTelemetrySdk();
@@ -101,26 +99,13 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
                 //
                 //     The OTEL_EXPORTER_OTLP_HEADERS environment variable should be set to include your New Relic API key:
                 //         OTEL_EXPORTER_OTLP_HEADERS=api-key=<YOUR_API_KEY_HERE>
-                tracerProviderBuilder
-                    .AddOtlpExporter(options =>
-                    {
-                        options.Endpoint = new Uri("https://otlp.nr-data.net:4317");//new Uri($"{Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT")}");
-                        options.Headers =
-                            "api-key=bb413cc336625e6b6569a7dc4a03f858789cNRAL"; //Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
-                    });
+                tracerProviderBuilder.AddNewRelicExporter();
 
                 tracerProviderBuilder.AddConsoleExporter();
 
-                tracerProviderBuilder.AddJaegerExporter(o =>
-                {
-                    o.AgentHost = jaergerHostName;
-                    o.AgentPort = int.Parse(jaergerPort);
-                });
+                tracerProviderBuilder.AddJaegerExporter(jaergerHostName, jaergerPort);
 
-                tracerProviderBuilder.AddZipkinExporter(b =>
-                {
-                    b.Endpoint = new Uri($"http://{zipkinHostName}:{zipkinPort}/api/v2/spans");
-                });
+                tracerProviderBuilder.AddZipkinExporter(zipkinHostName, zipkinPort);
             });
 
             services.AddOpenTelemetryMetrics(meterProviderBuilder =>
@@ -140,23 +125,11 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
                 //
                 //     The OTEL_EXPORTER_OTLP_HEADERS environment variable should be set to include your New Relic API key:
                 //         OTEL_EXPORTER_OTLP_HEADERS=api-key=<YOUR_API_KEY_HERE>
-                meterProviderBuilder
-                    .AddOtlpExporter(options =>
-                    {
-                        //options.Endpoint = new Uri($"{Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT")}");
-                        //options.Headers = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
-
-                        options.Endpoint = new Uri("https://otlp.nr-data.net:4317");//new Uri($"{Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT")}");
-                        options.Headers =
-                            "api-key=bb413cc336625e6b6569a7dc4a03f858789cNRAL"; //Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
-
-                        // New Relic requires the exporter to use delta aggregation temporality.
-                        // The OTLP exporter defaults to using cumulative aggregation temporatlity.
-                        options.AggregationTemporality = AggregationTemporality.Delta;
-                    });
+                meterProviderBuilder.AddNewRelicExporter();
                 //meterProviderBuilder.AddConsoleExporter();
             });
             services.AddTelemetryServices();
         }
+
     }
 }
