@@ -1,21 +1,59 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using OpenTelemetry.Resources;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-namespace LogCorner.EduSync.Speech.Telemetry
+
+namespace LogCorner.EduSync.Speech.Telemetry.Configuration
 {
-    public static class ServicesConfiguration
+    public static class OpenTelemetryConfiguration
     {
+        public static void AddOpenTelemetry(this ILoggingBuilder loggingBuilder, IConfiguration configuration)
+        {
+            var openTelemetryServiceName = configuration["OpenTelemetry:ServiceName"];
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            loggingBuilder
+                .AddOpenTelemetry(options =>
+                {
+                    options.IncludeFormattedMessage = true;
+                    options.IncludeScopes = true;
+                    options.ParseStateValues = true;
+
+                    options
+                        .SetResourceBuilder(
+                            ResourceBuilder
+                                .CreateDefault()
+                                .AddService(openTelemetryServiceName)
+                                .AddAttributes(new Dictionary<string, object>
+                                {
+                                    { "environment", environment }
+                                })
+                                .AddTelemetrySdk())
+                        .AddOtlpExporter(exporterOptions =>
+                        {
+                            //options.Endpoint = new Uri($"{Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT")}");
+                            //options.Headers = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
+
+                            exporterOptions.Endpoint =
+                                new Uri(
+                                    "https://otlp.nr-data.net:4317"); //new Uri($"{Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT")}");
+                            exporterOptions.Headers =
+                                "api-key=bb413cc336625e6b6569a7dc4a03f858789cNRAL"; //Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
+                        });
+                });
+        }
+
         public static void AddOpenTelemetry(this IServiceCollection services, IConfiguration configuration)
         {
             // Define an OpenTelemetry resource
             // A resource represents a collection of attributes describing the
             // service. This collection of attributes will be associated with all
             // telemetry generated from this service (traces, metrics, logs).
-            var opentelemetryServiceName = configuration["OpenTelemetry:ServiceName"];
+            var openTelemetryServiceName = configuration["OpenTelemetry:ServiceName"];
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var sourceName = configuration["OpenTelemetry:SourceName"];
 
@@ -28,7 +66,7 @@ namespace LogCorner.EduSync.Speech.Telemetry
 
             var resourceBuilder = ResourceBuilder
                 .CreateDefault()
-                .AddService(opentelemetryServiceName)
+                .AddService(openTelemetryServiceName)
                 .AddAttributes(new Dictionary<string, object> {
                     { "environment", environment }
                 })
@@ -118,7 +156,7 @@ namespace LogCorner.EduSync.Speech.Telemetry
                     });
                 //meterProviderBuilder.AddConsoleExporter();
             });
-            services.AddSingleton<IOpenTelemetryService, OpenTelemetryService>();
+            services.AddTelemetryServices();
         }
     }
 }
