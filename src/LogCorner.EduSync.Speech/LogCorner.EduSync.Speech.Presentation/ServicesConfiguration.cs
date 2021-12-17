@@ -140,6 +140,8 @@ namespace LogCorner.EduSync.Speech.Presentation
                             "api-key=bb413cc336625e6b6569a7dc4a03f858789cNRAL"; //Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
                     });
 
+                tracerProviderBuilder.AddConsoleExporter();
+
                 tracerProviderBuilder.AddJaegerExporter(o =>
                 {
                     o.AgentHost = jaergerHostName;
@@ -184,6 +186,7 @@ namespace LogCorner.EduSync.Speech.Presentation
                         // The OTLP exporter defaults to using cumulative aggregation temporatlity.
                         options.AggregationTemporality = AggregationTemporality.Delta;
                     });
+                //meterProviderBuilder.AddConsoleExporter();
             });
             services.AddSingleton<IOpenTelemetryService, OpenTelemetryService>();
         }

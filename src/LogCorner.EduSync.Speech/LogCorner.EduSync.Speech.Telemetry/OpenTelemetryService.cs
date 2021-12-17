@@ -1,5 +1,6 @@
-﻿using System.Diagnostics;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace LogCorner.EduSync.Speech.Telemetry
 {
@@ -18,7 +19,7 @@ namespace LogCorner.EduSync.Speech.Telemetry
             _tracer = new ActivitySource(SourceName);
         }
 
-        public void DoSomeWork(string workName, System.Collections.Generic.IDictionary<string, object> tags)
+        public void DoSomeWork(string workName, IDictionary<string, object> tags)
         {
             // Start a span using the OpenTelemetry API
             using var span = _tracer.StartActivity(workName);
@@ -26,6 +27,20 @@ namespace LogCorner.EduSync.Speech.Telemetry
             // Decorate the span with additional attributes
 
             foreach (var item in tags)
+            {
+                span?.AddTag(item.Key, item.Value);
+            }
+        }
+
+        public void DoSomeWork(string workName, string eventName, IDictionary<string, object> tags,
+            IDictionary<string, object> additionalTags)
+        {
+            using var span = _tracer.StartActivity(workName)!;
+
+            span?.AddEvent(new ActivityEvent(eventName, tags: new ActivityTagsCollection(tags)));
+            // Decorate the span with additional attributes
+
+            foreach (var item in additionalTags)
             {
                 span?.AddTag(item.Key, item.Value);
             }

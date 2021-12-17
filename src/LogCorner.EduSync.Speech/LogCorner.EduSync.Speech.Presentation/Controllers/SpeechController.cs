@@ -2,11 +2,11 @@
 using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Presentation.Dtos;
 using LogCorner.EduSync.Speech.Presentation.Exceptions;
+using LogCorner.EduSync.Speech.Telemetry;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LogCorner.EduSync.Speech.Telemetry;
 
 namespace LogCorner.EduSync.Speech.Presentation.Controllers
 {
@@ -46,6 +46,20 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
                 {"Url",command.Url},
                 {"Type",command.Type}
             });
+            _openTelemetryService.DoSomeWork("Create speech event", "Post", new Dictionary<string, object>
+            {
+                {"Title",command.Title},
+                {"Description",command.Description},
+                {"Url",command.Url},
+                {"Type",command.Type}
+            }
+                , new Dictionary<string, object>
+                {
+                    {"Title_2",command.Title},
+                    {"Description_2",command.Description},
+                    {"Url_2",command.Url},
+                    {"Type_2",command.Type}
+                });
             return Ok();
         }
 
