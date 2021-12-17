@@ -16,6 +16,8 @@ using LogCorner.EduSync.Notification.Common;
 using LogCorner.EduSync.Speech.Command.SharedKernel;
 using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
 using LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser;
+using LogCorner.EduSync.Speech.Telemetry;
+
 namespace LogCorner.EduSync.Speech.Presentation
 {
     public class Startup
