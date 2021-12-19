@@ -5,10 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LogCorner.EduSync.Notification.Common" Version="1.0.7" />
+    <PackageReference Include="LogCorner.EduSync.Notification.Common" Version="1.0.8" />
   </ItemGroup>
 
   <ItemGroup>
+
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Domain\LogCorner.EduSync.Speech.Domain.csproj" />
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Infrastructure\LogCorner.EduSync.Speech.Infrastructure.csproj" />
     <ProjectReference Include="..\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.Command.SharedKernel.csproj" />
