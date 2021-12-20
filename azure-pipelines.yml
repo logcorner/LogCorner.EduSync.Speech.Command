@@ -1,5 +1,5 @@
 trigger:
-- master
+- develop
 
 pool:
   vmImage: 'windows-latest'
@@ -25,12 +25,6 @@ steps:
   inputs:
       command: 'test'
       projects: '**/*Unit[Tt]ests/*.csproj'
-      arguments: '--configuration $(buildConfiguration)'
+      arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
       testRunTitle: 'Run unit tests'
 
-- script: dotnet test <test-project> --logger trx
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'     
