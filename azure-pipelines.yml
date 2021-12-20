@@ -40,3 +40,9 @@ steps:
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'myWebsiteName'
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish ARM Artifact'
+  inputs:
+    PathtoPublish: 'K8/'
+    ArtifactName: 'drop-arm'
+    publishLocation: 'Container'
