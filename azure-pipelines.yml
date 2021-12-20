@@ -27,3 +27,10 @@ steps:
       projects: '**/*Unit[Tt]ests/*.csproj'
       arguments: '--configuration $(buildConfiguration)'
       testRunTitle: 'Run unit tests'
+
+- script: dotnet test <test-project> --logger trx
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'     
