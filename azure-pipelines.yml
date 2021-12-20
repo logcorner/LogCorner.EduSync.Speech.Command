@@ -11,11 +11,13 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
+    projects: '**/*.csproj'
     feedsToUse: 'select'
-    vstsFeed: 'my-vsts-feed' # A series of numbers and letters
+    vstsFeed: 'my-vsts-feed'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
+    projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'dotnet build $(buildConfiguration)'
