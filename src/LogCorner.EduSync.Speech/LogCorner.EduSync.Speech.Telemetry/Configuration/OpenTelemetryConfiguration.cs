@@ -87,7 +87,8 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
                         //    return context.Request.Method == "GET";
                         //};
                     })
-                    .AddHttpClientInstrumentation();
+                    .AddHttpClientInstrumentation()
+                    .AddSqlClientInstrumentation(s => s.SetDbStatementForText = true);
 
                 // Step 3. Configure the SDK to listen to custom instrumentation.
                 tracerProviderBuilder

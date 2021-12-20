@@ -15,7 +15,7 @@
     <!-- OpenTelemetry instrumentation packages -->
     <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc8" />
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc8" />
-
+    <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.0.0-rc7" />
     <!-- OpenTelemetry OTLP exporter.
          Note that logs support is currently in a separate package because the OTLP log data model is still deemed beta -->
     <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.2.0-beta1" />
