@@ -266,3 +266,4 @@ __pycache__/
 /terraform/201-aks-acr-identity/terraform.tfstate
 /terraform/201-aks-acr-identity/.terraform.lock.hcl
 *.hcl
+/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/Serilogs

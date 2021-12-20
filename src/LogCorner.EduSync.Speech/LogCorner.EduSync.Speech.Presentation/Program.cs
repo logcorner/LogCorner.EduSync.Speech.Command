@@ -12,15 +12,15 @@ namespace LogCorner.EduSync.Speech.Presentation
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        private static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .ConfigureLogging((context, loggingBuilder) =>
-                {
-                    loggingBuilder.ClearProviders();
-                    loggingBuilder.AddConsole();
-
-                    loggingBuilder.AddOpenTelemetry(context.Configuration);
-                })
-                .UseStartup<Startup>();
+                   .ConfigureLogging((context, loggingBuilder) =>
+                    {
+                        loggingBuilder.ClearProviders();
+                        loggingBuilder.AddConsole();
+                        loggingBuilder.AddSerilog(context.Configuration);
+                        loggingBuilder.AddOpenTelemetry(context.Configuration);
+                    })
+                   .UseStartup<Startup>();
     }
 }

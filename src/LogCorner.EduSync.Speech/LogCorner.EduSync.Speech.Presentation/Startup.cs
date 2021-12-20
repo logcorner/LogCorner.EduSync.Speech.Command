@@ -16,6 +16,7 @@ using LogCorner.EduSync.Notification.Common;
 using LogCorner.EduSync.Speech.Command.SharedKernel;
 using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
 using LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser;
+using LogCorner.EduSync.Speech.Presentation.Exceptions;
 using LogCorner.EduSync.Speech.Telemetry.Configuration;
 
 namespace LogCorner.EduSync.Speech.Presentation
@@ -90,7 +91,7 @@ namespace LogCorner.EduSync.Speech.Presentation
             }
 
             string pathBase = Configuration["pathBase"];
-           //app.UseMiddleware<ExceptionMiddleware>();
+           app.UseMiddleware<ExceptionMiddleware>();
             app.UseSwagger(x =>
             {
                 if (!string.IsNullOrWhiteSpace(pathBase))
