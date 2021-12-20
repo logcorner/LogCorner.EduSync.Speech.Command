@@ -1,8 +1,8 @@
 ﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
-using LogCorner.EduSync.Speech.SharedKernel.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
 
 namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
@@ -39,7 +39,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             _description = description?.Value ?? throw new ArgumentNullAggregateException(0, nameof(description));
             _type = type != null ? type.IntValue : throw new ArgumentNullAggregateException(0, nameof(type));
             _mediaFileItems = new List<MediaFile>();
-            AddDomainEvent(new SpeechCreatedEvent(Id, Title.Value, Url.Value, Description.Value, new SharedKernel.Events.SpeechTypeEnum(type.IntValue, type.StringValue)));
+            AddDomainEvent(new SpeechCreatedEvent(Id, Title.Value, Url.Value, Description.Value, new Command.SharedKernel.Events.SpeechTypeEnum(type.IntValue, type.StringValue)));
         }
 
         public Speech(Guid id, Title title, UrlValue urlValue, Description description, SpeechType type)
@@ -51,7 +51,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
             _type = type.IntValue;
             _mediaFileItems = new List<MediaFile>();
 
-            AddDomainEvent(new SpeechCreatedEvent(Id, Title.Value, Url.Value, Description.Value, new SharedKernel.Events.SpeechTypeEnum(type.IntValue, type.StringValue)));
+            AddDomainEvent(new SpeechCreatedEvent(Id, Title.Value, Url.Value, Description.Value, new Command.SharedKernel.Events.SpeechTypeEnum(type.IntValue, type.StringValue)));
         }
 
         /*
@@ -112,7 +112,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 
         public void ChangeType(SpeechType type, long originalVersion)
         {
-            AddDomainEvent(new SpeechTypeChangedEvent(Id, new SharedKernel.Events.SpeechTypeEnum(type.IntValue, type.StringValue)), originalVersion);
+            AddDomainEvent(new SpeechTypeChangedEvent(Id, new Command.SharedKernel.Events.SpeechTypeEnum(type.IntValue, type.StringValue)), originalVersion);
         }
 
         public void Apply(SpeechTitleChangedEvent ev)

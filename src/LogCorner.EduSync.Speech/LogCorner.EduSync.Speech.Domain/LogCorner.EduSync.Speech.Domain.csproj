@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.SharedKernel.csproj" />
+    <ProjectReference Include="..\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.Command.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

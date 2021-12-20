@@ -1,5 +1,5 @@
-﻿using LogCorner.EduSync.Speech.SharedKernel.Events;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
 
 namespace LogCorner.EduSync.Speech.Application.Interfaces
 {

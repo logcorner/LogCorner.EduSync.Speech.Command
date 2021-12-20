@@ -50,6 +50,7 @@
     <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <SqlTargetName>logcorner-edusync-speech-database</SqlTargetName>
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
@@ -66,6 +67,7 @@
     <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="Docker" />
     <Folder Include="Docker\Restore" />
+    <Folder Include="Docker\mssql-tools" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Speech.sql" />
@@ -74,8 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Docker\Dockerfile" />
+    <None Include="Docker\mssql-tools\Dockerfile" />
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)bin\$(Configuration)\LogCorner.EduSync.Speech.Database_Create.sql" "$(ProjectDir)Docker\Restore" /Y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(ProjectDir)bin\$(Configuration)\logcorner-edusync-speech-database_Create.sql" "$(ProjectDir)Docker\Restore" /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>

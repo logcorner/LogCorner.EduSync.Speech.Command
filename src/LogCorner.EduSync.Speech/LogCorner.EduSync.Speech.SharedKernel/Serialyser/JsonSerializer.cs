@@ -1,4 +1,4 @@
-﻿namespace LogCorner.EduSync.Speech.SharedKernel.Serialyser
+﻿namespace LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser
 {
     public class JsonSerializer : IJsonSerializer
     {

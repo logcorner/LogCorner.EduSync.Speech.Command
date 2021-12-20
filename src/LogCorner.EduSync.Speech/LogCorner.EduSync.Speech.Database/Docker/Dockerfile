@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/mssql/server:2019-latest
 
 # add LogCorner.EduSync.Speech.Database_Create.sql to /home/resources/ and name it Restore.sql
-ADD Restore/LogCorner.EduSync.Speech.Database_Create.sql /home/resources/Restore.sql
+ADD Restore/logcorner-edusync-speech-database_Create.sql /home/resources/Restore.sql
 
 # add SA_PASSWORD as build-time variable
 ARG SA_PASSWORD

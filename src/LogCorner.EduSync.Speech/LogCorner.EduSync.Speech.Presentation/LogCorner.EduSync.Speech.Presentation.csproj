@@ -10,7 +10,9 @@
   <PropertyGroup>
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
 <EnableDefaultItems>false</EnableDefaultItems>
+
 <UserSecretsId>d253721e-694a-4556-a49f-42284bc6dd75</UserSecretsId>
+
 </PropertyGroup>
 
   <ItemGroup>
@@ -54,9 +56,14 @@
 
   <ItemGroup>
     <Content Include="appsettings.Development.json" />
-    <Content Include="appsettings.Development.save.json" />
     <Content Include="appsettings.Docker.json" />
     <Content Include="appsettings.json" />
+    <Content Include="appsettings.Kubernetes.AKS.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="appsettings.Kubernetes.helm.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="appsettings.Kubernetes.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -71,29 +78,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="5.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="5.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client.Core" Version="5.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client.Core" Version="5.0.11" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.36.1" />
-    <PackageReference Include="Microsoft.Identity.Web" Version="1.17.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.36.2" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="1.18.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.2.2" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.2" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.2.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Application\LogCorner.EduSync.Speech.Application.csproj" />
-    <ProjectReference Include="..\LogCorner.EduSync.Speech.Infrastructure\LogCorner.EduSync.Speech.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="LogCorner.EduSync.SignalR.Common">
-      <HintPath>..\..\SharedKernel\LogCorner.EduSync.SignalR.Common.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+
 
   <ItemGroup>
     <Content Update="appsettings.Development.json">

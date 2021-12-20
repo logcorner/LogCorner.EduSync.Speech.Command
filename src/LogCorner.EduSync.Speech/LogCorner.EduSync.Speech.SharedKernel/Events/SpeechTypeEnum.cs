@@ -1,4 +1,4 @@
-﻿namespace LogCorner.EduSync.Speech.SharedKernel.Events
+﻿namespace LogCorner.EduSync.Speech.Command.SharedKernel.Events
 {
     public class SpeechTypeEnum
     {

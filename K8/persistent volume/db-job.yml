@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sqljob
+  # namespace: dev
+spec:
+  template:
+    spec:
+      containers:
+      - name: sqljobcontainer
+        image: logcorner/mssql-tools
+        imagePullPolicy: Never
+        command: ["/opt/mssql-tools/bin/sqlcmd"]
+        args: [ "-S", "mssql-service", "-d", "master", "-U", "sa", "-P", "vV5r9tn0M4@", "-I", "-i", "initialize-database.sql" ]
+      restartPolicy: Never

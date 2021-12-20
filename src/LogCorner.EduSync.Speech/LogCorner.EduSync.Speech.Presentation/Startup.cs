@@ -1,20 +1,22 @@
-﻿using LogCorner.EduSync.SignalR.Common;
-using LogCorner.EduSync.Speech.Application.Interfaces;
+﻿using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using LogCorner.EduSync.Speech.Infrastructure;
-using LogCorner.EduSync.Speech.Presentation.Exceptions;
-using LogCorner.EduSync.Speech.SharedKernel;
-using LogCorner.EduSync.Speech.SharedKernel.Events;
-using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
+using System.Collections.Generic;
+using LogCorner.EduSync.Notification.Common;
+using LogCorner.EduSync.Speech.Command.SharedKernel;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser;
+using LogCorner.EduSync.Speech.Presentation.Exceptions;
 
 namespace LogCorner.EduSync.Speech.Presentation
 {
@@ -51,8 +53,8 @@ namespace LogCorner.EduSync.Speech.Presentation
             services.AddScoped(typeof(IInvoker<>), typeof(Invoker<>));
             services.AddTransient<IDomainEventRebuilder, DomainEventRebuilder>();
             services.AddTransient<IJsonProvider, JsonProvider>();
-          
-           services.AddSignalRServices($"{Configuration["HubUrl"]}?clientName=speech-http-command-api",Configuration);
+
+            services.AddSignalRServices($"{Configuration["HubUrl"]}?clientName=speech-http-command-api", Configuration);
 
             services.AddSharedKernel();
 
@@ -82,23 +84,35 @@ namespace LogCorner.EduSync.Speech.Presentation
             else
             {
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
+
+            string pathBase = Configuration["pathBase"];
             app.UseMiddleware<ExceptionMiddleware>();
-            app.UseSwagger()
-                .UseSwaggerUI(c =>
+            app.UseSwagger(x =>
+            {
+                if (!string.IsNullOrWhiteSpace(pathBase))
                 {
-                    var oAuthClientId = Configuration["SwaggerUI:OAuthClientId"];
-                    var oAuthClientSecret = Configuration["SwaggerUI:OAuthClientSecret"];
+                    x.RouteTemplate = "swagger/{documentName}/swagger.json";
+                    x.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
+                    {
+                        swaggerDoc.Servers = new List<OpenApiServer> { new OpenApiServer { Url = $"https://{httpReq.Host.Value}{pathBase}" } };
+                    });
+                }
+            })
+            .UseSwaggerUI(c =>
+            {
+                var oAuthClientId = Configuration["SwaggerUI:OAuthClientId"];
+                var oAuthClientSecret = Configuration["SwaggerUI:OAuthClientSecret"];
 
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1");
-                    c.OAuthClientId(oAuthClientId);
-                    c.OAuthClientSecret(oAuthClientSecret);
-                    c.OAuthAppName("The Speech Micro Service Command Swagger UI");
-                    c.OAuthScopeSeparator(" ");
+                c.SwaggerEndpoint("../swagger/v1/swagger.json", "WebApi v1");
+                c.OAuthClientId(oAuthClientId);
+                c.OAuthClientSecret(oAuthClientSecret);
+                c.OAuthAppName("The Speech Micro Service Command Swagger UI");
+                c.OAuthScopeSeparator(" ");
 
-                    c.OAuthUsePkce();
-                });
-            app.UseHttpsRedirection();
+                c.OAuthUsePkce();
+            });
             app.UseRouting();
             app.UseCors("CorsPolicy");
             app.UseAuthentication();
@@ -108,6 +122,11 @@ namespace LogCorner.EduSync.Speech.Presentation
             {
                 endpoints.MapControllers().RequireAuthorization();
             });
+
+            if (!string.IsNullOrWhiteSpace(pathBase))
+            {
+                app.UsePathBase(new Microsoft.AspNetCore.Http.PathString(pathBase));
+            }
         }
     }
 }

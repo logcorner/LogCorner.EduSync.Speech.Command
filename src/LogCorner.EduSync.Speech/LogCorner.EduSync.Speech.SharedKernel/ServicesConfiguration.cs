@@ -1,7 +1,7 @@
-﻿using LogCorner.EduSync.Speech.SharedKernel.Serialyser;
+﻿using LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LogCorner.EduSync.Speech.SharedKernel
+namespace LogCorner.EduSync.Speech.Command.SharedKernel
 {
     public static class ServicesConfiguration
     {
