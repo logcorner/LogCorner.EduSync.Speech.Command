@@ -21,5 +21,9 @@ steps:
   inputs:
     containerregistrytype: 'Azure Container Registry'
     dockerComposeFile: '**/docker-compose.yml'
+    additionalDockerComposeFiles: |
+      docker-compose.override.yml
+      docker-compose-unit-tests.yml
+      docker-compose.override-unit-tests.yml
     action: 'Build services'
     includeLatestTag: true
