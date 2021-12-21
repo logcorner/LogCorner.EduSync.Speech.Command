@@ -20,7 +20,7 @@ steps:
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    dockerComposeFile: '**/docker-compose.yml'
+    dockerComposeFile: 'src/docker-compose.yml'
     additionalDockerComposeFiles: |
       docker-compose.override.yml
       docker-compose-unit-tests.yml
