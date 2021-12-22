@@ -5,10 +5,11 @@
 
 resources:
   repositories:
-    - repository: LogCorner
-      type: github
-      endpoint: github.com_logcorner 
-      name: logcorner/LogCorner.EduSync.Speech.Command
+  - repository: MyGitHubRepo
+    type: github
+    endpoint: github.com_logcorner
+    name: logcorner/LogCorner.EduSync.Speech.Command
+    ref: azure-pipelines
      
     
    
@@ -21,6 +22,7 @@ pool:
 steps:
 - checkout: self
 - checkout: LogCorner
+
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
