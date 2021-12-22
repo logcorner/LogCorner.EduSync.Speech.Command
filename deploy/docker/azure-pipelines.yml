@@ -24,6 +24,18 @@ steps:
 - checkout: MyGitHubRepo
 - bash: |
     echo Tools version: $(Build.SourcesDirectory)
+    echo "Build.ArtifactStagingDirectory:" 
+
+    echo "$(Build.ArtifactStagingDirectory)"
+
+    echo "Build.BinariesDirectory:" 
+
+    echo "$(Build.BinariesDirectory)"
+
+    echo "Build.SourcesDirectory:"
+
+    echo "$(Build.SourcesDirectory)"
+
 - script: tree $(Agent.WorkFolder)\1 /f
 - task: DockerCompose@0
   inputs:
