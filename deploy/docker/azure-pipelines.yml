@@ -46,3 +46,9 @@ steps:
     testResultsFiles: '**/tests-results*.xml'
     failTaskOnFailedTests: true
   continueOnError: true
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish ARM Artifact'
+  inputs:
+    PathtoPublish: 'deploy/kubernetes/aks/'
+    ArtifactName: 'drop-arm'
+    publishLocation: 'Container'
