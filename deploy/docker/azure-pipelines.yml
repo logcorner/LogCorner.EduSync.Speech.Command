@@ -21,7 +21,7 @@ pool:
 
 steps:
 - checkout: self
-- checkout: LogCorner
+- checkout: MyGitHubRepo
 
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
