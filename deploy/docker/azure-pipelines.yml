@@ -9,11 +9,11 @@ resources:
       type: github
       endpoint: LogCorner.EduSync.Speech.Command
       name: logcorner/LogCorner.EduSync.Speech.Command
-      ref: azure-pipelines
+     
     
    
 trigger:
-- develop
+- azure-pipelines
 
 pool:
   vmImage: ubuntu-latest
