@@ -21,13 +21,6 @@ steps:
 - checkout: self
 - checkout: MyGitHubRepo
 
-- task: CmdLine@2
-  displayName: 'Directory listing - Build.ArtifactStagingDirectory'
-  inputs:
-    script: |
-      D:
-      cd $(Build.ArtifactStagingDirectory)
-      dir /b /s
 
 - task: DockerCompose@0
   inputs:
@@ -45,3 +38,11 @@ steps:
     dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose-unit-tests.yml'
     additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
     action: 'Run services'
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results '
+  inputs:
+    testResultsFormat: VSTest
+    testResultsFiles: '$(System.DefaultWorkingDirectory)/**/tests-results*.xml'
+    failTaskOnFailedTests: true
+  continueOnError: true
