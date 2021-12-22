@@ -48,7 +48,7 @@ steps:
   displayName: 'Publish Test Results'
   inputs:
     testResultsFormat: 'VSTest'
-    testResultsFiles: '**/*TestResults/*.xml'
+    testResultsFiles: 'LogCorner.EduSync.Speech.Command/src/TestResults/tests-results-domain/tests-results-domain.xml'
     failTaskOnFailedTests: true
   continueOnError: true
 - task: PublishBuildArtifacts@1
