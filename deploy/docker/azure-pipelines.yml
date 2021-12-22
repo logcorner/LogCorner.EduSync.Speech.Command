@@ -52,7 +52,7 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: 'Get-Childitem  -Recurse'
+    script: 'Get-Childitem -File -Recurse'
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
