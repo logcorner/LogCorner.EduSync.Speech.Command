@@ -45,4 +45,4 @@ steps:
   inputs:
     PathtoPublish: 'K8/'
     ArtifactName: 'drop-arm'
-    publishLocation: 'Container'   
+    publishLocation: 'Container'
