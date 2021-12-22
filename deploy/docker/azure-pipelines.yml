@@ -52,6 +52,6 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish ARM Artifact'
   inputs:
-    PathtoPublish: 'deploy/kubernetes/aks/'
+    PathtoPublish: 'LogCorner.EduSync.Speech.Command/deploy/'
     ArtifactName: 'drop-arm'
     publishLocation: 'Container'
