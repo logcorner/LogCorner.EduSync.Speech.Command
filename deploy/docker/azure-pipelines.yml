@@ -48,7 +48,7 @@ steps:
   displayName: 'Publish Test Results'
   inputs:
     testResultsFormat: 'VSTest'
-    testResultsFiles: '**/tests-results-*.xml'
+    testResultsFiles: '**/*TestResults/*.xml'
     failTaskOnFailedTests: true
   continueOnError: true
 - task: PublishBuildArtifacts@1
