@@ -45,7 +45,7 @@ steps:
   displayName: 'Publish Test Results'
   inputs:
     testResultsFormat: 'VSTest'
-    testResultsFiles: '$(System.DefaultWorkingDirectory)/**/tests-results*.xml'
+    testResultsFiles: 'LogCorner.EduSync.Speech.Command/**/tests-results*.xml'
     failTaskOnFailedTests: true
   continueOnError: true
 
