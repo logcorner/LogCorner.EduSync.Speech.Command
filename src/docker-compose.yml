@@ -3,7 +3,7 @@ version: '3.4'
 services:
   # web api service
   logcorner.edusync.speech.command:
-    image: ${DOCKER_REGISTRY-}/logcorner-edusync-speech-command
+    image: logcorner-edusync-speech-command
     build:
       context: .
       dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/Dockerfile
@@ -13,7 +13,7 @@ services:
       - speech_network
  # database service
   logcorner.edusync.speech.command.data:
-    image: ${DOCKER_REGISTRY-}/logcorner-edusync-speech-command-data
+    image: logcorner-edusync-speech-command-data
     build:
       context: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Database/Docker
       dockerfile: Dockerfile
@@ -23,14 +23,17 @@ services:
       - speech_network    
   # database service
   logcorner.edusync.speech.mssql-tools:
-    image: ${DOCKER_REGISTRY-}/logcorner-edusync-speech-mssql-tools
+    image: logcorner-edusync-speech-mssql-tools
     build:
       context: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Database/Docker
       dockerfile: mssql-tools/Dockerfile
-   
-
+  
 networks:
   speech_network:
     external:
       name: speech_network
+
+
+
+
 
