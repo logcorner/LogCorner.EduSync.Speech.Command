@@ -43,7 +43,8 @@ steps:
   displayName: 'List files'
   inputs:
     script: |
-      for %%f in ( "$(Build.ArtifactStagingDirectory)\*" ) do @echo %%f
+      dir /a-D /S /B
+    workingDirectory: '$(Build.ArtifactStagingDirectory)'
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
