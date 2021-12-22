@@ -36,7 +36,9 @@ steps:
 
     echo "$(Build.SourcesDirectory)"
 
-- script: tree $(Agent.WorkFolder)\1 /f
+- script: dir
+  workingDirectory: $(Agent.BuildDirectory)
+  displayName: List contents of a folder
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
