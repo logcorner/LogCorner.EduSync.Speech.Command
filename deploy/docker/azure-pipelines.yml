@@ -10,9 +10,7 @@ resources:
     endpoint: github.com_logcorner
     name: logcorner/LogCorner.EduSync.Speech.Command
     ref: azure-pipelines
-     
-    
-   
+ 
 trigger:
 - azure-pipelines
 
@@ -36,6 +34,6 @@ steps:
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    dockerComposeFile: 'src/docker-compose-unit-tests.yml'
+    dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose-unit-tests.yml'
     additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
     action: 'Run services'
