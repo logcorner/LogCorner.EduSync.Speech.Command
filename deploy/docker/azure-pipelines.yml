@@ -43,7 +43,7 @@ steps:
   displayName: 'List files'
   inputs:
     script: |
-      dir /a-D /S /B
+      dir /a /s /b
     workingDirectory: '$(Build.ArtifactStagingDirectory)'
 - task: DockerCompose@0
   inputs:
