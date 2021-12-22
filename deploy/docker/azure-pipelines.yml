@@ -48,7 +48,7 @@ steps:
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    dockerComposeFile: 'src/docker-compose.yml'
+    dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose.yml'
     additionalDockerComposeFiles: |
       docker-compose.override.yml
       docker-compose-unit-tests.yml
