@@ -40,11 +40,10 @@ steps:
   workingDirectory: $(Agent.BuildDirectory)
   displayName: List contents of a folder
 - task: CmdLine@2
+  displayName: 'List files'
   inputs:
     script: |
-      echo  '$(System.DefaultWorkingDirectory)'
-      dir
-      dir subfoldername
+      for %%f in ( "$(Build.ArtifactStagingDirectory)\*" ) do @echo %%f
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
