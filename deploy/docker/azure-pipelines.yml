@@ -40,10 +40,7 @@ steps:
     dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose-unit-tests.yml'
     additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
     action: 'Run services'
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: 'Get-Childitem  -Recurse'
+- bash: echo $(System.DefaultWorkingDirectory)
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'
   inputs:
@@ -51,6 +48,11 @@ steps:
     testResultsFiles: 'LogCorner.EduSync.Speech.Command/src/TestResults/tests-results-domain/tests-results-domain.xml'
     failTaskOnFailedTests: true
   continueOnError: true
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'Get-Childitem  -Recurse'
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
