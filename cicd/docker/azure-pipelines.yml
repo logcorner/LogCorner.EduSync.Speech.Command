@@ -14,8 +14,7 @@ resources:
 trigger:
 - azure-pipelines
 
-pool:
-  vmImage: ubuntu-latest
+pool: LOGCORNER-POOL
 
 steps:
 - checkout: self
