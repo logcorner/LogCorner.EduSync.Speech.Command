@@ -24,7 +24,7 @@ steps:
 - checkout: MyGitHubRepo
 - bash: |
     echo Tools version: $(Build.SourcesDirectory)
-- script: dir $(Build.SourcesDirectory)
+- script: tree $(Agent.WorkFolder)\1 /f
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
