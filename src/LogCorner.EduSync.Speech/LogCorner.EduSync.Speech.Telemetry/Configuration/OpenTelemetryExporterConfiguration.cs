@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
+using Serilog;
 
 namespace LogCorner.EduSync.Speech.Telemetry.Configuration
 {
@@ -32,9 +33,11 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
 
         public static void AddZipkinExporter(this TracerProviderBuilder tracerProviderBuilder, string zipkinHostName, string zipkinPort)
         {
-            tracerProviderBuilder.AddZipkinExporter(b =>
+            var endpoint = new Uri($"http://{zipkinHostName}:{zipkinPort}/api/v2/spans");
+            Log.Debug($"OpenTelemetryExporterConfiguration::AddZipkinExporter:Endpoint {endpoint}");
+                tracerProviderBuilder.AddZipkinExporter(b =>
             {
-                b.Endpoint = new Uri($"http://{zipkinHostName}:{zipkinPort}/api/v2/spans");
+                b.Endpoint = endpoint;
             });
         }
 
@@ -42,8 +45,10 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
         {
             tracerProviderBuilder.AddJaegerExporter(o =>
             {
+
                 o.AgentHost = jaergerHostName;
                 o.AgentPort = int.Parse(jaergerPort);
+                
             });
         }
     }
