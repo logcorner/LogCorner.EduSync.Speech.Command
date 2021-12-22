@@ -3,6 +3,15 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+resources:
+  repositories:
+    - repository: LogCorner
+      type: github
+      endpoint: LogCorner.EduSync.Speech.Command
+      name: logcorner/LogCorner.EduSync.Speech.Command
+      ref: azure-pipelines
+    
+   
 trigger:
 - develop
 
@@ -27,3 +36,9 @@ steps:
       docker-compose.override-unit-tests.yml
     action: 'Build services'
     includeLatestTag: true
+- task: DockerCompose@0
+  inputs:
+    containerregistrytype: 'Azure Container Registry'
+    dockerComposeFile: 'src/docker-compose-unit-tests.yml'
+    additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
+    action: 'Run services'
