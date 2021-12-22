@@ -21,6 +21,14 @@ steps:
 - checkout: self
 - checkout: MyGitHubRepo
 
+- task: CmdLine@2
+  displayName: 'Directory listing - Build.ArtifactStagingDirectory'
+  inputs:
+    script: |
+      D:
+      cd $(Build.ArtifactStagingDirectory)
+      dir /b /s
+
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
