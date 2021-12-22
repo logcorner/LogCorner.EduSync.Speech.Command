@@ -23,7 +23,7 @@ steps:
 - checkout: self
 - checkout: MyGitHubRepo
 - bash: |
-    echo "Tools version: $(Build.SourcesDirectory)
+    echo Tools version: $(Build.SourcesDirectory)
 - script: dir $(Build.SourcesDirectory)
 - task: DockerCompose@0
   inputs:
