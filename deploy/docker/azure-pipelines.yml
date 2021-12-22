@@ -22,29 +22,7 @@ pool:
 steps:
 - checkout: self
 - checkout: MyGitHubRepo
-- bash: |
-    echo Tools version: $(Build.SourcesDirectory)
-    echo "Build.ArtifactStagingDirectory:" 
 
-    echo "$(Build.ArtifactStagingDirectory)"
-
-    echo "Build.BinariesDirectory:" 
-
-    echo "$(Build.BinariesDirectory)"
-
-    echo "Build.SourcesDirectory:"
-
-    echo "$(Build.SourcesDirectory)"
-
-- script: dir
-  workingDirectory: $(Agent.BuildDirectory)
-  displayName: List contents of a folder
-- task: CmdLine@2
-  displayName: 'List files'
-  inputs:
-    script: |
-      dir 
-    workingDirectory: '$(Build.ArtifactStagingDirectory)'
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
