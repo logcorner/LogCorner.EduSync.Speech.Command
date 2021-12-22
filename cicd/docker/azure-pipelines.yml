@@ -39,7 +39,7 @@ steps:
     dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose-unit-tests.yml'
     additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
     action: 'Run services'
-- bash: echo $(System.DefaultWorkingDirectory)
+
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'
   inputs:
