@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   logcorner.edusync.speech.domain.unittests:
-    image: ${DOCKER_REGISTRY-}logcorneredusyncspeechdomainunittests
+    image: ${DOCKER_REGISTRY-}/logcorner-edusync-speech-domain-unittests
     build:
       context: .
       dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Domain.UnitTests/Dockerfile
@@ -10,7 +10,7 @@ services:
       - ./TestResults/tests-results-domain:/domain-tests
 
   logcorner.edusync.speech.application.unittests:
-    image: ${DOCKER_REGISTRY-}logcorneredusyncspeechapplicationunittests
+    image: ${DOCKER_REGISTRY-}/logcorner-edusync-speech-application-unittests
     build:
       context: .
       dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/Dockerfile
@@ -18,14 +18,14 @@ services:
       - ./TestResults/tests-results-application:/application-tests
 
   logcorner.edusync.speech.presentation.unittests:
-    image: ${DOCKER_REGISTRY-}logcorneredusyncspeechpresentationunittests
+    image: ${DOCKER_REGISTRY-}/logcorner-edusync-speech-presentation-unittests
     build:
       context: .
       dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTests/Dockerfile
     volumes: 
        - ./TestResults/tests-results-presentation:/presentation-tests
   logcorner.edusync.speech.infrastructure.unittests:
-    image: ${DOCKER_REGISTRY-}logcorneredusyncspeechinfrastructureunittests
+    image: ${DOCKER_REGISTRY-}/logcorner-edusync-speech-infrastructure-unittests
     build:
       context: .
       dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Infrastructure.UnitTests/Dockerfile
