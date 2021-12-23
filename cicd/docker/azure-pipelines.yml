@@ -33,18 +33,16 @@ steps:
     action: 'Build services'
     includeLatestTag: true
 - task: DockerCompose@0
-  displayName: 'Run unit tests'
+  displayName: 'Run UnitTests'
   inputs:
-    containerregistrytype: 'Azure Container Registry'
     dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose-unit-tests.yml'
     additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
-    action: 'Run services'
-
+    dockerComposeCommand: up
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'
   inputs:
     testResultsFormat: 'VSTest'
-    testResultsFiles: 'LogCorner.EduSync.Speech.Command/src/TestResultsMock/tests-results-domain/tests-results-domain.xml'
+    testResultsFiles: '$(System.DefaultWorkingDirectory)/**/TestResults/**/tests-results*.xml'
     failTaskOnFailedTests: true
   continueOnError: true
 
@@ -58,3 +56,4 @@ steps:
     PathtoPublish: 'LogCorner.EduSync.Speech.Command/deploy/'
     ArtifactName: 'drop-arm'
     publishLocation: 'Container'
+
