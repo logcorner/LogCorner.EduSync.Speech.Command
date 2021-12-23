@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="8f933915-20f6-44f1-9888-5b7b6a2b2b45" name="@9f8601c2c96a 2021-12-21 15:09:23" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2021-12-21T15:09:23.6378269+00:00" queuing="2021-12-21T15:09:23.6378270+00:00" start="2021-12-21T15:09:21.6183796+00:00" finish="2021-12-21T15:09:23.6734461+00:00" />
+  <TestSettings name="default" id="5b2f6699-9c97-4370-8c4a-a0610f10cdb4">
+    <Deployment runDeploymentRoot="_9f8601c2c96a_2021-12-21_15_09_23" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="36fbc9b3-f5b0-4efd-ab3f-6f231b289371" testId="27c3bf36-b1f5-b815-2dc5-6bd1e8d22fb8" testName="Register Speech With Exception Return InternalServerError" computerName="9f8601c2c96a" duration="00:00:00.0383502" startTime="2021-12-21T15:09:23.5712203+00:00" endTime="2021-12-21T15:09:23.5712208+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="36fbc9b3-f5b0-4efd-ab3f-6f231b289371" />
+    <UnitTestResult executionId="9c4a3048-9a3e-4c68-b3d8-985523ac2fd9" testId="819cd31c-5980-3d1a-4912-a76c3230615a" testName="Update Speech When ModelState Is Valid With No Errors Should Return Ok" computerName="9f8601c2c96a" duration="00:00:00.0339963" startTime="2021-12-21T15:09:23.5309743+00:00" endTime="2021-12-21T15:09:23.5309748+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9c4a3048-9a3e-4c68-b3d8-985523ac2fd9" />
+    <UnitTestResult executionId="0f003f1a-41a3-4bc6-a08e-06f2b2d40e95" testId="00ccbb5e-fe47-5906-3c59-b3d498a64f50" testName="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.NotEmptyAttributeUnitTest.NotEmptyAttributeWithEmptyGuidIsNotValid" computerName="9f8601c2c96a" duration="00:00:00.0003884" startTime="2021-12-21T15:09:23.4300385+00:00" endTime="2021-12-21T15:09:23.4300386+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0f003f1a-41a3-4bc6-a08e-06f2b2d40e95" />
+    <UnitTestResult executionId="03d2b9a3-f497-4fa2-9ba9-351bba8fd3d9" testId="65b4b55a-5266-329e-1d43-a50bdeebe760" testName="Register Speech With Valid ModelState Return Ok" computerName="9f8601c2c96a" duration="00:00:00.0029177" startTime="2021-12-21T15:09:23.5742261+00:00" endTime="2021-12-21T15:09:23.5742266+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="03d2b9a3-f497-4fa2-9ba9-351bba8fd3d9" />
+    <UnitTestResult executionId="fb6fc080-4325-4248-94fe-7c044b87e441" testId="71590310-f8b0-8e3d-5560-d5b5820377ac" testName="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.NotEmptyAttributeUnitTest.NotEmptyAttributeWithValidGuidShouldReturnTrue" computerName="9f8601c2c96a" duration="00:00:00.0030705" startTime="2021-12-21T15:09:23.4244956+00:00" endTime="2021-12-21T15:09:23.4245611+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fb6fc080-4325-4248-94fe-7c044b87e441" />
+    <UnitTestResult executionId="52e6c530-3b8a-4fa7-9eac-d7790a38b078" testId="7fc4b935-a4c4-b70f-820c-9f9ca2984749" testName="Update Speech When SpeechId Is Empty Sould Raise PresentationException" computerName="9f8601c2c96a" duration="00:00:00.0030337" startTime="2021-12-21T15:09:23.5773669+00:00" endTime="2021-12-21T15:09:23.5773675+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="52e6c530-3b8a-4fa7-9eac-d7790a38b078" />
+    <UnitTestResult executionId="6dbd27b7-3abe-4192-8ce2-27e9168d7b96" testId="9befe443-2d07-b30a-f626-1c4e728bf723" testName="Delete Speech With Invalid ModelState Return BadRequest" computerName="9f8601c2c96a" duration="00:00:00.0795068" startTime="2021-12-21T15:09:23.4968474+00:00" endTime="2021-12-21T15:09:23.4968479+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6dbd27b7-3abe-4192-8ce2-27e9168d7b96" />
+    <UnitTestResult executionId="b55de11e-5390-477b-af39-10262ca0224e" testId="af70562a-a12d-ece6-d586-c2300706f4f5" testName="Delete Speech With Valid ModelState Return Ok" computerName="9f8601c2c96a" duration="00:00:00.0052627" startTime="2021-12-21T15:09:23.6148806+00:00" endTime="2021-12-21T15:09:23.6148808+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b55de11e-5390-477b-af39-10262ca0224e" />
+    <UnitTestResult executionId="ff0b063c-5a22-4066-8240-0317a039d18a" testId="fab956b0-ea5c-0e2d-2d67-2808fbdf37ac" testName="Update Speech When ModelState Is Invalid Should Return BadRequest" computerName="9f8601c2c96a" duration="00:00:00.0008707" startTime="2021-12-21T15:09:23.6146974+00:00" endTime="2021-12-21T15:09:23.6146979+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ff0b063c-5a22-4066-8240-0317a039d18a" />
+    <UnitTestResult executionId="147324ec-4121-4d90-a0d2-1aad72a7f549" testId="ca48937f-b2bb-c56e-2f72-9808850a5fec" testName="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.NotEmptyAttributeUnitTest.NotEmptyAttributeWithNullShouldReturnTrue" computerName="9f8601c2c96a" duration="00:00:00.0001002" startTime="2021-12-21T15:09:23.4299444+00:00" endTime="2021-12-21T15:09:23.4299449+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="147324ec-4121-4d90-a0d2-1aad72a7f549" />
+    <UnitTestResult executionId="c1b81290-ba63-4fd0-80bf-a5e0af6df08d" testId="27f7c84b-8c5b-2f4f-33eb-8c73438304b3" testName="Register Speech With Invalid ModelState Return BadRequest" computerName="9f8601c2c96a" duration="00:00:00.0016038" startTime="2021-12-21T15:09:23.5327571+00:00" endTime="2021-12-21T15:09:23.5327575+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c1b81290-ba63-4fd0-80bf-a5e0af6df08d" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.NotEmptyAttributeUnitTest.NotEmptyAttributeWithValidGuidShouldReturnTrue" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.presentation.unittests/bin/debug/net5.0/logcorner.edusync.speech.presentation.unittests.dll" id="71590310-f8b0-8e3d-5560-d5b5820377ac">
+      <Execution id="fb6fc080-4325-4248-94fe-7c044b87e441" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Presentation.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.NotEmptyAttributeUnitTest" name="NotEmptyAttributeWithValidGuidShouldReturnTrue" />
+    </UnitTest>
+    <UnitTest name="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.NotEmptyAttributeUnitTest.NotEmptyAttributeWithNullShouldReturnTrue" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.presentation.unittests/bin/debug/net5.0/logcorner.edusync.speech.presentation.unittests.dll" id="ca48937f-b2bb-c56e-2f72-9808850a5fec">
+      <Execution id="147324ec-4121-4d90-a0d2-1aad72a7f549" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Presentation.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.NotEmptyAttributeUnitTest" name="NotEmptyAttributeWithNullShouldReturnTrue" />
+    </UnitTest>
+    <UnitTest name="Delete Speech With Invalid ModelState Return BadRequest" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.presentation.unittests/bin/debug/net5.0/logcorner.edusync.speech.presentation.unittests.dll" id="9befe443-2d07-b30a-f626-1c4e728bf723">
+      <Execution id="6dbd27b7-3abe-4192-8ce2-27e9168d7b96" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Presentation.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.SpeechControllerUnitTest" name="DeleteSpeechWithInvalidModelStateReturnBadRequest" />
+    </UnitTest>
+    <UnitTest name="Update Speech When SpeechId Is Empty Sould Raise PresentationException" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.presentation.unittests/bin/debug/net5.0/logcorner.edusync.speech.presentation.unittests.dll" id="7fc4b935-a4c4-b70f-820c-9f9ca2984749">
+      <Execution id="52e6c530-3b8a-4fa7-9eac-d7790a38b078" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Presentation.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.SpeechControllerUnitTest" name="UpdateSpeechWhenSpeechIdIsEmptySouldRaisePresentationException" />
+    </UnitTest>
+    <UnitTest name="Register Speech With Invalid ModelState Return BadRequest" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.presentation.unittests/bin/debug/net5.0/logcorner.edusync.speech.presentation.unittests.dll" id="27f7c84b-8c5b-2f4f-33eb-8c73438304b3">
+      <Execution id="c1b81290-ba63-4fd0-80bf-a5e0af6df08d" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Presentation.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.SpeechControllerUnitTest" name="RegisterSpeechWithInvalidModelStateReturnBadRequest" />
+    </UnitTest>
+    <UnitTest name="Update Speech When ModelState Is Invalid Should Return BadRequest" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.presentation.unittests/bin/debug/net5.0/logcorner.edusync.speech.presentation.unittests.dll" id="fab956b0-ea5c-0e2d-2d67-2808fbdf37ac">
+      <Execution id="ff0b063c-5a22-4066-8240-0317a039d18a" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Presentation.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.SpeechControllerUnitTest" name="UpdateSpeechWhenModelStateIsInvalidReturnBadRequest" />
+    </UnitTest>
+    <UnitTest name="Register Speech With Valid ModelState Return Ok" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.presentation.unittests/bin/debug/net5.0/logcorner.edusync.speech.presentation.unittests.dll" id="65b4b55a-5266-329e-1d43-a50bdeebe760">
+      <Execution id="03d2b9a3-f497-4fa2-9ba9-351bba8fd3d9" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Presentation.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.SpeechControllerUnitTest" name="RegisterSpeechWithValidModelStateReturnOk" />
+    </UnitTest>
+    <UnitTest name="Delete Speech With Valid ModelState Return Ok" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.presentation.unittests/bin/debug/net5.0/logcorner.edusync.speech.presentation.unittests.dll" id="af70562a-a12d-ece6-d586-c2300706f4f5">
+      <Execution id="b55de11e-5390-477b-af39-10262ca0224e" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Presentation.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.SpeechControllerUnitTest" name="DeleteSpeechWithValidModelStateReturnOk" />
+    </UnitTest>
+    <UnitTest name="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.NotEmptyAttributeUnitTest.NotEmptyAttributeWithEmptyGuidIsNotValid" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.presentation.unittests/bin/debug/net5.0/logcorner.edusync.speech.presentation.unittests.dll" id="00ccbb5e-fe47-5906-3c59-b3d498a64f50">
+      <Execution id="0f003f1a-41a3-4bc6-a08e-06f2b2d40e95" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Presentation.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.NotEmptyAttributeUnitTest" name="NotEmptyAttributeWithEmptyGuidIsNotValid" />
+    </UnitTest>
+    <UnitTest name="Update Speech When ModelState Is Valid With No Errors Should Return Ok" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.presentation.unittests/bin/debug/net5.0/logcorner.edusync.speech.presentation.unittests.dll" id="819cd31c-5980-3d1a-4912-a76c3230615a">
+      <Execution id="9c4a3048-9a3e-4c68-b3d8-985523ac2fd9" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Presentation.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.SpeechControllerUnitTest" name="UpdateSpeechWhenModelStateIsValidWithNoErrorsShouldReturnOk" />
+    </UnitTest>
+    <UnitTest name="Register Speech With Exception Return InternalServerError" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.presentation.unittests/bin/debug/net5.0/logcorner.edusync.speech.presentation.unittests.dll" id="27c3bf36-b1f5-b815-2dc5-6bd1e8d22fb8">
+      <Execution id="36fbc9b3-f5b0-4efd-ab3f-6f231b289371" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Presentation.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Presentation.UnitTests.Specs.SpeechControllerUnitTest" name="RegisterSpeechWithExceptionReturnInternalServerError" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="27c3bf36-b1f5-b815-2dc5-6bd1e8d22fb8" executionId="36fbc9b3-f5b0-4efd-ab3f-6f231b289371" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="819cd31c-5980-3d1a-4912-a76c3230615a" executionId="9c4a3048-9a3e-4c68-b3d8-985523ac2fd9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="00ccbb5e-fe47-5906-3c59-b3d498a64f50" executionId="0f003f1a-41a3-4bc6-a08e-06f2b2d40e95" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="65b4b55a-5266-329e-1d43-a50bdeebe760" executionId="03d2b9a3-f497-4fa2-9ba9-351bba8fd3d9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="71590310-f8b0-8e3d-5560-d5b5820377ac" executionId="fb6fc080-4325-4248-94fe-7c044b87e441" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7fc4b935-a4c4-b70f-820c-9f9ca2984749" executionId="52e6c530-3b8a-4fa7-9eac-d7790a38b078" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9befe443-2d07-b30a-f626-1c4e728bf723" executionId="6dbd27b7-3abe-4192-8ce2-27e9168d7b96" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="af70562a-a12d-ece6-d586-c2300706f4f5" executionId="b55de11e-5390-477b-af39-10262ca0224e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fab956b0-ea5c-0e2d-2d67-2808fbdf37ac" executionId="ff0b063c-5a22-4066-8240-0317a039d18a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ca48937f-b2bb-c56e-2f72-9808850a5fec" executionId="147324ec-4121-4d90-a0d2-1aad72a7f549" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="27f7c84b-8c5b-2f4f-33eb-8c73438304b3" executionId="c1b81290-ba63-4fd0-80bf-a5e0af6df08d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="11" executed="11" passed="11" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.4.3+1b45f5407b (64-bit .NET 5.0.13)
+[xUnit.net 00:00:01.06]   Discovering: LogCorner.EduSync.Speech.Presentation.UnitTests
+[xUnit.net 00:00:01.10]   Discovered:  LogCorner.EduSync.Speech.Presentation.UnitTests
+[xUnit.net 00:00:01.10]   Starting:    LogCorner.EduSync.Speech.Presentation.UnitTests
+[xUnit.net 00:00:01.38]   Finished:    LogCorner.EduSync.Speech.Presentation.UnitTests
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

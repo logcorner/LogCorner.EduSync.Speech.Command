@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="8e7e2fcc-c12a-4d70-ac9b-17996593411e" name="@e0105a868bd5 2021-12-21 15:09:18" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2021-12-21T15:09:18.2596549+00:00" queuing="2021-12-21T15:09:18.2596550+00:00" start="2021-12-21T15:09:16.3931701+00:00" finish="2021-12-21T15:09:18.3000799+00:00" />
+  <TestSettings name="default" id="1ca95aaf-8b8d-4d40-b153-255ca89cd92a">
+    <Deployment runDeploymentRoot="_e0105a868bd5_2021-12-21_15_09_18" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="422425e7-fe9c-4cba-81e5-2f1368d829dc" testId="a93fc0b8-50f5-a02b-24f7-c830924d164f" testName="Handling Update when Command is not null should update speech Title" computerName="e0105a868bd5" duration="00:00:00.0118368" startTime="2021-12-21T15:09:18.2345646+00:00" endTime="2021-12-21T15:09:18.2345648+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="422425e7-fe9c-4cba-81e5-2f1368d829dc" />
+    <UnitTestResult executionId="520f1976-7692-43dc-839b-066b7612151c" testId="48078819-4ce6-7a70-7aa6-14a3b181b1f3" testName="Handling Delete  when speech does not exist should raise ApplicationNotFoundException" computerName="e0105a868bd5" duration="00:00:00.0095522" startTime="2021-12-21T15:09:18.2343524+00:00" endTime="2021-12-21T15:09:18.2343526+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="520f1976-7692-43dc-839b-066b7612151c" />
+    <UnitTestResult executionId="5cba6194-946d-4a44-bf91-7ab86b980ea0" testId="2acafa62-e341-2719-bc4c-670382b2b312" testName="Handle with null events should raise EventNullException" computerName="e0105a868bd5" duration="00:00:00.0026039" startTime="2021-12-21T15:09:18.2339827+00:00" endTime="2021-12-21T15:09:18.2339835+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5cba6194-946d-4a44-bf91-7ab86b980ea0" />
+    <UnitTestResult executionId="2c05933e-f737-4bb0-901a-450606ee289b" testId="5b5a708d-57a1-6c87-38ef-b0d52cdeaaf8" testName="register speech use case with null speech throws an ApplicationArgumentNullException" computerName="e0105a868bd5" duration="00:00:00.0021192" startTime="2021-12-21T15:09:18.2039450+00:00" endTime="2021-12-21T15:09:18.2039452+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2c05933e-f737-4bb0-901a-450606ee289b" />
+    <UnitTestResult executionId="2a5a9887-9409-4a6c-ac05-4cef4bf14f04" testId="2ea3ac59-78e9-bfee-3eb1-95eae8b1e187" testName="Handling update  when speech does not exist should raise ApplicationNotFoundException" computerName="e0105a868bd5" duration="00:00:00.0095422" startTime="2021-12-21T15:09:18.2343738+00:00" endTime="2021-12-21T15:09:18.2343740+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2a5a9887-9409-4a6c-ac05-4cef4bf14f04" />
+    <UnitTestResult executionId="f8aa9438-d8ec-4d21-8fb2-57eabbd78430" testId="240a5d81-f90b-5aa1-377b-ac26828249f5" testName="Handling Delete when Expected version is not equal to aggregate version should raise ConcurrencyException" computerName="e0105a868bd5" duration="00:00:00.1721063" startTime="2021-12-21T15:09:18.2026616+00:00" endTime="2021-12-21T15:09:18.2026617+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f8aa9438-d8ec-4d21-8fb2-57eabbd78430" />
+    <UnitTestResult executionId="234c4297-1d66-4dfb-9694-5fa83bcbce6f" testId="40b12e5e-f8fe-edb3-5456-9ef99d838ca8" testName="Subscribe with no uncommitted events should not call handle" computerName="e0105a868bd5" duration="00:00:00.0019412" startTime="2021-12-21T15:09:18.2342252+00:00" endTime="2021-12-21T15:09:18.2342255+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="234c4297-1d66-4dfb-9694-5fa83bcbce6f" />
+    <UnitTestResult executionId="ed9f60fd-1cfb-468a-9da6-8917a3601244" testId="fc0071e7-50ea-1443-0268-439ce1702803" testName="Delete speech use case with valid input return success" computerName="e0105a868bd5" duration="00:00:00.0031184" startTime="2021-12-21T15:09:18.2345056+00:00" endTime="2021-12-21T15:09:18.2345057+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ed9f60fd-1cfb-468a-9da6-8917a3601244" />
+    <UnitTestResult executionId="8660b901-fdff-4cf0-a12a-40a653c632af" testId="5d88b85e-8c6c-b70d-e3d0-279c36262e2a" testName="Handling Update when Expected version is not equal to aggregate version should raise ConcurrencyException" computerName="e0105a868bd5" duration="00:00:00.1721380" startTime="2021-12-21T15:09:18.1974048+00:00" endTime="2021-12-21T15:09:18.1974625+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8660b901-fdff-4cf0-a12a-40a653c632af" />
+    <UnitTestResult executionId="d4e65da2-67e9-4d40-ade3-f245b1cfb597" testId="a370da96-5d4f-f565-08dc-f75e47aa60e5" testName="Handle with events should call AppendAsync" computerName="e0105a868bd5" duration="00:00:00.1749508" startTime="2021-12-21T15:09:18.2026208+00:00" endTime="2021-12-21T15:09:18.2026212+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d4e65da2-67e9-4d40-ade3-f245b1cfb597" />
+    <UnitTestResult executionId="90c863b6-733e-47e9-8588-dcfd49ad9273" testId="fa202bce-68ef-642a-6b06-adc2af05f51e" testName="Subscribe with uncommitted events should call handle only once" computerName="e0105a868bd5" duration="00:00:00.1794590" startTime="2021-12-21T15:09:18.2039802+00:00" endTime="2021-12-21T15:09:18.2039804+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="90c863b6-733e-47e9-8588-dcfd49ad9273" />
+    <UnitTestResult executionId="6a9cc504-0092-4416-9e84-9a6d20dd5f3d" testId="dfa16544-a817-919a-313d-b15dcab80ae4" testName="Handle with events should call AppendAsync" computerName="e0105a868bd5" duration="00:00:00.0032367" startTime="2021-12-21T15:09:18.2342950+00:00" endTime="2021-12-21T15:09:18.2342952+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6a9cc504-0092-4416-9e84-9a6d20dd5f3d" />
+    <UnitTestResult executionId="c8bcd4ce-5ca5-4cd2-93a9-2a54df2d1541" testId="b3308c41-fee9-25a6-4c63-7a60ceed8941" testName="Handling update  when command is null  should raise ApplicationArgumentNullException" computerName="e0105a868bd5" duration="00:00:00.0007991" startTime="2021-12-21T15:09:18.2346079+00:00" endTime="2021-12-21T15:09:18.2346081+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c8bcd4ce-5ca5-4cd2-93a9-2a54df2d1541" />
+    <UnitTestResult executionId="6fb87959-6846-4b42-8bfe-6dbcb55f9bf8" testId="7d93a4d8-0e25-e1a8-7193-047bc73fc4d8" testName="register speech use case with valid input return success" computerName="e0105a868bd5" duration="00:00:00.1749389" startTime="2021-12-21T15:09:18.2026717+00:00" endTime="2021-12-21T15:09:18.2026717+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6fb87959-6846-4b42-8bfe-6dbcb55f9bf8" />
+    <UnitTestResult executionId="984887a0-6a8c-4fcb-9c3b-0c22f4b43b2a" testId="961c9709-424f-b6ee-a94f-e58ac9650f33" testName="Handling Delete  when command is null  should raise ApplicationArgumentNullException" computerName="e0105a868bd5" duration="00:00:00.0008855" startTime="2021-12-21T15:09:18.2344621+00:00" endTime="2021-12-21T15:09:18.2344622+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="984887a0-6a8c-4fcb-9c3b-0c22f4b43b2a" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Handle with events should call AppendAsync" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="a370da96-5d4f-f565-08dc-f75e47aa60e5">
+      <Execution id="d4e65da2-67e9-4d40-ade3-f245b1cfb597" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.EventSourcingHandlerUnitTest" name="HandleWithEventsShouldCallCommitAsync" />
+    </UnitTest>
+    <UnitTest name="Handling Update when Command is not null should update speech Title" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="a93fc0b8-50f5-a02b-24f7-c830924d164f">
+      <Execution id="422425e7-fe9c-4cba-81e5-2f1368d829dc" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.UpdateSpeechUseCaseUnitTest" name="HandlingUpdateWhenCommandIsNotNullShouldUpdateSpeechTitle" />
+    </UnitTest>
+    <UnitTest name="register speech use case with null speech throws an ApplicationArgumentNullException" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="5b5a708d-57a1-6c87-38ef-b0d52cdeaaf8">
+      <Execution id="2c05933e-f737-4bb0-901a-450606ee289b" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.RegisterSpeechUseCaseUnitTest" name="RegisterSpeechUseCaseWithNullSpeechThrowsExceptionTest" />
+    </UnitTest>
+    <UnitTest name="Handling Delete when Expected version is not equal to aggregate version should raise ConcurrencyException" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="240a5d81-f90b-5aa1-377b-ac26828249f5">
+      <Execution id="f8aa9438-d8ec-4d21-8fb2-57eabbd78430" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.DeleteSpeechUseCaseUnitTest" name="HandlingDeleteWhenExpectedVersionIsNotEqualToAggregateVersionShouldRaiseConcurrencyException" />
+    </UnitTest>
+    <UnitTest name="Subscribe with no uncommitted events should not call handle" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="40b12e5e-f8fe-edb3-5456-9ef99d838ca8">
+      <Execution id="234c4297-1d66-4dfb-9694-5fa83bcbce6f" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.EventSourcingSubscriberUnitTest" name="SubscribeWithNoUncommittedEventsShouldNotCallHandle" />
+    </UnitTest>
+    <UnitTest name="Delete speech use case with valid input return success" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="fc0071e7-50ea-1443-0268-439ce1702803">
+      <Execution id="ed9f60fd-1cfb-468a-9da6-8917a3601244" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.DeleteSpeechUseCaseUnitTest" name="DeleteSpeechUseCaseWithValidInputReturnSuccessTest" />
+    </UnitTest>
+    <UnitTest name="Handle with events should call AppendAsync" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="dfa16544-a817-919a-313d-b15dcab80ae4">
+      <Execution id="6a9cc504-0092-4416-9e84-9a6d20dd5f3d" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.EventSourcingHandlerUnitTest" name="HandleWithEventsShouldCallAppendAsync" />
+    </UnitTest>
+    <UnitTest name="Handling Delete  when command is null  should raise ApplicationArgumentNullException" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="961c9709-424f-b6ee-a94f-e58ac9650f33">
+      <Execution id="984887a0-6a8c-4fcb-9c3b-0c22f4b43b2a" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.DeleteSpeechUseCaseUnitTest" name="HandlingDeleteWhenCommandIsNullShouldRaiseApplicationArgumentNullException" />
+    </UnitTest>
+    <UnitTest name="register speech use case with valid input return success" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="7d93a4d8-0e25-e1a8-7193-047bc73fc4d8">
+      <Execution id="6fb87959-6846-4b42-8bfe-6dbcb55f9bf8" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.RegisterSpeechUseCaseUnitTest" name="RegisterSpeechUseCaseWithValidInputReturnSuccessTest" />
+    </UnitTest>
+    <UnitTest name="Handling update  when speech does not exist should raise ApplicationNotFoundException" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="2ea3ac59-78e9-bfee-3eb1-95eae8b1e187">
+      <Execution id="2a5a9887-9409-4a6c-ac05-4cef4bf14f04" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.UpdateSpeechUseCaseUnitTest" name="HandlingUpdateWhenSpeechDoesNotExistShouldRaiseApplicationNotFoundException" />
+    </UnitTest>
+    <UnitTest name="Handling update  when command is null  should raise ApplicationArgumentNullException" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="b3308c41-fee9-25a6-4c63-7a60ceed8941">
+      <Execution id="c8bcd4ce-5ca5-4cd2-93a9-2a54df2d1541" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.UpdateSpeechUseCaseUnitTest" name="HandlingUpdateWhenCommandIsNullShouldRaiseApplicationArgumentNullException" />
+    </UnitTest>
+    <UnitTest name="Handling Update when Expected version is not equal to aggregate version should raise ConcurrencyException" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="5d88b85e-8c6c-b70d-e3d0-279c36262e2a">
+      <Execution id="8660b901-fdff-4cf0-a12a-40a653c632af" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.UpdateSpeechUseCaseUnitTest" name="HandlingUpdateWhenExpectedVersionIsNotEqualToAggregateVersionShouldRaiseConcurrencyException" />
+    </UnitTest>
+    <UnitTest name="Handling Delete  when speech does not exist should raise ApplicationNotFoundException" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="48078819-4ce6-7a70-7aa6-14a3b181b1f3">
+      <Execution id="520f1976-7692-43dc-839b-066b7612151c" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.DeleteSpeechUseCaseUnitTest" name="HandlingDeleteWhenSpeechDoesNotExistShouldRaiseApplicationNotFoundException" />
+    </UnitTest>
+    <UnitTest name="Handle with null events should raise EventNullException" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="2acafa62-e341-2719-bc4c-670382b2b312">
+      <Execution id="5cba6194-946d-4a44-bf91-7ab86b980ea0" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.EventSourcingHandlerUnitTest" name="HandleWithNullEventsShouldRaiseEventNullException" />
+    </UnitTest>
+    <UnitTest name="Subscribe with uncommitted events should call handle only once" storage="/src/logcorner.edusync.speech/logcorner.edusync.speech.application.unittests/bin/debug/net5.0/logcorner.edusync.speech.application.unittests.dll" id="fa202bce-68ef-642a-6b06-adc2af05f51e">
+      <Execution id="90c863b6-733e-47e9-8588-dcfd49ad9273" />
+      <TestMethod codeBase="/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application.UnitTests/bin/Debug/net5.0/LogCorner.EduSync.Speech.Application.UnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogCorner.EduSync.Speech.Application.UnitTests.Specs.EventSourcingSubscriberUnitTest" name="SubscribeWithUncommittedEventsShouldCallHandleOnlyOnce" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="a93fc0b8-50f5-a02b-24f7-c830924d164f" executionId="422425e7-fe9c-4cba-81e5-2f1368d829dc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="48078819-4ce6-7a70-7aa6-14a3b181b1f3" executionId="520f1976-7692-43dc-839b-066b7612151c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2acafa62-e341-2719-bc4c-670382b2b312" executionId="5cba6194-946d-4a44-bf91-7ab86b980ea0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5b5a708d-57a1-6c87-38ef-b0d52cdeaaf8" executionId="2c05933e-f737-4bb0-901a-450606ee289b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2ea3ac59-78e9-bfee-3eb1-95eae8b1e187" executionId="2a5a9887-9409-4a6c-ac05-4cef4bf14f04" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="240a5d81-f90b-5aa1-377b-ac26828249f5" executionId="f8aa9438-d8ec-4d21-8fb2-57eabbd78430" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="40b12e5e-f8fe-edb3-5456-9ef99d838ca8" executionId="234c4297-1d66-4dfb-9694-5fa83bcbce6f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fc0071e7-50ea-1443-0268-439ce1702803" executionId="ed9f60fd-1cfb-468a-9da6-8917a3601244" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5d88b85e-8c6c-b70d-e3d0-279c36262e2a" executionId="8660b901-fdff-4cf0-a12a-40a653c632af" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a370da96-5d4f-f565-08dc-f75e47aa60e5" executionId="d4e65da2-67e9-4d40-ade3-f245b1cfb597" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fa202bce-68ef-642a-6b06-adc2af05f51e" executionId="90c863b6-733e-47e9-8588-dcfd49ad9273" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dfa16544-a817-919a-313d-b15dcab80ae4" executionId="6a9cc504-0092-4416-9e84-9a6d20dd5f3d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b3308c41-fee9-25a6-4c63-7a60ceed8941" executionId="c8bcd4ce-5ca5-4cd2-93a9-2a54df2d1541" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7d93a4d8-0e25-e1a8-7193-047bc73fc4d8" executionId="6fb87959-6846-4b42-8bfe-6dbcb55f9bf8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="961c9709-424f-b6ee-a94f-e58ac9650f33" executionId="984887a0-6a8c-4fcb-9c3b-0c22f4b43b2a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="15" executed="15" passed="15" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.4.3+1b45f5407b (64-bit .NET 5.0.13)
+[xUnit.net 00:00:00.72]   Discovering: LogCorner.EduSync.Speech.Application.UnitTests
+[xUnit.net 00:00:00.76]   Discovered:  LogCorner.EduSync.Speech.Application.UnitTests
+[xUnit.net 00:00:00.77]   Starting:    LogCorner.EduSync.Speech.Application.UnitTests
+[xUnit.net 00:00:01.29]   Finished:    LogCorner.EduSync.Speech.Application.UnitTests
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>
