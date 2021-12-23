@@ -9,10 +9,10 @@ resources:
     type: github
     endpoint: github.com_logcorner
     name: logcorner/LogCorner.EduSync.Speech.Command
-    ref: azure-pipelines
+    ref: develop
  
 trigger:
-- azure-pipelines
+- develop
 
 pool: LOGCORNER-POOL
 
