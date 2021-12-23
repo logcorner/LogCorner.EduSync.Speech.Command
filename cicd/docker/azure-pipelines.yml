@@ -14,8 +14,7 @@ resources:
 trigger:
 - azure-pipelines
 
-pool:
-  vmImage: ubuntu-latest
+pool: LOGCORNER-POOL
 
 steps:
 - checkout: self
@@ -40,12 +39,12 @@ steps:
     dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose-unit-tests.yml'
     additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
     action: 'Run services'
-- bash: echo $(System.DefaultWorkingDirectory)
+
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'
   inputs:
     testResultsFormat: 'VSTest'
-    testResultsFiles: '$(System.DefaultWorkingDirectory)/**/tests-results*.xml'
+    testResultsFiles: 'LogCorner.EduSync.Speech.Command/src/TestResults/tests-results-domain/tests-results-domain.xml'
     failTaskOnFailedTests: true
   continueOnError: true
 
