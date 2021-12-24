@@ -7,13 +7,14 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
 {
     public static class OpenTelemetryExporterConfiguration
     {
-        public static void AddNewRelicExporter(this MeterProviderBuilder meterProviderBuilder)
+        public static void AddNewRelicExporter(this MeterProviderBuilder meterProviderBuilder,
+            string hostName, int portNumber, string apiKey)
         {
             meterProviderBuilder
                 .AddOtlpExporter(options =>
                 {
-                    options.Endpoint = new Uri("https://otlp.nr-data.net:4317");
-                    options.Headers = "api-key={key}";
+                    options.Endpoint = new Uri($"{hostName}:{portNumber}");
+                    options.Headers = $"api-key={apiKey}";
 
                     // New Relic requires the exporter to use delta aggregation temporality.
                     // The OTLP exporter defaults to using cumulative aggregation temporatlity.
@@ -21,13 +22,13 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
                 });
         }
 
-        public static void AddNewRelicExporter(this TracerProviderBuilder tracerProviderBuilder)
+        public static void AddNewRelicExporter(this TracerProviderBuilder tracerProviderBuilder, string hostName, int portNumber, string apiKey)
         {
             tracerProviderBuilder
                 .AddOtlpExporter(options =>
                 {
-                    options.Endpoint = new Uri("https://otlp.nr-data.net:4317");
-                    options.Headers = "api-key={key}";
+                    options.Endpoint = new Uri($"{hostName}:{portNumber}");
+                    options.Headers = $"api-key={apiKey}";
                 });
         }
 
@@ -48,7 +49,6 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
 
                 o.AgentHost = jaergerHostName;
                 o.AgentPort = int.Parse(jaergerPort);
-                
             });
         }
     }

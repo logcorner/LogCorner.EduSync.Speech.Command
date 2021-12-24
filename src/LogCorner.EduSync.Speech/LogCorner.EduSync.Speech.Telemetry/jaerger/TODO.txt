@@ -1,5 +1,5 @@
 Set up Zipkin for distributed tracing
-
+kubectl create ns opentelemetry
 kubectl create deployment zipkin --image openzipkin/zipkin -n opentelemetry
 
 kubectl expose deployment zipkin --type ClusterIP --port 9411 -n opentelemetry
@@ -10,7 +10,9 @@ kubectl port-forward svc/zipkin 9411:9411 -n opentelemetry
 # Install Jaeger
 helm repo add jaegertracing https://jaegertracing.github.io/helm-charts
 helm install jaeger-operator jaegertracing/jaeger-operator
-kubectl apply -f jaeger-operator.yaml
+kubectl apply -f jaeger-operator.yml
 
 # Wait for Jaeger to be up and running
 kubectl wait deploy --selector app.kubernetes.io/name=jaeger --for=condition=available
+
+kubectl port-forward svc/jaeger-query 16686

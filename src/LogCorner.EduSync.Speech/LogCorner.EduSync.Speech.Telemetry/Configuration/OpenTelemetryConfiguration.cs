@@ -16,6 +16,9 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
         {
             var openTelemetryServiceName = configuration["OpenTelemetry:ServiceName"];
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var newRelicHostName = configuration["OpenTelemetry:NewRelic:Hostname"];
+            var newRelicPortNumber = int.Parse(configuration["OpenTelemetry:NewRelic:PortNumber"]);
+            var newRelicApiKey = configuration["OpenTelemetry:NewRelic:LicenceKey"];
             loggingBuilder
                 .AddOpenTelemetry(options =>
                 {
@@ -35,11 +38,8 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
                                 .AddTelemetrySdk())
                         .AddOtlpExporter(exporterOptions =>
                         {
-                            exporterOptions.Endpoint =
-                                new Uri(
-                                    "https://otlp.nr-data.net:4317"); //new Uri($"{Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT")}");
-                            exporterOptions.Headers =
-                                "api-key=bb413cc336625e6b6569a7dc4a03f858789cNRAL"; //Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
+                            exporterOptions.Endpoint = new Uri($"{newRelicHostName}:{newRelicPortNumber}");
+                            exporterOptions.Headers = $"api-key={newRelicApiKey}";
                         });
                 });
         }
@@ -58,8 +58,11 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
             var jaergerPort = configuration["OpenTelemetry:Jaeger:PortNumber"];
 
             var zipkinHostName = configuration["OpenTelemetry:Zipkin:Hostname"];
-
             var zipkinPort = configuration["OpenTelemetry:Zipkin:PortNumber"];
+
+            var newRelicHostName = configuration["OpenTelemetry:NewRelic:Hostname"];
+            var newRelicPortNumber = int.Parse(configuration["OpenTelemetry:NewRelic:PortNumber"]);
+            var newRelicApiKey = configuration["OpenTelemetry:NewRelic:LicenceKey"];
 
             var resourceBuilder = ResourceBuilder
                 .CreateDefault()
@@ -100,7 +103,7 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
                 //
                 //     The OTEL_EXPORTER_OTLP_HEADERS environment variable should be set to include your New Relic API key:
                 //         OTEL_EXPORTER_OTLP_HEADERS=api-key=<YOUR_API_KEY_HERE>
-                tracerProviderBuilder.AddNewRelicExporter();
+                tracerProviderBuilder.AddNewRelicExporter(newRelicHostName, newRelicPortNumber, newRelicApiKey);
 
                 tracerProviderBuilder.AddConsoleExporter();
 
@@ -126,7 +129,7 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
                 //
                 //     The OTEL_EXPORTER_OTLP_HEADERS environment variable should be set to include your New Relic API key:
                 //         OTEL_EXPORTER_OTLP_HEADERS=api-key=<YOUR_API_KEY_HERE>
-                meterProviderBuilder.AddNewRelicExporter();
+                meterProviderBuilder.AddNewRelicExporter(newRelicHostName, newRelicPortNumber, newRelicApiKey);
                 //meterProviderBuilder.AddConsoleExporter();
             });
             services.AddTelemetryServices();
