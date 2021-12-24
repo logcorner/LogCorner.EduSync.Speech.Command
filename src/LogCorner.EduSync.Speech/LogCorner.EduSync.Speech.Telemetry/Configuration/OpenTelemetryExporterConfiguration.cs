@@ -15,7 +15,6 @@ namespace LogCorner.EduSync.Speech.Telemetry.Configuration
                 {
                     options.Endpoint = new Uri($"{hostName}:{portNumber}");
                     options.Headers = $"api-key={apiKey}";
-
                     // New Relic requires the exporter to use delta aggregation temporality.
                     // The OTLP exporter defaults to using cumulative aggregation temporatlity.
                     options.AggregationTemporality = AggregationTemporality.Delta;
