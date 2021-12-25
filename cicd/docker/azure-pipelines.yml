@@ -9,10 +9,10 @@ resources:
     type: github
     endpoint: github.com_logcorner
     name: logcorner/LogCorner.EduSync.Speech.Command
-    ref: azure-pipelines
+    ref: develop
  
 trigger:
-- azure-pipelines
+- develop
 
 pool: LOGCORNER-POOL
 
@@ -36,9 +36,11 @@ steps:
 - task: DockerCompose@0
   displayName: 'Run UnitTests'
   inputs:
+    containerregistrytype: 'Azure Container Registry'
     dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose-unit-tests.yml'
     additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
-    dockerComposeCommand: up
+    dockerComposeFileArgs: 'DOCKER_REGISTRY=logcornerbuild'
+    dockerComposeCommand: 'up'
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'
   inputs:
@@ -47,10 +49,6 @@ steps:
     failTaskOnFailedTests: true
   continueOnError: true
 
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: 'Get-Childitem -File -Recurse'
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
