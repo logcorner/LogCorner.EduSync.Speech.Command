@@ -73,6 +73,5 @@ namespace LogCorner.EduSync.Speech.Presentation
                 });
             });
         }
-     
     }
 }

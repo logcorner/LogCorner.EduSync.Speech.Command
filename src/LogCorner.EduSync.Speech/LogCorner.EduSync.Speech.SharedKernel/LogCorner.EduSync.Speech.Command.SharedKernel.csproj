@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.7.0</AssemblyVersion>
-    <Version>1.0.7</Version>
+    <AssemblyVersion>1.0.9.0</AssemblyVersion>
+    <Version>1.0.9</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>LogCorner</Copyright>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <FileVersion>1.0.7.0</FileVersion>
+    <FileVersion>1.0.9.0</FileVersion>
     <PackageProjectUrl>https://logcorner.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/logcorner/LogCorner.EduSync.Speech.Command/tree/develop/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.SharedKernel</RepositoryUrl>
   </PropertyGroup>

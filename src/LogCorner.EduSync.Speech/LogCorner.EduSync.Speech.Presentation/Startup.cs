@@ -1,8 +1,13 @@
-﻿using LogCorner.EduSync.Speech.Application.Interfaces;
+﻿using LogCorner.EduSync.Notification.Common;
+using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Application.UseCases;
+using LogCorner.EduSync.Speech.Command.SharedKernel;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser;
 using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using LogCorner.EduSync.Speech.Infrastructure;
+using LogCorner.EduSync.Speech.Presentation.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -12,12 +17,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
-using LogCorner.EduSync.Notification.Common;
-using LogCorner.EduSync.Speech.Command.SharedKernel;
-using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
-using LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser;
-using LogCorner.EduSync.Speech.Presentation.Exceptions;
-using LogCorner.EduSync.Speech.Telemetry.Configuration;
 
 namespace LogCorner.EduSync.Speech.Presentation
 {
@@ -91,7 +90,7 @@ namespace LogCorner.EduSync.Speech.Presentation
             }
 
             string pathBase = Configuration["pathBase"];
-           app.UseMiddleware<ExceptionMiddleware>();
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseSwagger(x =>
             {
                 if (!string.IsNullOrWhiteSpace(pathBase))

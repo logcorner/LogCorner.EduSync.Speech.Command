@@ -2,11 +2,11 @@
 using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Presentation.Dtos;
 using LogCorner.EduSync.Speech.Presentation.Exceptions;
-using LogCorner.EduSync.Speech.Telemetry;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using LogCorner.EduSync.Speech.Telemetry;
 
 namespace LogCorner.EduSync.Speech.Presentation.Controllers
 {
@@ -17,50 +17,51 @@ namespace LogCorner.EduSync.Speech.Presentation.Controllers
         private readonly IUpdateSpeechUseCase _updateSpeechUseCase;
         private readonly IDeleteSpeechUseCase _deleteSpeechUseCase;
 
-        private readonly IOpenTelemetryService _openTelemetryService;
+        private readonly ITraceService _traceService;
 
         public SpeechController(ICreateSpeechUseCase createSpeechUseCase, IUpdateSpeechUseCase updateSpeechUseCase, IDeleteSpeechUseCase deleteSpeechUseCase,
-             IOpenTelemetryService openTelemetryService)
+             ITraceService traceService)
         {
             _createSpeechUseCase = createSpeechUseCase;
             _updateSpeechUseCase = updateSpeechUseCase;
             _deleteSpeechUseCase = deleteSpeechUseCase;
-            _openTelemetryService = openTelemetryService;
+
+            _traceService = traceService;
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] SpeechForCreationDto dto)
         {
-            if (!ModelState.IsValid)
+            using (var activity = _traceService.StartActivity("Post New Speech"))
             {
-                return BadRequest(ModelState);
-            }
+                IDictionary<string, object> headers = new Dictionary<string, object>();
+                _traceService.InjectContextIntoHeader(activity, headers);
 
-            var command = new RegisterSpeechCommandMessage(dto.Title, dto.Description, dto.Url, dto.TypeId);
-
-            await _createSpeechUseCase.Handle(command);
-            _openTelemetryService.DoSomeWork("Create speech", new Dictionary<string, object>
-            {
-                {"Title",command.Title},
-                {"Description",command.Description},
-                {"Url",command.Url},
-                {"Type",command.Type}
-            });
-            _openTelemetryService.DoSomeWork("Create speech event", "Post", new Dictionary<string, object>
-            {
-                {"Title",command.Title},
-                {"Description",command.Description},
-                {"Url",command.Url},
-                {"Type",command.Type}
-            }
-                , new Dictionary<string, object>
+                foreach (var item in headers)
                 {
-                    {"Title_2",command.Title},
-                    {"Description_2",command.Description},
-                    {"Url_2",command.Url},
-                    {"Type_2",command.Type}
-                });
-            return Ok();
+                    Request.Headers.Add(item.Key, item.Value.ToString());
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var command = new RegisterSpeechCommandMessage(dto.Title, dto.Description, dto.Url, dto.TypeId);
+
+                var tags = new Dictionary<string, object>
+                {
+                    { "Title", command.Title },
+                    { "Description", command.Description },
+                    { "Url", command.Url },
+                    { "Type", command.Type }
+                };
+                _traceService.AddActivityTags(activity, tags);
+
+                await _createSpeechUseCase.Handle(command);
+
+                return Ok();
+            }
         }
 
         [HttpPut]

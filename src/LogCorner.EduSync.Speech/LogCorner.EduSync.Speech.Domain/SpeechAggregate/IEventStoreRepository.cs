@@ -1,6 +1,6 @@
-﻿using System;
+﻿using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
+using System;
 using System.Threading.Tasks;
-using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
 
 namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
