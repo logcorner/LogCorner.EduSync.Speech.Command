@@ -1,6 +1,4 @@
-using System;
-using System.Threading.Tasks;
-using LogCorner.EduSync.Notification.Common;
+using LogCorner.EduSync.Notification.Common.Hub;
 using LogCorner.EduSync.Speech.Application.Exceptions;
 using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
@@ -8,6 +6,8 @@ using LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser;
 using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
+using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Application.UnitTests.Specs

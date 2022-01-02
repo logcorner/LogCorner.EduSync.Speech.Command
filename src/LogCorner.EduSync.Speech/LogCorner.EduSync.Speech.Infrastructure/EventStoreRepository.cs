@@ -1,10 +1,10 @@
-﻿using LogCorner.EduSync.Speech.Domain.Exceptions;
+﻿using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
+using LogCorner.EduSync.Speech.Domain.Exceptions;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
 
 namespace LogCorner.EduSync.Speech.Infrastructure
 {
