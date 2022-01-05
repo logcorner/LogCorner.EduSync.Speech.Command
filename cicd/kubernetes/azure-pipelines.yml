@@ -31,12 +31,7 @@ stages:
     pool:
       name: LOGCORNER-POOL
     steps:
-    - task: 6d15af64-176c-496d-b583-fd2ae21d4df4@1
-      inputs:
-        repository: self
-    - task: 6d15af64-176c-496d-b583-fd2ae21d4df4@1
-      inputs:
-        repository: MyGitHubRepo
+    -
     - task: DockerCompose@0
       displayName: 'Build docker images '
       inputs:
@@ -47,56 +42,35 @@ stages:
         action: 'Build services'
         additionalImageTags: '$(tag)'
         includeLatestTag: true
-    - task: DockerCompose@0
-      displayName: 'Push docker images '
+  
+    - task: replacetokens@3
       inputs:
-        containerregistrytype: 'Azure Container Registry'
-        azureSubscription: 'Microsoft Azure Sponsorship(023b2039-5c23-44b8-844e-c002f8ed431d)'
-        azureContainerRegistry: '{"loginServer":"acrlogcornerregistry.azurecr.io", "id" : "/subscriptions/023b2039-5c23-44b8-844e-c002f8ed431d/resourceGroups/aks/providers/Microsoft.ContainerRegistry/registries/acrlogcornerregistry"}'
-        dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose.yml'
-        dockerComposeFileArgs: 'DOCKER_REGISTRY=$(containerRegistry)'
-        action: 'Push services'
-        additionalImageTags: '$(tag)'
-        includeLatestTag: true
-    - task: ecdc45f6-832d-4ad9-b52b-ee49e94659be@0
+        rootDirectory: 'LogCorner.EduSync.Speech.Command/deploy/kubernetes/aks'
+        targetFiles: 'app-deploy.yaml'
+        encoding: 'auto'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        actionOnNoFiles: 'continue'
+        enableTransforms: false
+        tokenPrefix: '__'
+        tokenSuffix: '__'
+        useLegacyPattern: false
+        enableTelemetry: true
+
+    - script: cat src/02_kubernetes_aks/app-deploy.yaml
+
+    - task: Kubernetes@1
+      displayName: Kubernetes Deploy
       inputs:
-        targetPath: LogCorner.EduSync.Speech.Command/deploy/kubernetes/aks/
-        artifactName: manifests
-- stage: Deploy
-  displayName: Deploy stage
-  dependsOn:
-  - Build
-  jobs:
-  - deployment: Deploy
-    displayName: Deploy
-    pool:
-      name: LOGCORNER-POOL
-    environment:
-      name: 'logcornerLogCornerEduSyncSpeechCommand-1222.aks'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: KubernetesManifest@0
-            displayName: Create imagePullSecret
-            inputs:
-              action: 'createSecret'
-              kubernetesServiceConnection: 'akslogcornercluster-aks'
-              namespace: 'aks'
-              secretType: 'dockerRegistry'
-              secretName: '$(imagePullSecret)'
-              dockerRegistryEndpoint: '$(dockerRegistryServiceConnection)'
-          - task: KubernetesManifest@0
-            displayName: Deploy to Kubernetes cluster
-            inputs:
-              action: 'deploy'
-              kubernetesServiceConnection: 'deploy to aks'
-              namespace: 'aks'
-              manifests: |
-                $(Pipeline.Workspace)/manifests/namespace.yml
-                $(Pipeline.Workspace)/manifests/CommandDatabase/*.yml
-                 $(Pipeline.Workspace)/manifests/CommandApi/*.yml
-              containers: '$(containerRegistry)/$(imageRepository):$(tag)'
-              imagePullSecrets: '$(imagePullSecret)'
-              rolloutStatusTimeout: '10'
+        connectionType: 'Azure Resource Manager'
+        azureSubscriptionEndpoint: 'aks-spn-ca'
+        azureResourceGroup: 'aks'
+        kubernetesCluster: 'akslogcornercluster'
+        namespace: 'default'
+        command: 'apply'
+        useConfigurationFile: true
+        configuration: 'src/02_kubernetes_aks'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Azure Container Registry'
 
