@@ -42,11 +42,19 @@ stages:
         action: 'Build services'
         additionalImageTags: '$(tag)'
         includeLatestTag: true
-  
+    - task: AzureCLI@2
+      displayName: Docker Push
+      inputs:
+        azureSubscription: 'aks-spn-ca'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az acr login -n acrlogcornerregistry
+          docker push acrlogcornerregistry.azurecr.io/logcorner-edusync-speech-command:$(tag)
     - task: replacetokens@3
       inputs:
         rootDirectory: 'LogCorner.EduSync.Speech.Command/deploy/kubernetes/aks'
-        targetFiles: 'app-deploy.yaml'
+        targetFiles: '*.yaml'
         encoding: 'auto'
         writeBOM: true
         actionOnMissing: 'warn'
@@ -58,7 +66,7 @@ stages:
         useLegacyPattern: false
         enableTelemetry: true
 
-    - script: cat src/02_kubernetes_aks/app-deploy.yaml
+    - script: cat LogCorner.EduSync.Speech.Command/deploy/kubernetes/aks/command-api-deployment.yaml
 
     - task: Kubernetes@1
       displayName: Kubernetes Deploy
