@@ -1,14 +1,14 @@
 trigger:
   branches:
     include:
-    - develop
+    - azure-pipelines-aks
 resources:
   repositories:
   - repository: MyGitHubRepo
     type: github
     endpoint: github.com_logcorner
     name: logcorner/LogCorner.EduSync.Speech.Command
-    ref: develop
+    ref: azure-pipelines-aks
 variables:
 - name: dockerRegistryServiceConnection
   value: 'b8aa5216-2fdd-4063-a6d8-9d48c8ea8616'
