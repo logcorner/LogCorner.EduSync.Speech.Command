@@ -20,6 +20,8 @@ variables:
   value: 'LogCorner.EduSync.Speech.Command/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/Dockerfile'
 - name: tag
   value: '$(Build.BuildId)'
+- name: ACR_NAME
+  value:  acrlogcornerregistry
 - name: imagePullSecret
   value: 'acrlogcornerregistry1339485b-auth'
 stages:
