@@ -66,8 +66,8 @@ stages:
         useLegacyPattern: false
         enableTelemetry: true
 
-    - script: cat deploy/kubernetes/aks/CommandApi/command-api-deployment.yaml
-    - script: cat deploy/kubernetes/aks/CommandDatabase/db-job.yaml
+    - script: cat deploy/kubernetes/aks/CommandApi/command-api-deployment.yml
+    - script: cat deploy/kubernetes/aks/CommandDatabase/db-job.yml
 
     - task: Kubernetes@1
       displayName: Kubernetes Deploy
