@@ -53,6 +53,7 @@ stages:
         inlineScript: |
           az acr login -n acrlogcornerregistry
           docker push acrlogcornerregistry.azurecr.io/logcorner-edusync-speech-command:$(tag)
+          docker push acrlogcornerregistry.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
     - task: replacetokens@3
       displayName: Replace Tokens in  CommandApi
       inputs:
