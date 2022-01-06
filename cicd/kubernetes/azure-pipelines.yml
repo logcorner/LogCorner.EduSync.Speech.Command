@@ -29,7 +29,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      vmImage: 'ubuntu-latest'
+      name: LOGCORNER-POOL
     steps:
     
     - task: DockerCompose@0
@@ -53,7 +53,7 @@ stages:
           docker push acrlogcornerregistry.azurecr.io/logcorner-edusync-speech-command:$(tag)
     - task: replacetokens@3
       inputs:
-        rootDirectory: 'LogCorner.EduSync.Speech.Command/deploy/kubernetes/aks'
+        rootDirectory: 'deploy/kubernetes/aks'
         targetFiles: '*.yaml'
         encoding: 'auto'
         writeBOM: true
@@ -66,7 +66,7 @@ stages:
         useLegacyPattern: false
         enableTelemetry: true
 
-    - script: cat LogCorner.EduSync.Speech.Command/deploy/kubernetes/aks/command-api-deployment.yaml
+    - script: cat deploy/kubernetes/aks/command-api-deployment.yaml
 
     - task: Kubernetes@1
       displayName: Kubernetes Deploy
@@ -78,7 +78,7 @@ stages:
         namespace: 'default'
         command: 'apply'
         useConfigurationFile: true
-        configuration: 'src/02_kubernetes_aks'
+        configuration: 'deploy/kubernetes/aks'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
 
