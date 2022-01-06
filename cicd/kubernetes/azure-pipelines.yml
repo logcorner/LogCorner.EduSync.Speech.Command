@@ -29,7 +29,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      name: LOGCORNER-POOL
+      vmImage: ubuntu-latest
     steps:
     -
     - task: DockerCompose@0
