@@ -55,8 +55,8 @@ stages:
           docker push acrlogcornerregistry.azurecr.io/logcorner-edusync-speech-command:$(tag)
     - task: replacetokens@3
       inputs:
-        rootDirectory: 'deploy/kubernetes/aks/CommandApi'
-        targetFiles: 'command-api-deployment.yml'
+        rootDirectory: 'deploy/kubernetes/aks'
+        targetFiles: '*.yml'
         encoding: 'auto'
         writeBOM: true
         actionOnMissing: 'warn'
