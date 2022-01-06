@@ -54,8 +54,9 @@ stages:
           az acr login -n acrlogcornerregistry
           docker push acrlogcornerregistry.azurecr.io/logcorner-edusync-speech-command:$(tag)
     - task: replacetokens@3
+      displayName: Replace Tokens in  CommandApi
       inputs:
-        rootDirectory: 'deploy/kubernetes/aks'
+        rootDirectory: 'deploy/kubernetes/aks/CommandApi'
         targetFiles: '*.yml'
         encoding: 'auto'
         writeBOM: true
@@ -68,6 +69,21 @@ stages:
         useLegacyPattern: false
         enableTelemetry: true
 
+    - task: replacetokens@3
+      displayName: Replace Tokens in  CommandDatabase
+      inputs:
+        rootDirectory: 'deploy/kubernetes/aks/CommandDatabase'
+        targetFiles: '*.yml'
+        encoding: 'auto'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        actionOnNoFiles: 'continue'
+        enableTransforms: false
+        tokenPrefix: '__'
+        tokenSuffix: '__'
+        useLegacyPattern: false
+        enableTelemetry: true
     - script: cat deploy/kubernetes/aks/CommandApi/command-api-deployment.yml
     - script: cat deploy/kubernetes/aks/CommandDatabase/db-job.yml
 
