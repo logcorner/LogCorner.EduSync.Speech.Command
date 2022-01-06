@@ -87,7 +87,18 @@ stages:
         enableTelemetry: true
     - script: cat deploy/kubernetes/aks/CommandApi/command-api-deployment.yml
     - script: cat deploy/kubernetes/aks/CommandDatabase/db-job.yml
-
+    
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'Azure Resource Manager'
+        azureSubscriptionEndpoint: 'aks-spn-ca'
+        azureResourceGroup: 'aks'
+        kubernetesCluster: 'akslogcornercluster'
+        command: 'apply'
+        useConfigurationFile: true
+        configuration: 'deploy/kubernetes/aks'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Azure Container Registry'
     - task: Kubernetes@1
       displayName: Kubernetes Deploy CommandApi
       inputs:
