@@ -37,7 +37,7 @@ stages:
       inputs:
         containerregistrytype: 'Azure Container Registry'
         azureContainerRegistry: '$(dockerRegistryServiceConnection)'
-        dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose.yml'
+        dockerComposeFile: 'src/docker-compose.yml'
         dockerComposeFileArgs: 'DOCKER_REGISTRY=$(containerRegistry)'
         action: 'Build services'
         additionalImageTags: '$(tag)'
