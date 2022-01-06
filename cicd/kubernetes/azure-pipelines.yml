@@ -98,6 +98,7 @@ stages:
         command: 'apply'
         useConfigurationFile: true
         configuration: 'deploy/kubernetes/aks/CommandApi'
+        arguments: '--namespace=aks'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
     - task: Kubernetes@1
@@ -111,5 +112,6 @@ stages:
         command: 'apply'
         useConfigurationFile: true
         configuration: 'deploy/kubernetes/aks/CommandDatabase'
+        arguments: '--namespace=aks'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
