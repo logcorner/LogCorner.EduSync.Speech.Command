@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: command-api-container
-        image: acrlogcornerregistry.azurecr.io/logcorner-edusync-speech-command:#{Build.BuildId}#
+        image: __ACR_NAME__.azurecr.io/logcorner-edusync-speech-command:__TAG__
         imagePullPolicy: Always
         env:
         - name: ASPNETCORE_ENVIRONMENT
