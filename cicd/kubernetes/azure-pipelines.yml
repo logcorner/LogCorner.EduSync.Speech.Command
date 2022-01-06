@@ -88,7 +88,7 @@ stages:
     - script: cat deploy/kubernetes/aks/CommandDatabase/db-job.yml
 
     - task: Kubernetes@1
-      displayName: Kubernetes Deploy
+      displayName: Kubernetes Deploy CommandApi
       inputs:
         connectionType: 'Azure Resource Manager'
         azureSubscriptionEndpoint: 'aks-spn-ca'
@@ -97,10 +97,19 @@ stages:
         namespace: 'default'
         command: 'apply'
         useConfigurationFile: true
-        configuration: 'deploy/kubernetes/aks'
-        arguments: |
-          kubectl apply -f CommandDatabase
-          kubectl apply -f CommandApi
+        configuration: 'deploy/kubernetes/aks/CommandApi'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
-
+    - task: Kubernetes@1
+      displayName: Kubernetes Deploy CommandDatabase
+      inputs:
+        connectionType: 'Azure Resource Manager'
+        azureSubscriptionEndpoint: 'aks-spn-ca'
+        azureResourceGroup: 'aks'
+        kubernetesCluster: 'akslogcornercluster'
+        namespace: 'default'
+        command: 'apply'
+        useConfigurationFile: true
+        configuration: 'deploy/kubernetes/aks/CommandDatabase'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Azure Container Registry'
