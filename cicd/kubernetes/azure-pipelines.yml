@@ -98,6 +98,9 @@ stages:
         command: 'apply'
         useConfigurationFile: true
         configuration: 'deploy/kubernetes/aks'
+        arguments: |
+          kubectl apply -f CommandDatabase
+          kubectl apply -f CommandApi
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
 
