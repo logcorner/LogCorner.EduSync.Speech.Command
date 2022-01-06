@@ -54,7 +54,7 @@ stages:
     - task: replacetokens@3
       inputs:
         rootDirectory: 'deploy/kubernetes/aks'
-        targetFiles: '*.yaml'
+        targetFiles: '*.yml'
         encoding: 'auto'
         writeBOM: true
         actionOnMissing: 'warn'
