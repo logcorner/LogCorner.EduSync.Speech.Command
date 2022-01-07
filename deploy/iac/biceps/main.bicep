@@ -23,7 +23,7 @@ param environmentType string = 'Test'
 
 @description('A unique suffix to add to resource names that need to be globally unique.')
 @maxLength(13)
-param resourceNameSuffix string = uniqueString(resourceGroup().id)
+param resourceNameSuffix string = resourceGroup().name
 
 resource clusterName_resource 'Microsoft.ContainerService/managedClusters@2020-09-01' = {
   name: clusterName
