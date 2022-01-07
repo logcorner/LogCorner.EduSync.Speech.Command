@@ -30,7 +30,7 @@ jobs:
     displayName: 'Build docker images '
     inputs:
       containerregistrytype: 'Azure Container Registry'
-      dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose.yml'
+      dockerComposeFile: 'src/docker-compose.yml'
       additionalDockerComposeFiles: |
         docker-compose.override.yml
         docker-compose-unit-tests.yml
@@ -42,7 +42,7 @@ jobs:
     displayName: 'Run UnitTests'
     inputs:
       containerregistrytype: 'Azure Container Registry'
-      dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose-unit-tests.yml'
+      dockerComposeFile: 'src/docker-compose-unit-tests.yml'
       additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
       dockerComposeFileArgs: 'DOCKER_REGISTRY=${{parameters.containerRegistry}}'
       dockerComposeCommand: 'up'
@@ -57,7 +57,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact'
     inputs:
-      PathtoPublish: 'LogCorner.EduSync.Speech.Command/deploy/'
+      PathtoPublish: 'deploy/'
       ArtifactName: 'drop-arm'
       publishLocation: 'Container'
     
