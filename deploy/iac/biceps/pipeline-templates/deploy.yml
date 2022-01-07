@@ -48,3 +48,12 @@ stages:
                 --template-file deploy/main.bicep \
                 --parameters environmentType=$(EnvironmentType) 
 
+- stage: Test
+  jobs:
+  - job: Windows
+    pool:
+      vmImage: windows-latest
+    steps:
+    - script: echo npm install
+    - script: echo npm test 
+  
