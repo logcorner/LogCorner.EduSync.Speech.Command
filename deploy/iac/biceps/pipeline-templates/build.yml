@@ -11,7 +11,7 @@ jobs:
 - job: Build
   displayName: Build application and database
   pool:
-    vmImage: ubuntu-latest
+    name: LOGCORNER-POOL
 
   steps:
 
