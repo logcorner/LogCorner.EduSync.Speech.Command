@@ -15,5 +15,7 @@ stages:
   - template : pipeline-templates/build.yml
     parameters:
       containerRegistry: acrlogcornerregistry.azurecr.io
+      dockerRegistryServiceConnection: 'b8aa5216-2fdd-4063-a6d8-9d48c8ea8616'
+      tag: '$(Build.BuildId)'
  
 

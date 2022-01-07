@@ -2,13 +2,10 @@
 parameters:
 - name: containerRegistry
   type: string
-
-variables:
 - name: dockerRegistryServiceConnection
-  value: 'b8aa5216-2fdd-4063-a6d8-9d48c8ea8616'
+  type: string
 - name: tag
-  value: '$(Build.BuildId)'
-
+  type: string
 
 jobs:
 - job: Build
