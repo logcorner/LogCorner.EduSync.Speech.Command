@@ -17,7 +17,7 @@ stages:
       dockerRegistryServiceConnection: 'b8aa5216-2fdd-4063-a6d8-9d48c8ea8616'
       tag: '$(Build.BuildId)'
   # Lint the Bicep file.
-- template: pipeline-templates/lint.yml
+  - template: pipeline-templates/lint.yml
   
   # Deploy to the test environment.
 - template: pipeline-templates/deploy.yml
