@@ -45,6 +45,6 @@ stages:
             inlineScript: |
               az deployment group what-if \
                 --resource-group $(ResourceGroupName) \
-                --template-file deploy/main.bicep \
+                --template-file deploy/iac/biceps/main.bicep \
                 --parameters environmentType=$(EnvironmentType) 
 
