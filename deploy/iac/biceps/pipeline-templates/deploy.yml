@@ -17,7 +17,7 @@ stages:
           name: RunPreflightValidation
           displayName: Run preflight validation
           inputs:
-            azureSubscription: ToyWebsite${{parameters.environmentType}}
+            azureSubscription: aks-spn-ca
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
