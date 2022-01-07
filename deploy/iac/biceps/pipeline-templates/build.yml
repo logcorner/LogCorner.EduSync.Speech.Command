@@ -11,7 +11,7 @@ jobs:
 - job: Build
   displayName: Build application and database
   pool:
-    vmImage: windows-latest
+    vmImage: ubuntu-latest
 
   steps:
 
