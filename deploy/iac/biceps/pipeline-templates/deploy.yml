@@ -17,7 +17,7 @@ stages:
           name: RunPreflightValidation
           displayName: Run preflight validation
           inputs:
-            azureSubscription: deploy-aks-test
+            azureSubscription: AzureDevOpsServiceConnection
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
