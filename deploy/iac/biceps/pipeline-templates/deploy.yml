@@ -68,7 +68,7 @@ stages:
               name: DeployBicepFile
               displayName: Deploy Bicep file
               inputs:
-                azureSubscription: ToyWebsite${{parameters.environmentType}}
+                azureSubscription: AzureDevOpsServiceConnection
                 scriptType: 'bash'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
