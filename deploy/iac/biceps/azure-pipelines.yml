@@ -1,0 +1,16 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - azure-pipelines-aks
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+
+- stage: Build
+  jobs:
+  # Build the Visual Studio solution.
+  - template : pipeline-templates/build.yml
+
