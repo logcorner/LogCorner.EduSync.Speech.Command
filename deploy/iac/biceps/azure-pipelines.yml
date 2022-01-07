@@ -13,6 +13,7 @@ stages:
   jobs:
   # Build the Visual Studio solution.
   - template : pipeline-templates/build.yml
-
+    parameters:
+      containerRegistry: acrlogcornerregistry.azurecr.io
  
 

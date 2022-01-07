@@ -1,3 +1,15 @@
+
+parameters:
+- name: containerRegistry
+  type: string
+
+variables:
+- name: dockerRegistryServiceConnection
+  value: 'b8aa5216-2fdd-4063-a6d8-9d48c8ea8616'
+- name: tag
+  value: '$(Build.BuildId)'
+
+
 jobs:
 - job: Build
   displayName: Build application and database
@@ -13,7 +25,7 @@ jobs:
       containerregistrytype: 'Azure Container Registry'
       azureContainerRegistry: '$(dockerRegistryServiceConnection)'
       dockerComposeFile: 'src/docker-compose.yml'
-      dockerComposeFileArgs: 'DOCKER_REGISTRY=$(containerRegistry)'
+      dockerComposeFileArgs: 'DOCKER_REGISTRY=${{parameters.containerRegistry}}'
       action: 'Build services'
       additionalImageTags: '$(tag)'
       includeLatestTag: true
