@@ -51,8 +51,8 @@ stages:
 - stage: Deploy_${{parameters.environmentType}}
   displayName: Deploy (${{parameters.environmentType}} Environment)
   jobs:
-  - deployment: DeployWebsite
-    displayName: Deploy website
+  - deployment: DeployCluster
+    displayName: Deploy AKS Cluster and Container Registry
     pool:
       vmImage: windows-latest
     variables:
