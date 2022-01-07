@@ -15,17 +15,6 @@ jobs:
 
   steps:
 
-  # Build, copy, and publish the website.
-  # - task: DockerCompose@0
-  #   displayName: 'Build docker images'
-  #   inputs:
-  #     containerregistrytype: 'Azure Container Registry'
-  #     azureContainerRegistry: '$(dockerRegistryServiceConnection)'
-  #     dockerComposeFile: 'src/docker-compose.yml'
-  #     dockerComposeFileArgs: 'DOCKER_REGISTRY=${{parameters.containerRegistry}}'
-  #     action: 'Build services'
-  #     additionalImageTags: '$(tag)'
-  #     includeLatestTag: true
   - task: DockerCompose@0
     displayName: 'Build docker images '
     inputs:
@@ -57,7 +46,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact'
     inputs:
-      PathtoPublish: 'deploy/'
+      PathtoPublish: 'deploy/kubernetes/aks/'
       ArtifactName: 'drop-arm'
       publishLocation: 'Container'
     
