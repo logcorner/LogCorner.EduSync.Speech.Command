@@ -18,4 +18,9 @@ stages:
       tag: '$(Build.BuildId)'
   # Lint the Bicep file.
   - template: pipeline-templates/lint.yml
+  
+  # Deploy to the test environment.
+  - template: pipeline-templates/deploy.yml
+    parameters:
+      environmentType: Test
 
