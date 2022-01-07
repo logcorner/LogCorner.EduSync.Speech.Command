@@ -2,7 +2,7 @@ jobs:
 - job: Build
   displayName: Build application and database
   pool:
-    name: LOGCORNER-POOL
+    vmImage: windows-latest
 
   steps:
 
