@@ -1,5 +1,5 @@
 @description('The name of the Managed Cluster resource.')
-param clusterName string = 'akslogcornercluster'
+param clusterName string = 'akslogcornercluster-${resourceNameSuffix}'
 @description('The location of the Managed Cluster resource.')
 param location string = resourceGroup().location
 @description('Optional DNS prefix to use with hosted Kubernetes API server FQDN.')
@@ -20,6 +20,10 @@ param roleAcrPull string = 'b24988ac-6180-42a0-ab88-20f7382dd24c'
 
 @description('Provide a globally unique name of your Azure Container Registry')
 param environmentType string = 'Test'
+
+@description('A unique suffix to add to resource names that need to be globally unique.')
+@maxLength(13)
+param resourceNameSuffix string = uniqueString(resourceGroup().id)
 
 resource clusterName_resource 'Microsoft.ContainerService/managedClusters@2020-09-01' = {
   name: clusterName
@@ -51,7 +55,7 @@ resource clusterName_resource 'Microsoft.ContainerService/managedClusters@2020-0
 @minLength(5)
 @maxLength(50)
 @description('Provide a globally unique name of your Azure Container Registry')
-param acrName string = 'acrlogcornerregistry'
+param acrName string = 'acrlogcornerregistry-${resourceNameSuffix}'
 
 @description('Provide a tier of your Azure Container Registry.')
 param acrSku string = 'Basic'
