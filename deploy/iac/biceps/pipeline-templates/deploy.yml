@@ -48,3 +48,34 @@ stages:
                 --template-file deploy/iac/biceps/main.bicep \
                 --parameters environmentType=$(EnvironmentType) 
 
+- stage: Deploy_${{parameters.environmentType}}
+  displayName: Deploy (${{parameters.environmentType}} Environment)
+  jobs:
+  - deployment: DeployWebsite
+    displayName: Deploy website
+    pool:
+      vmImage: windows-latest
+    variables:
+    - group: ToyWebsite${{parameters.environmentType}}
+    environment: ${{parameters.environmentType}}
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - checkout: self
+
+            - task: AzureCLI@2
+              name: DeployBicepFile
+              displayName: Deploy Bicep file
+              inputs:
+                azureSubscription: ToyWebsite${{parameters.environmentType}}
+                scriptType: 'bash'
+                scriptLocation: 'inlineScript'
+                inlineScript: |
+                  set -e
+                  deploymentOutput=$(az deployment group create \
+                    --name $(Build.BuildNumber) \
+                    --resource-group $(ResourceGroupName) \
+                    --template-file deploy/iac/biceps/main.bicep \
+                    --parameters environmentType=$(EnvironmentType) )
+                 
