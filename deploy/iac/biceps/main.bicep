@@ -1,6 +1,6 @@
 @description('A unique suffix to add to resource names that need to be globally unique.')
 @maxLength(13)
-param resourceNameSuffix string = resourceGroup().name
+param resourceNameSuffix string = uniqueString(resourceGroup().id)
 @description('The name of the Managed Cluster resource.')
 param clusterName string = 'akslogcornercluster${resourceNameSuffix}'
 @description('The location of the Managed Cluster resource.')
