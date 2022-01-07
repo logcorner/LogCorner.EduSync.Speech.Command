@@ -2,13 +2,12 @@ trigger:
   batch: true
   branches:
     include:
-    - main
+    - azure-pipelines-aks
 
 pool:
-  vmImage: ubuntu-latest
+  name: LOGCORNER-POOL
 
 stages:
-
 - stage: Build
   jobs:
   # Build the Visual Studio solution.

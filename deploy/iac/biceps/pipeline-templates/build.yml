@@ -16,15 +16,48 @@ jobs:
   steps:
 
   # Build, copy, and publish the website.
+  # - task: DockerCompose@0
+  #   displayName: 'Build docker images'
+  #   inputs:
+  #     containerregistrytype: 'Azure Container Registry'
+  #     azureContainerRegistry: '$(dockerRegistryServiceConnection)'
+  #     dockerComposeFile: 'src/docker-compose.yml'
+  #     dockerComposeFileArgs: 'DOCKER_REGISTRY=${{parameters.containerRegistry}}'
+  #     action: 'Build services'
+  #     additionalImageTags: '$(tag)'
+  #     includeLatestTag: true
   - task: DockerCompose@0
-    displayName: 'Build docker images'
+    displayName: 'Build docker images '
     inputs:
       containerregistrytype: 'Azure Container Registry'
-      azureContainerRegistry: '$(dockerRegistryServiceConnection)'
-      dockerComposeFile: 'src/docker-compose.yml'
+      dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose.yml'
+      additionalDockerComposeFiles: |
+        docker-compose.override.yml
+        docker-compose-unit-tests.yml
+        docker-compose.override-unit-tests.yml
       dockerComposeFileArgs: 'DOCKER_REGISTRY=${{parameters.containerRegistry}}'
       action: 'Build services'
-      additionalImageTags: '$(tag)'
       includeLatestTag: true
+  - task: DockerCompose@0
+    displayName: 'Run UnitTests'
+    inputs:
+      containerregistrytype: 'Azure Container Registry'
+      dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose-unit-tests.yml'
+      additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
+      dockerComposeFileArgs: 'DOCKER_REGISTRY=${{parameters.containerRegistry}}'
+      dockerComposeCommand: 'up'
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results'
+    inputs:
+      testResultsFormat: 'VSTest'
+      testResultsFiles: '$(System.DefaultWorkingDirectory)/**/TestResults/**/tests-results*.xml'
+      failTaskOnFailedTests: true
+    continueOnError: true
 
-  
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact'
+    inputs:
+      PathtoPublish: 'LogCorner.EduSync.Speech.Command/deploy/'
+      ArtifactName: 'drop-arm'
+      publishLocation: 'Container'
+    
