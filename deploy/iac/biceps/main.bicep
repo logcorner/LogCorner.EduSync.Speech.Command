@@ -16,6 +16,11 @@ param agentCount int = 3
 param agentVMSize string = 'Standard_D2s_v3'
 
 param roleAcrPull string = 'b24988ac-6180-42a0-ab88-20f7382dd24c'
+
+
+@description('Provide a globally unique name of your Azure Container Registry')
+param environmentType string = 'Test'
+
 resource clusterName_resource 'Microsoft.ContainerService/managedClusters@2020-09-01' = {
   name: clusterName
   location: location
