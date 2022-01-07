@@ -2,7 +2,7 @@ trigger:
   batch: true
   branches:
     include:
-    - azure-pipelines-aks
+    - main
 
 pool:
   vmImage: ubuntu-latest
@@ -14,3 +14,15 @@ stages:
   # Build the Visual Studio solution.
   - template : pipeline-templates/build.yml
 
+  # Lint the Bicep file.
+  - template: pipeline-templates/lint.yml
+
+# Deploy to the test environment.
+- template: pipeline-templates/deploy.yml
+  parameters:
+    environmentType: Test
+
+# Deploy to the production environment.
+- template: pipeline-templates/deploy.yml
+  parameters:
+    environmentType: Production

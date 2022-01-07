@@ -7,38 +7,42 @@ jobs:
   steps:
 
   # Build, copy, and publish the website.
+  - task: DotNetCoreCLI@2
+    displayName: Build publishable website
+    inputs:
+      command: 'publish'
+      publishWebProjects: true
 
-- task: DockerCompose@0
-  displayName: 'Build docker images '
-  inputs:
-    containerregistrytype: 'Azure Container Registry'
-    dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose.yml'
-    additionalDockerComposeFiles: |
-      docker-compose.override.yml
-      docker-compose-unit-tests.yml
-      docker-compose.override-unit-tests.yml
-    dockerComposeFileArgs: 'DOCKER_REGISTRY=logcornerbuild'
-    action: 'Build services'
-    includeLatestTag: true
-- task: DockerCompose@0
-  displayName: 'Run UnitTests'
-  inputs:
-    containerregistrytype: 'Azure Container Registry'
-    dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose-unit-tests.yml'
-    additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
-    dockerComposeFileArgs: 'DOCKER_REGISTRY=logcornerbuild'
-    dockerComposeCommand: 'up'
-- task: PublishTestResults@2
-  displayName: 'Publish Test Results'
-  inputs:
-    testResultsFormat: 'VSTest'
-    testResultsFiles: '$(System.DefaultWorkingDirectory)/**/TestResults/**/tests-results*.xml'
-    failTaskOnFailedTests: true
-  continueOnError: true
+  - task: CopyFiles@2
+    displayName: Copy publishable website
+    inputs:
+      sourceFolder: '$(Build.SourcesDirectory)/src/ToyCompany/ToyCompany.Website/bin'
+      contents: '**/publish.zip'
+      targetFolder: '$(Build.ArtifactStagingDirectory)/website'
+      flattenFolders: true
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact'
-  inputs:
-    PathtoPublish: 'LogCorner.EduSync.Speech.Command/deploy/'
-    ArtifactName: 'drop-arm'
-    publishLocation: 'Container'
+  - task: PublishBuildArtifacts@1
+    displayName: Publish website as pipeline artifact
+    inputs:
+      pathToPublish: '$(Build.ArtifactStagingDirectory)/website'
+      artifactName: 'website'
+
+  # Build, copy, and publish the DACPAC file.
+  - task: VSBuild@1
+    displayName: Build Visual Studio solution
+    inputs:
+      solution: '$(Build.SourcesDirectory)/src/ToyCompany/ToyCompany.Database/ToyCompany.Database.sqlproj'
+
+  - task: CopyFiles@2
+    displayName: Copy DACPAC
+    inputs:
+      sourceFolder: '$(Build.SourcesDirectory)/src/ToyCompany/ToyCompany.Database/bin'
+      contents: '**/*.dacpac'
+      targetFolder: '$(Build.ArtifactStagingDirectory)/database'
+      flattenFolders: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish DACPAC as pipeline artifact
+    inputs:
+      pathToPublish: '$(Build.ArtifactStagingDirectory)/database'
+      artifactName: 'database'
