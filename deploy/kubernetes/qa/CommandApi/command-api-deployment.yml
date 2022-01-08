@@ -3,32 +3,32 @@ kind: Deployment
 
 metadata:
   name: speech-command-http-api-deployment
-  namespace: aks
+  namespace: qa
   labels:
     version: 1.0.0
     product: speech-command-http-api
-    environment: aks
+    environment: qa
 
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: speech-command-http-api
-      env: aks
+      env: qa
   
   template:
     metadata:
       labels:
         app: speech-command-http-api
-        env: aks
+        env: qa
     spec:
       containers:
       - name: command-api-container
-        image: acr5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-command
-        imagePullPolicy: Always
+        image: logcornerhub/logcorner-edusync-speech-command:#{Build.BuildId}#
+        imagePullPolicy: Never
         env:
         - name: ASPNETCORE_ENVIRONMENT
-          value: "Kubernetes.AKS"
+          value: "Kubernetes.qa"
         ports:
         - containerPort: 80
         - containerPort: 443
@@ -36,3 +36,6 @@ spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
+      imagePullSecrets:
+       - name: regsecret
+    

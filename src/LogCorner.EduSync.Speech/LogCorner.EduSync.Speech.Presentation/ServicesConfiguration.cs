@@ -12,6 +12,11 @@ namespace LogCorner.EduSync.Speech.Presentation
     {
         public static void AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
+            bool.TryParse(configuration["isAuthenticationEnabled"], out var isAuthenticationEnabled);
+            if (!isAuthenticationEnabled)
+            {
+                return;
+            }
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(options =>
                     {
@@ -24,7 +29,9 @@ namespace LogCorner.EduSync.Speech.Presentation
 
         public static void AddCustomSwagger(this IServiceCollection services, IConfiguration configuration)
         {
-            var TenantName = configuration["SwaggerUI:TenantName"];
+            var tenantName = configuration["SwaggerUI:TenantName"];
+            bool.TryParse(configuration["isAuthenticationEnabled"], out var isAuthenticationEnabled);
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
@@ -33,44 +40,60 @@ namespace LogCorner.EduSync.Speech.Presentation
                     Version = "v1",
                     Description = "The Speech Micro Service Command HTTP API"
                 });
-                options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                if (isAuthenticationEnabled)
                 {
-                    Type = SecuritySchemeType.OAuth2,
-
-                    Flows = new OpenApiOAuthFlows
+                    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                     {
-                        AuthorizationCode = new OpenApiOAuthFlow
+                        Type = SecuritySchemeType.OAuth2,
+
+                        Flows = new OpenApiOAuthFlows
                         {
-                            AuthorizationUrl = new Uri($"https://{TenantName}.b2clogin.com/{TenantName}.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/authorize"),
-                            TokenUrl = new Uri($"https://{TenantName}.b2clogin.com/{TenantName}.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/token"),
-                            Scopes = new Dictionary<string, string>
+                            AuthorizationCode = new OpenApiOAuthFlow
                             {
-                                {$"https://{TenantName}.onmicrosoft.com/command/api/Speech.Create","Create a new Speech"},
-                                {$"https://{TenantName}.onmicrosoft.com/command/api/Speech.Edit", "Edit and Update a  Speech" },
-                                {$"https://{TenantName}.onmicrosoft.com/command/api/Speech.Delete","Delete a Speech"}
+                                AuthorizationUrl =
+                                    new Uri(
+                                        $"https://{tenantName}.b2clogin.com/{tenantName}.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/authorize"),
+                                TokenUrl = new Uri(
+                                    $"https://{tenantName}.b2clogin.com/{tenantName}.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/token"),
+                                Scopes = new Dictionary<string, string>
+                                {
+                                    {
+                                        $"https://{tenantName}.onmicrosoft.com/command/api/Speech.Create",
+                                        "Create a new Speech"
+                                    },
+                                    {
+                                        $"https://{tenantName}.onmicrosoft.com/command/api/Speech.Edit",
+                                        "Edit and Update a  Speech"
+                                    },
+                                    {
+                                        $"https://{tenantName}.onmicrosoft.com/command/api/Speech.Delete",
+                                        "Delete a Speech"
+                                    }
+                                }
                             }
                         }
-                    }
-                });
+                    });
 
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
+                    options.AddSecurityRequirement(new OpenApiSecurityRequirement
                     {
-                        new OpenApiSecurityScheme
                         {
-                            Reference = new OpenApiReference
+                            new OpenApiSecurityScheme
                             {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "oauth2"
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "oauth2"
+                                }
+                            },
+                            new[]
+                            {
+                                $"https://{tenantName}.onmicrosoft.com/command/api/Speech.Create",
+                                $"https://{tenantName}.onmicrosoft.com/command/api/Speech.Edit",
+                                $"https://{tenantName}.onmicrosoft.com/command/api/Speech.Delete"
                             }
-                        },
-                        new[] {
-                                $"https://{TenantName}.onmicrosoft.com/command/api/Speech.Create",
-                                $"https://{TenantName}.onmicrosoft.com/command/api/Speech.Edit",
-                                $"https://{TenantName}.onmicrosoft.com/command/api/Speech.Delete"
-                              }
-                    }
-                });
+                        }
+                    });
+                }
             });
         }
     }

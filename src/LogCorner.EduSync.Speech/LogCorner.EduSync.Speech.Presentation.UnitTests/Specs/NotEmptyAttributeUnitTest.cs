@@ -1,5 +1,5 @@
-﻿using System;
-using LogCorner.EduSync.Speech.Presentation.Dtos;
+﻿using LogCorner.EduSync.Speech.Presentation.Dtos;
+using System;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Presentation.UnitTests.Specs

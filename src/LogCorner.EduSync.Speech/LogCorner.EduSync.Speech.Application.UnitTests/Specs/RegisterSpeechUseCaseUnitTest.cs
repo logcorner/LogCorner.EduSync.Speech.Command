@@ -1,10 +1,10 @@
-using System.Threading.Tasks;
 using LogCorner.EduSync.Speech.Application.Commands;
 using LogCorner.EduSync.Speech.Application.Exceptions;
 using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Application.UnitTests.Specs

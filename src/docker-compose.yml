@@ -27,10 +27,13 @@ services:
     build:
       context: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Database/Docker
       dockerfile: mssql-tools/Dockerfile
-   
-
+  
 networks:
   speech_network:
     external:
       name: speech_network
+
+
+
+
 

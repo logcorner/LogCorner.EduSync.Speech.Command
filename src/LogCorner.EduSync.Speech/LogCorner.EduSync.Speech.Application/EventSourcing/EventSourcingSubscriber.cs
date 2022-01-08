@@ -1,9 +1,9 @@
-﻿using LogCorner.EduSync.Speech.Application.Interfaces;
-using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
+using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 
-namespace LogCorner.EduSync.Speech.Application.UseCases
+namespace LogCorner.EduSync.Speech.Application.EventSourcing
 {
     public class EventSourcingSubscriber : IEventSourcingSubscriber
     {

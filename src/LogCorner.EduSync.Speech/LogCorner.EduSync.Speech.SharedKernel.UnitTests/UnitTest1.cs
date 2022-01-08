@@ -1,7 +1,7 @@
-using System.Linq;
 using LogCorner.EduSync.Speech.Command.SharedKernel;
 using LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.SharedKernel.UnitTests
