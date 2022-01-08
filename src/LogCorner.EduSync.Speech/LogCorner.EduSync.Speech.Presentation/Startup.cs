@@ -17,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using LogCorner.EduSync.Speech.Application.EventSourcing;
 
 namespace LogCorner.EduSync.Speech.Presentation
 {
