@@ -8,6 +8,7 @@ using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
 using System;
 using System.Threading.Tasks;
+using LogCorner.EduSync.Speech.Application.EventSourcing;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Application.UnitTests.Specs
