@@ -38,16 +38,17 @@ stages:
         containerregistrytype: 'Azure Container Registry'
         dockerComposeFile: 'src/docker-compose-unit-tests.yml'
         additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
-        dockerComposeFileArgs: 'DOCKER_REGISTRY=testk8'
+        dockerComposeFileArgs: 'DOCKER_REGISTRY=acrlogcornerregistryf5f3b5dppivbi.azurecr.io'
         action: 'Run a Docker Compose command'
         dockerComposeCommand: 'up'
     - task: DockerCompose@0
+      displayName: 'Publish Images Services'
       inputs:
         containerregistrytype: 'Azure Container Registry'
         azureSubscription: 'AzureDevOpsServiceConnection'
         azureContainerRegistry: '{"loginServer":"acrlogcornerregistryf5f3b5dppivbi.azurecr.io", "id" : "/subscriptions/023b2039-5c23-44b8-844e-c002f8ed431d/resourceGroups/aks-biceps-production/providers/Microsoft.ContainerRegistry/registries/acrlogcornerregistryf5f3b5dppivbi"}'
         dockerComposeFile: 'src/docker-compose.yml'
-        dockerComposeFileArgs: 'DOCKER_REGISTRY=testk8'
+        dockerComposeFileArgs: 'DOCKER_REGISTRY=acrlogcornerregistryf5f3b5dppivbi.azurecr.io'
         action: 'Push services'
     - task: PublishTestResults@2
       displayName: 'Publish Test Results'
