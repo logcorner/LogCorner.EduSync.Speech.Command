@@ -23,7 +23,7 @@ stages:
 - template: pipeline-templates/deploy.yml
   parameters:
     environmentType: Test
-    containerRegistry: buildagent
+    
    
 # Deploy to the production environment.
 - template: pipeline-templates/deploy.yml

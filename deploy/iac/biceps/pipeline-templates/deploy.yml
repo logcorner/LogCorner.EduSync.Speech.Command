@@ -2,9 +2,6 @@ parameters:
 - name: environmentType
   type: string
 
-- name: containerRegistry
-  type: string  
-
 stages:
 
 - ${{ if ne(parameters.environmentType, 'Production') }}:
@@ -93,7 +90,7 @@ stages:
                 scriptType: 'ps'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
-                  docker tag ${{parameters.containerRegistry}}/logcorner-edusync-speech-mssql-tools $(ACR_NAME)/logcorner-edusync-speech-mssql-tools:latest
+                  docker tag buildagent/logcorner-edusync-speech-mssql-tools $(ACR_NAME)/logcorner-edusync-speech-mssql-tools:latest
                   az acr login -n acrlogcornerregistryf5f3b5dppivbi
                   docker push $(ACR_NAME)/logcorner-edusync-speech-mssql-tools:latest      
                  
