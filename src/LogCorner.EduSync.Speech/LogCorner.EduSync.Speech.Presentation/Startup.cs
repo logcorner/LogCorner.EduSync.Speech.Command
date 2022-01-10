@@ -1,4 +1,5 @@
 ﻿using LogCorner.EduSync.Notification.Common;
+using LogCorner.EduSync.Speech.Application.EventSourcing;
 using LogCorner.EduSync.Speech.Application.Interfaces;
 using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Command.SharedKernel;
@@ -17,7 +18,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
-using LogCorner.EduSync.Speech.Application.EventSourcing;
 
 namespace LogCorner.EduSync.Speech.Presentation
 {

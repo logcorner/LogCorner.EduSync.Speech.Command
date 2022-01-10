@@ -1,12 +1,11 @@
+using LogCorner.EduSync.Speech.Application.EventSourcing;
 using LogCorner.EduSync.Speech.Application.Interfaces;
-using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LogCorner.EduSync.Speech.Application.EventSourcing;
 using Xunit;
 
 namespace LogCorner.EduSync.Speech.Application.UnitTests.Specs
