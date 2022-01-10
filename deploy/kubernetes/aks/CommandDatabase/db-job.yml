@@ -13,7 +13,7 @@ spec:
       containers:
       - name: sqljobcontainer
         # image: acrlogcornerregistry.azurecr.io/logcorner-edusync-speech-mssql-tools:latest
-        image: __ACR_NAME__.azurecr.io/logcorner-edusync-speech-mssql-tools:__TAG__
+        image: __ACR_NAME__/logcorner-edusync-speech-mssql-tools:latest
         imagePullPolicy: IfNotPresent
         command: ["/opt/mssql-tools/bin/sqlcmd"]
         args: [ "-S", "db-speech-command-api-service", "-d", "master", "-U", "sa", "-P", "MyC0m9l&xP@ssw0rd", "-I", "-i", "logcorner-edusync-speech-database_Create.sql" ]
