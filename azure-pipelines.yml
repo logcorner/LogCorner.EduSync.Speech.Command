@@ -53,7 +53,7 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           docker tag -t buildagent/logcorner-edusync-speech-mssql-tools acrlogcornerregistryf5f3b5dppivbi.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
-          az acr login -n acrlogcornerregistry
+          az acr login -n acrlogcornerregistryf5f3b5dppivbi
           docker push acrlogcornerregistryf5f3b5dppivbi.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
     - task: DockerCompose@0
       displayName: 'Publish Images Services'
