@@ -107,6 +107,19 @@ stages:
                 namespace: 'default'
                 command: 'apply'
                 useConfigurationFile: true
+                configuration: 'deploy/kubernetes/aks'
+                secretType: 'dockerRegistry'
+                containerRegistryType: 'Azure Container Registry'
+            - task: Kubernetes@1
+              displayName: Kubernetes Deploy CommandDatabase
+              inputs:
+                connectionType: 'Azure Resource Manager'
+                azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
+                azureResourceGroup: '$(ResourceGroupName)'
+                kubernetesCluster: '$(clusterName)'
+                namespace: 'default'
+                command: 'apply'
+                useConfigurationFile: true
                 configuration: 'deploy/kubernetes/aks/CommandDatabase'
                 arguments: '--namespace=aks'
                 secretType: 'dockerRegistry'
