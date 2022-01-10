@@ -5,7 +5,7 @@ trigger:
     - azure-pipelines-aks
 
 pool:
-  name: LOGCORNER-POOL
+  vmImage: windows-latest
 
 stages:
 - stage: Build
