@@ -84,7 +84,7 @@ resource assignAcrPullToAks 'Microsoft.Authorization/roleAssignments@2020-04-01-
 }
 
 
-output controlPlaneFQDN string =clusterName_resource.properties.fqdn
+output clusterName string =clusterName_resource.name
 
 @description('Output the login server property for later use')
 output loginServer string = acrResource.properties.loginServer
