@@ -102,7 +102,7 @@ stages:
               inputs:
                 connectionType: 'Azure Resource Manager'
                 azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
-                azureResourceGroup: 'aks'
+                azureResourceGroup: '$(ResourceGroupName)'
                 kubernetesCluster: '$(controlPlaneFQDN)'
                 namespace: 'default'
                 command: 'apply'
