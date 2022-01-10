@@ -23,7 +23,7 @@ stages:
 - template: pipeline-templates/deploy.yml
   parameters:
     environmentType: Test
-    tag: '$(Build.BuildId)'
+   
 # Deploy to the production environment.
 - template: pipeline-templates/deploy.yml
   parameters:
