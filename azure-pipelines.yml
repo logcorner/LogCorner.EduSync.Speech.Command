@@ -7,6 +7,9 @@ trigger:
 pool:
   name: LOGCORNER-POOL
 
+variables:
+  tag: 1.0.0-$(Build.BuildId)
+
 stages:
 - stage: Build
   jobs:
@@ -28,7 +31,7 @@ stages:
           docker-compose.override.yml
           docker-compose-unit-tests.yml
           docker-compose.override-unit-tests.yml
-        dockerComposeFileArgs: 'DOCKER_REGISTRY=acrlogcornerregistryf5f3b5dppivbi.azurecr.io'
+        dockerComposeFileArgs: 'DOCKER_REGISTRY=buildagent'
         action: 'Build services'
         additionalImageTags: 'acrlogcornerregistryf5f3b5dppivbi.azurecr.io'
         includeLatestTag: true
@@ -38,9 +41,20 @@ stages:
         containerregistrytype: 'Azure Container Registry'
         dockerComposeFile: 'src/docker-compose-unit-tests.yml'
         additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
-        dockerComposeFileArgs: 'DOCKER_REGISTRY=acrlogcornerregistryf5f3b5dppivbi.azurecr.io'
+        dockerComposeFileArgs: 'DOCKER_REGISTRY=buildagent'
         action: 'Run a Docker Compose command'
         dockerComposeCommand: 'up'
+        
+    - task: AzureCLI@2
+      displayName: Docker Build & Push
+      inputs:
+        azureSubscription: 'AzureDevOpsServiceConnection'
+        scriptType: 'ps'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          docker tag -t buildagent/logcorner-edusync-speech-mssql-tools acrlogcornerregistryf5f3b5dppivbi.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
+          az acr login -n acrlogcornerregistry
+          docker push acrlogcornerregistryf5f3b5dppivbi.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
     - task: DockerCompose@0
       displayName: 'Publish Images Services'
       inputs:
