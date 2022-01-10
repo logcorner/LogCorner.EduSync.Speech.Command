@@ -22,12 +22,13 @@ stages:
       displayName: 'Build docker images '
       inputs:
         containerregistrytype: 'Azure Container Registry'
+        azureSubscription: 'AzureDevOpsServiceConnection'
         dockerComposeFile: 'src/docker-compose.yml'
         additionalDockerComposeFiles: |
           docker-compose.override.yml
           docker-compose-unit-tests.yml
           docker-compose.override-unit-tests.yml
-        dockerComposeFileArgs: 'DOCKER_REGISTRY=${{parameters.containerRegistry}}'
+        dockerComposeFileArgs: 'DOCKER_REGISTRY=TEST_K8'
         action: 'Build services'
         includeLatestTag: true
     - task: DockerCompose@0
@@ -36,7 +37,8 @@ stages:
         containerregistrytype: 'Azure Container Registry'
         dockerComposeFile: 'src/docker-compose-unit-tests.yml'
         additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
-        dockerComposeFileArgs: 'DOCKER_REGISTRY=${{parameters.containerRegistry}}'
+        dockerComposeFileArgs: 'DOCKER_REGISTRY=TEST_K8'
+        action: 'Run a Docker Compose command'
         dockerComposeCommand: 'up'
     - task: PublishTestResults@2
       displayName: 'Publish Test Results'
