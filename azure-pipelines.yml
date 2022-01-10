@@ -30,6 +30,7 @@ stages:
           docker-compose.override-unit-tests.yml
         dockerComposeFileArgs: 'DOCKER_REGISTRY=testk8'
         action: 'Build services'
+        additionalImageTags: 'acrlogcornerregistryf5f3b5dppivbi.azurecr.io'
         includeLatestTag: true
     - task: DockerCompose@0
       displayName: 'Run UnitTests'
