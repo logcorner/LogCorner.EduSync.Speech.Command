@@ -82,6 +82,17 @@ stages:
                   echo "##vso[task.setvariable variable=clusterName]$clusterName"
                   loginServer=$(echo $deploymentOutput | jq -r '.properties.outputs.loginServer.value')
                   echo "##vso[task.setvariable variable=ACR_NAME]$loginServer"
+                  
+            - task: AzureCLI@2
+              displayName: Docker Build & Push
+              inputs:
+                azureSubscription: 'AzureDevOpsServiceConnection'
+                scriptType: 'ps'
+                scriptLocation: 'inlineScript'
+                inlineScript: |
+                  docker tag buildagent/logcorner-edusync-speech-mssql-tools $(ACR_NAME)/logcorner-edusync-speech-mssql-tools:latest
+                  az acr login -n acrlogcornerregistryf5f3b5dppivbi
+                  docker push $(ACR_NAME)/logcorner-edusync-speech-mssql-tools:latest      
                  
             - task: replacetokens@3
               displayName: Replace Tokens in  CommandDatabase
