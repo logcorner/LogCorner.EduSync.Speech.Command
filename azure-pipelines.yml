@@ -45,7 +45,7 @@ stages:
         containerregistrytype: 'Azure Container Registry'
         azureSubscription: 'AzureDevOpsServiceConnection'
         azureContainerRegistry: '{"loginServer":"acrlogcornerregistryf5f3b5dppivbi.azurecr.io", "id" : "/subscriptions/023b2039-5c23-44b8-844e-c002f8ed431d/resourceGroups/aks-biceps-production/providers/Microsoft.ContainerRegistry/registries/acrlogcornerregistryf5f3b5dppivbi"}'
-        dockerComposeFile: 'src/docker-compose'
+        dockerComposeFile: 'src/docker-compose.yml'
         dockerComposeFileArgs: 'DOCKER_REGISTRY=testk8'
         action: 'Push services'
     - task: PublishTestResults@2
