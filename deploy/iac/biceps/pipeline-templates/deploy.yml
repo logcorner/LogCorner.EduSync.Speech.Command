@@ -87,6 +87,7 @@ stages:
                   $loginServer =  ($deploymentOutput | ConvertFrom-Json).properties.outputs.loginServer.value
                   Write-Output $loginServer
                   Write-Host "##vso[task.setvariable variable=ACR_NAME]$loginServer"
+                  Write-Host "##vso[task.setvariable variable=TAG]$(Build.BuildNumber)"
             - task: AzureCLI@2
               displayName: Docker Build & Push
               inputs:
@@ -141,6 +142,20 @@ stages:
                 command: 'apply'
                 useConfigurationFile: true
                 configuration: 'deploy/kubernetes/aks/CommandDatabase'
+                arguments: '--namespace=aks'
+                secretType: 'dockerRegistry'
+                containerRegistryType: 'Azure Container Registry'
+            - task: Kubernetes@1
+              displayName: Kubernetes Deploy CommandApi
+              inputs:
+                connectionType: 'Azure Resource Manager'
+                azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
+                azureResourceGroup: '$(ResourceGroupName)'
+                kubernetesCluster: '$(clusterName)'
+                namespace: 'default'
+                command: 'apply'
+                useConfigurationFile: true
+                configuration: 'deploy/kubernetes/aks/CommandApi'
                 arguments: '--namespace=aks'
                 secretType: 'dockerRegistry'
                 containerRegistryType: 'Azure Container Registry'
