@@ -95,8 +95,10 @@ stages:
                 scriptLocation: 'inlineScript'
                 inlineScript: |
                   docker tag buildagent/logcorner-edusync-speech-mssql-tools $(ACR_NAME)/logcorner-edusync-speech-mssql-tools:$(Build.BuildNumber)
+                  docker tag buildagent/logcorner-edusync-speech-command $(ACR_NAME)/logcorner-edusync-speech-command:$(Build.BuildNumber)
                   az acr login -n $(acrName)
                   docker push $(ACR_NAME)/logcorner-edusync-speech-mssql-tools:$(Build.BuildNumber)      
+                  docker push $(ACR_NAME)/logcorner-edusync-speech-command:$(Build.BuildNumber)
                  
             - task: replacetokens@3
               displayName: Replace Tokens in  CommandDatabase
