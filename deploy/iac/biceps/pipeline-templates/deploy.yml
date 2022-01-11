@@ -78,7 +78,14 @@ stages:
                     --template-file deploy/iac/biceps/main.bicep `
                     --parameters environmentType=$(EnvironmentType)) 
                   Write-Host  $deploymentOutput
-                  
+                  $acrName =  ($json | ConvertFrom-Json).properties.outputs.acrName.value
+                  Write-Output $acrName
+
+                  $clusterName =  ($json | ConvertFrom-Json).properties.outputs.clusterName.value
+                  Write-Output $clusterName
+
+                  $loginServer =  ($json | ConvertFrom-Json).properties.outputs.loginServer.value
+                  Write-Output $loginServer
             - task: AzureCLI@2
               displayName: Docker Build & Push
               inputs:
