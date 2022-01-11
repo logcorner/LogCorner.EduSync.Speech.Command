@@ -72,7 +72,6 @@ stages:
                 scriptType: 'ps'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
-                  set -e
                   deploymentOutput=$(az deployment group create `
                     --name $(Build.BuildNumber) `
                     --resource-group $(ResourceGroupName) `
