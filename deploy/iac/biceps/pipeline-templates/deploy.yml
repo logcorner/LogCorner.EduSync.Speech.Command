@@ -54,7 +54,7 @@ stages:
   - deployment: DeployCluster
     displayName: Deploy AKS Cluster and Container Registry
     pool:
-      vmImage: windows-latest
+      name: LOGCORNER-POOL
     variables:
     - group: ToyWebsite${{parameters.environmentType}}
     environment: ${{parameters.environmentType}}
