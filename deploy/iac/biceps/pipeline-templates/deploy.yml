@@ -116,7 +116,21 @@ stages:
                 tokenSuffix: '__'
                 useLegacyPattern: false
                 enableTelemetry: true
-               
+            - task: replacetokens@3
+              displayName: Replace Tokens in  CommandApi
+              inputs:
+                rootDirectory: 'deploy/kubernetes/aks/CommandApi'
+                targetFiles: '*.yml'
+                encoding: 'auto'
+                writeBOM: true
+                actionOnMissing: 'warn'
+                keepToken: false
+                actionOnNoFiles: 'continue'
+                enableTransforms: false
+                tokenPrefix: '__'
+                tokenSuffix: '__'
+                useLegacyPattern: false
+                enableTelemetry: true   
             
             - task: Kubernetes@1
               displayName: Kubernetes Deploy CommandDatabase
