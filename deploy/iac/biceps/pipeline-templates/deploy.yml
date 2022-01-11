@@ -72,7 +72,7 @@ stages:
                 scriptType: 'ps'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
-                  deploymentOutput=$(az deployment group create `
+                  $deploymentOutput=$(az deployment group create `
                     --name $(Build.BuildNumber) `
                     --resource-group $(ResourceGroupName) `
                     --template-file deploy/iac/biceps/main.bicep `
