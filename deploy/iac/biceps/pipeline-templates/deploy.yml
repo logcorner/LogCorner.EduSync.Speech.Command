@@ -81,11 +81,11 @@ stages:
                   $deploymentOutput | Get-Member -MemberType NoteProperty | ForEach-Object {
 
                       $name = $_.name
-                      $result | Add-Member -MemberType NoteProperty -Name $name -value $out.$name.value
+                      $result | Add-Member -MemberType NoteProperty -Name $name -value  $deploymentOutput.$name.value
                   }
 
                   Write-Host $result
-                  $clusterName=$(Write-Host $deploymentOutput | Get-Member -Name properties.outputs.clusterName)
+                  $clusterName= $deploymentOutput | Get-Member -Name properties.outputs.clusterName)
                   echo "##vso[task.setvariable variable=clusterName]$clusterName"
                   loginServer=$(echo $deploymentOutput | jq -r '.properties.outputs.loginServer.value')
                   echo "##vso[task.setvariable variable=ACR_NAME]$loginServer"
