@@ -80,12 +80,13 @@ stages:
                   Write-Host  $deploymentOutput
                   $acrName =  ($json | ConvertFrom-Json).properties.outputs.acrName.value
                   Write-Output $acrName
-
+                  Write-Host "##vso[task.setvariable variable=acrName]$acrName"
                   $clusterName =  ($json | ConvertFrom-Json).properties.outputs.clusterName.value
                   Write-Output $clusterName
-
+                  Write-Host "##vso[task.setvariable variable=clusterName]$clusterName"
                   $loginServer =  ($json | ConvertFrom-Json).properties.outputs.loginServer.value
                   Write-Output $loginServer
+                  Write-Host "##vso[task.setvariable variable=ACR_NAME]$loginServer"
             - task: AzureCLI@2
               displayName: Docker Build & Push
               inputs:
