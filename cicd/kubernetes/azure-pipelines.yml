@@ -11,7 +11,7 @@ resources:
     ref: azure-pipelines-aks
 variables:
 - name: dockerRegistryServiceConnection
-  value: 'b8aa5216-2fdd-4063-a6d8-9d48c8ea8616'
+  value: 'AzureDevOpsServiceConnection'
 - name: imageRepository
   value: 'logcornerlogcorneredusyncspeechcommand'
 - name: containerRegistry
@@ -47,7 +47,7 @@ stages:
     - task: AzureCLI@2
       displayName: Docker Push
       inputs:
-        azureSubscription: 'aks-spn-ca'
+        azureSubscription: 'AzureDevOpsServiceConnection'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
