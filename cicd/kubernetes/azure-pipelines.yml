@@ -11,7 +11,7 @@ resources:
     ref: develop
 variables:
 - name: dockerRegistryServiceConnection
-  value: 'b8aa5216-2fdd-4063-a6d8-9d48c8ea8616'
+  value: 'AzureDevOpsServiceConnection'
 - name: imageRepository
   value: 'logcornerlogcorneredusyncspeechcommand'
 - name: containerRegistry
@@ -72,7 +72,7 @@ stages:
       displayName: Kubernetes Deploy
       inputs:
         connectionType: 'Azure Resource Manager'
-        azureSubscriptionEndpoint: 'aks-spn-ca'
+        azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
         azureResourceGroup: 'aks'
         kubernetesCluster: 'akslogcornercluster'
         namespace: 'default'
