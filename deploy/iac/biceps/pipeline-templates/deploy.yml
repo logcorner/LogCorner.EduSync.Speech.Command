@@ -102,7 +102,7 @@ stages:
                   docker push $(ACR_NAME)/logcorner-edusync-speech-command:$(Build.BuildNumber)
                  
             - task: replacetokens@3
-              displayName: Replace Tokens in  CommandDatabase
+              displayName: Replace Tokens in k8 configuration files
               inputs:
                 rootDirectory: 'deploy/kubernetes/aks'
                 targetFiles: '**\*.yml'
@@ -118,7 +118,7 @@ stages:
                 enableTelemetry: true
                        
             - task: Kubernetes@1
-              displayName: Kubernetes Deploy CommandDatabase
+              displayName: Kubernetes Deploy Configuration files
               inputs:
                 connectionType: 'Azure Resource Manager'
                 azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
@@ -126,7 +126,7 @@ stages:
                 kubernetesCluster: '$(clusterName)'
                 command: 'apply'
                 useConfigurationFile: true
-                configuration: 'deploy/kubernetes/aks'
+                configuration: 'deploy/kubernetes/aks/'
                 arguments: '-R'
                 secretType: 'dockerRegistry'
                 containerRegistryType: 'Azure Container Registry'
