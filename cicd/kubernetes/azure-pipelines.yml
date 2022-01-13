@@ -51,9 +51,9 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          az acr login -n akslogcornercluster5xvudnm6uolcm
-          docker push akslogcornercluster5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-command:$(tag)
-          docker push akslogcornercluster5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
+          az acr login -n acrlogcornerregistry5xvudnm6uolcm
+          docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-command:$(tag)
+          docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
     - task: replacetokens@3
       displayName: Replace Tokens in  CommandApi
       inputs:
