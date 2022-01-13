@@ -81,7 +81,8 @@ stages:
         kubernetesCluster: 'akslogcornercluster5xvudnm6uolcm'
         command: 'apply'
         useConfigurationFile: true
-        configuration: 'deploy/kubernetes/aks/**/*.yml'
+        configuration: 'deploy/kubernetes/aks/'
+        arguments: '-R'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
 
