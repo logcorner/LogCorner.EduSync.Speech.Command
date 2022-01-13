@@ -124,7 +124,6 @@ stages:
                 azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
                 azureResourceGroup: '$(ResourceGroupName)'
                 kubernetesCluster: '$(clusterName)'
-                namespace: 'default'
                 command: 'apply'
                 useConfigurationFile: true
                 configuration: 'deploy/kubernetes/aks'
