@@ -127,7 +127,7 @@ stages:
                 command: 'apply'
                 useConfigurationFile: true
                 configuration: 'deploy/kubernetes/aks/'
-                arguments: '-R'
+                arguments: '--recursive'
                 secretType: 'dockerRegistry'
                 containerRegistryType: 'Azure Container Registry'
            
