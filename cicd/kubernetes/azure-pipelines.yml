@@ -81,34 +81,8 @@ stages:
         kubernetesCluster: 'akslogcornercluster5xvudnm6uolcm'
         command: 'apply'
         useConfigurationFile: true
-        configuration: 'deploy/kubernetes/aks'
+        configuration: 'deploy/kubernetes/aks/**/*.yml'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
-    - task: Kubernetes@1
-      displayName: Kubernetes Deploy CommandApi
-      inputs:
-        connectionType: 'Azure Resource Manager'
-        azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
-        azureResourceGroup: 'aks'
-        kubernetesCluster: 'akslogcornercluster5xvudnm6uolcm'
-        namespace: 'default'
-        command: 'apply'
-        useConfigurationFile: true
-        configuration: 'deploy/kubernetes/aks/CommandApi'
-        arguments: '--namespace=aks'
-        secretType: 'dockerRegistry'
-        containerRegistryType: 'Azure Container Registry'
-    - task: Kubernetes@1
-      displayName: Kubernetes Deploy CommandDatabase
-      inputs:
-        connectionType: 'Azure Resource Manager'
-        azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
-        azureResourceGroup: 'aks'
-        kubernetesCluster: 'akslogcornercluster5xvudnm6uolcm'
-        namespace: 'default'
-        command: 'apply'
-        useConfigurationFile: true
-        configuration: 'deploy/kubernetes/aks/CommandDatabase'
-        arguments: '--namespace=aks'
-        secretType: 'dockerRegistry'
-        containerRegistryType: 'Azure Container Registry'
+
+     
