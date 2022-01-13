@@ -104,8 +104,8 @@ stages:
             - task: replacetokens@3
               displayName: Replace Tokens in  CommandDatabase
               inputs:
-                rootDirectory: 'deploy/kubernetes/aks/CommandDatabase'
-                targetFiles: '*.yml'
+                rootDirectory: 'deploy/kubernetes/aks'
+                targetFiles: '**\*.yml'
                 encoding: 'auto'
                 writeBOM: true
                 actionOnMissing: 'warn'
@@ -116,22 +116,7 @@ stages:
                 tokenSuffix: '__'
                 useLegacyPattern: false
                 enableTelemetry: true
-            - task: replacetokens@3
-              displayName: Replace Tokens in  CommandApi
-              inputs:
-                rootDirectory: 'deploy/kubernetes/aks/CommandApi'
-                targetFiles: '*.yml'
-                encoding: 'auto'
-                writeBOM: true
-                actionOnMissing: 'warn'
-                keepToken: false
-                actionOnNoFiles: 'continue'
-                enableTransforms: false
-                tokenPrefix: '__'
-                tokenSuffix: '__'
-                useLegacyPattern: false
-                enableTelemetry: true   
-            
+                       
             - task: Kubernetes@1
               displayName: Kubernetes Deploy CommandDatabase
               inputs:
@@ -143,33 +128,8 @@ stages:
                 command: 'apply'
                 useConfigurationFile: true
                 configuration: 'deploy/kubernetes/aks'
+                arguments: '-R'
                 secretType: 'dockerRegistry'
                 containerRegistryType: 'Azure Container Registry'
-            - task: Kubernetes@1
-              displayName: Kubernetes Deploy CommandDatabase
-              inputs:
-                connectionType: 'Azure Resource Manager'
-                azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
-                azureResourceGroup: '$(ResourceGroupName)'
-                kubernetesCluster: '$(clusterName)'
-                namespace: 'default'
-                command: 'apply'
-                useConfigurationFile: true
-                configuration: 'deploy/kubernetes/aks/CommandDatabase'
-                arguments: '--namespace=aks'
-                secretType: 'dockerRegistry'
-                containerRegistryType: 'Azure Container Registry'
-            - task: Kubernetes@1
-              displayName: Kubernetes Deploy CommandApi
-              inputs:
-                connectionType: 'Azure Resource Manager'
-                azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
-                azureResourceGroup: '$(ResourceGroupName)'
-                kubernetesCluster: '$(clusterName)'
-                namespace: 'default'
-                command: 'apply'
-                useConfigurationFile: true
-                configuration: 'deploy/kubernetes/aks/CommandApi'
-                arguments: '--namespace=aks'
-                secretType: 'dockerRegistry'
-                containerRegistryType: 'Azure Container Registry'
+           
+             
