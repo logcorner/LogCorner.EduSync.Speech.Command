@@ -8,6 +8,7 @@ metadata:
     product: init-sql-database-job
     environment: qa
 spec:
+  ttlSecondsAfterFinished: 100
   template:
     spec:
       containers:

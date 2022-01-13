@@ -92,10 +92,3 @@ output loginServer string = acrResource.properties.loginServer
 @description('Output the login server property for later use')
 output acrName string = acrResource.name
 
-/* output appServiceAppName string = appServiceApp.name
-output appServiceAppHostName string = appServiceApp.properties.defaultHostName
-output storageAccountName string = storageAccount.name
-output storageAccountImagesBlobContainerName string = storageAccount::blobService::storageAccountImagesBlobContainer.name
-output sqlServerFullyQualifiedDomainName string = sqlServer.properties.fullyQualifiedDomainName
-output sqlDatabaseName string = sqlDatabase.name
- */
