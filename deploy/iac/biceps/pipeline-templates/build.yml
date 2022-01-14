@@ -2,10 +2,6 @@
 parameters:
 - name: containerRegistry
   type: string
-- name: dockerRegistryServiceConnection
-  type: string
-- name: tag
-  type: string
 
 jobs:
 - job: Build
