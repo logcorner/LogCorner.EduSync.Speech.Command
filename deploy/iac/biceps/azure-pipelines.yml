@@ -27,7 +27,7 @@ stages:
   parameters:
     environmentType: Test
     dockerRegistry: ${{ variables.dockerRegistry  }}
-    databaseImageName: ${{ variables.databaseImage  }}
+    databaseImageName: ${{ variables.databaseImageName  }}
     webApiImageName: ${{ variables.webApiImageName  }}
    
 # Deploy to the production environment.
@@ -35,5 +35,5 @@ stages:
   parameters:
     environmentType: Production
     dockerRegistry: ${{ variables.dockerRegistry  }}
-    databaseImage: ${{ variables.databaseImage  }}
-    webApiImage: ${{ variables.webApiImage  }}
+    databaseImageName: ${{ variables.databaseImageName  }}
+    webApiImageName: ${{ variables.webApiImageName  }}
