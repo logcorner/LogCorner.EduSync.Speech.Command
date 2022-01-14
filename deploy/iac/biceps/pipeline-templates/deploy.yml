@@ -1,7 +1,8 @@
 parameters:
 - name: environmentType
   type: string
-
+- name: containerRegistry
+  type: string
 stages:
 
 - ${{ if ne(parameters.environmentType, 'Production') }}:
