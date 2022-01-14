@@ -1,7 +1,7 @@
 parameters:
 - name: environmentType
   type: string
-- name: containerRegistry
+- name: dockerRegistry
   type: string
 stages:
 
@@ -96,8 +96,8 @@ stages:
                 scriptType: 'ps'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
-                  docker tag ${{parameters.containerRegistry}}/logcorner-edusync-speech-mssql-tools $(ACR_LOGIN_SERVER)/logcorner-edusync-speech-mssql-tools:$(Build.BuildNumber)
-                  docker tag ${{parameters.containerRegistry}}/logcorner-edusync-speech-command $(ACR_LOGIN_SERVER)/logcorner-edusync-speech-command:$(Build.BuildNumber)
+                  docker tag ${{parameters.dockerRegistry}}/logcorner-edusync-speech-mssql-tools $(ACR_LOGIN_SERVER)/logcorner-edusync-speech-mssql-tools:$(Build.BuildNumber)
+                  docker tag ${{parameters.dockerRegistry}}/logcorner-edusync-speech-command $(ACR_LOGIN_SERVER)/logcorner-edusync-speech-command:$(Build.BuildNumber)
                   az acr login -n $(acrName)
                   docker push $(ACR_LOGIN_SERVER)/logcorner-edusync-speech-mssql-tools:$(Build.BuildNumber)      
                   docker push $(ACR_LOGIN_SERVER)/logcorner-edusync-speech-command:$(Build.BuildNumber)

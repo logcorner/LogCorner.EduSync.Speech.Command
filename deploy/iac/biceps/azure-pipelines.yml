@@ -7,7 +7,7 @@ trigger:
 pool:
   name: LOGCORNER-POOL
 variables:
-  containerRegistry: "buildagent"
+  dockerRegistry: "logcornerhub"
   
 stages:
 - stage: Build
@@ -15,7 +15,7 @@ stages:
   # Build the Visual Studio solution.
   - template : pipeline-templates/build.yml
     parameters:
-      containerRegistry: ${{ variables.containerRegistry  }}
+      dockerRegistry: ${{ variables.dockerRegistry  }}
       
   # Lint the Bicep file.
   - template: pipeline-templates/lint.yml
@@ -24,10 +24,10 @@ stages:
 - template: pipeline-templates/deploy.yml
   parameters:
     environmentType: Test
-    containerRegistry: ${{ variables.containerRegistry  }}
+    dockerRegistry: ${{ variables.dockerRegistry  }}
    
 # Deploy to the production environment.
 - template: pipeline-templates/deploy.yml
   parameters:
     environmentType: Production
-    containerRegistry: ${{ variables.containerRegistry  }}
+    dockerRegistry: ${{ variables.dockerRegistry  }}

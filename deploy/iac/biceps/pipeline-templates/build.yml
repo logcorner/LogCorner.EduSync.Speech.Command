@@ -1,6 +1,6 @@
 
 parameters:
-- name: containerRegistry
+- name: dockerRegistry
   type: string
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
         docker-compose.override.yml
         docker-compose-unit-tests.yml
         docker-compose.override-unit-tests.yml
-      dockerComposeFileArgs: 'DOCKER_REGISTRY=${{parameters.containerRegistry}}'
+      dockerComposeFileArgs: 'DOCKER_REGISTRY=${{parameters.dockerRegistry}}'
       action: 'Build services'
       includeLatestTag: true
   - task: DockerCompose@0
@@ -29,7 +29,7 @@ jobs:
       containerregistrytype: 'Azure Container Registry'
       dockerComposeFile: 'src/docker-compose-unit-tests.yml'
       additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
-      dockerComposeFileArgs: 'DOCKER_REGISTRY=${{parameters.containerRegistry}}'
+      dockerComposeFileArgs: 'DOCKER_REGISTRY=${{parameters.dockerRegistry}}'
       dockerComposeCommand: 'up'
   - task: PublishTestResults@2
     displayName: 'Publish Test Results'
