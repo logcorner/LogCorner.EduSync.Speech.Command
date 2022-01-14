@@ -30,9 +30,7 @@ az aks get-credentials --resource-group aks --name akslogcornercluster
 kubectl config get-contexts 
 kubectl config use-context  akslogcornercluster 
 
-kubectl apply -f .
-kubectl apply -f CommandDatabase
-kubectl apply -f CommandApi
+kubectl apply -f . -f CommandDatabase  -f CommandApi
 kubectl rollout restart deployment speech-command-http-api-deployment -n aks
 kubectl logs speech-command-http-api-deployment-8d494c44c-j7zx6 -n aks
 
