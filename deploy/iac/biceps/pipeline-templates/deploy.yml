@@ -3,6 +3,10 @@ parameters:
   type: string
 - name: dockerRegistry
   type: string
+- name: databaseImageName
+  type: string
+- name: webApiImageName
+  type: string
 stages:
 
 - ${{ if ne(parameters.environmentType, 'Production') }}:
@@ -96,11 +100,11 @@ stages:
                 scriptType: 'ps'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
-                  docker tag ${{parameters.dockerRegistry}}/logcorner-edusync-speech-mssql-tools $(ACR_LOGIN_SERVER)/logcorner-edusync-speech-mssql-tools:$(Build.BuildNumber)
-                  docker tag ${{parameters.dockerRegistry}}/logcorner-edusync-speech-command $(ACR_LOGIN_SERVER)/logcorner-edusync-speech-command:$(Build.BuildNumber)
+                  docker tag ${{parameters.dockerRegistry}}/${{parameters.databaseImageName}} $(ACR_LOGIN_SERVER)/${{parameters.databaseImageName}}:$(Build.BuildNumber)
+                  docker tag ${{parameters.dockerRegistry}}/${{parameters.webApiImageName}} $(ACR_LOGIN_SERVER)/${{parameters.webApiImageName}}:$(Build.BuildNumber)
                   az acr login -n $(acrName)
-                  docker push $(ACR_LOGIN_SERVER)/logcorner-edusync-speech-mssql-tools:$(Build.BuildNumber)      
-                  docker push $(ACR_LOGIN_SERVER)/logcorner-edusync-speech-command:$(Build.BuildNumber)
+                  docker push $(ACR_LOGIN_SERVER)/${{parameters.webApiImageName}}:$(Build.BuildNumber)      
+                  docker push $(ACR_LOGIN_SERVER)/${{parameters.webApiImageName}}:$(Build.BuildNumber)
                  
             - task: replacetokens@3
               displayName: Replace Tokens in k8 configuration files

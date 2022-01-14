@@ -25,9 +25,13 @@ stages:
   parameters:
     environmentType: Test
     dockerRegistry: ${{ variables.dockerRegistry  }}
+    databaseImageName: logcorner-edusync-speech-mssql-tools
+    webApiImageName: logcorner-edusync-speech-command
    
 # Deploy to the production environment.
 - template: pipeline-templates/deploy.yml
   parameters:
     environmentType: Production
     dockerRegistry: ${{ variables.dockerRegistry  }}
+    databaseImage: logcorner-edusync-speech-mssql-tools
+    webApiImage: logcorner-edusync-speech-command
