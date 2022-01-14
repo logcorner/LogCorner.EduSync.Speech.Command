@@ -125,10 +125,8 @@ stages:
                 azureResourceGroup: '$(ResourceGroupName)'
                 kubernetesCluster: '$(clusterName)'
                 command: 'apply'
-                useConfigurationFile: true
-                configuration: 'deploy/kubernetes/aks'
-                arguments: '--recursive'
+                arguments: '-f . -f CommandDatabase -f CommandApi'
                 secretType: 'dockerRegistry'
                 containerRegistryType: 'Azure Container Registry'
-           
+                workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/kubernetes/aks'
              
