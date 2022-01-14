@@ -80,7 +80,7 @@ stages:
         azureResourceGroup: 'aks'
         kubernetesCluster: 'akslogcornercluster5xvudnm6uolcm'
         command: 'apply'
-        arguments: '-f . --recursive'
+        arguments: '-f . -f CommandDatabase -f CommandApi'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/kubernetes/aks'
