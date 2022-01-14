@@ -87,7 +87,7 @@ stages:
                   Write-Host "##vso[task.setvariable variable=clusterName]$clusterName"
                   $loginServer =  ($deploymentOutput | ConvertFrom-Json).properties.outputs.loginServer.value
                   Write-Output $loginServer
-                  Write-Host "##vso[task.setvariable variable=ACR_NAME]$loginServer"
+                  Write-Host "##vso[task.setvariable variable=ACR_LOGIN_SERVER]$loginServer"
                   Write-Host "##vso[task.setvariable variable=TAG]$(Build.BuildNumber)"
             - task: AzureCLI@2
               displayName: Docker Build & Push
@@ -96,11 +96,11 @@ stages:
                 scriptType: 'ps'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
-                  docker tag ${{parameters.containerRegistry}}/logcorner-edusync-speech-mssql-tools $(ACR_NAME)/logcorner-edusync-speech-mssql-tools:$(Build.BuildNumber)
-                  docker tag ${{parameters.containerRegistry}}/logcorner-edusync-speech-command $(ACR_NAME)/logcorner-edusync-speech-command:$(Build.BuildNumber)
+                  docker tag ${{parameters.containerRegistry}}/logcorner-edusync-speech-mssql-tools $(ACR_LOGIN_SERVER)/logcorner-edusync-speech-mssql-tools:$(Build.BuildNumber)
+                  docker tag ${{parameters.containerRegistry}}/logcorner-edusync-speech-command $(ACR_LOGIN_SERVER)/logcorner-edusync-speech-command:$(Build.BuildNumber)
                   az acr login -n $(acrName)
-                  docker push $(ACR_NAME)/logcorner-edusync-speech-mssql-tools:$(Build.BuildNumber)      
-                  docker push $(ACR_NAME)/logcorner-edusync-speech-command:$(Build.BuildNumber)
+                  docker push $(ACR_LOGIN_SERVER)/logcorner-edusync-speech-mssql-tools:$(Build.BuildNumber)      
+                  docker push $(ACR_LOGIN_SERVER)/logcorner-edusync-speech-command:$(Build.BuildNumber)
                  
             - task: replacetokens@3
               displayName: Replace Tokens in k8 configuration files
