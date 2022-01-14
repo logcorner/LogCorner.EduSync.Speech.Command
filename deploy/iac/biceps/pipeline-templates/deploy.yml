@@ -103,7 +103,7 @@ stages:
                   docker tag ${{parameters.dockerRegistry}}/${{parameters.databaseImageName}} $(ACR_LOGIN_SERVER)/${{parameters.databaseImageName}}:$(Build.BuildNumber)
                   docker tag ${{parameters.dockerRegistry}}/${{parameters.webApiImageName}} $(ACR_LOGIN_SERVER)/${{parameters.webApiImageName}}:$(Build.BuildNumber)
                   az acr login -n $(acrName)
-                  docker push $(ACR_LOGIN_SERVER)/${{parameters.webApiImageName}}:$(Build.BuildNumber)      
+                  docker push $(ACR_LOGIN_SERVER)/${{parameters.databaseImageName}}:$(Build.BuildNumber)      
                   docker push $(ACR_LOGIN_SERVER)/${{parameters.webApiImageName}}:$(Build.BuildNumber)
                  
             - task: replacetokens@3
