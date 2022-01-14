@@ -34,7 +34,7 @@ var environmentConfigurationMap = {
   Production: {
     containerRegistry: {
       sku: {
-        name: 'Basic'
+        name: 'Premium'
        }
     }
     kubernetesServices: {
@@ -53,7 +53,7 @@ var environmentConfigurationMap = {
   Test: {
     containerRegistry: {
       sku: {
-        name: 'Premium'
+        name: 'Basic'
       }
     }
     kubernetesServices: {
