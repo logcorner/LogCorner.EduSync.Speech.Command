@@ -18,12 +18,58 @@ param agentCount int = 3
 @description('The size of the Virtual Machine.')
 param agentVMSize string = 'Standard_D2s_v3'
 
-param roleAcrPull string = 'b24988ac-6180-42a0-ab88-20f7382dd24c'
 
+
+/* CONTAINER REGISTRY */
+param roleAcrPull string = 'b24988ac-6180-42a0-ab88-20f7382dd24c'
+@minLength(5)
+@maxLength(50)
+@description('Provide a globally unique name of your Azure Container Registry')
+param acrName string = 'acrlogcornerregistry${resourceNameSuffix}'
 
 @description('Provide a globally unique name of your Azure Container Registry')
 param environmentType string = 'Test'
-
+// Define the SKUs for each component based on the environment type.
+var environmentConfigurationMap = {
+  Production: {
+    containerRegistry: {
+      sku: {
+        name: 'Basic'
+       }
+    }
+    kubernetesServices: {
+      agentPoolProfiles: [
+        {
+          name: 'agentpool'
+          osDiskSizeGB: osDiskSizeGB
+          count: agentCount
+          vmSize: agentVMSize
+          osType: 'Linux'
+          mode: 'System'
+        }
+      ]
+    }
+  }
+  Test: {
+    containerRegistry: {
+      sku: {
+        name: 'Premium'
+      }
+    }
+    kubernetesServices: {
+      agentPoolProfiles: [
+        {
+          name: 'agentpool'
+          osDiskSizeGB: osDiskSizeGB
+          count: agentCount
+          vmSize: agentVMSize
+          osType: 'Linux'
+          mode: 'System'
+        }
+      ]
+    }
+  }
+}
 
 
 resource clusterName_resource 'Microsoft.ContainerService/managedClusters@2020-09-01' = {
@@ -36,7 +82,7 @@ resource clusterName_resource 'Microsoft.ContainerService/managedClusters@2020-0
   properties: {
     dnsPrefix: dnsPrefix
     enableRBAC: true 
-    agentPoolProfiles: [
+   /*  agentPoolProfiles: [
       {
         name: 'agentpool'
         osDiskSizeGB: osDiskSizeGB
@@ -45,28 +91,17 @@ resource clusterName_resource 'Microsoft.ContainerService/managedClusters@2020-0
         osType: 'Linux'
         mode: 'System'
       }
-    ]
+    ] */
+   agentPoolProfiles:environmentConfigurationMap[environmentType].kubernetesServices.agentPoolProfiles
   
   }
 }
 
 
-/* CONTAINER REGISTRY */
-
-@minLength(5)
-@maxLength(50)
-@description('Provide a globally unique name of your Azure Container Registry')
-param acrName string = 'acrlogcornerregistry${resourceNameSuffix}'
-
-@description('Provide a tier of your Azure Container Registry.')
-param acrSku string = 'Basic'
-
 resource acrResource 'Microsoft.ContainerRegistry/registries@2021-06-01-preview' = {
   name: acrName
   location: location
-  sku: {
-    name: acrSku
-  }
+  sku: environmentConfigurationMap[environmentType].containerRegistry.sku
   properties: {
     adminUserEnabled: true
   }
