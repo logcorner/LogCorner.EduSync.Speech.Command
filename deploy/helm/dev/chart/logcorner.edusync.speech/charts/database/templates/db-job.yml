@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-initsqljob
+  namespace: {{ .Values.namespace }}
+  labels:
+    product: {{ .Release.Name }}-{{ .Chart.Name }}-initsqljob
+    environment: {{ .Values.namespace }}
+spec:
+  template:
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-{{ .Chart.Name }}-initsqljob
+        image: {{ .Values.image.initsqljob.repository }}:{{ .Values.image.initsqljob.tag }}
+        imagePullPolicy: Never
+        command: ["/opt/mssql-tools/bin/sqlcmd"]
+        args: [ "-S", {{ .Release.Name }}-{{ .Chart.Name }}-service, "-d", "master", "-U", "sa", "-P",  {{ .Values.secret.sqlserverdb_password }}, "-I", "-i", "logcorner-edusync-speech-database_Create.sql" ]
+      restartPolicy: Never
