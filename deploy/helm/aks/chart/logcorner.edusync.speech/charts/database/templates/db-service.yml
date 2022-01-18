@@ -5,9 +5,9 @@ metadata:
   namespace: {{ .Values.global.namespace }}
 spec:
   selector:
-    app: mssql
+    app: {{ .Release.Name }}-{{ .Chart.Name }}
   ports:
     - protocol: TCP
-      port: 1433
-      targetPort: 1433
-  type: ClusterIP
+      port:  {{ .Values.service.port }}
+      targetPort:  {{ .Values.service.targetPort }}
+  type: {{ .Values.service.type }}

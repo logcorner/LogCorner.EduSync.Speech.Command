@@ -13,8 +13,8 @@ initsqljob:
     repository: logcornerhub
     name : logcorner-edusync-speech-mssql-tools
     tag: "latest"
-   
+    pullPolicy: Never
 service:
-  type: NodePort
+  type: LoadBalancer
   port: 1433
   targetPort: 1433

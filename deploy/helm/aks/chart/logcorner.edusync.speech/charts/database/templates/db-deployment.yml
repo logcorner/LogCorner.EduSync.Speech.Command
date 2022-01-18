@@ -32,10 +32,10 @@ spec:
             secretKeyRef:
               name: {{ .Release.Name }}-{{ .Chart.Name }}-secret
               key: SA_PASSWORD 
-        # volumeMounts:
-        # - name: mssqldb
-          # mountPath: /var/opt/mssql
-      # volumes:
-      # - name: mssqldb
-        # persistentVolumeClaim:
-          # claimName: mssql-data
+        volumeMounts:
+        - name: mssqldb
+          mountPath: /var/opt/mssql
+      volumes:
+      - name: mssqldb
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-{{ .Chart.Name }}-mssql-data

@@ -1,23 +1,9 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: azure-disk
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-azure-disk
   namespace: {{ .Values.global.namespace }}
 provisioner: kubernetes.io/azure-disk
 parameters:
   storageaccounttype: Standard_LRS
   kind: Managed
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: mssql-data
-  namespace: {{ .Values.global.namespace }}
-  annotations:
-    volume.beta.kubernetes.io/storage-class: azure-disk
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 8Gi
