@@ -3,36 +3,36 @@ kind: Deployment
 
 metadata:
   name: {{ .Release.Name }}-{{ .Chart.Name }}-deployment
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.global.namespace }}
   labels:
     version: 1.0.0
-    product: speech-command-http-api
-    environment: aks
+    product: {{ .Release.Name }}-{{ .Chart.Name }}-deployment
+    environment: {{ .Values.global.namespace }}
 
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: speech-command-http-api
-      env: aks
+      app: {{ .Release.Name }}-{{ .Chart.Name }}
+      env: {{ .Values.global.namespace }}
   
   template:
     metadata:
       labels:
-        app: speech-command-http-api
-        env: aks
+        app: {{ .Release.Name }}-{{ .Chart.Name }}
+        env: {{ .Values.global.namespace }}
     spec:
       containers:
-      - name: command-api-container
-        image: logcornerhub/logcorner-edusync-speech-command
-        imagePullPolicy: Never
+      - name: {{ .Release.Name }}-{{ .Chart.Name }}
+        image: {{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }} 
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
         - name: ASPNETCORE_ENVIRONMENT
-          value: "Kubernetes.AKS"
+          value: {{ .Values.environment.aspnetcore }}
         ports:
-        - containerPort: 80
-        - containerPort: 443
+        - containerPort: {{ .Values.containerPort.http }}
+        - containerPort: {{ .Values.containerPort.https }}
           protocol: TCP
-      restartPolicy: Always
+      restartPolicy:  {{ .Values.restartPolicy }}
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst

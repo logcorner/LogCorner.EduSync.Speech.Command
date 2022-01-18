@@ -1,2 +1,2 @@
 global:
-  namespace: k8s
+  namespace: helm

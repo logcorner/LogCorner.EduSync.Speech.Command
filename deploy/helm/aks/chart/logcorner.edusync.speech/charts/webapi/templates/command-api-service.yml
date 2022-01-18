@@ -2,22 +2,22 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Release.Name }}-{{ .Chart.Name }}-service
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.global.namespace }}
   labels:
     version: 1.0.0
-    product: speech-command-http-api
-    environment: aks
+    product: {{ .Release.Name }}-{{ .Chart.Name }}
+    environment: {{ .Values.global.namespace }}
 spec:
-  type: NodePort
+  type: {{ .Values.service.type }}
   ports:
-  - port: 80
-    targetPort: 80
+  - port: {{ .Values.service.ports.http.port }}
+    targetPort: {{ .Values.service.ports.http.targetPort }}
     protocol: TCP
     name: http
-  - port: 443
-    targetPort: 443
+  - port: {{ .Values.service.ports.https.port }}
+    targetPort: {{ .Values.service.ports.https.targetPort }}
     protocol: TCP
     name: https
   selector:
-    app: speech-command-http-api
-    env: aks
+    app: {{ .Release.Name }}-{{ .Chart.Name }}
+    env: {{ .Values.global.namespace }}
