@@ -1,13 +1,19 @@
 secret:
   sqlserverdb_password: "MyC0m9l&xP@ssw0rd"
-# namespace: helm
-image:
-  initsqljob:
-    repository: logcornerhub/logcorner-edusync-speech-mssql-tools
-    tag: "latest"
-  sqldatabase:
-    repository: mcr.microsoft.com/mssql/server
+
+sqldatabase:
+  image:
+    repository: mcr.microsoft.com
+    name: mssql/server
     tag: "2019-latest"
+  containerPort: 1433
+  mssqlpid: Developer
+initsqljob:
+  image:
+    repository: logcornerhub
+    name : logcorner-edusync-speech-mssql-tools
+    tag: "latest"
+   
 service:
   type: NodePort
   port: 1433

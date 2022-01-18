@@ -7,30 +7,30 @@ spec:
   replicas: 1
   selector:
      matchLabels:
-       app: mssql
+       app: {{ .Release.Name }}-{{ .Chart.Name }}
   template:
     metadata:
       labels:
-        app: mssql
+        app: {{ .Release.Name }}-{{ .Chart.Name }}
     spec:
       terminationGracePeriodSeconds: 30
       hostname: mssqlinst
       securityContext:
         fsGroup: 10001
       containers:
-      - name: mssql
-        image: mcr.microsoft.com/mssql/server:2019-latest
+      - name: {{ .Release.Name }}-{{ .Chart.Name }}
+        image: {{ .Values.sqldatabase.image.repository }}/{{ .Values.sqldatabase.image.name }}:{{ .Values.sqldatabase.image.tag }} 
         ports:
-        - containerPort: 1433
+        - containerPort: {{ .Values.sqldatabase.containerPort }}
         env:
         - name: MSSQL_PID
-          value: "Developer"
+          value: {{ .Values.sqldatabase.mssqlpid }}
         - name: ACCEPT_EULA
           value: "Y"
         - name: SA_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mssql
+              name: {{ .Release.Name }}-{{ .Chart.Name }}-secret
               key: SA_PASSWORD 
         # volumeMounts:
         # - name: mssqldb
