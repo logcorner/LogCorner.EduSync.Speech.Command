@@ -102,5 +102,5 @@ stages:
         command: 'upgrade'
         chartType: 'FilePath'
         chartPath: '$(Build.ArtifactStagingDirectory)/logcorner.command-$(Build.BuildNumber).tgz'
-        releaseName: 'logcorner-test'
+        releaseName: 'command-http'
        
