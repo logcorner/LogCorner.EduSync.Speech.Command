@@ -27,7 +27,11 @@ variables:
 - name: HelmVersion
   value: 3.5.0
 - name: KubernetesCluster
-  value: 'akslogcornercluster5xvudnm6uolcm'  
+  value: 'akslogcornercluster5xvudnm6uolcm'
+- name: releaseName
+  value: 'command-http'
+- name: KubernetesNamespace
+  value: '$(releaseName)-helm'   
 stages:
 - stage: Build
   displayName: Build stage
@@ -76,14 +80,7 @@ stages:
 
     - script: cat deploy/helm/aks/chart/logcorner.edusync.speech/charts/database/values.yaml
     - script: cat deploy/helm/aks/chart/logcorner.edusync.speech/charts/webapi/values.yaml
-    - task: Tokenizer@0
-      displayName: 'Run Tokenizer'
-      inputs:
-        sourceFilesPattern: '*.yaml'
-        tokenDataSource: 'environmentVariables'
-        sourcePath: 'deploy/helm/aks/chart/'
-    - script: cat deploy/helm/aks/chart/logcorner.edusync.speech/charts/database/values.yaml
-    - script: cat deploy/helm/aks/chart/logcorner.edusync.speech/charts/webapi/values.yaml
+
     - task: HelmInstaller@0
       displayName: 'Install Helm $(HelmVersion)'
       inputs:
@@ -109,6 +106,5 @@ stages:
         command: 'upgrade'
         chartType: 'FilePath'
         chartPath: '$(Build.ArtifactStagingDirectory)/logcorner.command-$(Build.BuildNumber).tgz'
-        releaseName: 'logcorner-test'
-        waitForExecution: false
+        releaseName: '$(releaseName)'
        
