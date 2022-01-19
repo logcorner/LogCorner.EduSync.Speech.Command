@@ -92,7 +92,7 @@ stages:
         azureResourceGroup: 'aks'
         kubernetesCluster: $(KubernetesCluster)
         command: 'package'
-        chartPath: deploy\helm\aks\chart
+        chartPath: deploy/helm/aks/chart
         chartVersion: $(Build.BuildNumber)
         save: false
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))   
