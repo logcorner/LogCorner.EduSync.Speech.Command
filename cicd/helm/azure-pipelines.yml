@@ -62,8 +62,8 @@ stages:
       enabled: false
       displayName: Replace Tokens in  CommandApi
       inputs:
-        rootDirectory: 'deploy/kubernetes/aks'
-        targetFiles: '**\*.yml'
+        rootDirectory: 'deploy/helm/aks/chart/'
+        targetFiles: '**\*.yaml'
         encoding: 'auto'
         writeBOM: true
         actionOnMissing: 'warn'
@@ -75,9 +75,16 @@ stages:
         useLegacyPattern: false
         enableTelemetry: true
 
-    - script: cat deploy/kubernetes/aks/CommandApi/command-api-deployment.yml
-    - script: cat deploy/kubernetes/aks/CommandDatabase/db-job.yml
-    
+    - script: cat deploy/helm/aks/chart/logcorner.edusync.speech/charts/database/values.yaml
+    - script: cat deploy/helm/aks/chart/logcorner.edusync.speech/charts/webapi/values.yaml
+    - task: Tokenizer@0
+      displayName: 'Run Tokenizer'
+      inputs:
+        sourceFilesPattern: '*.yaml'
+        tokenDataSource: 'environmentVariables'
+        sourcePath: 'deploy/helm/aks/chart/'
+    - script: cat deploy/helm/aks/chart/logcorner.edusync.speech/charts/database/values.yaml
+    - script: cat deploy/helm/aks/chart/logcorner.edusync.speech/charts/webapi/values.yaml
     - task: HelmInstaller@0
       displayName: 'Install Helm $(HelmVersion)'
       inputs:
