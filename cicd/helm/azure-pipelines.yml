@@ -85,15 +85,15 @@ stages:
         checkLatestHelmVersion: false
         installKubectl: true
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) 
+    
     - task: HelmDeploy@0
-      displayName: 'helm package'
       inputs:
-        azureSubscriptionEndpoint: AzureDevOpsServiceConnection
+        connectionType: 'Azure Resource Manager'
+        azureSubscription: 'AzureDevOpsServiceConnection'
         azureResourceGroup: 'aks'
-        kubernetesCluster: $(KubernetesCluster)
-        command: 'package'
-        chartPath: deploy/helm/aks/chart
-        chartVersion: $(Build.BuildNumber)
-        save: false
-      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))   
-     
+        kubernetesCluster: '$(KubernetesCluster)'
+        command: 'install'
+        chartType: 'FilePath'
+        chartPath: 'deploy/helm/aks/chart'
+        chartVersion: '$(Build.BuildNumber)'
+        releaseName: 'logcorner.aks'
