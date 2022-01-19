@@ -1,8 +1,8 @@
 replicaCount: 1
 image:
-  repository: acrlogcornerregistry5xvudnm6uolcm.azurecr.io
+  repository: __RepositoryName__
   name: logcorner-edusync-speech-command 
-  tag: "latest"
+  tag: __ImageTag__
   pullPolicy: IfNotPresent
 environment:
   aspnetcore: "Kubernetes.helm"
