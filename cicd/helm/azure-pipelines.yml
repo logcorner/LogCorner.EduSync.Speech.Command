@@ -88,12 +88,6 @@ stages:
     
     - task: HelmDeploy@0
       inputs:
-        connectionType: 'Azure Resource Manager'
-        azureSubscription: 'AzureDevOpsServiceConnection'
-        azureResourceGroup: 'aks'
-        kubernetesCluster: '$(KubernetesCluster)'
-        command: 'install'
-        chartType: 'Name'
-        chartName: 'logcorner.edusync.speech'
+        command: 'package'
+        chartPath: 'deploy/helm/aks/chart/logcorner.edusync.speech'
         chartVersion: '$(Build.BuildNumber)'
-        releaseName: 'command-http'
