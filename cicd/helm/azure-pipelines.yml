@@ -91,3 +91,16 @@ stages:
         command: 'package'
         chartPath: 'deploy/helm/aks/chart/logcorner.edusync.speech'
         chartVersion: '$(Build.BuildNumber)'
+    - task: HelmDeploy@0
+      displayName: 'Helm upgrade release'
+      inputs:
+        connectionType: 'Azure Resource Manager'
+        azureSubscription: 'AzureDevOpsServiceConnection'
+        azureResourceGroup: 'aks'
+        kubernetesCluster: '$(KubernetesCluster)'
+        useClusterAdmin: true
+        command: 'upgrade'
+        chartType: 'FilePath'
+        chartPath: '$(Build.ArtifactStagingDirectory)/logcorner.edusync.speech-$(Build.BuildNumber).tgz'  
+        releaseName: 'logcorner-test'  
+       
