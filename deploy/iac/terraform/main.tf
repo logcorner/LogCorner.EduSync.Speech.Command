@@ -1,22 +1,11 @@
 # The Azure Active Resource Manager Terraform provider
- terraform {
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-       version = "=2.46.0"
-    }
-    azuread = {
-     source  = "hashicorp/azuread"
-     version = "= 1.6.0"
-   }
-  }
-}
 provider "azurerm" {
-  features {}
+  //version = "=1.36.0"
 }
+
 # The Azure Active Directory Terraform provider
 provider "azuread" {
-  tenant_id = "f12a747a-cddf-4426-96ff-ebe055e215a3"
+  //version = "=0.6.0"
 }
 
 # Reference to the current subscription.  Used when creating role assignments
@@ -27,7 +16,3 @@ resource "azurerm_resource_group" "default" {
   name     = "${var.name}-${var.environment}-rg"
   location = "${var.location}"
 }
-
-
-
-
