@@ -87,6 +87,7 @@ stages:
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) 
     
     - task: HelmDeploy@0
+      displayName: 'Pack Helm Chart $(HelmVersion)'
       inputs:
         command: 'package'
         chartPath: 'deploy/helm/aks/chart/logcorner.edusync.speech'
@@ -101,6 +102,7 @@ stages:
         useClusterAdmin: true
         command: 'upgrade'
         chartType: 'FilePath'
-        chartPath: '$(Build.ArtifactStagingDirectory)/logcorner.command-$(Build.BuildNumber).tgz'  
-        releaseName: 'logcorner-test'  
+        chartPath: '$(Build.ArtifactStagingDirectory)/logcorner.command-$(Build.BuildNumber).tgz'
+        releaseName: 'logcorner-test'
+        waitForExecution: false
        
