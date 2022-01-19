@@ -1,2 +1,2 @@
 global:
-  namespace: helm
+  namespace: __KubernetesNamespace__
