@@ -18,9 +18,9 @@ variables:
   value: 'acrlogcornerregistry5xvudnm6uolcm.azurecr.io'
 - name: dockerfilePath
   value: 'LogCorner.EduSync.Speech.Command/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/Dockerfile'
-- name: tag
+- name: ImageTag
   value: '$(Build.BuildId)'
-- name: ACR_NAME
+- name: RepositoryName
   value:  acrlogcornerregistry5xvudnm6uolcm.azurecr.io
 - name: imagePullSecret
   value: 'acrlogcornerregistry1339485b-auth'
@@ -46,7 +46,7 @@ stages:
         dockerComposeFile: 'src/docker-compose.yml'
         dockerComposeFileArgs: 'DOCKER_REGISTRY=$(containerRegistry)'
         action: 'Build services'
-        additionalImageTags: '$(tag)'
+        additionalImageTags: '$(ImageTag)'
         includeLatestTag: true
     - task: AzureCLI@2
       displayName: Docker Push
@@ -56,8 +56,8 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           az acr login -n acrlogcornerregistry5xvudnm6uolcm
-          docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-command:$(tag)
-          docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
+          docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-command:$(ImageTag)
+          docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-mssql-tools:$(ImageTag)
     - task: replacetokens@3
       enabled: false
       displayName: Replace Tokens in  CommandApi
