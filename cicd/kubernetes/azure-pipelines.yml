@@ -35,6 +35,7 @@ stages:
     steps:
     
     - task: DockerCompose@0
+      enabled: false
       displayName: 'Build docker images '
       inputs:
         containerregistrytype: 'Azure Container Registry'
@@ -45,6 +46,7 @@ stages:
         additionalImageTags: '$(tag)'
         includeLatestTag: true
     - task: AzureCLI@2
+      enabled: false
       displayName: Docker Push
       inputs:
         azureSubscription: 'AzureDevOpsServiceConnection'
@@ -55,6 +57,7 @@ stages:
           docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-command:$(tag)
           docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
     - task: replacetokens@3
+      enabled: false
       displayName: Replace Tokens in  CommandApi
       inputs:
         rootDirectory: 'deploy/kubernetes/aks'
