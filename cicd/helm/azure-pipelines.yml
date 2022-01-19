@@ -76,14 +76,7 @@ stages:
 
     - script: cat deploy/helm/aks/chart/logcorner.edusync.speech/charts/database/values.yaml
     - script: cat deploy/helm/aks/chart/logcorner.edusync.speech/charts/webapi/values.yaml
-    - task: Tokenizer@0
-      displayName: 'Run Tokenizer'
-      inputs:
-        sourceFilesPattern: '*.yaml'
-        tokenDataSource: 'environmentVariables'
-        sourcePath: 'deploy/helm/aks/chart/'
-    - script: cat deploy/helm/aks/chart/logcorner.edusync.speech/charts/database/values.yaml
-    - script: cat deploy/helm/aks/chart/logcorner.edusync.speech/charts/webapi/values.yaml
+
     - task: HelmInstaller@0
       displayName: 'Install Helm $(HelmVersion)'
       inputs:
