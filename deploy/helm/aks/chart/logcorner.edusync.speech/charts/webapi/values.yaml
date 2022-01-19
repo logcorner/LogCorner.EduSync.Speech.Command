@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: logcornerhub
+  repository: acrlogcornerregistry5xvudnm6uolcm.azurecr.io
   name: logcorner-edusync-speech-command 
   tag: "latest"
   pullPolicy: IfNotPresent
