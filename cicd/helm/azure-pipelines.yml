@@ -28,6 +28,8 @@ variables:
   value: 3.5.0
 - name: KubernetesCluster
   value: 'akslogcornercluster5xvudnm6uolcm'
+- name: chartName
+  value: 'logcorner.command'
 - name: releaseName
   value: 'command-http'
 - name: KubernetesNamespace
@@ -105,6 +107,6 @@ stages:
         useClusterAdmin: true
         command: 'upgrade'
         chartType: 'FilePath'
-        chartPath: '$(Build.ArtifactStagingDirectory)/logcorner.command-$(Build.BuildNumber).tgz'
+        chartPath: '$(Build.ArtifactStagingDirectory)/$(chartName)-$(Build.BuildNumber).tgz'
         releaseName: '$(releaseName)'
        
