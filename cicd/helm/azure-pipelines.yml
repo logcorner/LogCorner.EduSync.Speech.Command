@@ -27,7 +27,11 @@ variables:
 - name: HelmVersion
   value: 3.5.0
 - name: KubernetesCluster
-  value: 'akslogcornercluster5xvudnm6uolcm'  
+  value: 'akslogcornercluster5xvudnm6uolcm'
+- name: releaseName
+  value: 'command-http'
+- name: KubernetesNamespace
+  value: '$(releaseName)-helm'   
 stages:
 - stage: Build
   displayName: Build stage
@@ -102,5 +106,5 @@ stages:
         command: 'upgrade'
         chartType: 'FilePath'
         chartPath: '$(Build.ArtifactStagingDirectory)/logcorner.command-$(Build.BuildNumber).tgz'
-        releaseName: 'command-http'
+        releaseName: '$(releaseName)'
        
