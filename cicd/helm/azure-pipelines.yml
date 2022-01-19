@@ -24,6 +24,10 @@ variables:
   value:  acrlogcornerregistry5xvudnm6uolcm.azurecr.io
 - name: imagePullSecret
   value: 'acrlogcornerregistry1339485b-auth'
+- name: HelmVersion
+  value: 3.5.0
+- name: KubernetesCluster
+  value: 'akslogcornercluster5xvudnm6uolcm'  
 stages:
 - stage: Build
   displayName: Build stage
@@ -55,6 +59,7 @@ stages:
           docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-command:$(tag)
           docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
     - task: replacetokens@3
+      enabled: false
       displayName: Replace Tokens in  CommandApi
       inputs:
         rootDirectory: 'deploy/kubernetes/aks'
@@ -73,16 +78,22 @@ stages:
     - script: cat deploy/kubernetes/aks/CommandApi/command-api-deployment.yml
     - script: cat deploy/kubernetes/aks/CommandDatabase/db-job.yml
     
-    - task: Kubernetes@1
+    - task: HelmInstaller@0
+      displayName: 'Install Helm $(HelmVersion)'
       inputs:
-        connectionType: 'Azure Resource Manager'
-        azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
+        helmVersion: '$(HelmVersion)'
+        checkLatestHelmVersion: false
+        installKubectl: true
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) 
+    - task: HelmDeploy@0
+      displayName: 'helm package'
+      inputs:
+        azureSubscriptionEndpoint: AzureDevOpsServiceConnection
         azureResourceGroup: 'aks'
-        kubernetesCluster: 'akslogcornercluster5xvudnm6uolcm'
-        command: 'apply'
-        arguments: '-f . -f CommandDatabase -f CommandApi'
-        secretType: 'dockerRegistry'
-        containerRegistryType: 'Azure Container Registry'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/kubernetes/aks'
-
+        kubernetesCluster: $(KubernetesCluster)
+        command: 'package'
+        chartPath: deploy\helm\aks\chart
+        chartVersion: $(Build.BuildNumber)
+        save: false
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))   
      
