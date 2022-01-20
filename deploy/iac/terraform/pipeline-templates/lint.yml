@@ -11,3 +11,8 @@ jobs:
       name: LintBicepCode
       displayName: Run Bicep linter
       workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
+    - task: TerraformTaskV2@2
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
