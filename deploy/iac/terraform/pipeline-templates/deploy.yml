@@ -34,6 +34,13 @@ stages:
           displayName: Install TF 1.1.3
           inputs:
             terraformVersion: '1.1.4'
+        
+        - script: |
+            terraform init
+          name: LintBicepCode
+          displayName: Run Bicep linter
+          workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
+        
         - task: TerraformTaskV2@2
           displayName: $ terraform plan
           inputs:
