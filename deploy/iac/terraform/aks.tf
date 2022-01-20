@@ -5,12 +5,12 @@ resource "azurerm_kubernetes_cluster" "default" {
   dns_prefix          = "${var.dns_prefix}-${var.name}-aks-${var.environment}"
   depends_on          = [azurerm_role_assignment.aks_network, azurerm_role_assignment.aks_acr]
 
-  agent_pool_profile {
+
+  default_node_pool  {
     name            = "agentpool"
-    count           = "${var.node_count}"
+    node_count            = "${var.node_count}"
     vm_size         = "${var.node_type}"
-    os_type         = "Linux"
-    os_disk_size_gb = 30
+   
   }
 
   service_principal {
