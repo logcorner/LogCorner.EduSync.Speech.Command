@@ -15,25 +15,14 @@ provider "azurerm" {
   features {}
 }
 
-# The Azure Active Directory Terraform provider
-/* terraform {
-  required_providers {
-    azuread = {
-      source  = "hashicorp/azuread"
-      version = "~> 2.0.0"
-    }
-  }
-} */
-
 # Configure the Azure Active Directory Provider
- provider "azuread" {
-  tenant_id = "f12a747a-cddf-4426-96ff-ebe055e215a3"
+provider "azuread" {
+  client_id     = var.client_id
+  client_secret = var.client_secret
+  tenant_id     = var.tenant_id
 }
  
-# Retrieve domain information
-data "azuread_domains" "example" {
-  only_initial = true
-}
+
 # Reference to the current subscription.  Used when creating role assignments
 data "azurerm_subscription" "current" {}
 
