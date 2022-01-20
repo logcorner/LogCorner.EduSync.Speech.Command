@@ -2,7 +2,11 @@ jobs:
 - job: LintCode
   displayName: Lint code
   steps:
+    - task: TerraformInstaller@0
+      displayName: Install TF 0.14.8
+      inputs:
+        terraformVersion: '0.14.8'
     - script: |
-        az bicep build --file deploy/iac/biceps/main.bicep
+        terraform init
       name: LintBicepCode
       displayName: Run Bicep linter
