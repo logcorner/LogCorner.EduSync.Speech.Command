@@ -2,7 +2,7 @@ trigger:
   batch: true
   branches:
     include:
-    - azure-pipelines-aks
+    - azure-pipelines-aks-terraform
 
 pool:
   name: LOGCORNER-POOL
@@ -23,12 +23,12 @@ stages:
   - template: pipeline-templates/lint.yml
   
   # Deploy to the test environment.
-# - template: pipeline-templates/deploy.yml
-#   parameters:
-#     environmentType: Test
-#     dockerRegistry: ${{ variables.dockerRegistry  }}
-#     databaseImageName: ${{ variables.databaseImageName  }}
-#     webApiImageName: ${{ variables.webApiImageName  }}
+- template: pipeline-templates/deploy.yml
+  parameters:
+    environmentType: Test
+    dockerRegistry: ${{ variables.dockerRegistry  }}
+    databaseImageName: ${{ variables.databaseImageName  }}
+    webApiImageName: ${{ variables.webApiImageName  }}
    
 # # Deploy to the production environment.
 # - template: pipeline-templates/deploy.yml
