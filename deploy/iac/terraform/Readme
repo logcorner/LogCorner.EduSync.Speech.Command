@@ -1,0 +1,19 @@
+# prepare and push images to azure container registry
+az acr login --name tfqdemotfquickstartacr
+docker tag logcornerhub/logcorner-edusync-speech-mssql-tools tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-mssql-tools
+docker push tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-mssql-tools
+
+docker tag logcornerhub/logcorner-edusync-speech-command  tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-command
+docker push tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-command
+
+
+# prepare and deploy to aks
+
+az aks get-credentials --resource-group aks --name akslogcornercluster
+
+kubectl config get-contexts 
+kubectl config use-context  akslogcornercluster 
+
+kubectl apply -f . -f CommandDatabase  -f CommandApi
+kubectl rollout restart deployment speech-command-http-api-deployment -n aks
+kubectl logs speech-command-http-api-deployment-8d494c44c-j7zx6 -n aks

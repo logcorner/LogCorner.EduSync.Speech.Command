@@ -1,0 +1,48 @@
+
+parameters:
+- name: dockerRegistry
+  type: string
+
+jobs:
+- job: Build
+  displayName: Build application and database
+  pool:
+    name: LOGCORNER-POOL
+
+  steps:
+
+  - task: DockerCompose@0
+    displayName: 'Build docker images '
+    inputs:
+      containerregistrytype: 'Azure Container Registry'
+      dockerComposeFile: 'src/docker-compose.yml'
+      additionalDockerComposeFiles: |
+        docker-compose.override.yml
+        docker-compose-unit-tests.yml
+        docker-compose.override-unit-tests.yml
+      dockerComposeFileArgs: 'DOCKER_REGISTRY=${{parameters.dockerRegistry}}'
+      action: 'Build services'
+      includeLatestTag: true
+  - task: DockerCompose@0
+    displayName: 'Run UnitTests'
+    inputs:
+      containerregistrytype: 'Azure Container Registry'
+      dockerComposeFile: 'src/docker-compose-unit-tests.yml'
+      additionalDockerComposeFiles: 'docker-compose.override-unit-tests.yml'
+      dockerComposeFileArgs: 'DOCKER_REGISTRY=${{parameters.dockerRegistry}}'
+      dockerComposeCommand: 'up'
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results'
+    inputs:
+      testResultsFormat: 'VSTest'
+      testResultsFiles: '$(System.DefaultWorkingDirectory)/**/TestResults/**/tests-results*.xml'
+      failTaskOnFailedTests: true
+    continueOnError: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact'
+    inputs:
+      PathtoPublish: 'deploy/kubernetes/aks/'
+      ArtifactName: 'drop-arm'
+      publishLocation: 'Container'
+    

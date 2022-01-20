@@ -6,7 +6,7 @@ resource "azurerm_kubernetes_cluster" "default" {
   depends_on          = [azurerm_role_assignment.aks_network, azurerm_role_assignment.aks_acr]
 
   agent_pool_profile {
-    name            = "default"
+    name            = "agentpool"
     count           = "${var.node_count}"
     vm_size         = "${var.node_type}"
     os_type         = "Linux"
