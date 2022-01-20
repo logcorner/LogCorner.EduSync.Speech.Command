@@ -10,3 +10,4 @@ jobs:
         terraform init
       name: LintBicepCode
       displayName: Run Bicep linter
+      workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
