@@ -54,9 +54,7 @@ stages:
               cd $(System.DefaultWorkingDirectory)/deploy/iac/terraform
               
               terraform show tfplan 
-              # Format tfplan.json file
-             
-              # show only the changes
+          
               
           displayName: Create tfplan.json
 
