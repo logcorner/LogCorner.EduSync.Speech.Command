@@ -52,12 +52,12 @@ stages:
     
         - script: |
               cd $(System.DefaultWorkingDirectory)/deploy/iac/terraform
-              #terraform show -json tfplan >> tfplan.json
+              
               terraform show tfplan 
               # Format tfplan.json file
-              #terraform show -json tfplan | jq '.' > tfplan.json
+             
               # show only the changes
-              #cat tfplan.json | jq '[.resource_changes[] | {type: .type, name: .change.after.name, actions: .change.actions[]}]' 
+              
           displayName: Create tfplan.json
 
 # - ${{ if eq(parameters.environmentType, 'Production') }}:
