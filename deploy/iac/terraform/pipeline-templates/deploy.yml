@@ -104,9 +104,8 @@ stages:
                 scriptType: 'ps'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
-                  cd $(System.DefaultWorkingDirectory)/deploy/iac/terraform
-              
-                   terraform 'apply' 
+                  terraform 'apply' 
+                workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
             # - task: AzureCLI@2
             #   displayName: Docker Build & Push
             #   inputs:
