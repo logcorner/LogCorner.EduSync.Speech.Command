@@ -5,7 +5,7 @@ trigger:
     - azure-pipelines-aks-terraform
 
 pool:
-  name: LOGCORNER-POOL
+  vmImage: 'ubuntu-latest'
 variables:
   dockerRegistry: "logcornerhub"
   databaseImageName: "logcorner-edusync-speech-mssql-tools"
