@@ -96,16 +96,22 @@ stages:
           steps:
             - checkout: self
 
-            - task: AzureCLI@2
-              name: DeployBicepFile
-              displayName: Deploy Bicep file
+            - task: TerraformTaskV2@2
               inputs:
-                azureSubscription: AzureDevOpsServiceConnection
-                scriptType: 'ps'
-                scriptLocation: 'inlineScript'
-                inlineScript: |
-                  terraform 'apply' 
-                workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
+                provider: 'azurerm'
+                command: 'apply'
+                environmentServiceNameAzureRM: 'AzureDevOpsServiceConnection'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
+            - task: PowerShell@2
+              inputs:
+                targetType: 'inline'
+                script: |
+                  $json = Get-Content $env:jsonPath | Out-String | ConvertFrom-Json
+
+                  foreach($prop in $json.psobject.properties) {
+                      Write-Host("##vso[task.setvariable variable=$($prop.Name);]$($prop.Value.value)")
+                  }
+                workingDirectory: 'dir'
             # - task: AzureCLI@2
             #   displayName: Docker Build & Push
             #   inputs:
