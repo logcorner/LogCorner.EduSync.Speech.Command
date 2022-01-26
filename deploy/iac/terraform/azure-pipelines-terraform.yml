@@ -71,7 +71,7 @@ stages:
       displayName: Docker Push
       inputs:
         azureSubscription: 'AzureDevOpsServiceConnection'
-        scriptType: 'bash'
+        scriptType: 'ps'
         scriptLocation: 'inlineScript'
         inlineScript: |
           az acr login -n tfqdemotfquickstartacr.azurecr.io
