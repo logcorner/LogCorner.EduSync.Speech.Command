@@ -35,7 +35,7 @@ variable "environment" {
 variable "location" {
   type        = string
   description = "Location of the azure resource group."
-  default     = "WestUS2"
+  default     = "WestEurope"
 }
 
 // Node type information
