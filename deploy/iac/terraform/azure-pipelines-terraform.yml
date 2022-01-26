@@ -57,7 +57,6 @@ stages:
         commandOptions: '-input=false -auto-approve'
         environmentServiceNameAzureRM: 'AzureDevOpsServiceConnection'
     - task: DockerCompose@0
-      enabled: false
       displayName: 'Build docker images '
       inputs:
         containerregistrytype: 'Azure Container Registry'
@@ -68,7 +67,6 @@ stages:
         additionalImageTags: '$(tag)'
         includeLatestTag: true
     - task: AzureCLI@2
-      enabled: false
       displayName: Docker Push
       inputs:
         azureSubscription: 'AzureDevOpsServiceConnection'
@@ -82,7 +80,6 @@ stages:
       
     
     - task: replacetokens@3
-      enabled: false
       displayName: Replace Tokens in  CommandApi
       inputs:
         rootDirectory: 'deploy/kubernetes/aks'
@@ -100,7 +97,6 @@ stages:
 
     
     - task: Kubernetes@1
-      enabled: false
       inputs:
         connectionType: 'Azure Resource Manager'
         azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
