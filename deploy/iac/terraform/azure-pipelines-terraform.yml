@@ -102,7 +102,7 @@ stages:
         connectionType: 'Azure Resource Manager'
         azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
         azureResourceGroup: 'demo-tfquickstart-dev-rg'
-        kubernetesCluster: 'akslogcornercluster5xvudnm6uolcm'
+        kubernetesCluster: 'demo-tfquickstart-aks'
         command: 'apply'
         arguments: '-f . -f CommandDatabase -f CommandApi'
         secretType: 'dockerRegistry'
