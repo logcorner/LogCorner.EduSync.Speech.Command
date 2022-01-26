@@ -41,14 +41,19 @@ stages:
     - script: |
         terraform init
       name: LintBicepCode
-      displayName: Plan Terraform
+      displayName: Init Terraform
       workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
     - task: TerraformTaskV2@2
       inputs:
         provider: 'azurerm'
         command: 'validate'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
-      
+    - task: TerraformTaskV2@2
+      displayName: Plan Terraform
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        environmentServiceNameAzureRM: 'AzureDevOpsServiceConnection'
     - task: TerraformTaskV2@2
       displayName: Apply Terraform
       inputs:
