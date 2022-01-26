@@ -56,6 +56,20 @@ stages:
           az acr login -n acrlogcornerregistry5xvudnm6uolcm
           docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-command:$(tag)
           docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
+    - task: TerraformInstaller@0
+      displayName: Install TF 1.1.3
+      inputs:
+        terraformVersion: '1.1.4'
+    - script: |
+        terraform init
+      name: LintBicepCode
+      displayName: Run Bicep linter
+      workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
+    - task: TerraformTaskV2@2
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
     - task: replacetokens@3
       enabled: false
       displayName: Replace Tokens in  CommandApi
