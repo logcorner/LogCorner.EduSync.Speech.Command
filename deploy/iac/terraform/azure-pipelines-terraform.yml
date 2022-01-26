@@ -75,6 +75,8 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
+        commandOptions: '-input=false -auto-approve'
         environmentServiceNameAzureRM: 'AzureDevOpsServiceConnection'
       
     - task: PowerShell@2
