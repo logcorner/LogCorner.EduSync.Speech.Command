@@ -1,8 +1,6 @@
 trigger:
-  batch: true
-  branches:
-    include:
-    - azure-pipelines-aks-terraform
+  none
+  
 
 pool:
   name: LOGCORNER-POOL
