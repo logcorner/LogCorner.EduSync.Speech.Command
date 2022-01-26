@@ -1,14 +1,14 @@
 trigger:
   branches:
     include:
-    - azure-pipelines-aks
+    - azure-pipelines-aks-terraform
 resources:
   repositories:
   - repository: MyGitHubRepo
     type: github
     endpoint: github.com_logcorner
     name: logcorner/LogCorner.EduSync.Speech.Command
-    ref: azure-pipelines-aks
+    ref: azure-pipelines-aks-terraform
 variables:
 - name: dockerRegistryServiceConnection
   value: 'AzureDevOpsServiceConnection'
