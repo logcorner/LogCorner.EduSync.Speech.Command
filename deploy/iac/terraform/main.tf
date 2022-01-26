@@ -28,6 +28,6 @@ data "azurerm_subscription" "current" {}
 
 # The main resource group for this deployment
 resource "azurerm_resource_group" "default" {
-  name     = "${var.name}-${var.environment}-rg"
+  name     = "${var.name}-${var.environment}-rg-01"
   location = "${var.location}"
 }

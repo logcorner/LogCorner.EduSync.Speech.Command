@@ -15,13 +15,13 @@ variables:
 - name: imageRepository
   value: 'logcornerlogcorneredusyncspeechcommand'
 - name: containerRegistry
-  value: 'tfqdemotfquickstartacr.azurecr.io.azurecr.io'
+  value: 'tfqdemotfquickstartacr.azurecr.io'
 - name: dockerfilePath
   value: 'LogCorner.EduSync.Speech.Command/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/Dockerfile'
 - name: tag
   value: '$(Build.BuildId)'
 - name: ACR_NAME
-  value:  tfqdemotfquickstartacr.azurecr.io.azurecr.io
+  value:  tfqdemotfquickstartacr.azurecr.io
 - name: imagePullSecret
   value: 'acrlogcornerregistry1339485b-auth'
 stages:
