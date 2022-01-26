@@ -35,13 +35,13 @@ stages:
     steps:
     
     - task: TerraformInstaller@0
-      displayName: Install TF 1.1.3
+      displayName: Install Terraform 1.1.3
       inputs:
         terraformVersion: '1.1.4'
     - script: |
         terraform init
       name: LintBicepCode
-      displayName: Run Bicep linter
+      displayName: Plan Terraform
       workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
     - task: TerraformTaskV2@2
       inputs:
@@ -50,6 +50,7 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
       
     - task: TerraformTaskV2@2
+      displayName: Apply Terraform
       inputs:
         provider: 'azurerm'
         command: 'apply'
