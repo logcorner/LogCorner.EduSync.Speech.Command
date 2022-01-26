@@ -15,13 +15,13 @@ variables:
 - name: imageRepository
   value: 'logcornerlogcorneredusyncspeechcommand'
 - name: containerRegistry
-  value: 'acrlogcornerregistry5xvudnm6uolcm.azurecr.io'
+  value: 'tfqdemotfquickstartacr.azurecr.io.azurecr.io'
 - name: dockerfilePath
   value: 'LogCorner.EduSync.Speech.Command/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/Dockerfile'
 - name: tag
   value: '$(Build.BuildId)'
 - name: ACR_NAME
-  value:  acrlogcornerregistry5xvudnm6uolcm.azurecr.io
+  value:  tfqdemotfquickstartacr.azurecr.io.azurecr.io
 - name: imagePullSecret
   value: 'acrlogcornerregistry1339485b-auth'
 stages:
@@ -34,28 +34,6 @@ stages:
       name:  LOGCORNER-POOL
     steps:
     
-    - task: DockerCompose@0
-      enabled: false
-      displayName: 'Build docker images '
-      inputs:
-        containerregistrytype: 'Azure Container Registry'
-        azureContainerRegistry: '$(dockerRegistryServiceConnection)'
-        dockerComposeFile: 'src/docker-compose.yml'
-        dockerComposeFileArgs: 'DOCKER_REGISTRY=$(containerRegistry)'
-        action: 'Build services'
-        additionalImageTags: '$(tag)'
-        includeLatestTag: true
-    - task: AzureCLI@2
-      enabled: false
-      displayName: Docker Push
-      inputs:
-        azureSubscription: 'AzureDevOpsServiceConnection'
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: |
-          az acr login -n acrlogcornerregistry5xvudnm6uolcm
-          docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-command:$(tag)
-          docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
     - task: TerraformInstaller@0
       displayName: Install TF 1.1.3
       inputs:
@@ -78,17 +56,31 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
         commandOptions: '-input=false -auto-approve'
         environmentServiceNameAzureRM: 'AzureDevOpsServiceConnection'
-      
-    - task: PowerShell@2
+    - task: DockerCompose@0
+      enabled: false
+      displayName: 'Build docker images '
       inputs:
-        targetType: 'inline'
-        script: |
-                  $json = Get-Content $env:jsonPath | Out-String | ConvertFrom-Json
-
-                  foreach($prop in $json.psobject.properties) {
-                      Write-Host("##vso[task.setvariable variable=$($prop.Name);]$($prop.Value.value)")
-                  }
-        workingDirectory: 'dir'
+        containerregistrytype: 'Azure Container Registry'
+        azureContainerRegistry: '$(dockerRegistryServiceConnection)'
+        dockerComposeFile: 'src/docker-compose.yml'
+        dockerComposeFileArgs: 'DOCKER_REGISTRY=$(containerRegistry)'
+        action: 'Build services'
+        additionalImageTags: '$(tag)'
+        includeLatestTag: true
+    - task: AzureCLI@2
+      enabled: false
+      displayName: Docker Push
+      inputs:
+        azureSubscription: 'AzureDevOpsServiceConnection'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az acr login -n tfqdemotfquickstartacr.azurecr.io
+          docker push tfqdemotfquickstartacr.azurecr.io.azurecr.io/logcorner-edusync-speech-command:$(tag)
+          docker push tfqdemotfquickstartacr.azurecr.io.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
+   
+      
+    
     - task: replacetokens@3
       enabled: false
       displayName: Replace Tokens in  CommandApi
