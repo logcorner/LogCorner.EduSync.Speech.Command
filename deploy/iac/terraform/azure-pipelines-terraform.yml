@@ -76,7 +76,7 @@ stages:
         provider: 'azurerm'
         command: 'apply'
         environmentServiceNameAzureRM: 'AzureDevOpsServiceConnection'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
+      
     - task: PowerShell@2
       inputs:
         targetType: 'inline'
