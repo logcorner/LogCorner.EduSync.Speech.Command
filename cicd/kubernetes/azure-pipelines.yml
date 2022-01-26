@@ -1,7 +1,5 @@
 trigger:
-  branches:
-    include:
-    - azure-pipelines-aks
+  none
 resources:
   repositories:
   - repository: MyGitHubRepo
