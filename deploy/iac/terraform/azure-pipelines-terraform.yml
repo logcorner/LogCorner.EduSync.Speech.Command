@@ -75,8 +75,8 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           az acr login -n tfqdemotfquickstartacr.azurecr.io
-          docker push tfqdemotfquickstartacr.azurecr.io.azurecr.io/logcorner-edusync-speech-command:$(tag)
-          docker push tfqdemotfquickstartacr.azurecr.io.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
+          docker push tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-command:$(tag)
+          docker push tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
    
       
     
