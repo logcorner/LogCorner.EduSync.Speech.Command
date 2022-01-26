@@ -70,6 +70,23 @@ stages:
         provider: 'azurerm'
         command: 'validate'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
+      
+    - task: TerraformTaskV2@2
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        environmentServiceNameAzureRM: 'AzureDevOpsServiceConnection'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+                  $json = Get-Content $env:jsonPath | Out-String | ConvertFrom-Json
+
+                  foreach($prop in $json.psobject.properties) {
+                      Write-Host("##vso[task.setvariable variable=$($prop.Name);]$($prop.Value.value)")
+                  }
+        workingDirectory: 'dir'
     - task: replacetokens@3
       enabled: false
       displayName: Replace Tokens in  CommandApi
@@ -87,8 +104,6 @@ stages:
         useLegacyPattern: false
         enableTelemetry: true
 
-    - script: cat deploy/kubernetes/aks/CommandApi/command-api-deployment.yml
-    - script: cat deploy/kubernetes/aks/CommandDatabase/db-job.yml
     
     - task: Kubernetes@1
       enabled: false
