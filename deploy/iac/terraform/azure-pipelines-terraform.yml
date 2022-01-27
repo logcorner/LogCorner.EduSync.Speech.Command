@@ -60,7 +60,6 @@ stages:
         provider: 'azurerm'
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
-        commandOptions: '-chdir $(System.DefaultWorkingDirectory)/deploy/iac/terraform'
         environmentServiceNameAzureRM: 'AzureDevOpsServiceConnection'
     - task: TerraformTaskV2@2
       displayName: Apply Terraform
