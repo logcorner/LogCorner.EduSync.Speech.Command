@@ -1,4 +1,4 @@
-locals {
+/*locals {
   acr_name = "${replace(var.dns_prefix, "-", "")}${replace(var.name, "-", "")}acr"
 }
 resource "azurerm_container_registry" "default" {
@@ -7,4 +7,4 @@ resource "azurerm_container_registry" "default" {
   location                 = "${azurerm_resource_group.default.location}"
   sku                      = "Standard"
   admin_enabled            = false
-}
+}*/

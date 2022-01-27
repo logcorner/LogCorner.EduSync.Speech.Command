@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: command-api-container
-        image: tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-command:latest
+        image: __ACR_LOGIN_SERVER__/logcorner-edusync-speech-command:__BUILD_NUMBER__
         imagePullPolicy: Always
         env:
         - name: ASPNETCORE_ENVIRONMENT

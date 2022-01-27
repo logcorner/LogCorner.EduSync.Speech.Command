@@ -18,9 +18,9 @@ variables:
   value: 'tfqdemotfquickstartacr.azurecr.io'
 - name: dockerfilePath
   value: 'LogCorner.EduSync.Speech.Command/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/Dockerfile'
-- name: tag
+- name: BUILD_NUMBER
   value: '$(Build.BuildId)'
-- name: ACR_NAME
+- name: ACR_LOGIN_SERVER
   value:  tfqdemotfquickstartacr.azurecr.io
 - name: imagePullSecret
   value: 'acrlogcornerregistry1339485b-auth'
@@ -76,7 +76,7 @@ stages:
         dockerComposeFile: 'src/docker-compose.yml'
         dockerComposeFileArgs: 'DOCKER_REGISTRY=$(containerRegistry)'
         action: 'Build services'
-        additionalImageTags: '$(tag)'
+        additionalImageTags: '$(BUILD_NUMBER)'
         includeLatestTag: true
     - task: AzureCLI@2
       displayName: Docker Push
@@ -86,8 +86,8 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           az acr login -n tfqdemotfquickstartacr.azurecr.io
-          docker push tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-command:$(tag)
-          docker push tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
+          docker push tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-command:$(BUILD_NUMBER)
+          docker push tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-mssql-tools:$(BUILD_NUMBER)
    
       
     

@@ -16,12 +16,22 @@ resource "azurerm_kubernetes_cluster" "default" {
   identity {
     type = "SystemAssigned"
   }
-  /* service_principal {
-    client_id     = "${azuread_application.default.application_id}"
-    client_secret = "${azuread_service_principal_password.default.value}"
-  } */
+  
+}
 
- /*  role_based_access_control {
-    enabled = true
-  } */
+locals {
+  acr_name = "${replace(var.dns_prefix, "-", "")}${replace(var.name, "-", "")}acr"
+}
+resource "azurerm_container_registry" "default" {
+  name                     = "${local.acr_name}"
+  resource_group_name      = "${azurerm_resource_group.default.name}"
+  location                 = "${azurerm_resource_group.default.location}"
+  sku                      = "Standard"
+  admin_enabled            = false
+}
+
+resource "azurerm_role_assignment" "aks_acr" {
+  scope                = azurerm_container_registry.default.id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_kubernetes_cluster.default.kubelet_identity[0].object_id
 }
