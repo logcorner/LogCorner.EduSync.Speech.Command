@@ -38,11 +38,17 @@ stages:
       displayName: Install Terraform 1.1.3
       inputs:
         terraformVersion: '1.1.4'
-    - script: |
-        terraform init
-      name: LintBicepCode
-      displayName: Init Terraform
-      workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
+    
+    - task: TerraformTaskV2@2
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
+        backendServiceArm: 'AzureDevOpsServiceConnection'
+        backendAzureRmResourceGroupName: 'terraform-rg'
+        backendAzureRmStorageAccountName: 'tfbackenglogconer'
+        backendAzureRmContainerName: 'tfbackend'
+        backendAzureRmKey: 'terraform.tfstate'
     - task: TerraformTaskV2@2
       inputs:
         provider: 'azurerm'
