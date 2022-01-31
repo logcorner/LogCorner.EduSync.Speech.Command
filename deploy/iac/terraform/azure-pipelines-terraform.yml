@@ -84,19 +84,26 @@ stages:
         script: |
           $terraformOutput =  "$(terraformApply.jsonOutputVariablesPath)" 
           $output = Get-Content $($terraformOutput ) | ConvertFrom-Json
-          Write-Host  $output
-
+         
           $container_registry_name =  $output.container_registry_name.value
           $kubernetes_cluster_name =  $output.kubernetes_cluster_name.value
 
           Write-Host "kubernetes_cluster_name ="   $container_registry_name
           Write-Host  " kubernetes_cluster_name  =" $kubernetes_cluster_name
-          
+          Write-Host "##vso[task.setvariable variable=clusterName]$kubernetes_cluster_name"
+          Write-Host "##vso[task.setvariable variable=acrName]$container_registry_name"
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
 
-       
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your PowerShell commands here.
+          
+          Write-Host "$(clusterName)"= $(clusterName)
+          Write-Host "$(acrName)"= $(acrName)
       name: terraformOutput
-      displayName: Read terraform outputs
+      displayName: Read build variables
     - task: DockerCompose@0
       displayName: 'Build docker images '
       inputs:
