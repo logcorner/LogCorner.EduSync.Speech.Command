@@ -61,8 +61,14 @@ stages:
         provider: 'azurerm'
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
-        commandOptions: '-out=tfplan'
+        commandOptions: '-out tfplan'
         environmentServiceNameAzureRM: 'AzureDevOpsServiceConnection'
+    - task: PowerShell@2
+      inputs:
+         targetType: 'inline'
+         script: 'terraform show -json tfplan >> tfplan.json'
+         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
+    
     - task: TerraformTaskV2@2
       name: terraformApply
       displayName: Apply Terraform
@@ -70,7 +76,7 @@ stages:
         provider: 'azurerm'
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
-        commandOptions: '-input=false -auto-approve'
+        commandOptions: 'tfplan -auto-approve'
         environmentServiceNameAzureRM: 'AzureDevOpsServiceConnection'
     - powershell: |
       
