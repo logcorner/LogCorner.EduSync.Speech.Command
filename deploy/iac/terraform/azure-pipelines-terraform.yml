@@ -15,14 +15,12 @@ variables:
   value: 'AzureDevOpsServiceConnection'
 - name: imageRepository
   value: 'logcornerlogcorneredusyncspeechcommand'
-- name: containerRegistry
-  value: 'tfqdemotfquickstartacr.azurecr.io'
+
 - name: dockerfilePath
   value: 'LogCorner.EduSync.Speech.Command/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/Dockerfile'
 - name: BUILD_NUMBER
   value: '$(Build.BuildId)'
-- name: ACR_LOGIN_SERVER
-  value:  tfqdemotfquickstartacr.azurecr.io
+
 - name: imagePullSecret
   value: 'acrlogcornerregistry1339485b-auth'
 stages:
@@ -110,7 +108,7 @@ stages:
         containerregistrytype: 'Azure Container Registry'
         azureContainerRegistry: '$(dockerRegistryServiceConnection)'
         dockerComposeFile: 'src/docker-compose.yml'
-        dockerComposeFileArgs: 'DOCKER_REGISTRY=$(containerRegistry)'
+        dockerComposeFileArgs: 'DOCKER_REGISTRY=$(acrName).azurecr.io'
         action: 'Build services'
         additionalImageTags: '$(BUILD_NUMBER)'
         includeLatestTag: true
@@ -121,9 +119,9 @@ stages:
         scriptType: 'ps'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          az acr login -n tfqdemotfquickstartacr.azurecr.io
-          docker push tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-command:$(BUILD_NUMBER)
-          docker push tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-mssql-tools:$(BUILD_NUMBER)
+          az acr login -n $(acrName).azurecr.io
+          docker push $(acrName).azurecr.io/logcorner-edusync-speech-command:$(BUILD_NUMBER)
+          docker push $(acrName).azurecr.io/logcorner-edusync-speech-mssql-tools:$(BUILD_NUMBER)
   
     - task: replacetokens@3
       displayName: Replace Tokens in  CommandApi
@@ -147,7 +145,7 @@ stages:
         connectionType: 'Azure Resource Manager'
         azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
         azureResourceGroup: 'demo-tfquickstart-dev-rg'
-        kubernetesCluster: 'demo-tfquickstart-aks'
+        kubernetesCluster: '$(clusterName)'
         command: 'apply'
         arguments: '-f . -f CommandDatabase -f CommandApi'
         secretType: 'dockerRegistry'
