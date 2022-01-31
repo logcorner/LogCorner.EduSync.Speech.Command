@@ -1,4 +1,3 @@
-
 trigger:
   branches:
     include:
@@ -13,15 +12,8 @@ resources:
 variables:
 - name: dockerRegistryServiceConnection
   value: 'AzureDevOpsServiceConnection'
-- name: imageRepository
-  value: 'logcornerlogcorneredusyncspeechcommand'
-
-
 - name: BUILD_NUMBER
   value: '$(Build.BuildId)'
-
-- name: imagePullSecret
-  value: 'acrlogcornerregistry1339485b-auth'
 stages:
 - stage: Build
   displayName: Build stage
