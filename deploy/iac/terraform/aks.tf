@@ -35,6 +35,11 @@ resource "azurerm_role_assignment" "aks_acr" {
   principal_id         = azurerm_kubernetes_cluster.default.kubelet_identity[0].object_id
 }
 
+output "resource_group_name" {
+  description = "The name of the resource group"
+  value       = azurerm_resource_group.default.name
+}
+
 output "kubernetes_cluster_name" {
   description = "The name of the azure kubernetes service cluster"
   value       = azurerm_kubernetes_cluster.default.name
