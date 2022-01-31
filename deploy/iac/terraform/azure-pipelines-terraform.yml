@@ -76,7 +76,7 @@ stages:
         provider: 'azurerm'
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
-        commandOptions: 'tfplan -auto-approve'
+        commandOptions: '-auto-approve'
         environmentServiceNameAzureRM: 'AzureDevOpsServiceConnection'
     - powershell: |
       
