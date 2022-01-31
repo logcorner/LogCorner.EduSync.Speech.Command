@@ -121,7 +121,7 @@ stages:
         scriptType: 'ps'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          az acr login -n $(acrName).azurecr.io
+          az acr login -n $(acrName)
           docker push $(acrName).azurecr.io/logcorner-edusync-speech-command:$(BUILD_NUMBER)
           docker push $(acrName).azurecr.io/logcorner-edusync-speech-mssql-tools:$(BUILD_NUMBER)
   
@@ -146,7 +146,7 @@ stages:
       inputs:
         connectionType: 'Azure Resource Manager'
         azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
-        azureResourceGroup: '($resource_group_name)'
+        azureResourceGroup: '($resourceGroupName)'
         kubernetesCluster: '$(clusterName)'
         command: 'apply'
         arguments: '-f . -f CommandDatabase -f CommandApi'
