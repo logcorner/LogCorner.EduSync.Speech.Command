@@ -83,7 +83,8 @@ stages:
         targetType: 'inline'
         script: |
           $terraformOutput =  "$(terraformApply.jsonOutputVariablesPath)" 
-                  Write-Host "terraformOutput =  $(terraformOutput)"
+          Write-Host "terraformOutput :"
+          Write-Host  $terraformOutput
           
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
 
