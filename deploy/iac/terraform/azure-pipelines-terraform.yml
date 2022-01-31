@@ -92,7 +92,7 @@ stages:
           Write-Host "##vso[task.setvariable variable=resourceGroupName]$resource_group_name"
           Write-Host "##vso[task.setvariable variable=clusterName]$kubernetes_cluster_name"
           Write-Host "##vso[task.setvariable variable=acrName]$container_registry_name"
-          Write-Host "##vso[task.setvariable variable=ACR_LOGIN_SERVER]$(acrName).azurecr.io"
+          Write-Host "##vso[task.setvariable variable=ACR_LOGIN_SERVER]$container_registry_name.azurecr.io"
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
 
     - task: PowerShell@2
