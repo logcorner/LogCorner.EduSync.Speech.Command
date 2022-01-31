@@ -16,8 +16,7 @@ variables:
 - name: imageRepository
   value: 'logcornerlogcorneredusyncspeechcommand'
 
-- name: dockerfilePath
-  value: 'LogCorner.EduSync.Speech.Command/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/Dockerfile'
+
 - name: BUILD_NUMBER
   value: '$(Build.BuildId)'
 
@@ -83,11 +82,14 @@ stages:
           $terraformOutput =  "$(terraformApply.jsonOutputVariablesPath)" 
           $output = Get-Content $($terraformOutput ) | ConvertFrom-Json
          
+          $resource_group_name =  $output.resource_group_name.value
           $container_registry_name =  $output.container_registry_name.value
           $kubernetes_cluster_name =  $output.kubernetes_cluster_name.value
 
+          Write-Host "resource_group_name ="   $resource_group_name
           Write-Host "kubernetes_cluster_name ="   $container_registry_name
-          Write-Host  " kubernetes_cluster_name  =" $kubernetes_cluster_name
+          Write-Host  "kubernetes_cluster_name  =" $kubernetes_cluster_name
+          Write-Host "##vso[task.setvariable variable=resourceGroupName]$resource_group_name"
           Write-Host "##vso[task.setvariable variable=clusterName]$kubernetes_cluster_name"
           Write-Host "##vso[task.setvariable variable=acrName]$container_registry_name"
         workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/iac/terraform'
@@ -144,7 +146,7 @@ stages:
       inputs:
         connectionType: 'Azure Resource Manager'
         azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
-        azureResourceGroup: 'demo-tfquickstart-dev-rg'
+        azureResourceGroup: '($resource_group_name)'
         kubernetesCluster: '$(clusterName)'
         command: 'apply'
         arguments: '-f . -f CommandDatabase -f CommandApi'
