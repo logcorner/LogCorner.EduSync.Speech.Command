@@ -1,3 +1,12 @@
+terraform init -reconfigure
+terraform init
+terraform plan -out tfplan
+terraform show -json tfplan >> tfplan.json
+terraform apply  tfplan
+
+
+
+
 # prepare and push images to azure container registry
 az acr login --name tfqdemotfquickstartacr
 docker tag logcornerhub/logcorner-edusync-speech-mssql-tools tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-mssql-tools
