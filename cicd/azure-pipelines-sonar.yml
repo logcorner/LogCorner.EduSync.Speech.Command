@@ -11,11 +11,6 @@ variables:
   value: '58b27d78bf39ce9e38aad7676d1f5d7575cc2f7d'
 
 steps:
-- task: SonarQubePrepare@5
-  inputs:
-    SonarQube: 'sonarqueConnection'
-    scannerMode: 'CLI'
-    configMode: 'file'
 - task: DotNetCoreCLI@2
   displayName: 'dotnet restore'
   inputs:
@@ -46,6 +41,3 @@ steps:
      targetType: 'inline'
      script: 'dotnet sonarscanner end /d:sonar.login=$(sonarToken)'
      workingDirectory: '$(System.DefaultWorkingDirectory)/src'
-- task: SonarQubePublish@5
-  inputs:
-    pollingTimeoutSec: '300'
