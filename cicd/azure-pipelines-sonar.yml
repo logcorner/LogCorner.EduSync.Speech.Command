@@ -11,6 +11,11 @@ variables:
   value: '58b27d78bf39ce9e38aad7676d1f5d7575cc2f7d'
 
 steps:
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'sonarqueConnection'
+    scannerMode: 'CLI'
+    configMode: 'file'
 - task: DotNetCoreCLI@2
   displayName: 'dotnet restore'
   inputs:
