@@ -2,7 +2,7 @@ trigger:
 - develop
 
 pool:
-  name: LOGCORNER-POOL
+  vmImage: windows-latest
 
 steps:
    
