@@ -19,7 +19,7 @@ steps:
     script: |
       dotnet tool install --global dotnet-sonarscanner
       dotnet sonarscanner begin /k:"LogCorner.EduSync.Speech.Command" /d:sonar.host.url="http://aci-sonarqube-logcorner.westeurope.azurecontainer.io:9000"  /d:sonar.login="58b27d78bf39ce9e38aad7676d1f5d7575cc2f7d"
-    workingDirectory: '$(Build.ArtifactStagingDirectory)/LogCorner.EduSync.Speech.Command/src'
+    workingDirectory: '$(DefaultWorkingDirectory)/LogCorner.EduSync.Speech.Command/src'
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'
   inputs:
@@ -34,4 +34,4 @@ steps:
   inputs:
      targetType: 'inline'
      script: 'dotnet sonarscanner end /d:sonar.login="58b27d78bf39ce9e38aad7676d1f5d7575cc2f7d"'
-     workingDirectory: '$(Build.ArtifactStagingDirectory)/LogCorner.EduSync.Speech.Command/src'
+     workingDirectory: '$(DefaultWorkingDirectory)/LogCorner.EduSync.Speech.Command/src'
