@@ -1,0 +1,41 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+- name: sonarqubeKey
+  value: 'LogCorner.EduSync.Speech.Command'
+- name: sonarqubeName
+  value: 'LogCorner.EduSync.Speech.Command'
+steps:
+- task: SonarSource.sonarqube.15B84CA1-B62F-4A2A-A403-89B7A063157.SonarQubePrepare@4
+  displayName: 'Prepare analysis on SonarQube'
+  inputs:
+    SonarQube: Sonarqube
+    projectKey: '$(sonarqubeKey)'
+    projectName: '$(sonarqubeName)'
+    projectVersion: '$(Major).$(Minor)'
+    extraProperties: |
+          # Additional properties that will be passed to the scanner, 
+          # Put one key=value per line, example:
+          # sonar.exclusions=**/*.bin
+          sonar.dependencyCheck.reportPath=$(Build.SourcesDirectory)/dependency-check-report.xml     
+       sonar.dependencyCheck.htmlReportPath=$(Build.SourcesDirectory)/dependency-check-report.html
+          sonar.cpd.exclusions=**/AssemblyInfo.cs,**/*.g.cs
+             sonar.cs.vscoveragexml.reportsPaths=$(System.DefaultWorkingDirectory)/**/*.coveragexml
+         sonar.cs.vstest.reportsPaths=$(System.DefaultWorkingDirectory)/**/*.trx
+
+… Build & Test with DotNetCoreCLI
+
+- task: SonarSource.sonarqube.6D01813A-9589-4B15-8491-8164AEB38055.SonarQubeAnalyze@4
+  displayName: 'Run Code Analysis'
+
+- task: SonarSource.sonarqube.291ed61f-1ee4-45d3-b1b0-bf822d9095ef.SonarQubePublish@4
+  displayName: 'Publish Quality Gate Result'
