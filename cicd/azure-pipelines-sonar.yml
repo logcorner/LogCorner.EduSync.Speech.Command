@@ -41,3 +41,6 @@ steps:
      targetType: 'inline'
      script: 'dotnet sonarscanner end /d:sonar.login=$(sonarToken)'
      workingDirectory: '$(System.DefaultWorkingDirectory)/src'
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
