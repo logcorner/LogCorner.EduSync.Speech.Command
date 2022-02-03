@@ -10,3 +10,13 @@ steps:
   inputs:
     command: restore
     projects: '**/*.csproj'
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+  inputs:
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
+  inputs:
+    command: test
+    projects: '**/*Unit[Tt]ests/*.csproj'
