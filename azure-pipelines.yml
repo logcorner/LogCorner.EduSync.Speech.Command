@@ -40,6 +40,7 @@ steps:
   inputs:
     command: test
     projects: '**/*Unit[Tt]ests/*.csproj'
+  continueOnError: true
 
 - task: SonarQubeAnalyze@4
 
