@@ -15,6 +15,10 @@ module "logcorner-kubernetes_service" {
   node_type               = var.node_type
   dns_prefix              = var.dns_prefix
   environment             = var.environment
+  tags = (merge(var.default_tags, tomap({
+    type = "aks"
+    })
+  ))
 }
 
 module "logcorner-container_registry" {
@@ -24,4 +28,8 @@ module "logcorner-container_registry" {
   acr_name                    = var.acr_name
   sku                         = var.sku
   kubernetes_cluster_identity = module.logcorner-kubernetes_service.kubernetes_cluster_identity
+  tags = (merge(var.default_tags, tomap({
+    type = "acr"
+    })
+  ))
 }

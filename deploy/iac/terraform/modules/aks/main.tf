@@ -13,6 +13,8 @@ resource "azurerm_kubernetes_cluster" "default" {
   identity {
     type = "SystemAssigned"
   }
+
+  tags = var.tags
 }
 
 

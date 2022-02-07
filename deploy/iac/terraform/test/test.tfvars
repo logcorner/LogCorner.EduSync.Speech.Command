@@ -12,3 +12,7 @@ environment  = "test"
 acr_name= "locornermsacrtest"
 sku  ="Standard"
 
+default_tags = {
+  environment = "test"
+  deployed_by = "terraform"
+}

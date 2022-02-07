@@ -11,6 +11,14 @@ variable "environment" {
   type        = string
   description = "Name of the deployment environment"
 }
+
+variable "default_tags" {
+  type = object({
+    environment = string
+    deployed_by = string
+  })
+}
+
 #---------------   azure kubernetes services ----------------------------------------
 variable "aks_name" {
   type        = string

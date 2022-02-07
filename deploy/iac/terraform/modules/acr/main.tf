@@ -5,6 +5,7 @@ resource "azurerm_container_registry" "default" {
   location            = var.resource_group_location
   sku                 = var.sku
   admin_enabled       = false
+  tags = var.tags
 }
 
 resource "azurerm_role_assignment" "aks_acr" {

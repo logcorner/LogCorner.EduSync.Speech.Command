@@ -34,3 +34,17 @@ variable "dns_prefix" {
   description = "DNS Prefix"
 }
 
+variable "default_tags" {
+  type = object({
+    environment       = string
+    deployed_by = string
+  })
+   default = {
+   environment = ""
+  deployed_by = ""
+  }
+}
+
+variable "tags" {
+  
+}
