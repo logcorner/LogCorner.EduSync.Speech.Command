@@ -10,7 +10,6 @@ variable "resource_group_name" {
   default     = "demo-tfquickstart"
 }
 
-// Node type information
 
 variable "aks-name" {
   type        = string
