@@ -269,3 +269,4 @@ __pycache__/
 deploy/iac/terraform/planefilename.plan
 deploy/iac/terraform/tfplan
 deploy/iac/terraform/tfplan.json
+deploy/iac/terraform/powershell/output-a84c5e64-fc55-4bc3-ab1b-eb32c2f5c1c7.json
