@@ -26,3 +26,12 @@ kubectl config use-context  akslogcornercluster
 kubectl apply -f . -f CommandDatabase  -f CommandApi
 kubectl rollout restart deployment speech-command-http-api-deployment -n aks
 kubectl logs speech-command-http-api-deployment-8d494c44c-j7zx6 -n aks
+
+
+
+ terraform workspace new dev
+ terraform workspace select dev
+ terraform init -var-file="dev/dev.tfvars"
+ terraform validate -var-file="dev/dev.tfvars"
+ terraform plan -var-file="dev/dev.tfvars"
+ terraform apply -var-file="dev/dev.tfvars"
