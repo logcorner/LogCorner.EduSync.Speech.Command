@@ -39,7 +39,7 @@ resource "azuread_application" "swagger_ui_application" {
     }
   }
 }
-resource "azuread_application_password" "application_password" {
+resource "azuread_application_password" "swagger_ui_application_password" {
   display_name          = "secret"
   application_object_id = azuread_application.swagger_ui_application.object_id
 }
@@ -57,9 +57,26 @@ resource "azuread_app_role_assignment" "example" {
   resource_object_id  = azuread_service_principal.web_api_application.object_id
 }
 
+
+
+# Store the password credentials of client application in existing key vault
+resource "azurerm_key_vault_secret" "swagger_ui_application_clientid" {
+  name         = "swagger-ui-application-client-id"
+  value        = azuread_application.swagger_ui_application.application_id
+  key_vault_id = data.azurerm_key_vault.main.id
+}
+resource "azurerm_key_vault_secret" "swagger_ui_application_secret" {
+  name         = "swagger-ui-application-secret"
+  value        = azuread_application_password.swagger_ui_application_password.value
+  key_vault_id = data.azurerm_key_vault.main.id
+}
+
+
+
+
 output "application_password" {
   sensitive = true
-  value     = azuread_application_password.application_password.value
+  value     = azuread_application_password.swagger_ui_application_password.value
 }
 
 output "api_client_id" {

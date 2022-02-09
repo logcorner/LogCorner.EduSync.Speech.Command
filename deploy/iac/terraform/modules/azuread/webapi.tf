@@ -55,3 +55,12 @@ resource "azuread_application" "web_api_application" {
   }
 }
 
+
+# Store the password credentials of client application in existing key vault
+resource "azurerm_key_vault_secret" "secret" {
+  name         = "web-api-application-client-id"
+  value        = azuread_application.web_api_application.application_id
+  key_vault_id = data.azurerm_key_vault.main.id
+}
+
+

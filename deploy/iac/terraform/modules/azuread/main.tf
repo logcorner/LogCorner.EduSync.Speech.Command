@@ -22,7 +22,6 @@ provider "azuread" {
 
 
 
-
 provider "azurerm" {
   features {}
 }
@@ -30,5 +29,7 @@ provider "azurerm" {
 data "azuread_client_config" "current" {}
 
 
-
-
+data "azurerm_key_vault" "main" {
+  name                = "terraformlogcornerkeys"
+  resource_group_name = "TERRAFORM"
+}
