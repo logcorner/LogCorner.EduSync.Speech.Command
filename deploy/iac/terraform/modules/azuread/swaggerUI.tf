@@ -1,5 +1,5 @@
 resource "azuread_application" "swagger_ui_application" {
-  display_name     = "Swagger UI"
+  display_name     = "LogCorner.EduSync.Speech.SwaggerUI"
   sign_in_audience = "AzureADandPersonalMicrosoftAccount"
   web {
     redirect_uris = ["http://localhost:6000/swagger/oauth2-redirect.html",
@@ -44,9 +44,7 @@ resource "azuread_application_password" "swagger_ui_application_password" {
   application_object_id = azuread_application.swagger_ui_application.object_id
 }
 
-resource "azuread_service_principal" "web_api_application" {
-  application_id = azuread_application.web_api_application.application_id
-}
+
 resource "azuread_service_principal" "swagger_ui_application" {
   application_id = azuread_application.swagger_ui_application.application_id
 }
@@ -61,12 +59,12 @@ resource "azuread_app_role_assignment" "example" {
 
 # Store the password credentials of client application in existing key vault
 resource "azurerm_key_vault_secret" "swagger_ui_application_clientid" {
-  name         = "swagger-ui-application-client-id"
+  name         = "SwaggerUI--OAuthClientId"
   value        = azuread_application.swagger_ui_application.application_id
   key_vault_id = data.azurerm_key_vault.main.id
 }
 resource "azurerm_key_vault_secret" "swagger_ui_application_secret" {
-  name         = "swagger-ui-application-secret"
+  name         = "SwaggerUI--OAuthClientSecret"
   value        = azuread_application_password.swagger_ui_application_password.value
   key_vault_id = data.azurerm_key_vault.main.id
 }

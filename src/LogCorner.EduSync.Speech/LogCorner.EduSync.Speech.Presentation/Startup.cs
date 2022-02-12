@@ -88,8 +88,7 @@ namespace LogCorner.EduSync.Speech.Presentation
             }
 
             bool.TryParse(Configuration["isAuthenticationEnabled"], out var isAuthenticationEnabled);
-
-            string pathBase = Configuration["pathBase"];
+           string pathBase = Configuration["pathBase"];
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseSwagger(x =>
             {

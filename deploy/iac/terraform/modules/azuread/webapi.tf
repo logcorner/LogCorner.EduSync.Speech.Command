@@ -1,5 +1,5 @@
 resource "random_uuid" "random_id" {
-  count = 3
+  count = 4
 }
 
 resource "azuread_application" "web_api_application" {
@@ -55,10 +55,13 @@ resource "azuread_application" "web_api_application" {
   }
 }
 
+resource "azuread_service_principal" "web_api_application" {
+  application_id = azuread_application.web_api_application.application_id
+}
 
 # Store the password credentials of client application in existing key vault
-resource "azurerm_key_vault_secret" "secret" {
-  name         = "web-api-application-client-id"
+resource "azurerm_key_vault_secret" "web_api_application_clientid" {
+  name         = "CommandApiAzureAdB2C--ClientId"
   value        = azuread_application.web_api_application.application_id
   key_vault_id = data.azurerm_key_vault.main.id
 }

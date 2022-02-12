@@ -2,8 +2,16 @@
 resource "azuread_application" "confidential_client_application" {
   display_name     = "LogCorner.EduSync.ConfidentialClient"
   sign_in_audience = "AzureADMultipleOrgs"
- 
-}
+
+  required_resource_access {
+    resource_app_id = azuread_application.notification_server_application.application_id
+
+    resource_access {
+      id   = element(random_uuid.random_id[*].result, 3)
+      type = "Scope"
+    }
+  }
+ }
 
 
 resource "azuread_application_password" "confidential_client_password" {
@@ -11,15 +19,19 @@ resource "azuread_application_password" "confidential_client_password" {
   application_object_id = azuread_application.confidential_client_application.object_id
 }
 
+resource "azuread_service_principal" "confidential_client_application" {
+  application_id = azuread_application.confidential_client_application.application_id
+}
+
 
 # Store the password credentials of client application in existing key vault
-resource "azurerm_key_vault_secret" "confidential_client_clientid" {
-  name         = "confidential-client-client-id"
+resource "azurerm_key_vault_secret" "confidential_client_application_clientid" {
+  name         = "AzureAdConfidentialClient--ClientId"
   value        = azuread_application.confidential_client_application.application_id
   key_vault_id = data.azurerm_key_vault.main.id
 }
-resource "azurerm_key_vault_secret" "confidential_client_secret" {
-  name         = "confidential-client-secret"
+resource "azurerm_key_vault_secret" "confidential_application_secret" {
+  name         = "AzureAdConfidentialClient--ClientSecret"
   value        = azuread_application_password.confidential_client_password.value
   key_vault_id = data.azurerm_key_vault.main.id
 }
