@@ -5,10 +5,6 @@ resource "azuread_application" "swagger_ui_application" {
     redirect_uris = ["http://localhost:6000/swagger/oauth2-redirect.html",
     "https://localhost:6001/swagger/oauth2-redirect.html"]
 
-   /* implicit_grant {
-      access_token_issuance_enabled = true
-      id_token_issuance_enabled     = true
-    }*/
   }
   api {
     requested_access_token_version = 2
@@ -78,6 +74,13 @@ resource "azurerm_key_vault_secret" "swagger_ui_application_secret" {
   value        = azuread_application_password.swagger_ui_application_password.value
   key_vault_id = data.azurerm_key_vault.main.id
 }
+
+resource "azurerm_key_vault_secret" "swagger_ui_tenant_name" {
+  name         = "SwaggerUI--TenantName"
+  value        = var.tenantName
+  key_vault_id = data.azurerm_key_vault.main.id
+}
+
 
 
 

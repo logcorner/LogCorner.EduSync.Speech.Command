@@ -66,6 +66,20 @@ resource "azurerm_key_vault_secret" "web_api_application_clientid" {
   key_vault_id = data.azurerm_key_vault.main.id
 }
 
+resource "azurerm_key_vault_secret" "web_api_tenant_domain" {
+  name         = "CommandApiAzureAdB2C--Domain"
+  value        = "${var.tenantName}.onmicrosoft.com"
+  key_vault_id = data.azurerm_key_vault.main.id
+}
+
+resource "azurerm_key_vault_secret" "web_api_tenant_instance" {
+  name         = "CommandApiAzureAdB2C--Instance"
+  value        = "https://${var.tenantName}.b2clogin.com/tfp/"
+  key_vault_id = data.azurerm_key_vault.main.id
+}
+
+
+
 
 
 
