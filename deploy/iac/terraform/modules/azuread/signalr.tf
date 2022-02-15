@@ -26,8 +26,16 @@ resource "azuread_service_principal" "notification_server_application" {
 
 
 # Store the password credentials of client application in existing key vault
-resource "azurerm_key_vault_secret" "notification_server_application_clientid" {
+resource "azurerm_key_vault_secret" "notification_server_application_b2Cclientid" {
   name         = "NotificationServerAzureAdB2C--ClientId"
   value        = azuread_application.notification_server_application.application_id
   key_vault_id = data.azurerm_key_vault.main.id
 }
+
+resource "azurerm_key_vault_secret" "notification_server_application_clientid" {
+  name         = "NotificationServerAzureAd--ClientId"
+  value        = azuread_application.notification_server_application.application_id
+  key_vault_id = data.azurerm_key_vault.main.id
+ 
+}
+

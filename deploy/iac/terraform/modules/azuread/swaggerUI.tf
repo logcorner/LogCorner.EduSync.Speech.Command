@@ -5,10 +5,10 @@ resource "azuread_application" "swagger_ui_application" {
     redirect_uris = ["http://localhost:6000/swagger/oauth2-redirect.html",
     "https://localhost:6001/swagger/oauth2-redirect.html"]
 
-    implicit_grant {
+   /* implicit_grant {
       access_token_issuance_enabled = true
       id_token_issuance_enabled     = true
-    }
+    }*/
   }
   api {
     requested_access_token_version = 2
@@ -35,6 +35,16 @@ resource "azuread_application" "swagger_ui_application" {
 
     resource_access {
       id   = element(random_uuid.random_id[*].result, 2) # unique uuid //azuread_service_principal.web_api_application.oauth2_permission_scopes["Speech.Create"]
+      type = "Scope"
+    }
+   
+  }
+
+  required_resource_access {
+    resource_app_id = azuread_application.notification_server_application.application_id
+
+    resource_access {
+      id   = element(random_uuid.random_id[*].result, 3)
       type = "Scope"
     }
   }

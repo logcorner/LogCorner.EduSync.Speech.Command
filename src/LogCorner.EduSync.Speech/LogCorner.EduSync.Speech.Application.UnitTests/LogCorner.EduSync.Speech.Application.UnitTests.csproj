@@ -28,6 +28,12 @@
     <ProjectReference Include="..\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.Command.SharedKernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="LogCorner.EduSync.Notification.Common">
+      <HintPath>..\..\..\..\LogCorner.EduSync.Notification.Server\src\LogCorner.EduSync.Notification.Common\bin\Debug\netstandard2.1\LogCorner.EduSync.Notification.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 
 
 </Project>

@@ -36,3 +36,5 @@ resource "azurerm_key_vault_secret" "confidential_application_secret" {
   key_vault_id = data.azurerm_key_vault.main.id
 }
 
+
+

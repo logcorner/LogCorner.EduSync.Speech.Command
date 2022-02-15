@@ -89,10 +89,17 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.2.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.AzureKeyVault" Version="3.1.22" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Application\LogCorner.EduSync.Speech.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="LogCorner.EduSync.Notification.Common">
+      <HintPath>..\..\..\..\LogCorner.EduSync.Notification.Server\src\LogCorner.EduSync.Notification.Common\bin\Debug\netstandard2.1\LogCorner.EduSync.Notification.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 
