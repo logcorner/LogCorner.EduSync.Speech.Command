@@ -16,3 +16,7 @@ default_tags = {
   environment = "test"
   deployed_by = "terraform"
 }
+
+#---------------   azure ad application registration ----------------------------------------
+
+tenantName = "workshopb2clogcorner"

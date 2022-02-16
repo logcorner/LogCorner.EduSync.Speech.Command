@@ -13,10 +13,10 @@ resource "azuread_application" "swagger_ui_application" {
   required_resource_access {
     resource_app_id = azuread_application.web_api_application.application_id
 
-    resource_access {
-      id   = azuread_service_principal.web_api_application.app_role_ids["Query.All"]
-      type = "Role"
-    }
+    # resource_access {
+    #   id   = azuread_service_principal.web_api_application.app_role_ids["Query.All"]
+    #   type = "Role"
+    # }
 
     resource_access {
       id   = element(random_uuid.random_id[*].result, 0) # unique uuid //azuread_service_principal.web_api_application.oauth2_permission_scopes["Speech.Create"]
@@ -55,11 +55,11 @@ resource "azuread_service_principal" "swagger_ui_application" {
   application_id = azuread_application.swagger_ui_application.application_id
 }
 
-resource "azuread_app_role_assignment" "example" {
-  app_role_id         = azuread_service_principal.web_api_application.app_role_ids["Query.All"]
-  principal_object_id = azuread_service_principal.swagger_ui_application.object_id
-  resource_object_id  = azuread_service_principal.web_api_application.object_id
-}
+# resource "azuread_app_role_assignment" "example" {
+#   app_role_id         = azuread_service_principal.web_api_application.app_role_ids["Query.All"]
+#   principal_object_id = azuread_service_principal.swagger_ui_application.object_id
+#   resource_object_id  = azuread_service_principal.web_api_application.object_id
+# }
 
 
 
