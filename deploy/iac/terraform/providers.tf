@@ -8,7 +8,7 @@ terraform {
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 2.0.0"
+       version = "2.6.0"
     }
     random = {
       source  = "hashicorp/random"
@@ -20,9 +20,3 @@ provider "azurerm" {
   features {}
 }
 
-# Configure the Azure Active Directory Provider
-provider "azuread" {
-  client_id     = var.client_id
-  client_secret = var.client_secret
-  tenant_id     = var.tenant_id
-}
