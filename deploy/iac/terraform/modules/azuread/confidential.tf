@@ -42,6 +42,14 @@ resource "azurerm_key_vault_secret" "confidential_tenant_id" {
   key_vault_id = data.azurerm_key_vault.main.id
 }
 
+resource "azurerm_key_vault_secret" "confidential_tenant_name" {
+  name         = "AzureAdConfidentialClient--TenantName"
+  value        = var.tenantName
+  key_vault_id = data.azurerm_key_vault.main.id
+}
+
+
+
 
 
 

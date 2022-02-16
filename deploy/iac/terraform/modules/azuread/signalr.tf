@@ -32,6 +32,19 @@ resource "azurerm_key_vault_secret" "notification_server_application_b2Cclientid
   key_vault_id = data.azurerm_key_vault.main.id
 }
 
+resource "azurerm_key_vault_secret" "notification_server_b2cdomain" {
+  name         = "NotificationServerAzureAdB2C--Domain"
+  value        = "${var.tenantName}.onmicrosoft.com"
+  key_vault_id = data.azurerm_key_vault.main.id
+}
+
+resource "azurerm_key_vault_secret" "notification_server_b2ctenantId" {
+  name         = "NotificationServerAzureAdB2C--TenantId"
+  value        = data.azuread_client_config.current.tenant_id
+  key_vault_id = data.azurerm_key_vault.main.id
+}
+
+
 resource "azurerm_key_vault_secret" "notification_server_application_clientid" {
   name         = "NotificationServerAzureAd--ClientId"
   value        = azuread_application.notification_server_application.application_id
@@ -39,3 +52,16 @@ resource "azurerm_key_vault_secret" "notification_server_application_clientid" {
  
 }
 
+resource "azurerm_key_vault_secret" "notification_server_domain" {
+  name         = "NotificationServerAzureAd--Domain"
+  value        = "${var.tenantName}.onmicrosoft.com"
+  key_vault_id = data.azurerm_key_vault.main.id
+ 
+}
+
+resource "azurerm_key_vault_secret" "notification_server_tenantId" {
+  name         = "NotificationServerAzureAd--TenantId"
+  value        = data.azuread_client_config.current.tenant_id
+  key_vault_id = data.azurerm_key_vault.main.id
+ 
+}
