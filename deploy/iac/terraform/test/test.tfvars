@@ -20,3 +20,4 @@ default_tags = {
 #---------------   azure ad application registration ----------------------------------------
 
 tenantName = "workshopb2clogcorner"
+ConfidentialClientDisplayName="LogCorner.EduSync.ConfidentialClient"

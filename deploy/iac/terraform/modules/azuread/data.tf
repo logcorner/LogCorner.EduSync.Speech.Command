@@ -6,10 +6,6 @@ data "azurerm_key_vault" "main" {
   resource_group_name = "TERRAFORM"
 }
 
-
-# Configure the Azure Active Directory Provider
-provider "azuread" {
-  client_id     = var.client_id
-  client_secret = var.client_secret
-  tenant_id     = var.tenant_id
+resource "random_uuid" "random_id" {
+  count = 4
 }

@@ -13,24 +13,19 @@ resource "azuread_application" "swagger_ui_application" {
   required_resource_access {
     resource_app_id = azuread_application.web_api_application.application_id
 
-    # resource_access {
-    #   id   = azuread_service_principal.web_api_application.app_role_ids["Query.All"]
-    #   type = "Role"
-    # }
-
     resource_access {
-      id   = element(random_uuid.random_id[*].result, 0) # unique uuid //azuread_service_principal.web_api_application.oauth2_permission_scopes["Speech.Create"]
+      id   = element(random_uuid.random_id[*].result, 0) 
       type = "Scope"
 
     }
 
     resource_access {
-      id   = element(random_uuid.random_id[*].result, 1) # unique uuid //azuread_service_principal.web_api_application.oauth2_permission_scopes["Speech.Create"]
+      id   = element(random_uuid.random_id[*].result, 1) 
       type = "Scope"
     }
 
     resource_access {
-      id   = element(random_uuid.random_id[*].result, 2) # unique uuid //azuread_service_principal.web_api_application.oauth2_permission_scopes["Speech.Create"]
+      id   = element(random_uuid.random_id[*].result, 2) 
       type = "Scope"
     }
    
@@ -50,20 +45,10 @@ resource "azuread_application_password" "swagger_ui_application_password" {
   application_object_id = azuread_application.swagger_ui_application.object_id
 }
 
-
 resource "azuread_service_principal" "swagger_ui_application" {
   application_id = azuread_application.swagger_ui_application.application_id
 }
 
-# resource "azuread_app_role_assignment" "example" {
-#   app_role_id         = azuread_service_principal.web_api_application.app_role_ids["Query.All"]
-#   principal_object_id = azuread_service_principal.swagger_ui_application.object_id
-#   resource_object_id  = azuread_service_principal.web_api_application.object_id
-# }
-
-
-
-# Store the password credentials of client application in existing key vault
 resource "azurerm_key_vault_secret" "swagger_ui_application_clientid" {
   name         = "SwaggerUI--OAuthClientId"
   value        = azuread_application.swagger_ui_application.application_id
@@ -80,10 +65,6 @@ resource "azurerm_key_vault_secret" "swagger_ui_tenant_name" {
   value        = var.tenantName
   key_vault_id = data.azurerm_key_vault.main.id
 }
-
-
-
-
 
 output "application_password" {
   sensitive = true

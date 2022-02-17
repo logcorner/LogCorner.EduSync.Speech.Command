@@ -50,7 +50,7 @@ variable "sku" {
 #---------------   azure active directory application  registration ------------------
 
 variable "client_id" {
-  default  = "4f651204-1814-4a40-bfbf-9e37df91f71e"
+  default = "4f651204-1814-4a40-bfbf-9e37df91f71e"
 }
 
 variable "client_secret" {
@@ -62,5 +62,9 @@ variable "tenant_id" {
 }
 
 variable "tenantName" {
-   type = string
- }
+  type = string
+}
+
+variable "ConfidentialClientDisplayName" {
+  
+}

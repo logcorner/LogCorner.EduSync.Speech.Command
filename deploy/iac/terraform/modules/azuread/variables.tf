@@ -14,3 +14,7 @@ variable "client_secret" {
 variable "tenant_id" {
   default = "9f36bd04-e5e8-47f0-b89e-36168d55a5f9"
 }
+
+variable "ConfidentialClientDisplayName" {
+  
+}
