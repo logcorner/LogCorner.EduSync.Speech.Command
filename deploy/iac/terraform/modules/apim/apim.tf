@@ -28,6 +28,10 @@ resource "azurerm_api_management_api" "back-end-api" {
     content_format = "openapi-link"
     content_value  = "http://10.10.1.5/swagger/v1/swagger.json"
   }
+
+    oauth2_authorization {
+    authorization_server_name = azurerm_api_management_authorization_server.api-standard-apim-authorization-server.name
+  }
 }
 
 resource "azurerm_api_management_product" "product" {
@@ -45,4 +49,34 @@ resource "azurerm_api_management_product_api" "example" {
   product_id          = azurerm_api_management_product.product.product_id
   api_management_name = azurerm_api_management.apim.name
   resource_group_name = var.resource_group_name
+}
+
+
+
+resource "azurerm_api_management_authorization_server" "api-standard-apim-authorization-server" {
+  name                = "apim-authorization-server"
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = var.resource_group_name
+  display_name        = "oauth2 authorization Server"
+
+  authorization_endpoint = "https://workshopb2clogcorner.b2clogin.com/workshopb2clogcorner.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/authorize"
+
+  client_id                    = "282141f2-eb0d-4a9b-a323-dc4d33fcd5d0"
+  client_registration_endpoint = "http://localhost"
+  token_endpoint               = "https://workshopb2clogcorner.b2clogin.com/workshopb2clogcorner.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/token"
+  default_scope                = "https://workshopb2clogcorner.onmicrosoft.com/command/api/Speech.Create"
+
+
+  client_secret = "ZzE7Q~spdND-hzkCW1t0_R1Uq8mxAyk~kWP-5"
+
+  grant_types = [
+    "authorizationCode",
+  ]
+
+  client_authentication_method = [
+    "Body"
+  ]
+
+  authorization_methods        = ["GET", "POST","PUT","DELETE"]
+  bearer_token_sending_methods = ["authorizationHeader"]
 }

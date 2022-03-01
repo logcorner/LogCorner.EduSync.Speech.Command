@@ -1,9 +1,6 @@
-﻿using System;
-using Azure.Identity;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.Extensions.Hosting;
 
 namespace LogCorner.EduSync.Speech.Presentation
@@ -21,7 +18,7 @@ namespace LogCorner.EduSync.Speech.Presentation
                     {
                         var settings = config.Build();
 
-                        if (context.HostingEnvironment.IsDevelopment())
+                        if (!context.HostingEnvironment.IsDevelopment())
                         {
                             // Configure Azure Key Vault Connection
                             var uri = settings["AzureKeyVault:Uri"];
