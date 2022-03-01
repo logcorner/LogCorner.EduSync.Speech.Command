@@ -1,9 +1,9 @@
-resource_group_location   = "westus"
-resource_group_name = "demo-tfquickstart-test"
+resource_group_location   = "westeurope"
+resource_group_name = "demo-apim-test"
 #---------------   azure kubernetes services ----------------------------------------
-aks_name   = "demo-tfquickstart-aks-test"
-node_count  = 3
-node_type   = "Standard_D2s_v3"
+aks_name   = "demo-apim-aks-test"
+node_count  = 1
+node_type   = "Standard_D2_v2"
 dns_prefix  = "tfq"
 environment  = "test"
 

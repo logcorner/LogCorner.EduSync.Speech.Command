@@ -8,6 +8,7 @@ resource "azurerm_kubernetes_cluster" "default" {
     name       = "agentpool"
     node_count = var.node_count
     vm_size    = var.node_type
+    vnet_subnet_id = var.subnet_id
  }
 
   identity {

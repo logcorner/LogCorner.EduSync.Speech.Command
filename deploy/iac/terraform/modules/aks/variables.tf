@@ -48,3 +48,7 @@ variable "default_tags" {
 variable "tags" {
   
 }
+
+variable "subnet_id" {
+  
+}

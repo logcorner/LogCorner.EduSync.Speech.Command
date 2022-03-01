@@ -8,12 +8,12 @@ terraform apply  tfplan
 
 
 # prepare and push images to azure container registry
-az acr login --name tfqdemotfquickstartacr
-docker tag logcornerhub/logcorner-edusync-speech-mssql-tools tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-mssql-tools
-docker push tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-mssql-tools
+az acr login --name locornermsacrtest
+docker tag logcornerhub/logcorner-edusync-speech-mssql-tools locornermsacrtest.azurecr.io/logcorner-edusync-speech-mssql-tools
+docker push locornermsacrtest.azurecr.io/logcorner-edusync-speech-mssql-tools
 
-docker tag logcornerhub/logcorner-edusync-speech-command  tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-command
-docker push tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-command
+docker tag logcornerhub/logcorner-edusync-speech-command  locornermsacrtest.azurecr.io/logcorner-edusync-speech-command
+docker push locornermsacrtest.azurecr.io/logcorner-edusync-speech-command
 
 
 # prepare and deploy to aks
