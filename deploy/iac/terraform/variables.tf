@@ -66,5 +66,5 @@ variable "tenantName" {
 }
 
 variable "ConfidentialClientDisplayName" {
-  
+
 }

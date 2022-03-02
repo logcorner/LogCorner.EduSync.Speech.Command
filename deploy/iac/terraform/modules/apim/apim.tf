@@ -21,12 +21,14 @@ resource "azurerm_api_management_api" "back-end-api" {
   revision            = "1"
   display_name        = "Command HTTP API"
   path                = "api"
-  service_url          = "http://10.10.1.5"
+  service_url          = "http://10.10.1.35"//"https://conferenceapi.azurewebsites.net"
+  #service_url          = "https://conferenceapi.azurewebsites.net"
   protocols = ["https"]
 
   import {
     content_format = "openapi-link"
-    content_value  = "http://10.10.1.5/swagger/v1/swagger.json"
+    content_value  = "http://10.10.1.35/swagger/v1/swagger.json"//"https://conferenceapi.azurewebsites.net/?format=json"
+    #content_value  = "https://conferenceapi.azurewebsites.net/?format=json"
   }
 
     oauth2_authorization {

@@ -49,6 +49,10 @@ variable "tags" {
   
 }
 
-variable "subnet_id" {
+variable "subnet_aks_id" {
+  
+}
+
+variable "subnet_agic_id" {
   
 }
