@@ -20,7 +20,7 @@ resource "azurerm_api_management_api" "query-http-api" {
   api_management_name = azurerm_api_management.apim.name
   revision            = "1"
   display_name        = "Query HTTP API"
-  path                = "api"
+  path                = "query"
   service_url          = "http://10.10.1.35"//"https://conferenceapi.azurewebsites.net"
   #service_url          = "https://conferenceapi.azurewebsites.net"
   protocols = ["https"]
@@ -28,6 +28,29 @@ resource "azurerm_api_management_api" "query-http-api" {
   import {
     content_format = "openapi-link"
     content_value  = "http://10.10.1.35/swagger/v1/swagger.json"//"https://conferenceapi.azurewebsites.net/?format=json"
+    #content_value  = "https://conferenceapi.azurewebsites.net/?format=json"
+  }
+
+    oauth2_authorization {
+    authorization_server_name = azurerm_api_management_authorization_server.api-standard-apim-authorization-server.name
+  }
+}
+
+
+resource "azurerm_api_management_api" "command-http-api" {
+  name                = "command-http-api"
+  resource_group_name = var.resource_group_name
+  api_management_name = azurerm_api_management.apim.name
+  revision            = "1"
+  display_name        = "Commande HTTP API"
+  path                = "command"
+  service_url          = "http://10.10.1.36"//"https://conferenceapi.azurewebsites.net"
+  #service_url          = "https://conferenceapi.azurewebsites.net"
+  protocols = ["https"]
+
+  import {
+    content_format = "openapi-link"
+    content_value  = "http://10.10.1.36/swagger/v1/swagger.json"//"https://conferenceapi.azurewebsites.net/?format=json"
     #content_value  = "https://conferenceapi.azurewebsites.net/?format=json"
   }
 
@@ -46,13 +69,20 @@ resource "azurerm_api_management_product" "product" {
   published             = true
 }
 
-resource "azurerm_api_management_product_api" "product_api" {
+resource "azurerm_api_management_product_api" "product_query_http_api" {
   api_name            = azurerm_api_management_api.query-http-api.name
   product_id          = azurerm_api_management_product.product.product_id
   api_management_name = azurerm_api_management.apim.name
   resource_group_name = var.resource_group_name
 }
 
+
+resource "azurerm_api_management_product_api" "product_command_http_api" {
+  api_name            = azurerm_api_management_api.command-http-api.name
+  product_id          = azurerm_api_management_product.product.product_id
+  api_management_name = azurerm_api_management.apim.name
+  resource_group_name = var.resource_group_name
+}
 
 
 resource "azurerm_api_management_authorization_server" "api-standard-apim-authorization-server" {
@@ -61,15 +91,16 @@ resource "azurerm_api_management_authorization_server" "api-standard-apim-author
   resource_group_name = var.resource_group_name
   display_name        = "oauth2 authorization Server"
 
-  authorization_endpoint = "https://workshopb2clogcorner.b2clogin.com/workshopb2clogcorner.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/authorize"
+  authorization_endpoint = "https://datasynchrob2c.b2clogin.com/datasynchrob2c.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/authorize"
+  token_endpoint         = "https://datasynchrob2c.b2clogin.com/datasynchrob2c.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/token"
 
-  client_id                    = "282141f2-eb0d-4a9b-a323-dc4d33fcd5d0"
+  client_id                    = "40a32973-b38a-4785-a568-1bc9f434dad1"
   client_registration_endpoint = "http://localhost"
-  token_endpoint               = "https://workshopb2clogcorner.b2clogin.com/workshopb2clogcorner.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/token"
-  default_scope                = "https://workshopb2clogcorner.onmicrosoft.com/command/api/Speech.Create"
+  
+  default_scope                = "https://datasynchrob2c.onmicrosoft.com/query/api/Speech.List"
 
 
-  client_secret = "ZzE7Q~spdND-hzkCW1t0_R1Uq8mxAyk~kWP-5"
+  client_secret = "e9b7Q~PERfZL16cuU1Tp91Kn0zEfpUSkn~ZRs"
 
   grant_types = [
     "authorizationCode",
