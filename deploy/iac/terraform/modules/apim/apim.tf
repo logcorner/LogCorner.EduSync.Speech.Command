@@ -14,7 +14,7 @@ resource "azurerm_api_management" "apim" {
   }
 }
 
-resource "azurerm_api_management_api" "back-end-api" {
+resource "azurerm_api_management_api" "query-http-api" {
   name                = "query-http-api"
   resource_group_name = var.resource_group_name
   api_management_name = azurerm_api_management.apim.name
@@ -46,8 +46,8 @@ resource "azurerm_api_management_product" "product" {
   published             = true
 }
 
-resource "azurerm_api_management_product_api" "example" {
-  api_name            = azurerm_api_management_api.back-end-api.name
+resource "azurerm_api_management_product_api" "product_api" {
+  api_name            = azurerm_api_management_api.query-http-api.name
   product_id          = azurerm_api_management_product.product.product_id
   api_management_name = azurerm_api_management.apim.name
   resource_group_name = var.resource_group_name
