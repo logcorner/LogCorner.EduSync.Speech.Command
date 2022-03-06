@@ -1,5 +1,5 @@
 resource "azurerm_api_management" "apim" {
-  name                = "logcorner-apim-speech"
+  name                = "logcorner-apim-agic-speech"
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
   publisher_name      = "Logcorner"
@@ -15,11 +15,11 @@ resource "azurerm_api_management" "apim" {
 }
 
 resource "azurerm_api_management_api" "back-end-api" {
-  name                = "command-http-api"
+  name                = "query-http-api"
   resource_group_name = var.resource_group_name
   api_management_name = azurerm_api_management.apim.name
   revision            = "1"
-  display_name        = "Command HTTP API"
+  display_name        = "Query HTTP API"
   path                = "api"
   service_url          = "http://10.10.1.35"//"https://conferenceapi.azurewebsites.net"
   #service_url          = "https://conferenceapi.azurewebsites.net"
