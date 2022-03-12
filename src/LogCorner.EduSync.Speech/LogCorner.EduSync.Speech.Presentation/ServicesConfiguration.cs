@@ -20,11 +20,11 @@ namespace LogCorner.EduSync.Speech.Presentation
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(options =>
                     {
-                        configuration.Bind("CommandApiAzureAdB2C", options);
+                        configuration.Bind("AzureAdB2C", options);
 
                         options.TokenValidationParameters.NameClaimType = "name";
                     },
-                    options => { configuration.Bind("CommandApiAzureAdB2C", options); });
+                    options => { configuration.Bind("AzureAdB2C", options); });
         }
 
         public static void AddCustomSwagger(this IServiceCollection services, IConfiguration configuration)

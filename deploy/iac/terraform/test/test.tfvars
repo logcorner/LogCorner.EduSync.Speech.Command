@@ -2,8 +2,8 @@ resource_group_location   = "westeurope"
 resource_group_name = "demo-apim-test"
 #---------------   azure kubernetes services ----------------------------------------
 aks_name   = "demo-apim-aks-test"
-node_count  = 1
-node_type   = "Standard_D2_v2"
+node_count  = 3
+node_type   = "Standard_D4s_v4"
 dns_prefix  = "tfq"
 environment  = "test"
 

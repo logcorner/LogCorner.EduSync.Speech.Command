@@ -4,6 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+
+
   <ItemGroup>
 
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Domain\LogCorner.EduSync.Speech.Domain.csproj" />
@@ -11,12 +13,13 @@
     <ProjectReference Include="..\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.Command.SharedKernel.csproj" />
   </ItemGroup>
 
+
+
   <ItemGroup>
     <Reference Include="LogCorner.EduSync.Notification.Common">
-      <HintPath>..\..\..\..\LogCorner.EduSync.Notification.Server\src\LogCorner.EduSync.Notification.Common\bin\Debug\netstandard2.1\LogCorner.EduSync.Notification.Common.dll</HintPath>
+      <HintPath>..\BINARIES\LogCorner.EduSync.Notification.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
-
-  
+ 
 
 </Project>

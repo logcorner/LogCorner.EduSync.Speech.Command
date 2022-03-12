@@ -21,13 +21,13 @@ resource "azurerm_api_management_api" "query-http-api" {
   revision            = "1"
   display_name        = "Query HTTP API"
   path                = "query"
-  service_url          = "http://10.10.1.35"//"https://conferenceapi.azurewebsites.net"
+  service_url          = "http://10.10.1.98"//"https://conferenceapi.azurewebsites.net"
   #service_url          = "https://conferenceapi.azurewebsites.net"
   protocols = ["https"]
 
   import {
     content_format = "openapi-link"
-    content_value  = "http://10.10.1.35/swagger/v1/swagger.json"//"https://conferenceapi.azurewebsites.net/?format=json"
+    content_value  = "http://10.10.1.98/swagger/v1/swagger.json"//"https://conferenceapi.azurewebsites.net/?format=json"
     #content_value  = "https://conferenceapi.azurewebsites.net/?format=json"
   }
 
@@ -42,15 +42,15 @@ resource "azurerm_api_management_api" "command-http-api" {
   resource_group_name = var.resource_group_name
   api_management_name = azurerm_api_management.apim.name
   revision            = "1"
-  display_name        = "Commande HTTP API"
+  display_name        = "Command HTTP API"
   path                = "command"
-  service_url          = "http://10.10.1.36"//"https://conferenceapi.azurewebsites.net"
+  service_url          = "http://10.10.1.97"
   #service_url          = "https://conferenceapi.azurewebsites.net"
   protocols = ["https"]
 
   import {
     content_format = "openapi-link"
-    content_value  = "http://10.10.1.36/swagger/v1/swagger.json"//"https://conferenceapi.azurewebsites.net/?format=json"
+    content_value  = "http://10.10.1.97/swagger/v1/swagger.json"
     #content_value  = "https://conferenceapi.azurewebsites.net/?format=json"
   }
 
@@ -60,10 +60,10 @@ resource "azurerm_api_management_api" "command-http-api" {
 }
 
 resource "azurerm_api_management_product" "product" {
-  product_id            = "speech-microservice-command-http-api"
+  product_id            = "speech-microservice-http-api"
   api_management_name   = azurerm_api_management.apim.name
   resource_group_name   = var.resource_group_name
-  display_name          = "The Speech Micro Service Command HTTP API Product"
+  display_name          = "The Speech Micro Service  HTTP API Product"
   subscription_required = false
   approval_required     = false
   published             = true
@@ -97,7 +97,7 @@ resource "azurerm_api_management_authorization_server" "api-standard-apim-author
   client_id                    = "40a32973-b38a-4785-a568-1bc9f434dad1"
   client_registration_endpoint = "http://localhost"
   
-  default_scope                = "https://datasynchrob2c.onmicrosoft.com/query/api/Speech.List"
+  default_scope                = "https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Create"
 
 
   client_secret = "e9b7Q~PERfZL16cuU1Tp91Kn0zEfpUSkn~ZRs"
