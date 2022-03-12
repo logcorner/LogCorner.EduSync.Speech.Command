@@ -58,8 +58,8 @@
     <Content Include="appsettings.Development.json" />
     <Content Include="appsettings.Docker.json" />
     <Content Include="appsettings.json" />
-    <Content Include="appsettings.Kubernetes.AKS.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="appsettings.Kubernetes.aks.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="appsettings.Kubernetes.helm.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -94,12 +94,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Application\LogCorner.EduSync.Speech.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="LogCorner.EduSync.Notification.Common">
-      <HintPath>..\..\..\..\LogCorner.EduSync.Notification.Server\src\LogCorner.EduSync.Notification.Common\bin\Debug\netstandard2.1\LogCorner.EduSync.Notification.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 

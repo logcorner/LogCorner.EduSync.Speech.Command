@@ -3,7 +3,7 @@ kind: Deployment
 
 metadata:
   name: speech-command-http-api-deployment
- 
+  
   labels:
     version: 1.0.0
     product: speech-command-http-api
@@ -28,7 +28,7 @@ spec:
         imagePullPolicy: Always
         env:
         - name: ASPNETCORE_ENVIRONMENT
-          value: "Kubernetes.AKS"
+          value: "Kubernetes.aks"
         ports:
         - containerPort: 80
         - containerPort: 443
