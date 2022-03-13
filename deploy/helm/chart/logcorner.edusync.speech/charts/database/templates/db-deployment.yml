@@ -2,21 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-{{ .Chart.Name }}-deployment
-  namespace: {{ .Values.namespace }}
-  labels:
-    product: {{ .Release.Name }}-{{ .Chart.Name }}
-    environment: {{ .Values.namespace }}
+  namespace: {{ .Values.global.namespace }}
 spec:
   replicas: 1
   selector:
      matchLabels:
        app: {{ .Release.Name }}-{{ .Chart.Name }}
-       env: {{ .Values.namespace }}
   template:
     metadata:
       labels:
-       app: {{ .Release.Name }}-{{ .Chart.Name }}
-       env: {{ .Values.namespace }}
+        app: {{ .Release.Name }}-{{ .Chart.Name }}
     spec:
       terminationGracePeriodSeconds: 30
       hostname: mssqlinst
@@ -24,13 +19,12 @@ spec:
         fsGroup: 10001
       containers:
       - name: {{ .Release.Name }}-{{ .Chart.Name }}
-        image: {{ .Values.image.sqldatabase.repository }}:{{ .Values.image.sqldatabase.tag }} 
-        imagePullPolicy: IfNotPresent
+        image: {{ .Values.sqldatabase.image.repository }}/{{ .Values.sqldatabase.image.name }}:{{ .Values.sqldatabase.image.tag }} 
         ports:
-        - containerPort: 1433
+        - containerPort: {{ .Values.sqldatabase.containerPort }}
         env:
         - name: MSSQL_PID
-          value: "Developer"
+          value: {{ .Values.sqldatabase.mssqlpid }}
         - name: ACCEPT_EULA
           value: "Y"
         - name: SA_PASSWORD
@@ -38,11 +32,10 @@ spec:
             secretKeyRef:
               name: {{ .Release.Name }}-{{ .Chart.Name }}-secret
               key: SA_PASSWORD 
-        volumeMounts:
-        - name: mssqldb
-          mountPath: /var/opt/mssql/data
-      volumes: 
-      - name: mssqldb
-        persistentVolumeClaim:
-          claimName: {{ .Release.Name }}-{{ .Chart.Name }}-pvc
-     
+      #   volumeMounts:
+      #   - name: mssqldb
+      #     mountPath: /var/opt/mssql
+      # volumes:
+      # - name: mssqldb
+      #   persistentVolumeClaim:
+      #     claimName: {{ .Release.Name }}-{{ .Chart.Name }}-mssql-data

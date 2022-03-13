@@ -3,36 +3,36 @@ kind: Deployment
 
 metadata:
   name: {{ .Release.Name }}-{{ .Chart.Name }}-deployment
-  namespace: helm
+  namespace: {{ .Values.global.namespace }}
   labels:
-    product: {{ .Release.Name }}-{{ .Chart.Name }}
-    environment: helm
+    version: 1.0.0
+    product: {{ .Release.Name }}-{{ .Chart.Name }}-deployment
+    environment: {{ .Values.global.namespace }}
+
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}-{{ .Chart.Name }}
-      env: helm
+      env: {{ .Values.global.namespace }}
   
   template:
     metadata:
       labels:
         app: {{ .Release.Name }}-{{ .Chart.Name }}
-        env: helm
+        env: {{ .Values.global.namespace }}
     spec:
       containers:
-      - name: {{ .Release.Name }}-{{ .Chart.Name }}-container
-        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      - name: {{ .Release.Name }}-{{ .Chart.Name }}
+        image: {{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }} 
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
         - name: ASPNETCORE_ENVIRONMENT
-          value: "Kubernetes.helm"
+          value: {{ .Values.environment.aspnetcore }}
         ports:
-        - containerPort: 80
-        - containerPort: 443
+        - containerPort: {{ .Values.containerPort.http }}
+        - containerPort: {{ .Values.containerPort.https }}
           protocol: TCP
-      restartPolicy: {{ .Values.restartPolicy }}
+      restartPolicy:  {{ .Values.restartPolicy }}
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
-      
-    

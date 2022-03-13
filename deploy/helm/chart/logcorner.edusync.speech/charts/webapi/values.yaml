@@ -1,16 +1,22 @@
 replicaCount: 1
-namespace: helm
 image:
-  repository: logcornerhub/logcorner-edusync-speech-command
-  tag: "latest"
-imagePullPolicy: Never
+  repository: logcornerhub
+  name: logcorner-edusync-speech-command 
+  tag: helm
+  pullPolicy: IfNotPresent
+environment:
+  aspnetcore: "Kubernetes.helm"
+containerPort:
+  http: 80
+  https: 443
 restartPolicy: Always
 service:
-  type: ClusterIP
-  port: 80
-  targetPort: 80
-  ssl_port: 443
-  ssl_targetPort: 443
-ingress:
-  host: helm.kubernetes.docker.com
-  secretName: logcorner-ingress-tls
+  type: NodePort
+  ports: 
+    http:
+      port: 80
+      targetPort: 80
+    https:
+      port: 443
+      targetPort: 443
+

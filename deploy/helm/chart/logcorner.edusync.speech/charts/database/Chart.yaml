@@ -1,5 +1,5 @@
 apiVersion: v2
-name: db-command-api
+name: db
 appVersion: "3.6"
 description: A Helm chart for speech command api service Database sql server 2019 
 version: 1.0.0
