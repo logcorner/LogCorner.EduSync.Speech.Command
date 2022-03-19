@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-mssql-data
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    version: {{ .Chart.Version }}
+    product: {{ .Release.Name }}-{{ .Chart.Name }}-mssql-pvc
+    environment: {{ .Values.global.namespace }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Mi

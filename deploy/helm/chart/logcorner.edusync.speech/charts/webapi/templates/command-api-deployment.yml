@@ -5,7 +5,7 @@ metadata:
   name: {{ .Release.Name }}-{{ .Chart.Name }}-deployment
   namespace: {{ .Values.global.namespace }}
   labels:
-    version: 1.0.0
+    version: {{ .Chart.Version }}
     product: {{ .Release.Name }}-{{ .Chart.Name }}-deployment
     environment: {{ .Values.global.namespace }}
 

@@ -4,7 +4,7 @@ metadata:
   name: {{ .Release.Name }}-{{ .Chart.Name }}-job
   namespace: {{ .Values.global.namespace }}
   labels:
-    version: 1.0.0
+    version: {{ .Chart.Version }}
     product: {{ .Release.Name }}-{{ .Chart.Name }}-job
     environment: {{ .Values.global.namespace }}
 spec:
