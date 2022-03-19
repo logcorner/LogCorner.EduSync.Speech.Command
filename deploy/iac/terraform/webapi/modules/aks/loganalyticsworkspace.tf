@@ -1,6 +1,6 @@
 
 resource "azurerm_log_analytics_workspace" "Log_Analytics_WorkSpace" {
-    # The WorkSpace name has to be unique across the whole of azure, not just the current subscription/tenant.
+    
     name                = "logcorner-la"
     location            = var.resource_group_location
     resource_group_name = var.resource_group_name

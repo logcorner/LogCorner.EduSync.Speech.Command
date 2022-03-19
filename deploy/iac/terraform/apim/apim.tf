@@ -1,16 +1,16 @@
 resource "azurerm_api_management" "apim" {
-  name                = "logcorner-apim-agic-speech"
+  name                = var.api_management_name
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
-  publisher_name      = "Logcorner"
-  publisher_email     = "xyz@microsoft.com"
+  publisher_name      = var.publisher_name
+  publisher_email     = var.publisher_email
 
-  sku_name = "Developer_1"
+  sku_name = var.sku_name
 
   virtual_network_type = "External"
 
   virtual_network_configuration {
-      subnet_id = "${azurerm_subnet.apim.id}"
+      subnet_id = data.azurerm_subnet.apim.id
   }
 }
 
@@ -21,15 +21,14 @@ resource "azurerm_api_management_api" "query-http-api" {
   revision            = "1"
   display_name        = "Query HTTP API"
   path                = "query"
-  service_url          = "http://10.10.1.98"//"https://conferenceapi.azurewebsites.net"
-  #service_url          = "https://conferenceapi.azurewebsites.net"
+  service_url          = var.query_http_api_service_url
   protocols = ["https"]
 
-  import {
-    content_format = "openapi-link"
-    content_value  = "http://10.10.1.98/swagger/v1/swagger.json"//"https://conferenceapi.azurewebsites.net/?format=json"
-    #content_value  = "https://conferenceapi.azurewebsites.net/?format=json"
-  }
+  # import {
+  #   content_format = "openapi-link"
+  #   content_value  = "${var.query_http_api_service_url}/swagger/v1/swagger.json"
+   
+  # }
 
     oauth2_authorization {
     authorization_server_name = azurerm_api_management_authorization_server.api-standard-apim-authorization-server.name
@@ -44,14 +43,13 @@ resource "azurerm_api_management_api" "command-http-api" {
   revision            = "1"
   display_name        = "Command HTTP API"
   path                = "command"
-  service_url          = "http://10.10.1.97"
-  #service_url          = "https://conferenceapi.azurewebsites.net"
+  service_url          = var.command_http_api_service_url
   protocols = ["https"]
 
   import {
     content_format = "openapi-link"
-    content_value  = "http://10.10.1.97/swagger/v1/swagger.json"
-    #content_value  = "https://conferenceapi.azurewebsites.net/?format=json"
+    content_value  = "${var.command_http_api_service_url}/swagger/v1/swagger.json"
+   
   }
 
     oauth2_authorization {
@@ -100,7 +98,7 @@ resource "azurerm_api_management_authorization_server" "api-standard-apim-author
   default_scope                = "https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Create"
 
 
-  client_secret = "e9b7Q~PERfZL16cuU1Tp91Kn0zEfpUSkn~ZRs"
+  client_secret = "TJt7Q~AqlgOQAHruNgOsCkhfTRtitEcNr7Tzq"
 
   grant_types = [
     "authorizationCode",

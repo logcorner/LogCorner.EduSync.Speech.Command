@@ -1,5 +1,5 @@
 resource_group_location   = "westeurope"
-resource_group_name = "demo-apim-test"
+resource_group_name = "LOGCORNER-MICROSERVICES-IAC"
 #---------------   azure kubernetes services ----------------------------------------
 aks_name   = "demo-apim-aks-test"
 node_count  = 3

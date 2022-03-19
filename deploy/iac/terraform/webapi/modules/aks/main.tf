@@ -1,9 +1,3 @@
-# data "azurerm_subnet" "appgwsubnet" {
-#   name                 = "agic-aks-subnet"
-#   virtual_network_name = "apim-aks-vnet"
-#   resource_group_name  =  var.resource_group_name
-# }
-
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = var.aks_name
   location            = var.resource_group_location
