@@ -20,6 +20,8 @@ spec:
     targetPort: 443
     protocol: TCP
     name: https
+  externalIPs:
+    - 10.10.1.35
   selector:
     app: speech-command-http-api
     env: aks

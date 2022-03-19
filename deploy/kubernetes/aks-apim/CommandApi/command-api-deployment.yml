@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: command-api-container
-        image: logcornerhub/logcorner-edusync-speech-command
+        image: __ACR_LOGIN_SERVER__/logcorner-edusync-speech-command:__BUILD_NUMBER__
         imagePullPolicy: Always
         env:
         - name: ASPNETCORE_ENVIRONMENT
