@@ -276,3 +276,6 @@ deploy/iac/terraform/.terraform.tfstate.lock.info
 deploy/iac/terraform/terraform.tfstate.d/test/.terraform.tfstate.lock.info
 deploy/iac/terraform/modules/azuread/.terraform.tfstate.lock.info
 /deploy/iac/terraform/apim/.terraform
+/deploy/iac/terraform/.terraform
+*.tfstate
+*.backup
