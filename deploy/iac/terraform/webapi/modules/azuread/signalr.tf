@@ -27,41 +27,41 @@ resource "azuread_service_principal" "notification_server_application" {
 
 # Store the password credentials of client application in existing key vault
 resource "azurerm_key_vault_secret" "notification_server_application_b2Cclientid" {
-  name         = "NotificationServerAzureAdB2C--ClientId"
+  name         = "AzureAdB2C--ClientId"
   value        = azuread_application.notification_server_application.application_id
-  key_vault_id = data.azurerm_key_vault.main.id
+  key_vault_id = azurerm_key_vault.key_vault_signalr.id
 }
 
 resource "azurerm_key_vault_secret" "notification_server_b2cdomain" {
-  name         = "NotificationServerAzureAdB2C--Domain"
+  name         = "AzureAdB2C--Domain"
   value        = "${var.tenantName}.onmicrosoft.com"
-  key_vault_id = data.azurerm_key_vault.main.id
+  key_vault_id = azurerm_key_vault.key_vault_signalr.id
 }
 
 resource "azurerm_key_vault_secret" "notification_server_b2ctenantId" {
-  name         = "NotificationServerAzureAdB2C--TenantId"
+  name         = "AzureAdB2C--TenantId"
   value        = data.azuread_client_config.current.tenant_id
-  key_vault_id = data.azurerm_key_vault.main.id
+  key_vault_id = azurerm_key_vault.key_vault_signalr.id
 }
 
 
 resource "azurerm_key_vault_secret" "notification_server_application_clientid" {
-  name         = "NotificationServerAzureAd--ClientId"
+  name         = "AzureAd--ClientId"
   value        = azuread_application.notification_server_application.application_id
-  key_vault_id = data.azurerm_key_vault.main.id
+  key_vault_id = azurerm_key_vault.key_vault_signalr.id
  
 }
 
 resource "azurerm_key_vault_secret" "notification_server_domain" {
-  name         = "NotificationServerAzureAd--Domain"
+  name         = "AzureAd--Domain"
   value        = "${var.tenantName}.onmicrosoft.com"
-  key_vault_id = data.azurerm_key_vault.main.id
+  key_vault_id = azurerm_key_vault.key_vault_signalr.id
  
 }
 
 resource "azurerm_key_vault_secret" "notification_server_tenantId" {
-  name         = "NotificationServerAzureAd--TenantId"
+  name         = "AzureAd--TenantId"
   value        = data.azuread_client_config.current.tenant_id
-  key_vault_id = data.azurerm_key_vault.main.id
+  key_vault_id = azurerm_key_vault.key_vault_signalr.id
  
 }

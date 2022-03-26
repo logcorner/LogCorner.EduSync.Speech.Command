@@ -29,3 +29,16 @@ kubectl create secret docker-registry regsecret --docker-server=logcornerregistr
 az acr login --name tfqdemotfquickstartacr
 docker tag logcornerhub/logcorner-edusync-speech-mssql-tools tfqdemotfquickstartacr.azurecr.io/logcorner-edusync-speech-mssql-tools
 docker push logcornerterraformacr.azurecr.io/logcorner-edusync-speech-mssql-tools
+
+
+# use keyvault : https://pumpingco.de/blog/use-azure-keyvault-with-asp-net-core-running-in-an-aks-cluster-using-aad-pod-identity/
+$ az identity create -g LOGCORNER-MICROSERVICES-IAC -n logcorneridentity -o json
+
+
+$ az role assignment create  --role Reader --assignee a4ba5e20-7ca4-4529-b0b3-ecdaf12a84e5   --scope /subscriptions/023b2039-5c23-44b8-844e-c002f8ed431d/resourcegroups/LOGCORNER-MICROSERVICES-IAC
+
+az keyvault set-policy --name logcornersecretstore --secret-permissions list get  --object-id a4ba5e20-7ca4-4529-b0b3-ecdaf12a84e5 --resource-group  LOGCORNER-MICROSERVICES-IAC
+
+
+
+az role assignment create  --role "Managed Identity Operator"  --assignee d8f3ef20-e2f6-4422-8859-8837975f3b8f   --scope /subscriptions/023b2039-5c23-44b8-844e-c002f8ed431d/resourceGroups/LOGCORNER-MICROSERVICES-IAC/providers/Microsoft.ManagedIdentity/userAssignedIdentities/logcorneridentity

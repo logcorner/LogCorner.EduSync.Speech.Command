@@ -37,3 +37,7 @@ module "logcorner-container_registry" {
   ))
 }
 
+module "logcorner-app_registration" {
+  source     = "./modules/azuread"
+  tenantName = var.tenantName
+}

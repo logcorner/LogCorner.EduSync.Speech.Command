@@ -56,21 +56,21 @@ resource "azuread_service_principal" "web_api_application" {
 }
 
 resource "azurerm_key_vault_secret" "web_api_application_clientid" {
-  name         = "CommandApiAzureAdB2C--ClientId"
+  name         = "AzureAdB2C--ClientId"
   value        = azuread_application.web_api_application.application_id
-  key_vault_id = data.azurerm_key_vault.main.id
+  key_vault_id = azurerm_key_vault.key_vault_command.id
 }
 
 resource "azurerm_key_vault_secret" "web_api_tenant_domain" {
-  name         = "CommandApiAzureAdB2C--Domain"
+  name         = "AzureAdB2C--Domain"
   value        = "${var.tenantName}.onmicrosoft.com"
-  key_vault_id = data.azurerm_key_vault.main.id
+  key_vault_id = azurerm_key_vault.key_vault_command.id
 }
 
 resource "azurerm_key_vault_secret" "web_api_tenant_instance" {
-  name         = "CommandApiAzureAdB2C--Instance"
+  name         = "AzureAdB2C--Instance"
   value        = "https://${var.tenantName}.b2clogin.com/tfp/"
-  key_vault_id = data.azurerm_key_vault.main.id
+  key_vault_id = azurerm_key_vault.key_vault_command.id
 }
 
 

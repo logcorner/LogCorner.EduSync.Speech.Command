@@ -89,16 +89,16 @@ resource "azurerm_api_management_authorization_server" "api-standard-apim-author
   resource_group_name = var.resource_group_name
   display_name        = "oauth2 authorization Server"
 
-  authorization_endpoint = "https://datasynchrob2c.b2clogin.com/datasynchrob2c.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/authorize"
-  token_endpoint         = "https://datasynchrob2c.b2clogin.com/datasynchrob2c.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/token"
+  authorization_endpoint = "https://workshopb2clogcorner.b2clogin.com/workshopb2clogcorner.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/authorize"
+  token_endpoint         = "https://workshopb2clogcorner.b2clogin.com/workshopb2clogcorner.onmicrosoft.com/B2C_1_SignUpIn/oauth2/v2.0/token"
 
-  client_id                    = "40a32973-b38a-4785-a568-1bc9f434dad1"
+  client_id                    = "63ef158a-ce8b-4d2f-b078-10bd8f404b02"
   client_registration_endpoint = "http://localhost"
   
-  default_scope                = "https://datasynchrob2c.onmicrosoft.com/command/api/Speech.Create"
+  default_scope                = "https://workshopb2clogcorner.onmicrosoft.com/command/api/Speech.Create"
 
 
-  client_secret = "TJt7Q~AqlgOQAHruNgOsCkhfTRtitEcNr7Tzq"
+  client_secret = "Yb47Q~zJ0FXIiLIDkEiOmFaHiEyXXhkxb1SbK"
 
   grant_types = [
     "authorizationCode",
