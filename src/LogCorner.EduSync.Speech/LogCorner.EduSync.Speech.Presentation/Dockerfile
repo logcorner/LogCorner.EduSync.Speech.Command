@@ -6,7 +6,7 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.SharedKernel/nuget.config", "LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.SharedKernel/"]
+
 COPY ["LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/LogCorner.EduSync.Speech.Presentation.csproj", "LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/"]
 COPY ["LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application/LogCorner.EduSync.Speech.Application.csproj", "LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Application/"]
 COPY ["LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Infrastructure/LogCorner.EduSync.Speech.Infrastructure.csproj", "LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Infrastructure/"]
