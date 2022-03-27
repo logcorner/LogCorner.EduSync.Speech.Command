@@ -18,26 +18,26 @@ variables:
     - name: ACR_NAME
       value: 'locornermsacrtest'
 stages:
-    - template: pipeline-templates/backend.yml
-      parameters:
-        serviceConnectionName: ${{ variables.serviceConnectionName }}
-        resourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-        location: 'westeurope'
-        storageAccountName: ${{ variables.backendAzureRmStorageAccountName }} 
-        storageAccSkuName: 'Standard_LRS'
-        backendResourceContainerName: ${{ variables.backendResourceContainerName }}
-        application: 'dev'
-        environment: 'test'
-        deployed_by: 'terraform'
-    - template: pipeline-templates/deploy.yml
-      parameters:
-        deploymentName: 'webapi'
-        serviceConnectionName:  ${{ variables.serviceConnectionName }}
-        backendAzureRmResourceGroupName:  ${{ variables.backendAzureRmResourceGroupName }}
-        backendAzureRmStorageAccountName:  ${{ variables.backendAzureRmStorageAccountName }} 
-        backendResourceContainerName :  ${{ variables.backendResourceContainerName }}
-        filepath: 'deploy/iac/terraform/webapi'
-        workspace:  'test' 
+    # - template: pipeline-templates/backend.yml
+    #   parameters:
+    #     serviceConnectionName: ${{ variables.serviceConnectionName }}
+    #     resourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
+    #     location: 'westeurope'
+    #     storageAccountName: ${{ variables.backendAzureRmStorageAccountName }} 
+    #     storageAccSkuName: 'Standard_LRS'
+    #     backendResourceContainerName: ${{ variables.backendResourceContainerName }}
+    #     application: 'dev'
+    #     environment: 'test'
+    #     deployed_by: 'terraform'
+    # - template: pipeline-templates/deploy.yml
+    #   parameters:
+    #     deploymentName: 'webapi'
+    #     serviceConnectionName:  ${{ variables.serviceConnectionName }}
+    #     backendAzureRmResourceGroupName:  ${{ variables.backendAzureRmResourceGroupName }}
+    #     backendAzureRmStorageAccountName:  ${{ variables.backendAzureRmStorageAccountName }} 
+    #     backendResourceContainerName :  ${{ variables.backendResourceContainerName }}
+    #     filepath: 'deploy/iac/terraform/webapi'
+    #     workspace:  'test' 
     - template: pipeline-templates/build.yml
       parameters:
         BUILD_NUMBER: ${{ variables.BUILD_NUMBER }}
@@ -51,13 +51,13 @@ stages:
         resourceGroupName: ${{variables.backendAzureRmResourceGroupName}}
         kubernetesClusterName: 'demo-apim-aks-test'
         workspace:  'test'
-    - template: pipeline-templates/deploy.yml
-      parameters:
-        deploymentName: 'apim'
-        serviceConnectionName:  ${{ variables.serviceConnectionName }}
-        backendAzureRmResourceGroupName:  ${{ variables.backendAzureRmResourceGroupName }}
-        backendAzureRmStorageAccountName:  ${{ variables.backendAzureRmStorageAccountName }} 
-        backendResourceContainerName : 'backend-tfstate-apim-resources' #${{ variables.backendResourceContainerName }}
-        filepath: 'deploy/iac/terraform/apim'
-        workspace:  'test' 
+    # - template: pipeline-templates/deploy.yml
+    #   parameters:
+    #     deploymentName: 'apim'
+    #     serviceConnectionName:  ${{ variables.serviceConnectionName }}
+    #     backendAzureRmResourceGroupName:  ${{ variables.backendAzureRmResourceGroupName }}
+    #     backendAzureRmStorageAccountName:  ${{ variables.backendAzureRmStorageAccountName }} 
+    #     backendResourceContainerName : 'backend-tfstate-apim-resources' #${{ variables.backendResourceContainerName }}
+    #     filepath: 'deploy/iac/terraform/apim'
+    #     workspace:  'test' 
         
