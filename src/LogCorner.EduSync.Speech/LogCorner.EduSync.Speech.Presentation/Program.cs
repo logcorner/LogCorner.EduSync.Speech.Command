@@ -19,27 +19,27 @@ namespace LogCorner.EduSync.Speech.Presentation
                     {
                         var settings = config.Build();
 
-                        if (!context.HostingEnvironment.IsDevelopment())
-                        {
-                            // Configure Azure Key Vault Connection
-                            var uri = settings["AzureKeyVault:Uri"];
-                            var clientId = settings["AzureKeyVault:ClientId"];
-                            var clientSecret = settings["AzureKeyVault:ClientSecret"];
+                        //if (!context.HostingEnvironment.IsDevelopment())
+                        //{
+                        //    // Configure Azure Key Vault Connection
+                        //    var uri = settings["AzureKeyVault:Uri"];
+                        //    var clientId = settings["AzureKeyVault:ClientId"];
+                        //    var clientSecret = settings["AzureKeyVault:ClientSecret"];
 
-                            // Check, if Client ID and Client Secret credentials for a Service Principal
-                            // have been provided. If so, use them to connect, otherwise let the connection 
-                            // be done automatically in the background
-                            if (!string.IsNullOrEmpty(clientId) && !string.IsNullOrEmpty(clientSecret))
-                            {
-                                Console.WriteLine($"******** using service principal to read secrets from keyvault : {uri} ********");
-                                config.AddAzureKeyVault(uri, clientId, clientSecret);
-                            }
-                            else
-                            {
-                                Console.WriteLine($"******** using managed identity to read secrets from keyvault : {uri} ********");
-                                config.AddAzureKeyVault(uri);
-                            }
-                        }
+                        //    // Check, if Client ID and Client Secret credentials for a Service Principal
+                        //    // have been provided. If so, use them to connect, otherwise let the connection 
+                        //    // be done automatically in the background
+                        //    if (!string.IsNullOrEmpty(clientId) && !string.IsNullOrEmpty(clientSecret))
+                        //    {
+                        //        Console.WriteLine($"******** using service principal to read secrets from keyvault : {uri} ********");
+                        //        config.AddAzureKeyVault(uri, clientId, clientSecret);
+                        //    }
+                        //    else
+                        //    {
+                        //        Console.WriteLine($"******** using managed identity to read secrets from keyvault : {uri} ********");
+                        //        config.AddAzureKeyVault(uri);
+                        //    }
+                        //}
                     })
                     .UseStartup<Startup>();
     }
