@@ -8,7 +8,7 @@ jobs:
 - job: Job_1
   displayName: Agent job 1
   pool: 
-    vmImage: "ubuntu-18.04"
+    name: LOGCORNER-POOL
   steps:
   - checkout: self
   - task: DotNetCoreCLI@2
