@@ -1,0 +1,32 @@
+
+trigger:
+  - main
+  
+pool:
+    name: LOGCORNER-POOL
+variables:
+    - name: serviceConnectionName
+      value: 'AzureDevOpsServiceConnection'
+    - name: backendAzureRmResourceGroupName
+      value: 'LOGCORNER-MICROSERVICES-IAC'
+    
+    - name: BUILD_NUMBER
+      value: '$(Build.BuildId)'
+    - name: ACR_NAME
+      value: 'logcorneracrtest'
+stages:
+    - template: pipeline-templates/build.yml
+      parameters:
+        BUILD_NUMBER: ${{ variables.BUILD_NUMBER }}
+        ACR_NAME:  ${{ variables.ACR_NAME }}
+        serviceConnectionName: ${{ variables.serviceConnectionName }}
+    - template: pipeline-templates/deploy.yml
+      parameters:
+        BUILD_NUMBER: ${{ variables.BUILD_NUMBER }}
+        ACR_LOGIN_SERVER:  ${{ variables.ACR_NAME }}.azurecr.io
+        serviceConnectionName: ${{ variables.serviceConnectionName }}
+        resourceGroupName: ${{variables.backendAzureRmResourceGroupName}}
+        kubernetesClusterName: 'demo-apim-aks-test'
+        workspace:  'test'
+  
+        

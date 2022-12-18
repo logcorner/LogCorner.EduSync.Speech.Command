@@ -31,11 +31,6 @@ steps:
                    sonar.cs.vscoveragexml.reportsPaths=$(System.DefaultWorkingDirectory)/**/*.coveragexml
                sonar.cs.vstest.reportsPaths=$(System.DefaultWorkingDirectory)/**/*.trx
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet restore'
-  inputs:
-    command: restore
-    projects: '**/*.csproj'
-- task: DotNetCoreCLI@2
   displayName: 'dotnet build'
   inputs:
     projects: '**/*.csproj'

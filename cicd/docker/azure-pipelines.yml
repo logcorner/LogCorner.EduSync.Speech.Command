@@ -12,7 +12,7 @@ resources:
     ref: azure-pipelines-aks
  
 trigger:
-- azure-pipelines-aks
+- none
 
 pool: LOGCORNER-POOL
 

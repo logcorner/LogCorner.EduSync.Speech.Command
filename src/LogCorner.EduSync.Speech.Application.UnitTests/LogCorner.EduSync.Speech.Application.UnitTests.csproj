@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
+    <PackageReference Include="Moq" Version="4.18.3" />
+    <PackageReference Include="SpecFlow.xUnit" Version="3.9.74" />
+    <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LogCorner.EduSync.Speech.Application\LogCorner.EduSync.Speech.Application.csproj" />
+    <ProjectReference Include="..\LogCorner.EduSync.Speech.Infrastructure\LogCorner.EduSync.Speech.Infrastructure.csproj" />
+    <ProjectReference Include="..\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.Command.SharedKernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="LogCorner.EduSync.Notification.Common">
+      <HintPath>..\BINARIES\LogCorner.EduSync.Notification.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="LogCorner.EduSync.Speech.Resiliency">
+      <HintPath>..\BINARIES\LogCorner.EduSync.Speech.Resiliency.dll</HintPath>
+    </Reference>
+    <Reference Include="LogCorner.EduSync.Speech.Telemetry">
+      <HintPath>..\BINARIES\LogCorner.EduSync.Speech.Telemetry.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+
+
+</Project>
