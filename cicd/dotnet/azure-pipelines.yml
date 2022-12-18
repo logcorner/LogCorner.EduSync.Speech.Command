@@ -1,48 +1,57 @@
-trigger:
-- develop
-
-pool:
-  vmImage: 'windows-latest'
-
-variables:
-  buildConfiguration: 'Release'
-
-steps:
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'restore'
-    projects: '**/*.csproj'
-    
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
-  displayName: 'dotnet build $(buildConfiguration)'
-
-- task: DotNetCoreCLI@2
-  inputs:
-      command: 'test'
+Could not determine the agent queue name, please manually add a queue to target.
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: develop
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool: {}
+  steps:
+  - checkout: self
+  - task: DotNetCoreCLI@2
+    displayName: dotnet restore
+    inputs:
+      command: restore
+      projects: '**/*.csproj'
+  - task: DotNetCoreCLI@2
+    displayName: dotnet build
+    inputs:
+      projects: '**/*.csproj'
+  - task: DotNetCoreCLI@2
+    displayName: dotnet test
+    inputs:
+      command: test
       projects: '**/*Unit[Tt]ests/*.csproj'
-      arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
-      testRunTitle: 'Run unit tests'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: publish
-    publishWebProjects: True
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: True
-
-# this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'myWebsiteName'
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish ARM Artifact'
-  inputs:
-    PathtoPublish: 'K8/'
-    ArtifactName: 'drop-arm'
-    publishLocation: 'Container'
+  - task: DotNetCoreCLI@2
+    displayName: dotnet pack
+    enabled: False
+    inputs:
+      command: pack
+      searchPatternPack: src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.SharedKernel/LogCorner.EduSync.Speech.SharedKernel.csproj
+      outputDir: $(Build.ArtifactStagingDirectory)/Nugets
+  - task: DotNetCoreCLI@2
+    displayName: dotnet push
+    enabled: False
+    inputs:
+      command: push
+      searchPatternPush: $(Build.ArtifactStagingDirectory)/Nugets/*.nupkg
+      nuGetFeedType: external
+      feedPublish: 624f97ba-b760-4c02-9c49-5d44706ade0b
+      externalEndpoint: 30807e78-e74c-4929-a88d-25a70f763c78
+  - task: NuGetAuthenticate@0
+    displayName: NuGet Authenticate
+    enabled: False
+    inputs:
+      nuGetServiceConnections: 30807e78-e74c-4929-a88d-25a70f763c78
+      forceReinstallCredentialProvider: true
+  - task: NuGetCommand@2
+    displayName: NuGet push
+    enabled: False
+    inputs:
+      command: push
+      searchPatternPush: $(Build.ArtifactStagingDirectory)/Nugets/*.nupkg
+      nuGetFeedType: external
+      externalEndpoint: 30807e78-e74c-4929-a88d-25a70f763c78
+...
