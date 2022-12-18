@@ -1,4 +1,4 @@
-Could not determine the agent queue name, please manually add a queue to target.
+
 resources:
   repositories:
   - repository: self
@@ -7,7 +7,8 @@ resources:
 jobs:
 - job: Job_1
   displayName: Agent job 1
-  pool: {}
+  pool: 
+    vmImage: "ubuntu-18.04"
   steps:
   - checkout: self
   - task: DotNetCoreCLI@2
