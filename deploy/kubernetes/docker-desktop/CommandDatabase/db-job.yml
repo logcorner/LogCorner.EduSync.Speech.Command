@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: initsqldatabasejob
+  #namespace: qa
+  labels:
+    version: 1.0.0
+    product: init-sql-database-job
+    environment: qa
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+      - name: sqljobcontainer
+        image: logcornerhub/logcorner-edusync-speech-mssql-tools
+        imagePullPolicy: Never
+        command: ["/opt/mssql-tools/bin/sqlcmd"]
+        args: [ "-S", "db-speech-command-api-service", "-d", "master", "-U", "sa", "-P", "MyC0m9l&xP@ssw0rd", "-I", "-i", "logcorner-edusync-speech-database_Create.sql" ]
+      restartPolicy: Never

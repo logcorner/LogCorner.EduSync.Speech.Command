@@ -6,7 +6,7 @@ services:
     image: ${DOCKER_REGISTRY-}/logcorner-edusync-speech-command
     build:
       context: .
-      dockerfile: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/Dockerfile
+      dockerfile: LogCorner.EduSync.Speech.Presentation/Dockerfile
     depends_on:
       - logcorner.edusync.speech.command.data
     networks:
@@ -15,23 +15,26 @@ services:
   logcorner.edusync.speech.command.data:
     image: ${DOCKER_REGISTRY-}/logcorner-edusync-speech-command-data
     build:
-      context: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Database/Docker
+      context: LogCorner.EduSync.Speech.Database/Docker
       dockerfile: Dockerfile
       args:
         SA_PASSWORD: MyC0m9l&xP@ssw0rd
     networks:
       - speech_network    
-  # database service
+  # database mssql-tools
   logcorner.edusync.speech.mssql-tools:
     image: ${DOCKER_REGISTRY-}/logcorner-edusync-speech-mssql-tools
     build:
-      context: LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Database/Docker
+      context: LogCorner.EduSync.Speech.Database/Docker
       dockerfile: mssql-tools/Dockerfile
   
+ 
+
 networks:
   speech_network:
     external:
       name: speech_network
+
 
 
 

@@ -1,25 +1,25 @@
 trigger:
-  branches:
-    include:
-    - develop
+  none
 resources:
   repositories:
   - repository: MyGitHubRepo
     type: github
     endpoint: github.com_logcorner
     name: logcorner/LogCorner.EduSync.Speech.Command
-    ref: develop
+    ref: azure-pipelines-aks
 variables:
 - name: dockerRegistryServiceConnection
   value: 'AzureDevOpsServiceConnection'
 - name: imageRepository
   value: 'logcornerlogcorneredusyncspeechcommand'
 - name: containerRegistry
-  value: 'acrlogcornerregistry.azurecr.io'
+  value: 'acrlogcornerregistry5xvudnm6uolcm.azurecr.io'
 - name: dockerfilePath
   value: 'LogCorner.EduSync.Speech.Command/src/LogCorner.EduSync.Speech/LogCorner.EduSync.Speech.Presentation/Dockerfile'
 - name: tag
   value: '$(Build.BuildId)'
+- name: ACR_NAME
+  value:  acrlogcornerregistry5xvudnm6uolcm.azurecr.io
 - name: imagePullSecret
   value: 'acrlogcornerregistry1339485b-auth'
 stages:
@@ -29,32 +29,37 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      name: LOGCORNER-POOL
+      vmImage: 'ubuntu-latest'
     steps:
-    -
+    
     - task: DockerCompose@0
+      enabled: false
       displayName: 'Build docker images '
       inputs:
         containerregistrytype: 'Azure Container Registry'
         azureContainerRegistry: '$(dockerRegistryServiceConnection)'
-        dockerComposeFile: 'LogCorner.EduSync.Speech.Command/src/docker-compose.yml'
+        dockerComposeFile: 'src/docker-compose.yml'
         dockerComposeFileArgs: 'DOCKER_REGISTRY=$(containerRegistry)'
         action: 'Build services'
         additionalImageTags: '$(tag)'
         includeLatestTag: true
     - task: AzureCLI@2
+      enabled: false
       displayName: Docker Push
       inputs:
-        azureSubscription: 'aks-spn-ca'
+        azureSubscription: 'AzureDevOpsServiceConnection'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          az acr login -n acrlogcornerregistry
-          docker push acrlogcornerregistry.azurecr.io/logcorner-edusync-speech-command:$(tag)
+          az acr login -n acrlogcornerregistry5xvudnm6uolcm
+          docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-command:$(tag)
+          docker push acrlogcornerregistry5xvudnm6uolcm.azurecr.io/logcorner-edusync-speech-mssql-tools:$(tag)
     - task: replacetokens@3
+      enabled: false
+      displayName: Replace Tokens in  CommandApi
       inputs:
-        rootDirectory: 'LogCorner.EduSync.Speech.Command/deploy/kubernetes/aks'
-        targetFiles: '*.yaml'
+        rootDirectory: 'deploy/kubernetes/aks'
+        targetFiles: '**\*.yml'
         encoding: 'auto'
         writeBOM: true
         actionOnMissing: 'warn'
@@ -66,19 +71,20 @@ stages:
         useLegacyPattern: false
         enableTelemetry: true
 
-    - script: cat LogCorner.EduSync.Speech.Command/deploy/kubernetes/aks/command-api-deployment.yaml
-
+    - script: cat deploy/kubernetes/aks/CommandApi/command-api-deployment.yml
+    - script: cat deploy/kubernetes/aks/CommandDatabase/db-job.yml
+    
     - task: Kubernetes@1
-      displayName: Kubernetes Deploy
+      enabled: false
       inputs:
         connectionType: 'Azure Resource Manager'
         azureSubscriptionEndpoint: 'AzureDevOpsServiceConnection'
         azureResourceGroup: 'aks'
-        kubernetesCluster: 'akslogcornercluster'
-        namespace: 'default'
+        kubernetesCluster: 'akslogcornercluster5xvudnm6uolcm'
         command: 'apply'
-        useConfigurationFile: true
-        configuration: 'src/02_kubernetes_aks'
+        arguments: '-f . -f CommandDatabase -f CommandApi'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/kubernetes/aks'
 
+     
