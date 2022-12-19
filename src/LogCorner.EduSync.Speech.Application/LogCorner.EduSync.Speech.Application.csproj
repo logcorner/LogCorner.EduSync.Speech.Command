@@ -16,7 +16,7 @@
 	<ItemGroup>
 		<PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.0.0-beta.3" />
 		<PackageReference Include="LogCorner.EduSync.Speech.Resiliency" Version="2.0.5" />
-		<PackageReference Include="LogCorner.EduSync.Speech.Telemetry" Version="2.0.5" />
+		<PackageReference Include="LogCorner.EduSync.Speech.Telemetry" Version="2.0.6" />
 		<!--OPEN TELMETRY-->
 		<PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.0.0-rc7" />
 		<!-- OpenTelemetry API & SDK -->

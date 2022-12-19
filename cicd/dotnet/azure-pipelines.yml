@@ -41,4 +41,6 @@ jobs:
       packagesToPush: '$(Build.ArtifactStagingDirectory)/Nugets/*.nupkg'
       nuGetFeedType: 'external'
       publishFeedCredentials: 'nuget.org'
+      allowPackageConflicts: true
+    continueOnError: true
 ...
