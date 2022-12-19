@@ -21,6 +21,7 @@ steps:
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'dotnet build $(buildConfiguration)'
 - task: VSBuild@1
+  displayName: 'build database'
   inputs:
     solution: '**\*.sqlproj'
 - task: DotNetCoreCLI@2
