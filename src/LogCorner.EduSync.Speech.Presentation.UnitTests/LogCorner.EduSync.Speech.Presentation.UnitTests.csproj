@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LogCorner.EduSync.Speech.Telemetry" Version="2.0.5" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" Version="2.2.0" />
@@ -44,10 +45,6 @@
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Presentation\LogCorner.EduSync.Speech.Presentation.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="LogCorner.EduSync.Speech.Telemetry">
-      <HintPath>..\BINARIES\LogCorner.EduSync.Speech.Telemetry.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+  
 
 </Project>

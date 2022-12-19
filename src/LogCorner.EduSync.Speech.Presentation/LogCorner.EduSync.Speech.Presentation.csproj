@@ -81,6 +81,8 @@
 
 	  <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
 	  <PackageReference Include="Azure.Identity" Version="1.8.0" />
+	  <PackageReference Include="LogCorner.EduSync.Speech.Resiliency" Version="2.0.5" />
+	  <PackageReference Include="LogCorner.EduSync.Speech.Telemetry" Version="2.0.5" />
 	
     <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="7.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.1" />
@@ -131,20 +133,7 @@
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Application\LogCorner.EduSync.Speech.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-  <Reference Include="LogCorner.EduSync.Speech.Producer">
-    <HintPath>..\BINARIES\LogCorner.EduSync.Speech.Producer.dll</HintPath>
-  </Reference>
-  <Reference Include="LogCorner.EduSync.Speech.Resiliency">
-      <HintPath>..\BINARIES\LogCorner.EduSync.Speech.Resiliency.dll</HintPath>
-    </Reference>
-  <Reference Include="LogCorner.EduSync.Speech.ServiceBus">
-    <HintPath>..\BINARIES\LogCorner.EduSync.Speech.ServiceBus.dll</HintPath>
-  </Reference>
-    <Reference Include="LogCorner.EduSync.Speech.Telemetry">
-      <HintPath>..\BINARIES\LogCorner.EduSync.Speech.Telemetry.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+  
 
 
 
