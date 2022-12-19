@@ -20,7 +20,9 @@ steps:
     projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'dotnet build $(buildConfiguration)'
-
+- task: VSBuild@1
+  inputs:
+    solution: '**\*.sqlproj'
 - task: DotNetCoreCLI@2
   inputs:
       command: 'test'
