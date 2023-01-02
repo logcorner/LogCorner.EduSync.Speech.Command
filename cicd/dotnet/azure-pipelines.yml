@@ -20,6 +20,10 @@ jobs:
     displayName: dotnet build
     inputs:
       projects: '**/*.csproj'
+  - task: VSBuild@1
+    displayName: database build
+    inputs:
+      solution: '**\*.sqlproj'
   - task: DotNetCoreCLI@2
     displayName: dotnet test
     inputs:
