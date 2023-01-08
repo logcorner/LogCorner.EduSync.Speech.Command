@@ -1,0 +1,21 @@
+jobs:
+  Job_1:
+    name: Agent job 1
+    runs-on: LOGCORNER-POOL
+    steps:
+    - uses: actions/checkout@v2
+    - uses: microsoft/setup-msbuild@v1.0.2
+    - name: dotnet restore
+      run: dotnet restore **/*.csproj
+    - name: dotnet build
+      run: dotnet **/*.csproj
+    - name: database build
+      run: msbuild '**\*.sqlproj'
+    - name: dotnet test
+      run: dotnet test **/*Unit[Tt]ests/*.csproj
+    - name: dotnet pack
+      run: dotnet pack src/LogCorner.EduSync.Speech.SharedKernel/LogCorner.EduSync.Speech.SharedKernel.csproj
+    - name: NuGet push
+      run: nuget push
+      continue-on-error: true
+                    
