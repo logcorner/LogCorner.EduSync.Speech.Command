@@ -6,18 +6,18 @@ metadata:
   labels:
     version: 1.0.0
     product: db-speech-command-api
-    environment: qa
+    environment: docker-desktop
 spec:
   replicas: 1
   selector:
      matchLabels:
        app: db-speech-command-api
-       env: qa
+       env: docker-desktop
   template:
     metadata:
       labels:
        app: db-speech-command-api
-       env: qa
+       env: docker-desktop
     spec:
       terminationGracePeriodSeconds: 30
       hostname: mssqlinst

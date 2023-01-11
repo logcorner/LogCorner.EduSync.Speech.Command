@@ -6,7 +6,7 @@ metadata:
   labels:
     version: 1.0.0
     product: mssql-pvc
-    environment: qa
+    environment: docker-desktop
 spec:
   accessModes:
     - ReadWriteOnce

@@ -67,7 +67,7 @@
     <Content Include="appsettings.Kubernetes.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="appsettings.Kubernetes.qa.json">
+    <Content Include="appsettings.Kubernetes.docker-desktop.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Properties\launchSettings.json" />

@@ -6,7 +6,7 @@ metadata:
   labels:
     version: 1.0.0
     product: init-sql-database-job
-    environment: qa
+    environment: docker-desktop
 spec:
   ttlSecondsAfterFinished: 100
   template:

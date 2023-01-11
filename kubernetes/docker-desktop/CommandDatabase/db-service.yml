@@ -6,13 +6,13 @@ metadata:
   labels:
     version: 1.0.0
     product: db-speech-command-api
-    environment: qa
+    environment: docker-desktop
 spec:
   selector:
     app: db-speech-command-api
-    env: qa
+    env: docker-desktop
   ports:
     - protocol: TCP
       port: 1433
       targetPort: 1433
-  type: ClusterIP
+  type: NodePort

@@ -7,20 +7,20 @@ metadata:
   labels:
     version: 1.0.0
     product: speech-command-http-api
-    environment: qa
+    environment: docker-desktop
 
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: speech-command-http-api
-      env: qa
+      env: docker-desktop
   
   template:
     metadata:
       labels:
         app: speech-command-http-api
-        env: qa
+        env: docker-desktop
     spec:
       containers:
       - name: command-api-container
@@ -28,7 +28,7 @@ spec:
         imagePullPolicy: Never
         env:
         - name: ASPNETCORE_ENVIRONMENT
-          value: "Kubernetes.qa"
+          value: "Kubernetes.docker-desktop"
         ports:
         - containerPort: 80
         - containerPort: 443

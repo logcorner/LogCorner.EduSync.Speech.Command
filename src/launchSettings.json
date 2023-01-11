@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "logcorner.edusync.speech.command": "StartDebugging",
+        "logcorner.edusync.speech.command.data": "StartWithoutDebugging",
+        "logcorner.edusync.speech.mssql-tools": "DoNotStart"
+      }
+    }
+  }
+}
