@@ -49,8 +49,6 @@ https://kubernetes.docker.com/speech-command-http-api/swagger/index.html
   "typeId": 1
 }
 
-
-
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'MyC0m9l&xP@ssw0rd'
 
 select name from sys.databases

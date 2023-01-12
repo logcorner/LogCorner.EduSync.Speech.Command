@@ -1,0 +1,6 @@
+apiVersion: v2
+name: http-api
+appVersion: "3.6"
+description: A Helm chart for speech command api http service  
+version: 1.0.0
+type: application
