@@ -24,6 +24,6 @@ jobs:
             username: ${{ secrets.SERVICE_PRINCIPAL_ID }}
             password: ${{ secrets.SERVICE_PRINCIPAL_PASSWORD }}
 
-        - run: docker-compose ./src/ docker-compose.yml build . -t ${{ env.IMAGE_NAME }}
+        - run: docker-compose -f ./src/docker-compose.yml build 
         - run: docker tag logcornerhub/logcorner-edusync-speech-command ${{ env.IMAGE_NAME }}
         - run: docker push ${{ env.IMAGE_NAME }}
