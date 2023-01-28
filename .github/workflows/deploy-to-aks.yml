@@ -67,8 +67,9 @@ jobs:
     - uses: azure/k8s-deploy@v1
       with:
         manifests: |
-          manifests/deployment.yml
-          manifests/service.yml
+          kubernetes/aks-ingress/CommandApi/command-api-deployment.yml
+          kubernetes/aks-ingress/CommandApi/command-api-service.yml
+          kubernetes/aks-ingress/command-ingress.yml
         images: |
           ${{ env.IMAGE_NAME }}
         imagepullsecrets: |
