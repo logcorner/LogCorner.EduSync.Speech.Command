@@ -5,7 +5,7 @@ on:
 
 env:
   ACR_LOGON_SERVER: ${{ secrets.ACR_NAME }}.azurecr.io
-  IMAGE_NAME: ${{ secrets.ACR_NAME }}.azurecr.io/webapp:${{ github.sha }}
+  IMAGE_NAME: ${{ secrets.ACR_NAME }}.azurecr.io/logcorner-edusync-speech-command:${{ github.sha }}
 
 jobs:
   build-deploy-image:
