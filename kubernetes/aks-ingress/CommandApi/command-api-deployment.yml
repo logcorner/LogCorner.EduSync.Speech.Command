@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: speech-command-http-api-deployment
+  
+  labels:
+    version: 1.0.0
+    product: speech-command-http-api
+    environment: docker-desktop-ingress
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: speech-command-http-api
+      env: docker-desktop-ingress
+  
+  template:
+    metadata:
+      labels:
+        app: speech-command-http-api
+        env: docker-desktop-ingress
+    spec:
+      containers:
+      - name: command-api-container
+        image: acraksingressdemo.azurecr.io/logcorner-edusync-speech-command
+        imagePullPolicy: Never
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Kubernetes.docker-desktop-ingress"
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+          protocol: TCP
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+       - name: regsecret
+    
