@@ -36,3 +36,25 @@ az role assignment create --assignee $servicePrincipalId --scope $azureContainer
 
 az aks create --resource-group $resourceGroupName --name $aksName --node-count 2 --generate-ssh-keys --attach-acr $azureContainerRegistryName --service-principal $servicePrincipalId --client-secret $servicePrincipalPassword
 
+# nginx ingress
+https://learn.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli
+
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+
+kubectl create ns ingress-basic
+
+helm install ingress-nginx ingress-nginx/ingress-nginx  `
+--namespace ingress-basic  `
+--set controller.replicaCount=2   `
+--set controller.nodeSelector."beta\.kubernetes\.io/os"=linux `
+--set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux `
+--set controller.service.externalTrafficPolicy=Local
+
+
+kubectl get all -n ingress-basic
+
+
+kubectl apply -f aks-helloworld-one.yaml --namespace ingress-basic
+kubectl apply -f aks-helloworld-two.yaml --namespace ingress-basic
+kubectl apply -f hello-world-ingress.yaml --namespace ingress-basic
