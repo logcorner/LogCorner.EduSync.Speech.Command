@@ -36,6 +36,10 @@ az role assignment create --assignee $servicePrincipalId --scope $azureContainer
 
 az aks create --resource-group $resourceGroupName --name $aksName --node-count 2 --generate-ssh-keys --attach-acr $azureContainerRegistryName --service-principal $servicePrincipalId --client-secret $servicePrincipalPassword
 
+
+# Get the kubeconfig to log into the cluster
+az aks get-credentials  --resource-group $resourceGroupName   --name $aksName
+
 # nginx ingress
 https://learn.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli
 
@@ -58,3 +62,8 @@ kubectl get all -n ingress-basic
 kubectl apply -f aks-helloworld-one.yaml --namespace ingress-basic
 kubectl apply -f aks-helloworld-two.yaml --namespace ingress-basic
 kubectl apply -f hello-world-ingress.yaml --namespace ingress-basic
+
+
+http://www.ingress-nginx.cloud-devops-craft.com
+
+https://www.ingress-nginx.cloud-devops-craft.com
