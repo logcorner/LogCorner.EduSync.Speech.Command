@@ -8,18 +8,18 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 
 spec:
-  tls:
-    - hosts:
-      - kubernetes.docker.com
-      secretName: logcorner-ingress-tls
+  # tls:
+  #   - hosts:
+  #     - kubernetes.docker.com
+  #     secretName: logcorner-ingress-tls
   rules:
-    - host: kubernetes.docker.com
-      http:
-        paths:
-          - path: /speech-command-http-api(/|$)(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: speech-command-http-api-service
-                port:
-                  number: 80
+    # - host: kubernetes.docker.com
+  - http:
+      paths:
+      - path: /speech-command-http-api(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: speech-command-http-api-service
+            port:
+              number: 80

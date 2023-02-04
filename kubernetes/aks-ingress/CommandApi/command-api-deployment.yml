@@ -28,7 +28,7 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: ASPNETCORE_ENVIRONMENT
-          value: "Kubernetes.docker-desktop-ingress"
+          value: "Kubernetes.aks-ingress"
         ports:
         - containerPort: 80
         - containerPort: 443

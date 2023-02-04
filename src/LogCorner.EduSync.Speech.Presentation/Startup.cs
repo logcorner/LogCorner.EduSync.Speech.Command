@@ -98,7 +98,14 @@ namespace LogCorner.EduSync.Speech.Presentation
                 throw new PresentationException("isAuthenticationEnabled is not configured correctly ");
             }
             string pathBase = Configuration["pathBase"];
-            app.UseMiddleware<ExceptionMiddleware>();
+            string useHttps = Configuration["useHttps"];
+            var protocol = "http";
+            if (!string.IsNullOrWhiteSpace(useHttps))
+            {
+                protocol = "https";
+            }
+                
+                app.UseMiddleware<ExceptionMiddleware>();
             app.UseSwagger(x =>
             {
                 if (!string.IsNullOrWhiteSpace(pathBase))
@@ -106,7 +113,7 @@ namespace LogCorner.EduSync.Speech.Presentation
                     x.RouteTemplate = "swagger/{documentName}/swagger.json";
                     x.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
                     {
-                        swaggerDoc.Servers = new List<OpenApiServer> { new OpenApiServer { Url = $"https://{httpReq.Host.Value}{pathBase}" } };
+                        swaggerDoc.Servers = new List<OpenApiServer> { new OpenApiServer { Url = $"{protocol}://{httpReq.Host.Value}{pathBase}" } };
                     });
                 }
             })

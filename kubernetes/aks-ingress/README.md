@@ -14,11 +14,13 @@ $resourceGroupId =$(az group show --name $resourceGroupName --query id --output 
 
 
 # create a service principal
-az ad sp create-for-rbac --name $servicePrincipalName --scopes $resourceGroupId --role Contributor --sdk-auth
+$servicePrincipal = az ad sp create-for-rbac --name $servicePrincipalName --scopes $resourceGroupId --role Contributor --sdk-auth
 
 #copy output to a text file for use later
 
-$servicePrincipalPassword ="prnSVQ8sSgWuMu7Mnu-~en-v3XjyYz3Uys"
+$servicePrincipalPassword ="L678Q~7O9t1iad48PQKpau83lftxinDx0lyc9bxq"
+$servicePrincipalSecret= $(az ad sp list --display-name $servicePrincipalName --query "[].clientSecret" --output tsv)
+                 
 
 $servicePrincipalId= $(az ad sp list --display-name $servicePrincipalName --query "[].appId" --output tsv)
 
@@ -59,6 +61,17 @@ helm install ingress-nginx ingress-nginx/ingress-nginx  `
 kubectl get all -n ingress-basic
 
 
+az login
+az acr login --name $azureContainerRegistryName
+
+docker tag logcornerhub/logcorner-edusync-speech-command  "$azureContainerRegistryName.azurecr.io/logcorner-edusync-speech-command"
+
+docker push "$azureContainerRegistryName.azurecr.io/logcorner-edusync-speech-command"
+
+docker tag logcornerhub/logcorner-edusync-speech-mssql-tools  "$azureContainerRegistryName.azurecr.io/logcorner-edusync-speech-mssql-tools"
+
+docker push "$azureContainerRegistryName.azurecr.io/logcorner-edusync-speech-mssql-tools"
+
 kubectl apply -f aks-helloworld-one.yaml --namespace ingress-basic
 kubectl apply -f aks-helloworld-two.yaml --namespace ingress-basic
 kubectl apply -f hello-world-ingress.yaml --namespace ingress-basic
@@ -67,3 +80,6 @@ kubectl apply -f hello-world-ingress.yaml --namespace ingress-basic
 http://www.ingress-nginx.cloud-devops-craft.com
 
 https://www.ingress-nginx.cloud-devops-craft.com
+
+
+http://20.126.213.221/speech-command-http-api/swagger/index.html
