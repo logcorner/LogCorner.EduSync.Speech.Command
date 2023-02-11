@@ -98,7 +98,7 @@ resource "azurerm_api_management_authorization_server" "api-standard-apim-author
   default_scope                = "https://workshopb2clogcorner.onmicrosoft.com/command/api/Speech.Create"
 
 
-  client_secret = "Yb47Q~zJ0FXIiLIDkEiOmFaHiEyXXhkxb1SbK"
+  client_secret = ""
 
   grant_types = [
     "authorizationCode",
