@@ -16,5 +16,5 @@ spec:
         image: logcornerhub/logcorner-edusync-speech-mssql-tools
         imagePullPolicy: Never
         command: ["/opt/mssql-tools/bin/sqlcmd"]
-        args: [ "-S", "db-speech-command-api-service", "-d", "master", "-U", "sa", "-P", "MyC0m9l&xP@ssw0rd", "-I", "-i", "logcorner-edusync-speech-database_Create.sql" ]
+        args: [ "-S", "speech-command-db-service", "-d", "master", "-U", "sa", "-P", "MyC0m9l&xP@ssw0rd", "-I", "-i", "logcorner-edusync-speech-database_Create.sql" ]
       restartPolicy: Never
