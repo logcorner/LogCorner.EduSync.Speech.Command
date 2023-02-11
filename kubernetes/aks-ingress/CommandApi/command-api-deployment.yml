@@ -24,8 +24,8 @@ spec:
     spec:
       containers:
       - name: command-api-container
-        image: logcornerhub/logcorner-edusync-speech-command
-        imagePullPolicy: Never
+        image: acraksingressdemo.azurecr.io/logcorner-edusync-speech-command
+        imagePullPolicy: IfNotPresent
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: "Kubernetes.docker-desktop-ingress"

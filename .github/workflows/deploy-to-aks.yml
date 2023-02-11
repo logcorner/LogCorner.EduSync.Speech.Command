@@ -1,0 +1,77 @@
+name: Container Workflow
+on:
+  push:
+  workflow_dispatch:
+
+env:
+  ACR_LOGON_SERVER: ${{ secrets.ACR_NAME }}.azurecr.io
+  IMAGE_NAME: ${{ secrets.ACR_NAME }}.azurecr.io/logcorner-edusync-speech-command:${{ github.sha }}
+
+jobs:
+  build-deploy-image:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+    # checkout the repo
+    - name: 'Checkout GitHub Action'
+      uses: actions/checkout@master
+      
+    - name: 'Build and push image'
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.ACR_LOGON_SERVER }}
+        username: ${{ secrets.SERVICE_PRINCIPAL_ID }}
+        password: ${{ secrets.SERVICE_PRINCIPAL_PASSWORD }}
+
+    - run: docker-compose -f ./src/docker-compose.yml build 
+    - run: docker tag logcornerhub/logcorner-edusync-speech-command ${{ env.IMAGE_NAME }}
+    - run: docker push ${{ env.IMAGE_NAME }}
+    
+  deploy-to-aks:
+    
+    runs-on: ubuntu-latest
+    
+    if: github.ref == 'refs/heads/develop'
+
+    needs: build-deploy-image
+        
+    #env:
+      #NAMESPACE: dummy
+    
+    steps:
+    
+    - uses: actions/checkout@main
+    
+    # Set the target Azure Kubernetes Service (AKS) cluster. 
+    - uses: azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ${{ secrets.AKS_NAME }}
+        resource-group: ${{ secrets.AKS_RESOURCE_GROUP }}
+  
+    # Create namespace if doesn't exist
+    # - run: |
+    #    kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
+  
+    # Create image pull secret for ACR
+    - uses: azure/k8s-create-secret@v1
+      with:
+        container-registry-url: ${{ env.ACR_LOGON_SERVER }}
+        container-registry-username: ${{ secrets.SERVICE_PRINCIPAL_ID }}
+        container-registry-password: ${{ secrets.SERVICE_PRINCIPAL_PASSWORD }}
+        secret-name: ${{ secrets.AKS_SECRET }}
+        # namespace: ${{ env.NAMESPACE }}
+  
+    # Deploy app to AKS
+    - uses: azure/k8s-deploy@v1
+      with:
+        manifests: |
+          kubernetes/aks-ingress/CommandApi/command-api-deployment.yml
+          kubernetes/aks-ingress/CommandApi/command-api-service.yml
+          kubernetes/aks-ingress/command-ingress.yml
+        images: |
+          ${{ env.IMAGE_NAME }}
+        imagepullsecrets: |
+          ${{ secrets.AKS_SECRET }}
+        #namespace: ${{ env.NAMESPACE }}

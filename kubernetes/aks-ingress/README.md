@@ -1,59 +1,65 @@
 # LogCorner.EduSync
 Building microservices through Event Driven Architecture
 
-docker rmi -f $(docker images -a -q)
-docker volume rm $(docker volume ls -q)
+# to setup Azure Container Registry:
+$resourceGroupName ="rg-aks-ingress-demo"
+$resourceGroupLocation ="westeurope"
+$servicePrincipalName ="deploy-aks-with-github-action"
+$azureContainerRegistryName ="acraksingressdemo"
+$aksName="aks-ingress-cluster"
 
-kubectl apply -f .
+# create resource group
+az group create --name $resourceGroupName --location $resourceGroupLocation
+$resourceGroupId =$(az group show --name $resourceGroupName --query id --output tsv)
 
 kubectl get pods
  kubectl get services
 
+# create a service principal
+az ad sp create-for-rbac --name $servicePrincipalName --scopes $resourceGroupId --role Contributor --sdk-auth
 
-install ingress for docker desktop
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.3/deploy/static/provider/aws/deploy.yaml
+#copy output to a text file for use later
 
-kubectl get pods -n ingress-nginx --watch
+$servicePrincipalPassword ="prnSVQ8sSgWuMu7Mnu-~en-v3XjyYz3Uys"
 
-C:\Windows\System32\drivers\etc\hosts
+$servicePrincipalId= $(az ad sp list --display-name $servicePrincipalName --query "[].appId" --output tsv)
 
-127.0.0.1 kubernetes.docker.com
+# create azure container registry
+az acr create --resource-group $resourceGroupName --name $azureContainerRegistryName --sku Basic
+$azureContainerRegistryId=$(az acr show --name $azureContainerRegistryName --resource-group $resourceGroupName --query id --output tsv)
 
-curl http://kubernetes.docker.com
-https://kubernetes.docker.com/speech-command-http-api/swagger/index.html
+az role assignment create --assignee $servicePrincipalId --scope $azureContainerRegistryId --role AcrPush
 
 
-eneable ssl
-download openssl
-Win64 OpenSSL v3.0.7
-https://slproweb.com/products/Win32OpenSSL.html
+# to setup Azure Kubernetes Service cluster
 
 generate a certificate and a key
 
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -out logcorner-ingress-tls.crt -keyout logcorner-ingress-tls.key -subj "/CN=kubernetes.docker.com/O=logcorner-ingress-tls"
+az role assignment create --assignee $servicePrincipalId --scope $azureContainerRegistryId --role AcrPull
 
-deploy certificate to kubernetes
-kubectl create secret tls logcorner-ingress-tls --namespace default --key logcorner-ingress-tls.key --cert logcorner-ingress-tls.crt
+az aks create --resource-group $resourceGroupName --name $aksName --node-count 2 --generate-ssh-keys --attach-acr $azureContainerRegistryName --service-principal $servicePrincipalId --client-secret $servicePrincipalPassword
 
-<!-- kubectl create namespace docker-desktop-ingress
-kubectl create secret tls logcorner-ingress-tls --namespace docker-desktop-ingress --key logcorner-ingress-tls.key --cert logcorner-ingress-tls.crt -->
+# nginx ingress
+https://learn.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli
 
-kubectl apply -f command-ingress.yml
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+
+kubectl create ns ingress-basic
+
+helm install ingress-nginx ingress-nginx/ingress-nginx  `
+--namespace ingress-basic  `
+--set controller.replicaCount=2   `
+--set controller.nodeSelector."beta\.kubernetes\.io/os"=linux `
+--set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux `
+--set controller.service.externalTrafficPolicy=Local
 
 https://kubernetes.docker.com/speech-command-http-api/swagger/index.html
 
-{
-  "title": "this is a title",
-  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  "url": "http://test.com",
-  "typeId": 1
-}
+kubectl get all -n ingress-basic
 
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'MyC0m9l&xP@ssw0rd'
 
-select name from sys.databases
-go
-use [LogCorner.EduSync.Speech.Database]
-go
-select * from [dbo].[Speech]
-go
+kubectl apply -f aks-helloworld-one.yaml --namespace ingress-basic
+kubectl apply -f aks-helloworld-two.yaml --namespace ingress-basic
+kubectl apply -f hello-world-ingress.yaml --namespace ingress-basic
