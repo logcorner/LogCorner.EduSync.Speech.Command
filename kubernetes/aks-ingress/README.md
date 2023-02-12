@@ -30,14 +30,11 @@ $azureContainerRegistryId=$(az acr show --name $azureContainerRegistryName --res
 
 az role assignment create --assignee $servicePrincipalId --scope $azureContainerRegistryId --role AcrPush
 
-
 # to setup Azure Kubernetes Service cluster
-
 
 az role assignment create --assignee $servicePrincipalId --scope $azureContainerRegistryId --role AcrPull
 
 az aks create --resource-group $resourceGroupName --name $aksName --node-count 2 --generate-ssh-keys --attach-acr $azureContainerRegistryName --service-principal $servicePrincipalId --client-secret $servicePrincipalPassword
-
 
 # Get the kubeconfig to log into the cluster
 az aks get-credentials  --resource-group $resourceGroupName   --name $aksName
