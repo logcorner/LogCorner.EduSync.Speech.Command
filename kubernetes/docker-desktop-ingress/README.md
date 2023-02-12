@@ -1,13 +1,31 @@
 # LogCorner.EduSync
 Building microservices through Event Driven Architecture
 
+
 docker rmi -f $(docker images -a -q)
 docker volume rm $(docker volume ls -q)
+
+
+run the following command to build the images, so need to locate the docker-compose.yml file under (\LogCorner.EduSync.Speech.Command\src)
+
+docker-compose build
+The build will produce 2 images : logcornerhub/logcorner-edusync-speech-command  and logcornerhub/logcorner-edusync-speech-mssql-tools
+
+# login to your azure account and set your Azure default Subscription
+az login 
+
+az account set --name Microsoft Azure Sponsorship
+
+# in ths tutorial, I will use docker-desktop and enable kubernetes 
+
+kubectl config get-contexts 
+kubectl config use-context  docker-desktop 
+kubectl cluster-info
 
 kubectl apply -f .
 
 kubectl get pods
- kubectl get services
+kubectl get services
 
 
 install ingress for docker desktop

@@ -12,6 +12,8 @@ $aksName="aks-ingress-cluster"
 az group create --name $resourceGroupName --location $resourceGroupLocation
 $resourceGroupId =$(az group show --name $resourceGroupName --query id --output tsv)
 
+kubectl get pods
+ kubectl get services
 
 # create a service principal
 $servicePrincipal = az ad sp create-for-rbac --name $servicePrincipalName --scopes $resourceGroupId --role Contributor --sdk-auth
@@ -31,6 +33,8 @@ $azureContainerRegistryId=$(az acr show --name $azureContainerRegistryName --res
 az role assignment create --assignee $servicePrincipalId --scope $azureContainerRegistryId --role AcrPush
 
 # to setup Azure Kubernetes Service cluster
+
+generate a certificate and a key
 
 az role assignment create --assignee $servicePrincipalId --scope $azureContainerRegistryId --role AcrPull
 
@@ -54,9 +58,11 @@ helm install ingress-nginx ingress-nginx/ingress-nginx  `
 --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux `
 --set controller.service.externalTrafficPolicy=Local
 
+https://kubernetes.docker.com/speech-command-http-api/swagger/index.html
 
 kubectl get all -n ingress-basic
 
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'MyC0m9l&xP@ssw0rd'
 
 az login
 az acr login --name $azureContainerRegistryName

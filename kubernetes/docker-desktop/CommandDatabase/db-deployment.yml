@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db-speech-command-api-deployment
+  name: speech-command-db-deployment
   
   labels:
     version: 1.0.0
-    product: db-speech-command-api
+    product: speech-command-db
     environment: docker-desktop
 spec:
   replicas: 1
   selector:
      matchLabels:
-       app: db-speech-command-api
+       app: speech-command-db
        env: docker-desktop
   template:
     metadata:
       labels:
-       app: db-speech-command-api
+       app: speech-command-db
        env: docker-desktop
     spec:
       terminationGracePeriodSeconds: 30
