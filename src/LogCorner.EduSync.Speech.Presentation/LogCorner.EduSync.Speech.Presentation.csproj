@@ -58,7 +58,10 @@
     <Content Include="appsettings.Development.json" />
     <Content Include="appsettings.Docker.json" />
     <Content Include="appsettings.json" />
-    <Content Include="appsettings.Kubernetes.aks.json">
+    <Content Include="appsettings.Kubernetes.aks-ingress.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="appsettings.Kubernetes.docker-desktop-ingress.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="appsettings.Kubernetes.helm.json">
@@ -67,7 +70,7 @@
     <Content Include="appsettings.Kubernetes.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="appsettings.Kubernetes.qa.json">
+    <Content Include="appsettings.Kubernetes.docker-desktop.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Properties\launchSettings.json" />
@@ -90,6 +93,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.48.1" />
     <PackageReference Include="Microsoft.Identity.Web" Version="1.25.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />

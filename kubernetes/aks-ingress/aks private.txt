@@ -1,0 +1,22 @@
+az aks create --resource-group AKS-Private  --name AKSCluster1   --enable-private-cluster
+
+
+#You can access files using the --file parameter
+az aks command invoke  `
+    --resource-group AKS-Private  `
+    --name  AKSCluster1  `
+    --command "kubectl apply -f deployment.yaml"  `
+    --file deployment.yaml
+
+#Even though the cluster API Endpoint is private, you can still provision services on public IP addressed
+az aks command invoke  `
+    --resource-group AKS-Private  `
+    --name  AKSCluster1  `
+    --command "kubectl get service; kubectl get pods"
+
+
+
+az aks command invoke  `
+    --resource-group AKS-Private  `
+    --name  AKSCluster1  `
+    --command "kubectl get service; kubectl get pods"

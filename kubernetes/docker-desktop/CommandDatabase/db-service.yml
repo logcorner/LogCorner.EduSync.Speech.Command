@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: speech-command-db-service
+  
+  labels:
+    version: 1.0.0
+    product: db-speech-command-api
+    environment: docker-desktop
+spec:
+  selector:
+    app: speech-command-db
+    env: docker-desktop
+  ports:
+    - protocol: TCP
+      port: 1433
+      targetPort: 1433
+  type: NodePort

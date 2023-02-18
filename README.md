@@ -31,3 +31,5 @@ https://kubernetes.docker.com/speech-command-http-api/swagger/index.html
   "url": "http://test.com",
   "typeId": 1
 }
+
+https://github.com/serilog/serilog-sinks-opentelemetry

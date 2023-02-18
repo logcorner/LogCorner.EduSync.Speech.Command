@@ -1,0 +1,6 @@
+apiVersion: v2
+name: db-linux
+appVersion: "3.6"
+description: A Helm chart for speech command api service Database sql server 2019 
+version: 1.0.0
+type: application

@@ -1,0 +1,10 @@
+apiVersion: v2
+name: logcorner-command
+appVersion: "1.1"
+description: A Helm chart for logcorner edusync speech microservice architecture 1.1
+version: 1.0.0
+type: application
+keywords:
+  - demo
+dependences:
+  ...

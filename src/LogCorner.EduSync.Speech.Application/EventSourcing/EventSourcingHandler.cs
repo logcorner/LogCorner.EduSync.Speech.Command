@@ -72,7 +72,7 @@ namespace LogCorner.EduSync.Speech.Application.EventSourcing
                 {"@event.Payload", serializedBody}
             };
             _traceService.SetActivityTags(activity, tags);
-            await _resiliencyService.ExponentialExceptionRetry.ExecuteAsync(async () => await _eventPublisher.PublishAsync(Topics.Speech, jsonString));
+           //////////////////// await _resiliencyService.ExponentialExceptionRetry.ExecuteAsync(async () => await _eventPublisher.PublishAsync(Topics.Speech, jsonString));
         }
     }
 }
