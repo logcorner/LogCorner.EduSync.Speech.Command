@@ -6,3 +6,4 @@
 *.jfm
 *.dbmdl
 /src/LogCorner.EduSync.Speech.Presentation/LogCorner.EduSync.Speech.Presentation.csproj.user
+/iac/.terraform
