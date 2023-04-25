@@ -6,3 +6,5 @@
 *.jfm
 *.dbmdl
 /src/LogCorner.EduSync.Speech.Presentation/LogCorner.EduSync.Speech.Presentation.csproj.user
+/iac/.terraform/providers/registry.terraform.io/hashicorp/azurerm/3.42.0/windows_amd64/terraform-provider-azurerm_v3.42.0_x5.exe
+/iac/.terraform/terraform.tfstate
