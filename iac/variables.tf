@@ -12,11 +12,12 @@ variable "resource_group_name" {
 
 variable "default_tags" {
   type = object({
-    environment   = string
-    deployed_by   = string
+    environment = string
+    deployed_by = string
     business_unit = string
-    owner         = string
-    project       = string
+    owner = string
+    project = string
+    
   })
 }
 
@@ -83,6 +84,9 @@ variable "kubernetes_version" {
   description = "Kubernetes version"
   default     = "1.24.3"
 }
+
+
+
 
 variable "acr_subnet_name" {
   default = "acrSubnet"
