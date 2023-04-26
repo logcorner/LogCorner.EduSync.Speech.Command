@@ -22,7 +22,7 @@ docker-compose build
 docker tag logcornerhub/logcorner-edusync-speech-command  "$azureContainerRegistryName.azurecr.io/logcorner-edusync-speech-command:1.0.0"
 
 # push 
-docker push "$azureContainerRegistryName.azurecr.io/logcorner-edusync-speech-command:1.0.0"
+docker push "$azureContainerRegistryName.azurecr.io/logcorner-edusync-speech-command:3.0.0"
 
 kubectl apply -f aks-helloworld-one.yaml --namespace ingress-basic
 
@@ -30,7 +30,7 @@ kubectl get pods
 kubectl get services
 
 
-http://20.76.166.118/swagger/index.html
+http://20.4.161.165/swagger/index.html
 
 {
   "title": "this is a title",
