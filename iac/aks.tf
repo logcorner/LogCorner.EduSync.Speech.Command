@@ -18,12 +18,12 @@ resource "azurerm_kubernetes_cluster" "kubernetes_cluster" {
   }
 
   network_profile {
-    network_plugin     = "kubenet"
-    network_policy     = "calico"
+    network_plugin     = var.network_plugin
+    network_policy     = var.network_policy
     dns_service_ip     = var.aks_dns_service_ip
     docker_bridge_cidr = var.aks_docker_bridge_cidr
     service_cidr       = var.aks_service_cidr
-    load_balancer_sku  = "standard"
+    load_balancer_sku  = var.load_balancer_sku
   }
   key_vault_secrets_provider {
     secret_rotation_enabled = true

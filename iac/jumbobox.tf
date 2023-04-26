@@ -1,6 +1,5 @@
-
 resource "azurerm_network_interface" "network_interface" {
-  name                = "windows_vm_nic"
+  name                = var.jumbobox_nic_name
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -12,12 +11,12 @@ resource "azurerm_network_interface" "network_interface" {
 }
 
 resource "azurerm_windows_virtual_machine" "windows_virtual_machine" {
-  name                = "win-bastion-vm"
+  name                = var.jumbobox_vm_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  size                = "Standard_F2"
-  admin_username      = "adminuser"
-  admin_password      = "P@$$w0rd1234!"
+  size                = var.jumbobox_vm_size
+  admin_username      = var.jumbobox_admin_username
+  admin_password      = var.jumbobox_admin_password
   network_interface_ids = [
     azurerm_network_interface.network_interface.id,
   ]
@@ -35,17 +34,16 @@ resource "azurerm_windows_virtual_machine" "windows_virtual_machine" {
   }
 }
 
-
 resource "azurerm_public_ip" "bastion_public_ip" {
-  name                = "bastion_public_ip"
+  name                = var.bastion_public_ip_name
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Static"
-  sku                 = "Standard"
+  sku                 = var.bastion_public_ip_sku
 }
 
 resource "azurerm_bastion_host" "bastion_host" {
-  name                = "bastion_host"
+  name                = var.bastion_host_name
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 

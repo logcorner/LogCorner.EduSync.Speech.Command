@@ -21,12 +21,12 @@ data "azurerm_network_interface" "example" {
 }
 
 resource "azurerm_private_dns_a_record" "private_dns_a_record" {
-  name                = "logcorner-edusync-speech-mssqlserver"
+  name                = azurerm_mssql_server.mssql_server.name
   records             = [data.azurerm_network_interface.example.private_ip_address]
   resource_group_name = azurerm_resource_group.rg.name
 
   ttl       = 10
-  zone_name = "privatelink.database.windows.net"
+  zone_name = azurerm_private_dns_zone.private_dns_zone.name
   depends_on = [
     azurerm_private_dns_zone.private_dns_zone,
   ]
@@ -39,7 +39,7 @@ resource "azurerm_private_dns_a_record" "private_dns_a_record" {
 
 resource "azurerm_private_dns_zone_virtual_network_link" "dns_zone_virtual_network_link" {
   name                  = var.dns_zone_virtual_network_link_name
-  private_dns_zone_name = "privatelink.database.windows.net"
+  private_dns_zone_name = azurerm_private_dns_zone.private_dns_zone.name
   resource_group_name   = azurerm_resource_group.rg.name
   virtual_network_id    = azurerm_virtual_network.vnet.id
 
