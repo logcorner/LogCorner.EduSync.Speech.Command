@@ -1,4 +1,4 @@
-resource "azurerm_kubernetes_cluster" "k8s" {
+resource "azurerm_kubernetes_cluster" "kubernetes_cluster" {
   name                = var.aks_name
   location            = azurerm_resource_group.rg.location
   dns_prefix          = var.aks_dns_prefix
@@ -30,7 +30,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
   depends_on = [
     azurerm_virtual_network.vnet
-
   ]
 
   tags = (merge(var.default_tags, tomap({
@@ -41,5 +40,5 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
 output "fqdn" {
   description = "The FQDN of the Azure Kubernetes Managed Cluster."
-  value       = azurerm_kubernetes_cluster.k8s.fqdn
+  value       = azurerm_kubernetes_cluster.kubernetes_cluster.fqdn
 }

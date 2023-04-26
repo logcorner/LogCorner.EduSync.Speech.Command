@@ -29,6 +29,10 @@ variable "registry_name" {
   default = "logcorneredusyncregistry"
 }
 
+variable "registry_sku" {
+  default = "Premium"
+}
+
 variable "virtual_network_name" {
   default = "LogCorner.EduSync.Speech.Vnet"
 }
@@ -86,8 +90,6 @@ variable "kubernetes_version" {
 }
 
 
-
-
 variable "acr_subnet_name" {
   default = "acrSubnet"
 }
@@ -102,3 +104,13 @@ variable "database_subnet_address_prefix" {
   default = "10.2.2.0/24"
 }
 
+variable "sql_private_endpoint_network_interface_name" {
+  default = "sql-pe-nic"
+}
+
+variable "sql_private_endpoint_name" {
+  default = "sql-pe"
+}
+variable "dns_zone_virtual_network_link_name" {
+  default = "sql-vnet-link"
+}

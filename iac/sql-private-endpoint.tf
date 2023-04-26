@@ -1,13 +1,18 @@
 resource "azurerm_private_dns_zone" "private_dns_zone" {
   name                = "privatelink.database.windows.net"
   resource_group_name = azurerm_resource_group.rg.name
+
+  tags = (merge(var.default_tags, tomap({
+    type = "private_dns_zone"
+    })
+  ))
   depends_on = [
     azurerm_resource_group.rg,
   ]
 }
 
 data "azurerm_network_interface" "example" {
-  name                = "sql-pe-nic-log"
+  name                = var.sql_private_endpoint_network_interface_name
   resource_group_name = azurerm_resource_group.rg.name
 
   depends_on = [
@@ -15,53 +20,44 @@ data "azurerm_network_interface" "example" {
   ]
 }
 
-output "network_interface_private_ip_address" {
-  value = data.azurerm_network_interface.example.private_ip_address
-}
-
 resource "azurerm_private_dns_a_record" "private_dns_a_record" {
   name                = "logcorner-edusync-speech-mssqlserver"
   records             = [data.azurerm_network_interface.example.private_ip_address]
   resource_group_name = azurerm_resource_group.rg.name
-  tags = {
-    creator = "created by private endpoint sql-pe with resource guid f98da0ab-a7d2-45ff-86e4-0ea891b0481c"
-  }
+
   ttl       = 10
   zone_name = "privatelink.database.windows.net"
   depends_on = [
     azurerm_private_dns_zone.private_dns_zone,
   ]
+
+  tags = (merge(var.default_tags, tomap({
+    type = "private_dns_a_record"
+    })
+  ))
 }
 
-# resource "azurerm_network_interface" "res-7" {
-#   location            = "westeurope"
-#   name                = "sql-pe-nic"
-#   resource_group_name = "LOGCORNER.EDUSYNC.SPEECH.RG"
-#   ip_configuration {
-#     name                          = "sql-pe.nic.5758da49-c742-4345-88aa-444d93d9ea95"
-#     private_ip_address_allocation = "Dynamic"
-#     subnet_id                     = azurerm_subnet.databasesubnet.id
-#   }
-#   depends_on = [
-#     azurerm_subnet.databasesubnet
-#   ]
-# }
-
 resource "azurerm_private_dns_zone_virtual_network_link" "dns_zone_virtual_network_link" {
-  name                  = "jypehpisk3aui"
+  name                  = var.dns_zone_virtual_network_link_name
   private_dns_zone_name = "privatelink.database.windows.net"
   resource_group_name   = azurerm_resource_group.rg.name
   virtual_network_id    = azurerm_virtual_network.vnet.id
+
+  tags = (merge(var.default_tags, tomap({
+    type = "dns_zone_virtual_network_link"
+    })
+  ))
+
   depends_on = [
     azurerm_private_dns_zone.private_dns_zone,
     azurerm_virtual_network.vnet,
   ]
 }
 resource "azurerm_private_endpoint" "private_endpoint" {
-  custom_network_interface_name = "sql-pe-nic-log"
-  
-  location            = "westeurope"
-  name                = "sql-pe"
+  custom_network_interface_name = var.sql_private_endpoint_network_interface_name
+
+  location            = azurerm_resource_group.rg.location
+  name                = var.sql_private_endpoint_name
   resource_group_name = azurerm_resource_group.rg.name
   subnet_id           = azurerm_subnet.databasesubnet.id
   private_dns_zone_group {
@@ -70,15 +66,23 @@ resource "azurerm_private_endpoint" "private_endpoint" {
   }
   private_service_connection {
     is_manual_connection           = false
-    name                           = "sql-pe"
+    name                           = "${var.sql_private_endpoint_name}_private_service_connection"
     private_connection_resource_id = azurerm_mssql_server.mssql_server.id
     subresource_names              = ["sqlServer"]
   }
-  
+
+  tags = (merge(var.default_tags, tomap({
+    type = "private_endpoint"
+    })
+  ))
 
   depends_on = [
     azurerm_private_dns_zone.private_dns_zone,
     azurerm_subnet.databasesubnet,
     azurerm_mssql_server.mssql_server,
   ]
+}
+
+output "network_interface_private_ip_address" {
+  value = data.azurerm_network_interface.example.private_ip_address
 }
