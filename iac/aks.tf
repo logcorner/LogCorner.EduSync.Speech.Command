@@ -1,9 +1,9 @@
 resource "azurerm_kubernetes_cluster" "k8s" {
-  name       = var.aks_name
-  location   = azurerm_resource_group.rg.location
-  dns_prefix = var.aks_dns_prefix
+  name                = var.aks_name
+  location            = azurerm_resource_group.rg.location
+  dns_prefix          = var.aks_dns_prefix
   resource_group_name = azurerm_resource_group.rg.name
-  
+
   default_node_pool {
     name            = "agentpool"
     node_count      = var.aks_agent_count
@@ -32,8 +32,8 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     azurerm_virtual_network.vnet
 
   ]
- 
-   tags = (merge(var.default_tags, tomap({
+
+  tags = (merge(var.default_tags, tomap({
     type = "kubernetes_cluster"
     })
   ))

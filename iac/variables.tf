@@ -12,12 +12,12 @@ variable "resource_group_name" {
 
 variable "default_tags" {
   type = object({
-    environment = string
-    deployed_by = string
+    environment   = string
+    deployed_by   = string
     business_unit = string
-    owner = string
-    project = string
-    
+    owner         = string
+    project       = string
+
   })
 }
 
@@ -94,3 +94,11 @@ variable "acr_subnet_name" {
 variable "acr_subnet_address_prefix" {
   default = "10.2.1.0/24"
 }
+variable "database_subnet_name" {
+  default = "databaseSubnet"
+}
+
+variable "database_subnet_address_prefix" {
+  default = "10.2.2.0/24"
+}
+
