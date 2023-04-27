@@ -14,6 +14,8 @@ resource "azurerm_subnet" "kubesubnet" {
   address_prefixes     = [var.aks_subnet_address_prefix]
   virtual_network_name = azurerm_virtual_network.vnet.name
   resource_group_name  = azurerm_resource_group.rg.name
+
+
 }
 
 resource "azurerm_subnet" "acrsubnet" {
@@ -32,15 +34,15 @@ resource "azurerm_subnet" "databasesubnet" {
 }
 
 resource "azurerm_subnet" "managementSubnet" {
-  name                 = "managementSubnet"
+  name                 = var.management_subnet_name
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.2.3.0/24"]
+  address_prefixes     = [var.management_subnet_address_prefix]
 }
 
 resource "azurerm_subnet" "azureBastionSubnet" {
   name                 = "AzureBastionSubnet"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.2.4.0/27"]
+  address_prefixes     = [var.bastion_subnet_address_prefix]
 }

@@ -1,21 +1,21 @@
 resource "azurerm_mssql_server" "mssql_server" {
-  name                          = "logcorner-edusync-speech-mssqlserver"
+  name                          = var.mssql_server_name
   resource_group_name           = azurerm_resource_group.rg.name
   location                      = azurerm_resource_group.rg.location
-  version                       = "12.0"
-  administrator_login           = "missadministrator"
-  administrator_login_password  = "MyC0m9l&xP@ssw0rd"
+  version                       = var.mssql_server_version
+  administrator_login           = var.mssql_server_administrator_login
+  administrator_login_password  = var.mssql_server_administrator_login_password
   minimum_tls_version           = "1.2"
   public_network_access_enabled = false
+
   tags = (merge(var.default_tags, tomap({
     type = "sql_server"
     })
   ))
 }
 
-
 resource "azurerm_mssql_database" "mssql_database" {
-  name      = "LogCorner.EduSync.Speech.Database"
+  name      = var.mssql_database_name
   server_id = azurerm_mssql_server.mssql_server.id
 
 
