@@ -38,7 +38,7 @@ resource "azurerm_kubernetes_cluster" "kubernetes_cluster" {
   ))
 }
 
-output "fqdn" {
+output "aks_fqdn" {
   description = "The FQDN of the Azure Kubernetes Managed Cluster."
   value       = azurerm_kubernetes_cluster.kubernetes_cluster.fqdn
 }
