@@ -8,7 +8,7 @@ metadata:
     app: LogCorner.EduSync.Speech.Command
     version: 1.0.0
     owner: Logcorner
-    product: init-sql-database-job
+    product: speech-command-http-api-service
     environment: development
 
 spec:
@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
       - name: command-api-container
-        image: logcorneredusyncregistry.azurecr.io/logcorner-edusync-speech-command:3.0.0
+        image: logcorneredusyncregistry.azurecr.io/logcorner-edusync-speech-command:1.0.0
         imagePullPolicy: IfNotPresent
         env:
         - name: ASPNETCORE_ENVIRONMENT
@@ -36,8 +36,5 @@ spec:
         - containerPort: 443
           protocol: TCP
       restartPolicy: Always
-      terminationGracePeriodSeconds: 30
-      dnsPolicy: ClusterFirst
-      imagePullSecrets:
-       - name: regsecret
+   
     

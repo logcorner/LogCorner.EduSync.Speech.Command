@@ -105,7 +105,7 @@ namespace LogCorner.EduSync.Speech.Presentation
                 protocol = "https";
             }
                 
-                //app.UseMiddleware<ExceptionMiddleware>();
+                app.UseMiddleware<ExceptionMiddleware>();
             app.UseSwagger(x =>
             {
                 if (!string.IsNullOrWhiteSpace(pathBase))

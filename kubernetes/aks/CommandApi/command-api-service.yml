@@ -7,7 +7,7 @@ metadata:
     app: LogCorner.EduSync.Speech.Command
     version: 1.0.0
     owner: Logcorner
-    product: init-sql-database-job
+    product: speech-command-http-api-service
     environment: development
 spec:
   type: LoadBalancer

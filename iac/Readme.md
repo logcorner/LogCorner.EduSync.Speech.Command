@@ -34,7 +34,7 @@ kubectl get pods
 kubectl get services
 
 
-http://20.4.161.165/swagger/index.html
+http://52.137.56.112/swagger/index.html
 
 {
   "title": "this is a title",
