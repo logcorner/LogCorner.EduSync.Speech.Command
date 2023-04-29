@@ -13,3 +13,7 @@ resource "azurerm_container_registry" "acr" {
 }
 
 
+output "acr_login_server" {
+  description = "The Login Server of the Azure Container Registry."
+  value       = azurerm_container_registry.acr.login_server
+}

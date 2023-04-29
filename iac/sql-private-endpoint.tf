@@ -20,22 +20,22 @@ data "azurerm_network_interface" "example" {
   ]
 }
 
-resource "azurerm_private_dns_a_record" "private_dns_a_record" {
-  name                = azurerm_mssql_server.mssql_server.name
-  records             = [data.azurerm_network_interface.example.private_ip_address]
-  resource_group_name = azurerm_resource_group.rg.name
+# resource "azurerm_private_dns_a_record" "private_dns_a_record" {
+#   name                = azurerm_mssql_server.mssql_server.name
+#   records             = [data.azurerm_network_interface.example.private_ip_address]
+#   resource_group_name = azurerm_resource_group.rg.name
 
-  ttl       = 10
-  zone_name = azurerm_private_dns_zone.private_dns_zone.name
-  depends_on = [
-    azurerm_private_dns_zone.private_dns_zone,
-  ]
+#   ttl       = 10
+#   zone_name = azurerm_private_dns_zone.private_dns_zone.name
+#   depends_on = [
+#     azurerm_private_dns_zone.private_dns_zone,
+#   ]
 
-  tags = (merge(var.default_tags, tomap({
-    type = "private_dns_a_record"
-    })
-  ))
-}
+#   tags = (merge(var.default_tags, tomap({
+#     type = "private_dns_a_record"
+#     })
+#   ))
+# }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "dns_zone_virtual_network_link" {
   name                  = var.dns_zone_virtual_network_link_name
