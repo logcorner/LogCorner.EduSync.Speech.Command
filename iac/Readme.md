@@ -26,6 +26,9 @@ docker push "$azureContainerRegistryName.azurecr.io/logcorner-edusync-speech-com
 
 kubectl apply -f aks-helloworld-one.yaml --namespace ingress-basic
 
+kubectl config get-contexts 
+kubectl config use-context  docker-desktop 
+kubectl cluster-info
 kubectl get pods
 kubectl get services
 
