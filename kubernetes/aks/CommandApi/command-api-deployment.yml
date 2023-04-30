@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: speech-command-http-api-deployment
+  
+  labels:
+    app: LogCorner.EduSync.Speech.Command
+    version: 1.0.0
+    owner: Logcorner
+    product: speech-command-http-api-service
+    environment: development
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: LogCorner.EduSync.Speech.Command
+      environment: development
+  
+  template:
+    metadata:
+      labels:
+        app: LogCorner.EduSync.Speech.Command
+        environment: development
+    spec:
+      containers:
+      - name: command-api-container
+        image: logcorneredusyncregistry.azurecr.io/logcorner-edusync-speech-command:1.0.0
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Kubernetes.aks"
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+          protocol: TCP
+      restartPolicy: Always
+   
+    
