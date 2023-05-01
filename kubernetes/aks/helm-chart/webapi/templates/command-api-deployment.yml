@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-deployment
+  labels:
+    product: {{ .Release.Name }}-{{ .Chart.Name }}
+    environment: helm
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-{{ .Chart.Name }}
+      env: helm
+  
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-{{ .Chart.Name }}
+        env: helm
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-{{ .Chart.Name }}-container
+        image: {{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: {{ .Values.ASPNETCORE_ENVIRONMENT }}
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+          protocol: TCP
+      restartPolicy: {{ .Values.restartPolicy }}
+   
+      
+    

@@ -1,0 +1,15 @@
+replicaCount: 1
+image:
+  repository: logcorneredusyncregistry.azurecr.io
+  name: logcorner-edusync-speech-command
+  tag: 1.0.0
+imagePullPolicy: IfNotPresent
+restartPolicy: Always
+ASPNETCORE_ENVIRONMENT: Kubernetes.aks
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 80
+  ssl_port: 443
+  ssl_targetPort: 443
+
