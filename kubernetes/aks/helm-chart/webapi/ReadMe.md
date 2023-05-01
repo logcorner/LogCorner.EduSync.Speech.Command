@@ -12,68 +12,38 @@ kubectl config view
 helm repo add "stable" "https://charts.helm.sh/stable"
 
 helm env
+# Install a Release  :  helm install [release] [chart]
+# installing a chart named webapi with the release name logcorner-command
+helm install  logcorner-command  webapi
 
-helm install   logcorner-command  webapi
+# list all the releases deployed to a Kubernetes cluster
+helm list
 
 kubectl get pods
 kubectl get services
 
+# helm history [release]
+helm history logcorner-command
+
+# helm upgrade [release] [chart]
 helm upgrade   logcorner-command  webapi
-helm uninstall logcorner-command-http-api  webapi
+
+# helm rollback [release] [revision]
+helm rollback logcorner-command 1
+
+# helm status [release]
+helm status logcorner-command
+
+# helm get all [release]
+helm get all logcorner-command
+
+# helm get manifest  [release]
+helm get manifest logcorner-command
+
+# helm uninstall [release]
+helm uninstall logcorner-command  webapi
+
 
 http://51.124.4.112/swagger/index.html
 
 
-
-Action
-Install a Release
-Upgrade a Release revision
-Rollback to a Release revision
-Print Release history
-Display Release status
-Show details of a release
-Uninstall a Release
-List Releases
-Command
-helm install [release] [chart]
-helm upgrade [release] [chart]
-helm rollback [release] [revision]
-helm history [release]
-helm status [release]
-helm get all [release]
-helm uninstall [release]
-helm list
-
-
-
-# enable ingress
-# add helm.kubernetes.docker.com to host
-
-
-
-
-helm install [release] [chart]
-helm install  logcorner-command  logcorner.edusync.speech
-
-helm list --short  => list release name
-
-helm get manifest logcorner-command
-
-
-
-
-
-
-#UPGRADE RELEASE
-update appVersion: "1.1"  and description 
-version: 1.0.0 do not change  because chart is unchanged
-change image version 
-run the command
-
-helm upgrade logcorner-command  logcorner.edusync.speech
-
-helm rollback logcorner-command 1
-
-helm history logcorner-command 
-
-helm uninstall logcorner-command  logcorner.edusync.speech
