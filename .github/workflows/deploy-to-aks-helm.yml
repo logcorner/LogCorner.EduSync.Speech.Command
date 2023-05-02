@@ -16,7 +16,13 @@ jobs:
     # checkout the repo
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@master
-      
+    # Logs in with your Azure credentials
+    - name: Azure login
+      uses: azure/login@v1.4.6
+      with:
+        client-id: ${{ secrets.SERVICE_PRINCIPAL_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - name: 'Build and push image'
       uses: azure/docker-login@v1
       with:
