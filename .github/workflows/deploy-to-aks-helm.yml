@@ -26,11 +26,13 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-    - name: Install Azure CLI
+    - name: Azure CLI script
       uses: azure/CLI@v1
-    - name: Run Azure CLI Command
-      run: |
-        az acr login --name ${{ secrets.ACR_NAME }}
+      with:
+        azcliversion: 2.30.0
+        inlineScript: |
+          az account show
+          az storage -h
     # - name: 'Build and push image'
     #   uses: azure/docker-login@v1
     #   with:
