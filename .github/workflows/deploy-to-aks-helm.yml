@@ -31,8 +31,8 @@ jobs:
       with:
         azcliversion: 2.30.0
         inlineScript: |
-          az account show
-          az storage -h
+          az acr login --name ${{ secrets.ACR_NAME }}
+         
     # - name: 'Build and push image'
     #   uses: azure/docker-login@v1
     #   with:
