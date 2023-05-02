@@ -31,7 +31,7 @@ jobs:
       with:
         azcliversion: 2.30.0
         inlineScript: |
-          az acr login --name ${{ secrets.ACR_NAME }}
+          az acr login --name ${{ secrets.ACR_NAME }}  --expose-token
          
     # - name: 'Build and push image'
     #   uses: azure/docker-login@v1
