@@ -32,13 +32,13 @@ jobs:
         azcliversion: 2.30.0
         inlineScript: |
           az acr login --name ${{ secrets.ACR_NAME }}  --expose-token
-         
-    # - name: 'Build and push image'
-    #   uses: azure/docker-login@v1
-    #   with:
-    #     login-server: ${{ env.ACR_LOGON_SERVER }}
-    #     username: ${{ secrets.SERVICE_PRINCIPAL_ID }}
-    #     password: ${{ secrets.SERVICE_PRINCIPAL_PASSWORD }}
+          docker login loginServer -u 00000000-0000-0000-0000-000000000000 -p accessToken
+    - name: 'Build and push image'
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.ACR_LOGON_SERVER }}
+        username: ${{ secrets.SERVICE_PRINCIPAL_ID }}
+        password: ${{ secrets.SERVICE_PRINCIPAL_PASSWORD }}
 
     - run: docker-compose -f ./src/docker-compose.yml build 
     - run: docker tag logcornerhub/logcorner-edusync-speech-command ${{ env.IMAGE_NAME }}
