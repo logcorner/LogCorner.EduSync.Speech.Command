@@ -70,7 +70,7 @@ jobs:
   
     - name: Deploy to AKS using Helm
       run: |
-        helm upgrade --install my-app ./kubernetes/aks/helm-chart/webapi
+        helm upgrade --install logcorner-command ./kubernetes/aks/helm-chart/webapi
           
       env:
         IMAGE_TAG: ${{ github.run_number }}
