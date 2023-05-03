@@ -31,10 +31,12 @@ jobs:
     - run: docker push ${{ env.IMAGE_NAME }}
     
   deploy-to-aks:
-    
+    permissions:
+      contents: read
+      id-token: write
     runs-on: ubuntu-latest
    
-    needs: build-deploy-image
+    #needs: build-deploy-image
         
     #env:
       #NAMESPACE: dummy
