@@ -17,7 +17,7 @@ jobs:
     steps:
     # checkout the repo
     - name: 'Checkout GitHub Action'
-      uses: actions/checkout
+      uses: actions/checkout@master
     
     - name: 'Build and push image'
       uses: azure/docker-login@v1
@@ -40,7 +40,7 @@ jobs:
     
     steps:
     
-    - uses: actions/checkout
+    - uses: actions/checkout@master
     
     # Logs in with your Azure credentials
     - name: Azure login
