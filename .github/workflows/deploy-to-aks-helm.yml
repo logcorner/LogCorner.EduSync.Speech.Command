@@ -18,13 +18,7 @@ jobs:
     # checkout the repo
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@master
-    # Logs in with your Azure credentials
-    - name: Azure login
-      uses: azure/login@v1.4.6
-      with:
-        client-id: ${{ secrets.SERVICE_PRINCIPAL_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    
     - name: 'Build and push image'
       uses: azure/docker-login@v1
       with:
@@ -36,50 +30,32 @@ jobs:
     - run: docker tag logcornerhub/logcorner-edusync-speech-command ${{ env.IMAGE_NAME }}
     - run: docker push ${{ env.IMAGE_NAME }}
     
-  # deploy-to-aks:
+  deploy-to-aks:
     
-  #   runs-on: ubuntu-latest
-    
-  #   if: github.ref == 'refs/heads/develop'
-
-  #   needs: build-deploy-image
+    runs-on: ubuntu-latest
+   
+    needs: build-deploy-image
         
-  #   #env:
-  #     #NAMESPACE: dummy
+    #env:
+      #NAMESPACE: dummy
     
-  #   steps:
+    steps:
     
-  #   - uses: actions/checkout@main
+    - uses: actions/checkout@main
     
-  #   # Set the target Azure Kubernetes Service (AKS) cluster. 
-  #   - uses: azure/aks-set-context@v1
-  #     with:
-  #       creds: '${{ secrets.AZURE_CREDENTIALS }}'
-  #       cluster-name: ${{ secrets.AKS_NAME }}
-  #       resource-group: ${{ secrets.AKS_RESOURCE_GROUP }}
+    # Logs in with your Azure credentials
+    - name: Azure login
+      uses: azure/login@v1.4.6
+      with:
+        client-id: ${{ secrets.SERVICE_PRINCIPAL_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    
+        # Set the target Azure Kubernetes Service (AKS) cluster. 
+    - name: Set AKS context
+      id: set-context
+      uses: azure/aks-set-context@v3
+      with:
+        resource-group: ${{ secrets.RESOURCE_GROUP_NAME }}
+        cluster-name: ${{ secrets.AKS_NAME }}
   
-  #   # Create namespace if doesn't exist
-  #   # - run: |
-  #   #    kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
-  
-  #   # Create image pull secret for ACR
-  #   - uses: azure/k8s-create-secret@v1
-  #     with:
-  #       container-registry-url: ${{ env.ACR_LOGON_SERVER }}
-  #       container-registry-username: ${{ secrets.SERVICE_PRINCIPAL_ID }}
-  #       container-registry-password: ${{ secrets.SERVICE_PRINCIPAL_PASSWORD }}
-  #       secret-name: ${{ secrets.AKS_SECRET }}
-  #       # namespace: ${{ env.NAMESPACE }}
-  
-  #   # Deploy app to AKS
-  #   - uses: azure/k8s-deploy@v1
-  #     with:
-  #       manifests: |
-  #         kubernetes/aks-ingress/CommandApi/command-api-deployment.yml
-  #         kubernetes/aks-ingress/CommandApi/command-api-service.yml
-  #         kubernetes/aks-ingress/command-ingress.yml
-  #       images: |
-  #         ${{ env.IMAGE_NAME }}
-  #       imagepullsecrets: |
-  #         ${{ secrets.AKS_SECRET }}
-  #       #namespace: ${{ env.NAMESPACE }}
