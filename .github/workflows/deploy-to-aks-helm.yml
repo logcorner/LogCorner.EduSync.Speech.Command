@@ -70,7 +70,12 @@ jobs:
   
     - name: Deploy to AKS using Helm
       run: |
-        helm upgrade --install logcorner-command ./kubernetes/aks/helm-chart/webapi
+        helm upgrade --install logcorner-command ./kubernetes/aks/helm-chart/webapi\
+          --set image.repository=logcorneredusyncregistry.azurecr.io \
+          --set image.tag=${{ github.run_number }} \
+          --set replicaCount=3 \
+          --set service.type=LoadBalancer \
+          --set service.port=80
           
       env:
         IMAGE_TAG: ${{ github.run_number }}
