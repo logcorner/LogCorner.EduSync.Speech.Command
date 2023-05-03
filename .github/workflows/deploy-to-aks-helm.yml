@@ -68,13 +68,9 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }} # only needed if version is 'latest'
       id: install
   
-    # - name: Deploy to AKS using Helm
-    #   run: |
-    #     helm upgrade --install my-app ./my-app-chart \
-    #       --set image.repository=<image-repository> \
-    #       --set image.tag=${{ env.IMAGE_TAG }} \
-    #       --set replicaCount=3 \
-    #       --set service.type=LoadBalancer \
-    #       --set service.port=80
-    #   env:
-    #     IMAGE_TAG: ${{ github.run_number }}
+    - name: Deploy to AKS using Helm
+      run: |
+        helm upgrade --install my-app ./kubernetes/aks/helm-chart/webapi
+          
+      env:
+        IMAGE_TAG: ${{ github.run_number }}
