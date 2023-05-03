@@ -25,20 +25,12 @@ jobs:
         client-id: ${{ secrets.SERVICE_PRINCIPAL_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-    - name: Azure CLI script
-      uses: azure/CLI@v1
-      with:
-        azcliversion: 2.30.0
-        inlineScript: |
-          az acr login --name ${{ secrets.ACR_NAME }}  --expose-token
-          export ACCESS_TOKEN=$(az acr token credential show --name ${{ secrets.ACR_NAME }} --query "accessToken" -o tsv)
     - name: 'Build and push image'
       uses: azure/docker-login@v1
       with:
         login-server: ${{ env.ACR_LOGON_SERVER }}
         username: ${{ secrets.SERVICE_PRINCIPAL_ID }}
-        password: ${{ env.ACCESS_TOKEN }}
+        password: ${{ secrets.SERVICE_PRINCIPAL_PASSWORD }}
 
     - run: docker-compose -f ./src/docker-compose.yml build 
     - run: docker tag logcornerhub/logcorner-edusync-speech-command ${{ env.IMAGE_NAME }}
