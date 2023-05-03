@@ -68,7 +68,8 @@ jobs:
     - name: Deploy to AKS using Helm
       run: |
         helm upgrade --install logcorner-command ./kubernetes/aks/helm-chart/webapi\
-          --set image.repository=logcorneredusyncregistry.azurecr.io \
+          --set image.repository=${{ secrets.ACR_LOGON_SERVER }} \
+          --set image.name=logcorner-edusync-speech-command \
           --set image.tag=${{ github.run_number }} \
           --set replicaCount=1 \
           --set service.type=LoadBalancer \
