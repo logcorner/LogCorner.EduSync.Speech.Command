@@ -65,6 +65,7 @@ jobs:
       uses: azure/setup-helm@v3
       with:
           version: 'latest' # default is latest (stable)
+          token: ${{ secrets.GITHUB_TOKEN }} # only needed if version is 'latest'
       id: install
   
     # - name: Deploy to AKS using Helm
