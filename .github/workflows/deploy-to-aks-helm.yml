@@ -23,6 +23,14 @@ jobs:
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@master
     
+    # Logs in with your Azure credentials
+    - name: Azure login
+      uses: azure/login@v1.4.6
+      with:
+        client-id: ${{ secrets.SERVICE_PRINCIPAL_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        
     - uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.1.4
