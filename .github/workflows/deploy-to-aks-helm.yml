@@ -24,16 +24,18 @@ jobs:
       uses: actions/checkout@master
     
     # Logs in with your Azure credentials
-    - name: Login to Azure with service principal
-      uses: hashicorp/azure-login@v1
+  # Logs in with your Azure credentials
+    - name: Azure login
+      uses: azure/login@v1.4.6
       with:
         client-id: ${{ secrets.SERVICE_PRINCIPAL_ID }}
-        client-secret: ${{ secrets.SERVICE_PRINCIPAL_PASSWORD }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.1.4
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
     - name: Terraform Init
       id: init
       run: terraform init
