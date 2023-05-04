@@ -50,7 +50,7 @@ jobs:
     # Apply Terraform changes
     - name: Terraform Apply
       id: apply
-      run: terraform apply -var-file="dev.tfvars" -auto-approve -input=false
+      run: terraform apply -var-file="dev.tfvars" -auto-approve -input=false -lock=false
   build-deploy-image:
     permissions:
       contents: read
