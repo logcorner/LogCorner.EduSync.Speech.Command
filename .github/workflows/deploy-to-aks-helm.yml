@@ -43,14 +43,14 @@ jobs:
     - name: Terraform Plan
       id: plan
       run: terraform plan -var-file="dev.tfvars" -input=false -out=tfplan
-      continue-on-error: true
-    - run: echo ${{ steps.plan.outputs.stdout }}
-    - run: echo ${{ steps.plan.outputs.stderr }}
-    - run: echo ${{ steps.plan.outputs.exitcode }}
+      continue-on-error: false
+    # - run: echo ${{ steps.plan.outputs.stdout }}
+    # - run: echo ${{ steps.plan.outputs.stderr }}
+    # - run: echo ${{ steps.plan.outputs.exitcode }}
     # Apply Terraform changes
     - name: Terraform Apply
       id: apply
-      run: terraform apply -var-file="dev.tfvars" -auto-approve -input=false 
+      run: terraform apply -var-file="dev.tfvars" -auto-approve -input=false  ${{ steps.plan.outputs.plan_file }}
   build-deploy-image:
     permissions:
       contents: read
