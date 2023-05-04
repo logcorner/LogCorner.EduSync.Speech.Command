@@ -8,6 +8,37 @@ env:
   IMAGE_NAME: ${{ secrets.ACR_NAME }}.azurecr.io/logcorner-edusync-speech-command:${{ github.run_number }}
 
 jobs:
+
+  setup-iac:
+    defaults:
+      run:
+        working-directory: ./iac
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+
+    steps:
+    # checkout the repo
+    - name: 'Checkout GitHub Action'
+      uses: actions/checkout@master
+    
+    - uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.1.4
+    - name: Terraform Init
+      id: init
+      run: terraform init
+
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate -no-color
+
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -no-color
+      continue-on-error: true
+
   build-deploy-image:
     permissions:
       contents: read
