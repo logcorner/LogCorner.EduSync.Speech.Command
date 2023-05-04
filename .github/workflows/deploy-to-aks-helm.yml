@@ -42,7 +42,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan 
+      run: terraform plan -lock=false
       continue-on-error: true
     - run: echo ${{ steps.plan.outputs.stdout }}
     - run: echo ${{ steps.plan.outputs.stderr }}
