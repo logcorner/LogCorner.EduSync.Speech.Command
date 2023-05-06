@@ -1,0 +1,53 @@
+
+trigger:
+  - azure-pipelines-aks-terraform
+  
+pool:
+  vmImage: 'ubuntu-latest'
+variables:
+    - name: serviceConnectionName
+      value: 'github.com_logcorner'
+    - name: backendAzureRmResourceGroupName
+      value: 'WORKSHOP-LOGCORNER-MICROSERVICES'
+    - name: backendAzureRmStorageAccountName
+      value: 'storagelogornertf' 
+    - name: backendResourceContainerName
+      value: 'azure-pipeline-tfstate'
+    - name: BUILD_NUMBER
+      value: '$(Build.BuildId)'
+    - name: ACR_NAME
+      value: 'locornermsacrtest'
+stages:
+    
+  - template: pipeline-templates/deploy.yml
+    parameters:
+      deploymentName: 'webapi'
+      serviceConnectionName:  ${{ variables.serviceConnectionName }}
+      backendAzureRmResourceGroupName:  ${{ variables.backendAzureRmResourceGroupName }}
+      backendAzureRmStorageAccountName:  ${{ variables.backendAzureRmStorageAccountName }} 
+      backendResourceContainerName :  ${{ variables.backendResourceContainerName }}
+      filepath: 'deploy/iac/terraform/webapi'
+      workspace:  'test' 
+    # - template: pipeline-templates/build.yml
+    #   parameters:
+    #     BUILD_NUMBER: ${{ variables.BUILD_NUMBER }}
+    #     ACR_NAME:  ${{ variables.ACR_NAME }}
+    #     serviceConnectionName: ${{ variables.serviceConnectionName }}
+    # - template: pipeline-templates/deploy-aks.yml
+    #   parameters:
+    #     BUILD_NUMBER: ${{ variables.BUILD_NUMBER }}
+    #     ACR_LOGIN_SERVER:  ${{ variables.ACR_NAME }}.azurecr.io
+    #     serviceConnectionName: ${{ variables.serviceConnectionName }}
+    #     resourceGroupName: ${{variables.backendAzureRmResourceGroupName}}
+    #     kubernetesClusterName: 'demo-apim-aks-test'
+    #     workspace:  'test'
+    # - template: pipeline-templates/deploy.yml
+    #   parameters:
+    #     deploymentName: 'apim'
+    #     serviceConnectionName:  ${{ variables.serviceConnectionName }}
+    #     backendAzureRmResourceGroupName:  ${{ variables.backendAzureRmResourceGroupName }}
+    #     backendAzureRmStorageAccountName:  ${{ variables.backendAzureRmStorageAccountName }} 
+    #     backendResourceContainerName : 'backend-tfstate-apim-resources' #${{ variables.backendResourceContainerName }}
+    #     filepath: 'deploy/iac/terraform/apim'
+    #     workspace:  'test' 
+        
