@@ -12,6 +12,8 @@ using LogCorner.EduSync.Speech.Resiliency;
 using LogCorner.EduSync.Speech.Telemetry.Configuration;
 using Microsoft.EntityFrameworkCore;
 using LogCorner.EduSync.Speech.Command.SharedKernel;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +23,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddHealthChecks();
 //
 builder.Services.AddScoped<ICreateSpeechUseCase, SpeechUseCase>();
 builder.Services.AddScoped<IUpdateSpeechUseCase, SpeechUseCase>();
@@ -81,6 +83,18 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    AllowCachingResponses = false,
+    ResultStatusCodes =
+                {
+                    [HealthStatus.Healthy] = StatusCodes.Status200OK,
+                    [HealthStatus.Degraded] = StatusCodes.Status200OK,
+                    [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
+                }
+});
 
+app.MapControllers();
+// Configure the Prometheus scraping endpoint
+app.MapPrometheusScrapingEndpoint();
 app.Run();
