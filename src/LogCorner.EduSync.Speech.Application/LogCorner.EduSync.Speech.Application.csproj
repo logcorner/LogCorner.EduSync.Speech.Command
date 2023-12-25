@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="OpenTelemetry.Api" Version="1.7.0" />
+    <PackageReference Include="Polly" Version="8.2.0" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
