@@ -3,12 +3,31 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LogCorner.EduSync.Speech.Producer" Version="2.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Domain\LogCorner.EduSync.Speech.Domain.csproj" />
     <ProjectReference Include="..\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.SharedKernel.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="LogCorner.EduSync.Speech.ElasticSearch">
+      <HintPath>..\..\..\LogCorner.EduSync.Speech.Broker\src\LogCorner.EduSync.Speech.Producer\bin\Debug\net8.0\LogCorner.EduSync.Speech.ElasticSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="LogCorner.EduSync.Speech.Producer">
+      <HintPath>..\..\..\LogCorner.EduSync.Speech.Broker\src\LogCorner.EduSync.Speech.Producer\bin\Debug\net8.0\LogCorner.EduSync.Speech.Producer.dll</HintPath>
+    </Reference>
+    <Reference Include="LogCorner.EduSync.Speech.Repository">
+      <HintPath>..\..\..\LogCorner.EduSync.Speech.Broker\src\LogCorner.EduSync.Speech.Producer\bin\Debug\net8.0\LogCorner.EduSync.Speech.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="LogCorner.EduSync.Speech.Resiliency">
+      <HintPath>..\..\..\LogCorner.EduSync.Speech.Broker\src\LogCorner.EduSync.Speech.Producer\bin\Debug\net8.0\LogCorner.EduSync.Speech.Resiliency.dll</HintPath>
+    </Reference>
+    <Reference Include="LogCorner.EduSync.Speech.ServiceBus">
+      <HintPath>..\..\..\LogCorner.EduSync.Speech.Broker\src\LogCorner.EduSync.Speech.Producer\bin\Debug\net8.0\LogCorner.EduSync.Speech.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="LogCorner.EduSync.Speech.Telemetry">
+      <HintPath>..\..\..\LogCorner.EduSync.Speech.Broker\src\LogCorner.EduSync.Speech.Producer\bin\Debug\net8.0\LogCorner.EduSync.Speech.Telemetry.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

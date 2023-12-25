@@ -7,7 +7,7 @@ namespace LogCorner.EduSync.Speech.Command.SharedKernel.Events
         public string File { get; }
         public Guid MediaFileId { get; }
 
-        public MediaFileCreatedEvent(Guid aggregateId, Guid mediaFileId, string file, Guid eventId, DateTime ocurrendOn, long aggregateVersion = default) 
+        public MediaFileCreatedEvent(Guid aggregateId, Guid mediaFileId, string file, Guid eventId, DateTime ocurrendOn, long aggregateVersion = default)
         {
             MediaFileId = mediaFileId;
             AggregateId = aggregateId;

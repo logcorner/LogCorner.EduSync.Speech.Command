@@ -1,9 +1,9 @@
-﻿using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
+﻿using LogCorner.EduSync.Speech.Command.SharedKernel;
+using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
 using LogCorner.EduSync.Speech.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LogCorner.EduSync.Speech.Command.SharedKernel;
 
 namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 {
@@ -81,7 +81,7 @@ namespace LogCorner.EduSync.Speech.Domain.SpeechAggregate
 
         public void ChangeTitle(Title title, long originalVersion)
         {
-            AddDomainEvent(new SpeechTitleChangedEvent(Id, title.Value,Guid.NewGuid(), DateTime.Now), originalVersion);
+            AddDomainEvent(new SpeechTitleChangedEvent(Id, title.Value, Guid.NewGuid(), DateTime.Now), originalVersion);
         }
 
         public void ChangeDescription(Description description, long originalVersion)

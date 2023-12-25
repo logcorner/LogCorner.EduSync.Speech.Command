@@ -1,6 +1,5 @@
 ﻿using LogCorner.EduSync.Speech.Application.Exceptions;
 using LogCorner.EduSync.Speech.Application.Interfaces;
-using LogCorner.EduSync.Speech.Application.UseCases;
 using LogCorner.EduSync.Speech.Command.SharedKernel.Events;
 using LogCorner.EduSync.Speech.Command.SharedKernel.Serialyser;
 using LogCorner.EduSync.Speech.Domain.IRepository;
@@ -72,7 +71,7 @@ namespace LogCorner.EduSync.Speech.Application.EventSourcing
                 {"@event.Payload", serializedBody}
             };
             _traceService.SetActivityTags(activity, tags);
-           //////////////////// await _resiliencyService.ExponentialExceptionRetry.ExecuteAsync(async () => await _eventPublisher.PublishAsync(Topics.Speech, jsonString));
+            //////////////////// await _resiliencyService.ExponentialExceptionRetry.ExecuteAsync(async () => await _eventPublisher.PublishAsync(Topics.Speech, jsonString));
         }
     }
 }

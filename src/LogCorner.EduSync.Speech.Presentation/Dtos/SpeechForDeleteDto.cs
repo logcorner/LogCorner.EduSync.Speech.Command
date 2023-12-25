@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LogCorner.EduSync.Speech.Presentation.Dtos
+﻿namespace LogCorner.EduSync.Speech.Presentation.Dtos
 {
     public class SpeechForDeleteDto
     {
