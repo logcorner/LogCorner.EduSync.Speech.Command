@@ -93,7 +93,7 @@ app.MapHealthChecks("/health", new HealthCheckOptions
                     [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
                 }
 });
-
+app.UseCors("CorsPolicy");
 app.MapControllers();
 // Configure the Prometheus scraping endpoint
 app.MapPrometheusScrapingEndpoint();
