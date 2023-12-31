@@ -3,6 +3,8 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="LogCorner.EduSync.Speech.Resiliency" Version="3.0.0" />
+    <PackageReference Include="LogCorner.EduSync.Speech.Telemetry" Version="3.0.0" />
     <PackageReference Include="OpenTelemetry.Api" Version="1.7.0" />
     <PackageReference Include="Polly" Version="8.2.0" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="8.0.0" />
@@ -12,12 +14,5 @@
     <ProjectReference Include="..\LogCorner.EduSync.Speech.Infrastructure\LogCorner.EduSync.Speech.Infrastructure.csproj" />
     <ProjectReference Include="..\LogCorner.EduSync.Speech.SharedKernel\LogCorner.EduSync.Speech.SharedKernel.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="LogCorner.EduSync.Speech.Resiliency">
-      <HintPath>..\..\..\LogCorner.EduSync.Speech.Broker\src\LogCorner.EduSync.Speech.Resiliency\bin\Debug\netstandard2.1\LogCorner.EduSync.Speech.Resiliency.dll</HintPath>
-    </Reference>
-    <Reference Include="LogCorner.EduSync.Speech.Telemetry">
-      <HintPath>..\..\..\LogCorner.EduSync.Speech.Broker\src\LogCorner.EduSync.Speech.Telemetry\bin\Debug\net8.0\LogCorner.EduSync.Speech.Telemetry.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+  
 </Project>

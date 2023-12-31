@@ -7,13 +7,14 @@ using LogCorner.EduSync.Speech.Domain.IRepository;
 using LogCorner.EduSync.Speech.Domain.SpeechAggregate;
 using LogCorner.EduSync.Speech.Infrastructure;
 using LogCorner.EduSync.Speech.Presentation.Configuration;
-using LogCorner.EduSync.Speech.Producer;
 using LogCorner.EduSync.Speech.Resiliency;
 using LogCorner.EduSync.Speech.Telemetry.Configuration;
 using Microsoft.EntityFrameworkCore;
 using LogCorner.EduSync.Speech.Command.SharedKernel;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using LogCorner.EduSync.Speech.Producer;
+using LogCorner.EduSync.Speech.Producer.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,7 +49,7 @@ builder.Services.AddScoped(typeof(IInvoker<>), typeof(Invoker<>));
 builder.Services.AddTransient<IDomainEventRebuilder, DomainEventRebuilder>();
 builder.Services.AddTransient<IJsonProvider, JsonDotNetProvider>();
 
-builder.Services.AddProducer("localhost:9092", Configuration);
+builder.Services.AddProducerServices("localhost:9092", Configuration);
 builder.Services.AddScoped<IEventPublisher, EventPublisher>();
 builder.Services.AddSharedKernel();
 

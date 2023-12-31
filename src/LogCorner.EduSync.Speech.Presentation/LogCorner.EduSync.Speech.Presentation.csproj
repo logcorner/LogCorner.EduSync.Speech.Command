@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LogCorner.EduSync.Speech.Producer" Version="3.0.4" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="OpenTelemetry" Version="1.7.0" />
@@ -17,7 +18,6 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	  <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.3.0" />
 	  <PackageReference Include="Azure.Identity" Version="1.10.4" />
-	  <PackageReference Include="LogCorner.EduSync.Speech.Resiliency" Version="2.0.5" />
 	  <PackageReference Include="Microsoft.Identity.Client" Version="4.58.1" />
 	  <PackageReference Include="Microsoft.Identity.Web" Version="2.16.0" />
 	  <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
@@ -62,24 +62,9 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <Reference Include="LogCorner.EduSync.Speech.ElasticSearch">
-	    <HintPath>..\..\..\LogCorner.EduSync.Speech.Broker\src\LogCorner.EduSync.Speech.Producer\bin\Debug\net8.0\LogCorner.EduSync.Speech.ElasticSearch.dll</HintPath>
-	  </Reference>
-	  <Reference Include="LogCorner.EduSync.Speech.Producer">
-	    <HintPath>..\..\..\LogCorner.EduSync.Speech.Broker\src\LogCorner.EduSync.Speech.Producer\bin\Debug\net8.0\LogCorner.EduSync.Speech.Producer.dll</HintPath>
-	  </Reference>
-	  <Reference Include="LogCorner.EduSync.Speech.Repository">
-	    <HintPath>..\..\..\LogCorner.EduSync.Speech.Broker\src\LogCorner.EduSync.Speech.Producer\bin\Debug\net8.0\LogCorner.EduSync.Speech.Repository.dll</HintPath>
-	  </Reference>
-	  <Reference Include="LogCorner.EduSync.Speech.Resiliency">
-		  <HintPath>..\..\..\LogCorner.EduSync.Speech.Broker\src\LogCorner.EduSync.Speech.Resiliency\bin\Debug\netstandard2.1\LogCorner.EduSync.Speech.Resiliency.dll</HintPath>
-	  </Reference>
-	  <Reference Include="LogCorner.EduSync.Speech.ServiceBus">
-	    <HintPath>..\..\..\LogCorner.EduSync.Speech.Broker\src\LogCorner.EduSync.Speech.Producer\bin\Debug\net8.0\LogCorner.EduSync.Speech.ServiceBus.dll</HintPath>
-	  </Reference>
-	  <Reference Include="LogCorner.EduSync.Speech.Telemetry">
-		  <HintPath>..\..\..\LogCorner.EduSync.Speech.Broker\src\LogCorner.EduSync.Speech.Telemetry\bin\Debug\net8.0\LogCorner.EduSync.Speech.Telemetry.dll</HintPath>
-	  </Reference>
+    <Folder Include="Logs\" />
   </ItemGroup>
+
+  
 
 </Project>

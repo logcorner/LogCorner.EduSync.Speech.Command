@@ -21,15 +21,14 @@ services:
         SA_PASSWORD: MyC0m9l&xP@ssw0rd
     networks:
       - speech_network    
+
   # database mssql-tools
   logcorner.edusync.speech.mssql-tools:
     image: logcornerhub/logcorner-edusync-speech-mssql-tools
     build:
       context: LogCorner.EduSync.Speech.Database/Docker
       dockerfile: mssql-tools/Dockerfile
-  
  
-
 networks:
   speech_network:
     external:
